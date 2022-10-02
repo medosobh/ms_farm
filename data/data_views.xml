@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- project Group -->
+    <data noupdate="0">
+        <record id="project_group_dairy" model="farm.project.group">
+            <field name="name">Dairy Farming</field>
+            <field name="description">Dairy Farming</field>
+        </record>
+        <record id="project_group_poultry" model="farm.project.group">
+            <field name="name">Poultry Farming</field>
+            <field name="description">Poultry Farming</field>
+        </record>
+        <record id="project_group_crops" model="farm.project.group">
+            <field name="name">Crops Farming</field>
+            <field name="description">Crops Farming</field>
+        </record>
+        <record id="project_group_fruit" model="farm.project.group">
+            <field name="name">Fruit Farming</field>
+            <field name="description">Fruit Farming</field>
+        </record>
+        <record id="project_group_vegetable" model="farm.project.group">
+            <field name="name">Vegetable Farming</field>
+            <field name="description">Vegetable Farming</field>
+        </record>
+        <record id="project_group_aqua" model="farm.project.group">
+            <field name="name">Aqua Farming</field>
+            <field name="description">Aqua Farming</field>
+        </record>
+        <record id="project_group_greenhouse" model="farm.project.group">
+            <field name="name">Greenhouse</field>
+            <field name="description">Greenhouse</field>
+        </record>
+        <record id="project_group_apiculture" model="farm.project.group">
+            <field name="name">Bee Keeping</field>
+            <field name="description">Bee Keeping</field>
+        </record>
+        <record id="project_group_organic" model="farm.project.group">
+            <field name="name">Organic Farming</field>
+            <field name="description">Organic Farming</field>
+        </record>
+    </data>
+
+    <!-- Product Category -->
+    <data noupdate="0">
+        <record id="product_category_farm" model="product.category">
+            <field name="name">Farm</field>
+        </record>
+
+        <record id="product_category_material" model="product.category">
+            <field name="name">Material</field>
+            <field name="parent_id" ref="product_category_farm"/>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+        <record id="product_category_service" model="product.category">
+            <field name="name">Service</field>
+            <field name="parent_id" ref="product_category_farm"/>
+        </record>
+        <record id="product_category_product" model="product.category">
+            <field name="name">Product</field>
+            <field name="parent_id" ref="product_category_farm"/>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+        <record id="product_category_sale" model="product.category">
+            <field name="name">Sale</field>
+            <field name="parent_id" ref="product_category_farm"/>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+
+        <!-- Move out-->
+        <record id="product_category_fertilize" model="product.category">
+            <field name="parent_id" ref="product_category_material"/>
+            <field name="name">Fertilize</field>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+
+        </record>
+        <record id="product_category_nutrients" model="product.category">
+            <field name="parent_id" ref="product_category_material"/>
+            <field name="name">Nutrients</field>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+        <record id="product_category_pesticides" model="product.category">
+            <field name="parent_id" ref="product_category_material"/>
+            <field name="name">Pesticides</field>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+        <record id="product_category_cure" model="product.category">
+            <field name="parent_id" ref="product_category_material"/>
+            <field name="name">Cure</field>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+        <record id="product_category_spare" model="product.category">
+            <field name="parent_id" ref="product_category_material"/>
+            <field name="name">Spar Parts</field>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+        <record id="product_category_utilities" model="product.category">
+            <field name="parent_id" ref="product_category_material"/>
+            <field name="name">Utilities</field>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+        <!-- Move in-->
+        <record id="product_category_produce" model="product.category">
+            <field name="parent_id" ref="product_category_product"/>
+            <field name="name">Produce</field>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+        <record id="product_category_pioasset" model="product.category">
+            <field name="parent_id" ref="product_category_product"/>
+            <field name="name">Pio Asset</field>
+            <field name="property_cost_method">fifo</field>
+            <field name="property_valuation">real_time</field>
+        </record>
+        <!-- purchase-->
+        <record id="product_category_manpower" model="product.category">
+            <field name="parent_id" ref="product_category_service"/>
+            <field name="name">Manpower</field>
+            <field name="property_cost_method">standard</field>
+            <field name="property_valuation">manual_periodic</field>
+        </record>
+        <record id="product_category_equipment" model="product.category">
+            <field name="parent_id" ref="product_category_service"/>
+            <field name="name">Equipment</field>
+            <field name="property_cost_method">standard</field>
+            <field name="property_valuation">manual_periodic</field>
+        </record>
+        <record id="product_category_irrigate" model="product.category">
+            <field name="parent_id" ref="product_category_service"/>
+            <field name="name">Irrigate</field>
+            <field name="property_cost_method">standard</field>
+            <field name="property_valuation">manual_periodic</field>
+        </record>
+        <record id="product_category_maintenance" model="product.category">
+            <field name="parent_id" ref="product_category_service"/>
+            <field name="name">Maintenance</field>
+            <field name="property_cost_method">standard</field>
+            <field name="property_valuation">manual_periodic</field>
+        </record>
+        <record id="product_category_quality" model="product.category">
+            <field name="parent_id" ref="product_category_service"/>
+            <field name="name">Quality</field>
+            <field name="property_cost_method">standard</field>
+            <field name="property_valuation">manual_periodic</field>
+        </record>
+        <!-- direct sale-->
+        <record id="product_category_directsale" model="product.category">
+            <field name="parent_id" ref="product_category_sale"/>
+            <field name="name">Direct Sale</field>
+            <field name="property_cost_method">standard</field>
+            <field name="property_valuation">manual_periodic</field>
+        </record>
+    </data>
+
+    <!-- stock picking type -->
+    <data noupdate="0">
+        <record model="stock.picking.type" id="farm_stock_produce">
+            <field name="name">Farm Stock Produce</field>
+            <field name="sequence_id" eval="ref('farm_stock_produce_seq')"/>
+            <field name="sequence_code">F/PRO/%(year)s/</field>
+            <field name="code">incoming</field>
+            <field name="show_reserved" eval="True"/>
+            <field name="default_location_dest_id" eval="ref('stock.stock_location_stock')"/>
+        </record>
+
+        <record model="stock.picking.type" id="farm_stock_return">
+            <field name="name">Farm Stock Consumption Return</field>
+            <field name="sequence_id" eval="ref('farm_stock_return_seq')"/>
+            <field name="sequence_code">CON/RET/%(year)s/</field>
+            <field name="code">incoming</field>
+            <field name="show_reserved" eval="True"/>
+            <field name="default_location_dest_id" eval="ref('stock.stock_location_stock')"/>
+        </record>
+        <record model="stock.picking.type" id="farm_stock_consumption">
+            <field name="name">Farm Stock Consumption</field>
+            <field name="sequence_id" eval="ref('farm_stock_consumption_seq')"/>
+            <field name="sequence_code">CON/OUT/%(year)s/</field>
+            <field name="code">outgoing</field>
+            <field name="return_picking_type_id" eval="ref('farm_stock_return')"/>
+            <field name="default_location_src_id" eval="ref('stock.stock_location_stock')"/>
+        </record>
+
+        <record model="stock.picking.type" id="farm_stock_sale">
+            <field name="name">Farm Sales Out</field>
+            <field name="sequence_id" eval="ref('farm_stock_sale_seq')"/>
+            <field name="sequence_code">F/SAL/%(year)s/</field>
+            <field name="code">outgoing</field>
+            <field name="show_reserved" eval="True"/>
+            <field name="default_location_src_id" eval="ref('stock.stock_location_stock')"/>
+        </record>
+    </data>
+</odoo>

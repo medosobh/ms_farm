@@ -1,0 +1,121 @@
+<odoo>
+    <data>
+        <record id="farm_equipments_view_form" model="ir.ui.view">
+            <field name="name">farm.equipments.form</field>
+            <field name="model">farm.equipments</field>
+            <field name="arch" type="xml">
+                <form string="Equipments">
+                    <sheet>
+                        <div class="oe_title">
+                            <h3>
+                                <group>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                </group>
+                            </h3>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="description"/>
+                                <field name="total_order_cost"/>
+                                <field name="acq_date"/>
+                                <field name="body_code"/>
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="product_id"/>
+                            </group>
+                        </group>
+                        <field name="farm_operations_oline_ids">
+                            <tree editable="bottom">
+                                <field name="operations_id"/>
+                                <field name="product_id"/>
+                                <field name="categ_id" widget="selection" invisible="1"/>
+                                <field name="price_unit" widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="product_uom"/>
+                                <field name="qty"/>
+                                <field name="note"/>
+                                <field name="price_subtotal" sum="Total Cost"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="farm_equipments_view_tree" model="ir.ui.view">
+            <field name="name">farm.equipments.tree</field>
+            <field name="model">farm.equipments</field>
+            <field name="arch" type="xml">
+                <tree string="ModelTitle">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="total_order_cost"/>
+                    <field name="acq_date"/>
+                    <field name="body_code"/>
+                    <field name="type"/>
+                    <field name="product_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="farm_equipments_view_search" model="ir.ui.view">
+            <field name="name">farm.equipments.search</field>
+            <field name="model">farm.equipments</field>
+            <field name="arch" type="xml">
+                <search string="Equipments">
+                    <group expand="1" string="Group By">
+                        <filter string="Equipment Type" name="type" domain="[]"
+                                context="{'group_by':'type'}"/>
+                    </group>
+                    <searchpanel>
+                        <field name="type" select="multi" string="Equipment Type" enable_counters="1"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="farm_equipments_action" model="ir.actions.act_window">
+            <field name="name">Project Equipments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">farm.equipments</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first equipment!
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_equipments"
+                  name="Equipments"
+                  parent="farm_menu_other"
+                  action="farm_equipments_action"
+                  sequence="46"/>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="product_template_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.template.product.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='detailed_type']" position="before">
+                    <field name="equipments_id"/>
+                    <!-- Add your fields or attributes here -->
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

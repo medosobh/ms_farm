@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access.farm_projects,access_farm_projects,ms_farm.model_farm_projects,base.group_user,1,1,1,1
+access.farm_project_group,access_farm_project_group,ms_farm.model_farm_project_group,base.group_user,1,1,1,1
+access.farm_operations,access_farm_operations,ms_farm.model_farm_operations,base.group_user,1,1,1,1
+access.farm_operations_oline,access_farm_operations_oline,ms_farm.model_farm_operations_oline,base.group_user,1,1,1,1
+access.farm_materials,access_farm_materials,ms_farm.model_farm_materials,base.group_user,1,1,1,1
+access.farm_materials_oline,access_farm_materials_oline,ms_farm.model_farm_materials_oline,base.group_user,1,1,1,1
+access.farm_sales,access_farm_sales,ms_farm.model_farm_sales,base.group_user,1,1,1,1
+access.farm_sales_oline,access_farm_sales_oline,ms_farm.model_farm_sales_oline,base.group_user,1,1,1,1
+access.farm_produce,access_farm_produce,ms_farm.model_farm_produce,base.group_user,1,1,1,1
+access.farm_produce_oline,access_farm_produce_oline,ms_farm.model_farm_produce_oline,base.group_user,1,1,1,1
+access.farm_equipments,access_farm_equipments,ms_farm.model_farm_equipments,base.group_user,1,1,1,1
+access.farm_locations,access_farm_locations,ms_farm.model_farm_locations,base.group_user,1,1,1,1
+

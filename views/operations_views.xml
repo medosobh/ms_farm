@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="farm_operations_view_form" model="ir.ui.view">
+        <field name="name">farm.operations.form</field>
+        <field name="model">farm.operations</field>
+        <field name="arch" type="xml">
+            <form string="operations">
+                <header>
+                    <button name="button_farm_create_vendor_bill"
+                            string="Create Vendor Bill"
+                            type="object"
+                            class="oe_highlight"
+                            help="Create service vendor bill"
+                            states="purchase"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_operation_box">
+                        <button name="action_vendor_bill" type="object"
+                                class="oe_stat_button"
+                                icon="fa-dollar">
+                            <div class="o_stat_info">
+                                <field name="vendor_bill_count"/>
+                                <field name='invoice_ids' invisible="1"/>
+                                <span class="o_stat_text">Bill Count</span>
+                            </div>
+                        </button>
+                        <button name="action_vendor_bill" type="object"
+                                class="oe_stat_button"
+                                icon="fa-dollar">
+                            <div class="o_stat_info">
+                                <field name="currency_id" invisible="1"
+                                       groups="base.group_multi_currency"/>
+                                <field name="vendor_bill_total" widget='monetary'
+                                       options="{'currency_field': 'currency_id'}"/>
+                                <span class="o_stat_text">Bills</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <group>
+                        <group string="Basic">
+                            <field name="name"/>
+                            <field name="projects_id" widget="selection"/>
+                            <field name="short_name"/>
+                            <field name="category_id" widget="selection"/>
+                        </group>
+                        <group string="Information ">
+                            <field name="user_id" widget="selection"/>
+                            <field name="issue_date"/>
+                            <field name="o_order_cost" widget="monetary"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                            <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
+                            <field name="partner_id" widget="selection"/>
+                            <field name="payment_term_id" widget="selection"/>
+                            <field name="stock_warehouse" widget="selection"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="farm_operation_olines" string="Order Lines">
+                            <field name="farm_operations_oline_ids">
+                                <tree>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id" widget="selection"/>
+                                    <field name="name" widget="section_and_note_text"/>
+                                    <field name="categ_id" widget="selection" invisible="1"/>
+                                    <field name="price_unit" widget="monetary"/>
+                                    <field name="company_id" widget="selection" invisible="1"/>
+                                    <field name="currency_id" widget="selection" invisible="1"/>
+                                    <field name="product_uom"/>
+                                    <field name="qty"/>
+                                    <field name="note"/>
+                                    <field name="price_subtotal" sum="Total Cost"/>
+                                    <field name="equipments_id" widget="selection" invisible="1"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="sequence" widget="handle" invisible="1"/>
+                                        <field name="product_id" widget="selection"/>
+                                        <field name="name" widget="section_and_note_text"/>
+                                        <field name="categ_id" widget="selection" invisible="1"/>
+                                        <field name="price_unit" widget="monetary"/>
+                                        <field name="company_id" widget="selection" invisible="1"/>
+                                        <field name="currency_id" widget="selection" invisible="1"/>
+                                        <field name="product_uom"/>
+                                        <field name="qty"/>
+                                        <field name="note"/>
+                                        <field name="price_subtotal" sum="Total Cost"/>
+                                        <field name="equipments_id" widget="selection" invisible="1"/>
+                                    </group>
+
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_operations_view_tree" model="ir.ui.view">
+        <field name="name">farm.operations.tree</field>
+        <field name="model">farm.operations</field>
+        <field name="arch" type="xml">
+            <tree string="operations">
+                <field name="name"/>
+                <field name="state"/>
+                <field name="projects_id"/>
+                <field name="short_name"/>
+                <field name="category_id"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="activity_ids" widget="list_activity"/>
+                <field name="issue_date"/>
+                <field name="o_order_cost" sum="Total Order"/>
+                <field name="partner_id" widget="selection"/>
+                <field name="stock_warehouse" widget="selection"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="farm_operations_view_calendar" model="ir.ui.view">
+        <field name="name">farm.operations.calendar</field>
+        <field name="model">farm.operations</field>
+        <field name="arch" type="xml">
+            <calendar string="Operations"
+                      date_start="issue_date"
+                      create="1"
+                      quick_add="False"
+                      mode="month"
+                      color="category_id"
+                      hide_time="true"
+                      event_limit="5"
+                      form_view_id="%(farm_operations_view_form)d"
+                      event_open_popup="False">
+                <field name="category_id" filters="1" invisible="1"/>
+                <field name="user_id" filters="1" invisible="1"/>
+                <field name="short_name" filters="1" invisible="1"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="short_name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="farm_operations_view_pivot" model="ir.ui.view">
+        <field name="name">farm.operations.pivot</field>
+        <field name="model">farm.operations</field>
+        <field name="arch" type="xml">
+            <pivot string="Operations">
+                <field name="projects_id" type="row" interval="month"/>
+                <field name="short_name" type="row"/>
+                <field name="name" type="row"/>
+                <field name="issue_date" type="col"/>
+                <field name="category_id" type="col"/>
+                <field name="o_order_cost" type="measure" widget="monetary"/>
+
+                <field name="state"/>
+                <field name="user_id"/>
+                <field name="partner_id" widget="selection"/>
+                <field name="stock_warehouse" widget="selection"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="farm_operations_view_graph" model="ir.ui.view">
+        <field name="name">farm.operations.graph</field>
+        <field name="model">farm.operations</field>
+        <field name="arch" type="xml">
+            <graph string="Operation Analysis" type="line" sample="1">
+                <field name="issue_date" interval="day"/>
+                <field name="o_order_cost" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="farm_operations_view_search" model="ir.ui.view">
+        <field name="name">farm.operations.search</field>
+        <field name="model">farm.operations</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="state"/>
+                <field name="projects_id"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="name"/>
+                <filter name="filter_orders" string="Orders" domain="[('state', '=', 'order')]"/>
+                <filter name="filter_documents" string="Documents" domain="[('state', '=', 'document')]"/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group by">
+                    <filter string="Project" name="group_by_project" context="{'group_by':'projects_id'}"/>
+                    <filter string="Category" name="group_by_category" context="{'group_by':'category_id'}"/>
+                </group>
+                <searchpanel>
+                    <field name="projects_id" select="multi" string="Relative Project" enable_counters="1"/>
+                    <field name="category_id" select="multi" string="Relative Category" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="farm_operations_action" model="ir.actions.act_window">
+        <field name="name">Farm Operations Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">farm.operations</field>
+        <field name="view_mode">tree,form,calendar,pivot,graph</field>
+        <field name="context">{'search_default_filter_order': 1, 'default_state': 'order'}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first operation order!
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_operations_"
+              name="Operation Orders"
+              parent="farm_menu_orders"
+              action="farm_operations_action"
+              sequence="21"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_product_category"
+              name="Product Category"
+              parent="farm_menu_product"
+              action="product.product_category_action_form"
+              sequence="42"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_product_product"
+              name="Product"
+              parent="farm_menu_product"
+              action="stock.product_template_action_product"
+              sequence="43"/>
+
+
+</odoo>

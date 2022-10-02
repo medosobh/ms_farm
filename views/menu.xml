@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+        <menuitem id="farm_root"
+                  name="Farm"
+                  web_icon="static/description/icon.png"
+                  sequence="145"
+        />
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="farm_menu_orders"
+                  name="Orders"
+                  parent="farm_root"
+                  sequence="20"
+        />
+        <!-- This Menu Item Must have a parent -->
+
+        <menuitem id="farm_menu_documents"
+                  name="Documents"
+                  parent="farm_root"
+                  sequence="30"
+        />
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="farm_menu_configuration"
+                  name="Configuration"
+                  parent="farm_root"
+                  sequence="41"/>
+
+        <menuitem id="farm_menu_product"
+                  name="Product and Category"
+                  parent="farm_menu_configuration"
+                  sequence="41"/>
+
+        <menuitem id="farm_menu_other"
+                  name="Farm other Configuration"
+                  parent="farm_menu_configuration"
+                  sequence="44"/>
+
+
+
+        <!-- Inherit account Move (vendor bill) Form View to Modify it -->
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="farm_menu_vendor_bill"
+                  name="Vendor Bill"
+                  parent="farm_menu_documents"
+                  action="account.action_move_in_invoice_type"
+                  sequence="31"/>
+
+        <menuitem id="farm_menu_material_move"
+                  name="Material stock move"
+                  parent="farm_menu_documents"
+                  action="stock.action_picking_tree_all"
+                  sequence="32"/>
+
+        <menuitem id="farm_menu_product_move"
+                  name="Produce stock move"
+                  parent="farm_menu_documents"
+                  action="stock.action_picking_tree_all"
+                  sequence="33"/>
+
+        <menuitem id="farm_menu_customer_invoice"
+                  name="Customer Invoice"
+                  parent="farm_menu_documents"
+                  action="account.action_move_out_invoice_type"
+                  sequence="34"/>
+
+
+    </data>
+</odoo>

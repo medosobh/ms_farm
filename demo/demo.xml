@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <!--
+                  <record id="object0" model="ms_agriculture.ms_agriculture">
+                    <field name="name">Object 0</field>
+                    <field name="value">0</field>
+                  </record>
+
+                  <record id="object1" model="ms_agriculture.ms_agriculture">
+                    <field name="name">Object 1</field>
+                    <field name="value">10</field>
+                  </record>
+
+                  <record id="object2" model="ms_agriculture.ms_agriculture">
+                    <field name="name">Object 2</field>
+                    <field name="value">20</field>
+                  </record>
+
+                  <record id="object3" model="ms_agriculture.ms_agriculture">
+                    <field name="name">Object 3</field>
+                    <field name="value">30</field>
+                  </record>
+
+                  <record id="object4" model="ms_agriculture.ms_agriculture">
+                    <field name="name">Object 4</field>
+                    <field name="value">40</field>
+                  </record>
+
+
+
+
+                <header>
+                    <button name="button_draft" string="Set Draft"
+                            type="object" class="oe_highlight"
+                            help="Move to In Draft State" states="on_hold"/>
+                    <button name="button_in_operation" string="Set In Operation"
+                            type="object" class="oe_highlight"
+                            help="Move to In operation State" states="draft,finish"/>
+                    <button name="button_finish" string="Set Finish"
+                            type="object" class="oe_highlight"
+                            help="Move to In Finish State" states="in_operation"/>
+                    <button name="button_on_hold" string="Set On hold"
+                            type="object" class="oe_highlight"
+                            help="Move to On Hold State" states="in_operation"/>
+                    <field name="state" widget="statusbar"
+                           options="{'clickable': '0'}"
+                           clickable="True" type="object"/>
+                </header>
+
+        -->
+    </data>
+</odoo>
