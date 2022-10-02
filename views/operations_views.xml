@@ -12,7 +12,11 @@
                             class="oe_highlight"
                             help="Create service vendor bill"
                             states="purchase"/>
-                    <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
+                    <field name="state"
+                           widget="statusbar"
+                           options="{'clickable': '0'}"
+                           clickable="True"
+                           type="object"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_operation_box">
@@ -60,7 +64,7 @@
 
                     <notebook>
                         <page name="farm_operation_olines" string="Order Lines">
-                            <field name="farm_operations_oline_ids">
+                            <field name="operation_order_line_ids">
                                 <tree>
                                     <field name="sequence" widget="handle"/>
                                     <field name="product_id" widget="selection"/>
@@ -189,8 +193,8 @@
                 <field name="projects_id"/>
                 <field name="user_id" widget="many2one_avatar_user"/>
                 <field name="name"/>
-                <filter name="filter_orders" string="Orders" domain="[('state', '=', 'order')]"/>
-                <filter name="filter_documents" string="Documents" domain="[('state', '=', 'document')]"/>
+                <filter name="filter_orders" string="Orders" domain="[('state', '=', 'purchase')]"/>
+                <filter name="filter_documents" string="Documents" domain="[('state', '=', 'done')]"/>
                 <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
                 <group expand="0" string="Group by">
                     <filter string="Project" name="group_by_project" context="{'group_by':'projects_id'}"/>
@@ -209,7 +213,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">farm.operations</field>
         <field name="view_mode">tree,form,calendar,pivot,graph</field>
-        <field name="context">{'search_default_filter_order': 1, 'default_state': 'order'}</field>
+        <field name="context">{'search_default_filter_order': 1, 'default_state': 'purchase'}</field>
         <field name="domain">[]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

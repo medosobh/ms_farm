@@ -9,19 +9,16 @@ class farm_operations(models.Model):
     _description = 'Handel all operation orders'
     _order = 'issue_date'
 
-    @api.depends('farm_operations_oline_ids')
+    # -------------------------------------------------------------------------
+    # COMPUTE METHODS
+    # -------------------------------------------------------------------------
+    @api.depends('operation_order_line_ids')
     def _compute_operation_order_cost(self):
         for rec in self:
             oline = sum(
                 self.env['farm.operations.oline'].search([('operations_id', '=', rec.id)]).mapped('price_subtotal'))
             rec.o_order_cost = oline
         return rec.o_order_cost
-
-    @api.model
-    def create(self, vals):
-        if not vals.get('name') or vals['name'] == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('farm.operations') or _('New')
-        return super(farm_operations, self).create(vals)
 
     def _compute_vendor_bill_count(self):
         for rec in self:
@@ -34,6 +31,22 @@ class farm_operations(models.Model):
                 self.env['account.move'].search([('invoice_origin', '=', rec.name)]).mapped('amount_total_signed'))
             rec.vendor_bill_total = total
         return rec.vendor_bill_total
+
+    @api.depends('operation_order_line_ids.invoice_lines.move_id')
+    def _compute_invoice(self):
+        for order in self:
+            invoices = order.mapped('operation_order_line_ids.invoice_lines.move_id')
+            order.invoice_ids = invoices
+            order.invoice_count = len(invoices)
+
+    # -------------------------------------------------------------------------
+    # Create METHODS
+    # -------------------------------------------------------------------------
+    @api.model
+    def create(self, vals):
+        if not vals.get('name') or vals['name'] == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('farm.operations') or _('New')
+        return super(farm_operations, self).create(vals)
 
     def action_vendor_bill(self):
         return {
@@ -56,16 +69,45 @@ class farm_operations(models.Model):
         invoice_vals_list = []
         sequence = 10
         for order in self:
-            if order.state != 'order':
+            if order.state != 'purchase':
                 continue
 
             order = order.with_company(order.company_id)
-            pending_section = None
+            # pending_section = None
             # Invoice values.
-            invoice_vals = order._prepare_farm_vendor_bill()
+            """
+                    Prepare the dict of values to create the new bill for an operation order.
+                    """
+            self.ensure_one()
+            # vendor bill context
+            move_type = self._context.get('default_move_type', 'in_invoice')
+            journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
+            if not journal:
+                raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (
+                    self.company_id.name, self.company_id.id))
+
+            partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
+            partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
+                ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
+            invoice_vals = {
+                'ref': self.name or '',
+                'move_type': move_type,
+                'narration': self.notes,
+                'currency_id': self.currency_id.id,
+                'invoice_user_id': self.user_id and self.user_id.id or self.env.user.id,
+                'partner_id': partner_invoice_id,
+                # 'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id.get_fiscal_position(partner_invoice_id)).id,
+                # 'payment_reference': self.partner_ref or '',
+                'partner_bank_id': partner_bank_id.id,
+                'invoice_origin': self.name,
+                'invoice_payment_term_id': self.payment_term_id.id,
+                'invoice_line_ids': [],
+                'company_id': self.company_id.id,
+            }
+
             print('we here ...invoice_vals', invoice_vals)
             # Invoice line values (keep only necessary sections).
-            for line in order.farm_operations_oline_ids:
+            for line in order.operation_order_line_ids:
                 pending_section = line
                 if not float_is_zero(line.qty, precision_digits = precision):
                     if pending_section:
@@ -78,6 +120,7 @@ class farm_operations(models.Model):
                     line_vals.update({'sequence': sequence})
                     invoice_vals['invoice_line_ids'].append((0, 0, line_vals))
                     sequence += 1
+            print('hi......code to prepare 2', line_vals)
             invoice_vals_list.append(invoice_vals)
 
         if not invoice_vals_list:
@@ -96,39 +139,9 @@ class farm_operations(models.Model):
         moves.filtered(
             lambda m: m.currency_id.round(m.amount_total) < 0).action_switch_invoice_into_refund_credit_note()
 
-        return self.action_view_invoice(moves)
-
-    def _prepare_farm_vendor_bill(self):
-        """
-        Prepare the dict of values to create the new bill for an operation order.
-        """
-        print('hi......code to prepare 1')
-        self.ensure_one()
-        move_type = self._context.get('default_move_type', 'in_invoice')
-        journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
-        if not journal:
-            raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
-
-        partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
-        partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
-            ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
-        invoice_vals = {
-            'ref': self.name or '',
-            'move_type': move_type,
-            'narration': self.notes,
-            'currency_id': self.currency_id.id,
-            'invoice_user_id': self.user_id and self.user_id.id or self.env.user.id,
-            'partner_id': partner_invoice_id,
-            # 'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id.get_fiscal_position(partner_invoice_id)).id,
-            # 'payment_reference': self.partner_ref or '',
-            'partner_bank_id': partner_bank_id.id,
-            'invoice_origin': self.name,
-            'invoice_payment_term_id': self.payment_term_id.id,
-            'invoice_line_ids': [],
-            'company_id': self.company_id.id,
-        }
-        return invoice_vals
+        print('result of moves', moves)
+        # return self.action_view_invoice(moves)
+        return
 
     def action_view_vendor_bill(self, invoices=False):
         """This function returns an action that display existing vendor bills of
@@ -161,13 +174,6 @@ class farm_operations(models.Model):
 
         return result
 
-    @api.depends('farm_operations_oline_ids.invoice_lines.move_id')
-    def _compute_invoice(self):
-        for order in self:
-            invoices = order.mapped('farm_operations_oline_ids.invoice_lines.move_id')
-            order.invoice_ids = invoices
-            order.invoice_count = len(invoices)
-
     name = fields.Char(string = 'Operation Ref',
                        index = True,
                        readonly = True,
@@ -181,17 +187,19 @@ class farm_operations(models.Model):
         readonly = False,
         index = True,
         copy = False,
-        tracking = True, default = 'purchase')
+        tracking = True,
+        default = 'purchase')
     category_id = fields.Many2one('product.category',
                                   required = True,
                                   string = 'Product Category')
     projects_id = fields.Many2one('farm.projects',
                                   required = True,
                                   tracking = True)
-
     short_name = fields.Char(related = 'projects_id.short_name',
                              store = True)
-    issue_date = fields.Date(string = 'Date', default = fields.Datetime.today, tracking = True)
+    issue_date = fields.Date(string = 'Date',
+                             default = fields.Datetime.today,
+                             tracking = True)
     partner_id = fields.Many2one('res.partner',
                                  string = 'Partner')
     payment_term_id = fields.Many2one('account.payment.term',
@@ -209,7 +217,7 @@ class farm_operations(models.Model):
     user_id = fields.Many2one('res.users',
                               string = "Operation Man",
                               required = True)
-    farm_operations_oline_ids = fields.One2many('farm.operations.oline',
+    operation_order_line_ids = fields.One2many('farm.operations.oline',
                                                 'operations_id',
                                                 string = "order lines")
     notes = fields.Html('Terms and Conditions')
@@ -251,7 +259,6 @@ class farm_operations_oline(models.Model):
             rec.price_subtotal = rec.price_unit * rec.qty
 
     def _prepare_farm_account_move_line(self, move=False):
-        print('hi......code to prepare 2')
         self.ensure_one()
         aml_currency = move and move.currency_id or self.currency_id
         date = move and move.date or fields.Date.today()

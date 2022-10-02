@@ -46,7 +46,7 @@ class farm_equipments(models.Model):
                                        compute = '_compute_total_orders',
                                        currency_field = 'currency_id',
                                        store = True)
-    farm_operations_oline_ids = fields.One2many('farm.operations.oline',
+    operation_order_line_ids = fields.One2many('farm.operations.oline',
                                                 'equipments_id',
                                                 string = "order lines")
 
