@@ -60,119 +60,41 @@ class farm_operations(models.Model):
         }
 
     def button_farm_create_vendor_bill(self):
-        print('hi......code to create vendor bill')
-        """
-        Create the invoice associated to the Operation Order.
-        """
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
-        # 1) Prepare invoice vals
-        invoice_vals_list = []
-        sequence = 10
-        for order in self:
-            if order.state != 'purchase':
-                continue
+        print('hi .. let us do it')
 
-            order = order.with_company(order.company_id)
-            # pending_section = None
-            # Invoice values.
-            """
-                    Prepare the dict of values to create the new bill for an operation order.
-                    """
-            self.ensure_one()
-            # vendor bill context
-            move_type = self._context.get('default_move_type', 'in_invoice')
-            journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
-            if not journal:
-                raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (
-                    self.company_id.name, self.company_id.id))
+        self.ensure_one()
+        move_type = self._context.get('default_move_type', 'in_invoice')
+        journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
+        if not journal:
+            raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (
+            self.company_id.name, self.company_id.id))
 
-            partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
-            partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
-                ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
-            invoice_vals = {
-                'ref': self.name or '',
-                'move_type': move_type,
-                'narration': self.notes,
-                'currency_id': self.currency_id.id,
-                'invoice_user_id': self.user_id and self.user_id.id or self.env.user.id,
-                'partner_id': partner_invoice_id,
-                # 'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id.get_fiscal_position(partner_invoice_id)).id,
-                # 'payment_reference': self.partner_ref or '',
-                'partner_bank_id': partner_bank_id.id,
-                'invoice_origin': self.name,
-                'invoice_payment_term_id': self.payment_term_id.id,
-                'invoice_line_ids': [],
-                'company_id': self.company_id.id,
-            }
-
-            print('we here ...invoice_vals', invoice_vals)
-            # Invoice line values (keep only necessary sections).
-            for line in order.operation_order_line_ids:
-                pending_section = line
-                if not float_is_zero(line.qty, precision_digits = precision):
-                    if pending_section:
-                        line_vals = pending_section._prepare_farm_account_move_line()
-                        line_vals.update({'sequence': sequence})
-                        invoice_vals['invoice_line_ids'].append((0, 0, line_vals))
-                        sequence += 1
-                        pending_section = None
-                    line_vals = line._prepare_farm_account_move_line()
-                    line_vals.update({'sequence': sequence})
-                    invoice_vals['invoice_line_ids'].append((0, 0, line_vals))
-                    sequence += 1
-            print('hi......code to prepare 2', line_vals)
-            invoice_vals_list.append(invoice_vals)
-
-        if not invoice_vals_list:
-            raise UserError(
-                _('There is no invoiceable line. If a product has a control policy based on received quantity, please make sure that a quantity has been received.'))
-
-        # 3) Create invoices.
-        moves = self.env['account.move']
-        AccountMove = self.env['account.move'].with_context(default_move_type = 'in_invoice')
-        for vals in invoice_vals_list:
-            moves |= AccountMove.with_company(vals['company_id']).create(vals)
-
-        # 4) Some moves might actually be refunds: convert them if the total amount is negative
-        # We do this after the moves have been created since we need taxes, etc. to know if the total
-        # is actually negative or not
-        moves.filtered(
-            lambda m: m.currency_id.round(m.amount_total) < 0).action_switch_invoice_into_refund_credit_note()
-
-        print('result of moves', moves)
-        # return self.action_view_invoice(moves)
-        return
-
-    def action_view_vendor_bill(self, invoices=False):
-        """This function returns an action that display existing vendor bills of
-        given operation order ids. When only one found, show the vendor bill
-        immediately.
-        """
-        print('hi......code to view')
-        if not invoices:
-            # Invoice_ids may be filtered depending on the user. To ensure we get all
-            # invoices related to the operation order, we read them in sudo to fill the
-            # cache.
-            self.sudo()._read(['invoice_ids'])
-            invoices = self.invoice_ids
-            print('we here ...invoices', invoices)
-
-        result = self.env['ir.actions.act_window']._for_xml_id('account.action_move_in_invoice_type')
-        # choose the view_mode accordingly
-        if len(invoices) > 1:
-            result['domain'] = [('id', 'in', invoices.ids)]
-        elif len(invoices) == 1:
-            res = self.env.ref('account.view_move_form', False)
-            form_view = [(res and res.id or False, 'form')]
-            if 'views' in result:
-                result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
-            else:
-                result['views'] = form_view
-            result['res_id'] = invoices.id
-        else:
-            result = {'type': 'ir.actions.act_window_close'}
-
-        return result
+        partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
+        partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
+            ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
+        invoice_vals = {
+            'ref': self.name or '',
+            'move_type': move_type,
+            'narration': self.notes,
+            'currency_id': self.currency_id.id,
+            'invoice_user_id': self.user_id and self.user_id.id or self.env.user.id,
+            'partner_id': partner_invoice_id,
+            # 'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id.get_fiscal_position(partner_invoice_id)).id,
+            'payment_reference': self.name or '',
+            'partner_bank_id': partner_bank_id.id,
+            'invoice_origin': self.name,
+            'invoice_payment_term_id': self.payment_term_id.id,
+            'invoice_line_ids': [(0, 0, {
+                'sequence': self.operation_order_line_ids.sequence,
+                'product_id': self.operation_order_line_ids.product_id.id,
+                'product_uom_id': self.operation_order_line_ids.product_uom.id,
+                'quantity': self.operation_order_line_ids.qty,
+            })],
+            'company_id': self.company_id.id,
+        }
+        print('try...', invoice_vals)
+        bill = self.env['account.move'].create(invoice_vals)
+        return bill
 
     name = fields.Char(string = 'Operation Ref',
                        index = True,
@@ -201,6 +123,7 @@ class farm_operations(models.Model):
                              default = fields.Datetime.today,
                              tracking = True)
     partner_id = fields.Many2one('res.partner',
+                                 required = True,
                                  string = 'Partner')
     payment_term_id = fields.Many2one('account.payment.term',
                                       'Payment Terms',
