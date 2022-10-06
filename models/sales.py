@@ -7,18 +7,15 @@ class farm_sales(models.Model):
     _description = 'Handel all sales order'
     _order = 'issue_date'
 
+    # -------------------------------------------------------------------------
+    # COMPUTE METHODS
+    # -------------------------------------------------------------------------
     @api.depends('farm_sales_oline_ids')
     def _compute_sales_order_cost(self):
         for rec in self:
             sline = sum(self.env['farm.sales.oline'].search([('sales_id', '=', rec.id)]).mapped('price_subtotal'))
             rec.s_order_cost = sline
         return rec.s_order_cost
-
-    @api.model
-    def create(self, vals):
-        if not vals.get('name') or vals['name'] == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('farm.sales') or _('New')
-        return super(farm_sales, self).create(vals)
 
     def _compute_customer_invoice_count(self):
         for rec in self:
@@ -32,11 +29,19 @@ class farm_sales(models.Model):
             rec.customer_invoice_total = total
         return rec.customer_invoice_total
 
+    # -------------------------------------------------------------------------
+    # Create METHODS
+    # -------------------------------------------------------------------------
+    @api.model
+    def create(self, vals):
+        if not vals.get('name') or vals['name'] == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('farm.sales') or _('New')
+        return super(farm_sales, self).create(vals)
+
     def action_customer_invoice(self):
-        print('hi... action_customer_invoice')
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Vendor Bills',
+            'name': 'Customer Invoices',
             'res_model': 'account.move',
             'domain': [('invoice_origin', '=', self.name)],
             'view_mode': 'tree',

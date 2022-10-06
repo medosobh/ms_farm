@@ -27,7 +27,7 @@
                 'account',
                 'uom',
                 'product',
-                'sale',
+                'sale_management',
                 'purchase',
                 'stock',
                 ],
