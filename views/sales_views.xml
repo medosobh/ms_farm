@@ -6,7 +6,8 @@
         <field name="arch" type="xml">
             <form string="sales">
                 <header>
-                    <button name="button_farm_customer_invoice" string="Create Customer Invoice" type="object" class="oe_highlight"
+                    <button name="button_farm_customer_invoice" string="Create Customer Invoice" type="object"
+                            class="oe_highlight"
                             help="Create Customer Invoice" states="order"/>
                     <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
                 </header>
@@ -27,9 +28,9 @@
                                 icon="fa-dollar">
                             <div class="o_stat_info">
                                 <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
+                                       groups="base.group_multi_currency"/>
                                 <field name="customer_invoice_total" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
+                                       options="{'currency_field': 'currency_id'}"/>
                                 <span class="o_stat_text">Invoices</span>
                             </div>
                         </button>
@@ -69,6 +70,21 @@
                                     <field name="note"/>
                                     <field name="price_subtotal" sum="Total Cost"/>
                                 </tree>
+                                <form>
+                                    <group>
+                                        <field name="sequence" widget="handle" invisible="1"/>
+                                        <field name="product_id" widget="selection"/>
+                                        <field name="name" widget="section_and_note_text"/>
+                                        <field name="categ_id" widget="selection" invisible="1"/>
+                                        <field name="price_unit" widget="monetary"/>
+                                        <field name="company_id" widget="selection" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="product_uom"/>
+                                        <field name="qty"/>
+                                        <field name="note"/>
+                                        <field name="price_subtotal" sum="Total Cost"/>
+                                    </group>
+                                </form>
                             </field>
                         </page>
                     </notebook>
@@ -141,14 +157,14 @@
     </record>
 
     <record id="farm_sales_view_graph" model="ir.ui.view">
-         <field name="name">farm.sales.graph</field>
-         <field name="model">farm.sales</field>
-         <field name="arch" type="xml">
-             <graph string="Sales Analysis" type="line" sample="1">
-                 <field name="issue_date" interval="day"/>
-                 <field name="s_order_cost" type="measure"/>
-             </graph>
-         </field>
+        <field name="name">farm.sales.graph</field>
+        <field name="model">farm.sales</field>
+        <field name="arch" type="xml">
+            <graph string="Sales Analysis" type="line" sample="1">
+                <field name="issue_date" interval="day"/>
+                <field name="s_order_cost" type="measure"/>
+            </graph>
+        </field>
     </record>
 
     <record id="farm_sales_view_search" model="ir.ui.view">

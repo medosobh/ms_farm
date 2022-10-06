@@ -92,17 +92,13 @@ class farm_operations(models.Model):
             })],
             'company_id': self.company_id.id,
         }
-        # bill = self.env['account.move'].create(invoice_vals)
-        return {
-            'type': 'ir.actions.act_window',
-            # 'name': 'Vendor Bills',
-            'res_model': 'account.move',
-            # 'res.id': bill.id,
-            'view_mode': 'form',
-            'view_id': self.env.ref('account.view_move_form').id,
-            'domain': [('move_type', '=', 'in_invoice')],
-            'target': 'new'
-        }
+        bill = self.env['account.move'].create(invoice_vals)
+        result = self.env['ir.actions.act_window']._for_xml_id('account.action_move_in_invoice_type')
+        res = self.env.ref('account.view_move_form', False)
+        form_view = [(res and res.id or False, 'form')]
+        result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
+        result['res_id'] = bill.id
+        return result
 
     name = fields.Char(string = 'Operation Ref',
                        index = True,
