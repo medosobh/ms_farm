@@ -35,6 +35,10 @@ class farm_projects(models.Model):
         for rec in self:
             rec.state = 'on_hold'
 
+    # -------------------------------------------------------------------------
+    # COMPUTE METHODS
+    # -------------------------------------------------------------------------
+
     def _compute_operations_count(self):
         for rec in self:
             operations_count = self.env['farm.operations'].search_count([('projects_id', '=', rec.id)])
@@ -82,6 +86,10 @@ class farm_projects(models.Model):
                 self.env['farm.produce'].search([('projects_id', '=', rec.id)]).mapped('p_order_cost'))
             rec.plan_output_amount = sal_line
         return rec.plan_output_amount
+
+    # -------------------------------------------------------------------------
+    # Call Views METHODS
+    # -------------------------------------------------------------------------
 
     def action_open_operation_orders_timeframe(self):
         return {

@@ -54,14 +54,13 @@ class farm_operations(models.Model):
             'name': 'Vendor Bills',
             'res_model': 'account.move',
             'domain': [('invoice_origin', '=', self.name)],
-            'view_mode': 'tree',
+            'view_mode': 'tree,form',
             'context': {},
-            'target': 'new'
+            'target': 'current'
         }
 
     def button_farm_create_vendor_bill(self):
-        print('hi .. let us do it')
-
+        # create vendor bill in background and open popup form view.
         self.ensure_one()
         move_type = self._context.get('default_move_type', 'in_invoice')
         journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
@@ -73,6 +72,7 @@ class farm_operations(models.Model):
         partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
             ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
         invoice_vals = {
+            'state': 'draft',
             'ref': self.name or '',
             'move_type': move_type,
             'narration': self.notes,
@@ -92,9 +92,17 @@ class farm_operations(models.Model):
             })],
             'company_id': self.company_id.id,
         }
-        print('try...', invoice_vals)
-        bill = self.env['account.move'].create(invoice_vals)
-        return bill
+        # bill = self.env['account.move'].create(invoice_vals)
+        return {
+            'type': 'ir.actions.act_window',
+            # 'name': 'Vendor Bills',
+            'res_model': 'account.move',
+            # 'res.id': bill.id,
+            'view_mode': 'form',
+            'view_id': self.env.ref('account.view_move_form').id,
+            'domain': [('move_type', '=', 'in_invoice')],
+            'target': 'new'
+        }
 
     name = fields.Char(string = 'Operation Ref',
                        index = True,
