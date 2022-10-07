@@ -60,7 +60,7 @@ class farm_operations(models.Model):
         }
 
     def button_farm_create_vendor_bill(self):
-        # create vendor bill in background and open popup form view.
+        # create vendor bill in background and open form view.
         self.ensure_one()
         move_type = self._context.get('default_move_type', 'in_invoice')
         journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
@@ -89,6 +89,7 @@ class farm_operations(models.Model):
                 'product_id': self.operation_order_line_ids.product_id.id,
                 'product_uom_id': self.operation_order_line_ids.product_uom.id,
                 'quantity': self.operation_order_line_ids.qty,
+                'price_unit': self.operation_order_line_ids.price_unit,
             })],
             'company_id': self.company_id.id,
         }
@@ -184,40 +185,6 @@ class farm_operations_oline(models.Model):
     def _compute_subtotal(self):
         for rec in self:
             rec.price_subtotal = rec.price_unit * rec.qty
-
-    def _prepare_farm_account_move_line(self, move=False):
-        self.ensure_one()
-        aml_currency = move and move.currency_id or self.currency_id
-        date = move and move.date or fields.Date.today()
-        res = {
-            # 'display_type': self.display_type,
-            'sequence': self.sequence,
-            'name': '%s: %s' % (self.operations_id.name, self.name),
-            'product_id': self.product_id.id,
-            'product_uom_id': self.product_uom.id,
-            'quantity': self.qty,
-            'price_unit': self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date,
-                                                    round = False),
-            # 'tax_ids': [(6, 0, self.taxes_id.ids)],
-            # 'analytic_account_id': self.account_analytic_id.id,
-            # 'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
-            'purchase_line_id': self.id,
-        }
-        if not move:
-            return res
-
-        if self.currency_id == move.company_id.currency_id:
-            currency = False
-        else:
-            currency = move.currency_id
-
-        res.update({
-            'move_id': move.id,
-            'currency_id': currency and currency.id or False,
-            'date_maturity': move.invoice_date_due,
-            'partner_id': move.partner_id.id,
-        })
-        return res
 
     sequence = fields.Integer(string = 'Sequence', default = 10)
     product_id = fields.Many2one('product.product',

@@ -7,7 +7,7 @@ class farm_produce(models.Model):
     _description = 'Handel all produce order'
     _order = 'issue_date'
 
-    @api.depends('farm_produce_oline_ids')
+    @api.depends('produce_order_line_ids')
     def _compute_produce_order_cost(self):
         self.p_order_cost = 0
         for rec in self:
@@ -54,7 +54,7 @@ class farm_produce(models.Model):
     user_id = fields.Many2one('res.users',
                               string = "Operation Man",
                               required = True)
-    farm_produce_oline_ids = fields.One2many('farm.produce.oline',
+    produce_order_line_ids = fields.One2many('farm.produce.oline',
                                              'produce_id',
                                              string = "produce order lines")
     company_id = fields.Many2one('res.company',

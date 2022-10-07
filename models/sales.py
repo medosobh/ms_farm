@@ -1,4 +1,5 @@
 from odoo import fields, models, api, _
+from odoo.exceptions import AccessError, UserError, ValidationError
 
 
 class farm_sales(models.Model):
@@ -10,7 +11,7 @@ class farm_sales(models.Model):
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
     # -------------------------------------------------------------------------
-    @api.depends('farm_sales_oline_ids')
+    @api.depends('sales_order_line_ids')
     def _compute_sales_order_cost(self):
         for rec in self:
             sline = sum(self.env['farm.sales.oline'].search([('sales_id', '=', rec.id)]).mapped('price_subtotal'))
@@ -50,7 +51,47 @@ class farm_sales(models.Model):
         }
 
     def button_farm_customer_invoice(self):
-        print('hi')
+        # create Customer Invoice in background and open form view.
+        self.ensure_one()
+        move_type = self._context.get('default_move_type', 'out_invoice')
+        journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
+        if not journal:
+            raise UserError(_('Please define an accounting sales journal for the company %s (%s).', self.company_id.name,
+                  self.company_id.id))
+
+        partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
+        partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
+            ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
+        invoice_vals = {
+            'state': 'draft',
+            'ref': self.name or '',
+            'move_type': move_type,
+            'narration': self.notes,
+            'currency_id': self.currency_id.id,
+            'invoice_user_id': self.user_id and self.user_id.id or self.env.user.id,
+            'partner_id': partner_invoice_id,
+            # 'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id.get_fiscal_position(partner_invoice_id)).id,
+            'payment_reference': self.name or '',
+            'partner_bank_id': partner_bank_id.id,
+            'journal_id': journal.id,  # company comes from the journal
+            'invoice_origin': self.name,
+            'invoice_payment_term_id': self.payment_term_id.id,
+            'invoice_line_ids': [(0, 0, {
+                'sequence': self.sales_order_line_ids.sequence,
+                'product_id': self.sales_order_line_ids.product_id.id,
+                'product_uom_id': self.sales_order_line_ids.product_uom.id,
+                'quantity': self.sales_order_line_ids.qty,
+                'price_unit': self.sales_order_line_ids.price_unit,
+            })],
+            'company_id': self.company_id.id,
+        }
+        invoice = self.env['account.move'].create(invoice_vals)
+        result = self.env['ir.actions.act_window']._for_xml_id('account.action_move_out_invoice_type')
+        res = self.env.ref('account.view_move_form', False)
+        form_view = [(res and res.id or False, 'form')]
+        result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
+        result['res_id'] = invoice.id
+        return result
 
     name = fields.Char(string = 'Sales Ref',
                        index = True,
@@ -72,6 +113,7 @@ class farm_sales(models.Model):
                              store = True)
     issue_date = fields.Date(string = 'Date', default = fields.Datetime.today, tracking = True)
     partner_id = fields.Many2one('res.partner',
+                                 required = True,
                                  string = 'Partner')
     stock_warehouse = fields.Many2one('stock.warehouse',
                                       string = 'Warehouse')
@@ -82,7 +124,7 @@ class farm_sales(models.Model):
     user_id = fields.Many2one('res.users',
                               string = "Operation Man",
                               required = True)
-    farm_sales_oline_ids = fields.One2many('farm.sales.oline',
+    sales_order_line_ids = fields.One2many('farm.sales.oline',
                                            'sales_id',
                                            string = "order lines")
     company_id = fields.Many2one('res.company',

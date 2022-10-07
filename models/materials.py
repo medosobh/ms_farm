@@ -7,7 +7,7 @@ class farm_materials(models.Model):
     _description = 'Handel all operation orders'
     _order = 'issue_date'
 
-    @api.depends('farm_materials_oline_ids')
+    @api.depends('materials_order_line_ids')
     def _compute_material_order_cost(self):
         for rec in self:
             oline = sum(
@@ -22,7 +22,7 @@ class farm_materials(models.Model):
         return super(farm_materials, self).create(vals)
 
     def button_farm_stock_out(self):
-        print('hi')
+    # send stock move out .. consumption.
 
     name = fields.Char(string = 'Material Ref',
                        index = True,
@@ -57,7 +57,7 @@ class farm_materials(models.Model):
     user_id = fields.Many2one('res.users',
                               string = "Material Man",
                               required = True)
-    farm_materials_oline_ids = fields.One2many('farm.materials.oline',
+    materials_order_line_ids = fields.One2many('farm.materials.oline',
                                                'materials_id',
                                                string = "order lines")
     company_id = fields.Many2one('res.company',

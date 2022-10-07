@@ -36,7 +36,7 @@
 
                     <notebook>
                         <page name="farm_material_olines" string="Order Lines">
-                            <field name="farm_materials_oline_ids">
+                            <field name="materials_order_line_ids">
                                 <tree>
                                     <field name="sequence" widget="handle"/>
                                     <field name="product_id" widget="selection"/>
