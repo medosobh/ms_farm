@@ -107,9 +107,8 @@ class farm_operations(models.Model):
                        tracking = True,
                        default = lambda x: _('New'))
     state = fields.Selection([
-        ('purchase', 'Invoicing'),
-        ('done', 'Locked')
-    ],
+        ('order', 'Invoicing'),
+        ('lock', 'Locked')],
         string = 'Status',
         readonly = False,
         index = True,

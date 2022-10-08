@@ -99,8 +99,8 @@ class farm_sales(models.Model):
                        tracking = True,
                        default = lambda x: _('New'))
     state = fields.Selection([
-        ('order', 'Order'),
-        ('document', 'Document')],
+        ('order', 'Invoicing'),
+        ('lock', 'Locked')],
         string = 'State', readonly = False, copy = False,
         tracking = True, default = 'order')
     category_id = fields.Many2one('product.category',
@@ -115,6 +115,9 @@ class farm_sales(models.Model):
     partner_id = fields.Many2one('res.partner',
                                  required = True,
                                  string = 'Partner')
+    payment_term_id = fields.Many2one('account.payment.term',
+                                      'Payment Terms',
+                                      domain = "['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
     stock_warehouse = fields.Many2one('stock.warehouse',
                                       string = 'Warehouse')
     s_order_cost = fields.Float(string = 'Order Cost',
@@ -127,6 +130,7 @@ class farm_sales(models.Model):
     sales_order_line_ids = fields.One2many('farm.sales.oline',
                                            'sales_id',
                                            string = "order lines")
+    notes = fields.Html('Terms and Conditions')
     company_id = fields.Many2one('res.company',
                                  string = 'Company',
                                  change_default = True,

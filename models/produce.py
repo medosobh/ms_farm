@@ -30,8 +30,8 @@ class farm_produce(models.Model):
                        tracking = True,
                        default = lambda x: _('New'))
     state = fields.Selection([
-        ('order', 'Order'),
-        ('document', 'Document')],
+        ('order', 'Invoicing'),
+        ('lock', 'Locked')],
         string = 'State', readonly = False, copy = False,
         tracking = True, default = 'order')
     category_id = fields.Many2one('product.category',

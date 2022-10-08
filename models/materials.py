@@ -1,4 +1,5 @@
 from odoo import fields, models, api, _
+from odoo.exceptions import UserError
 
 
 class farm_materials(models.Model):
@@ -7,6 +8,9 @@ class farm_materials(models.Model):
     _description = 'Handel all operation orders'
     _order = 'issue_date'
 
+    # -------------------------------------------------------------------------
+    # COMPUTE METHODS
+    # -------------------------------------------------------------------------
     @api.depends('materials_order_line_ids')
     def _compute_material_order_cost(self):
         for rec in self:
@@ -15,6 +19,21 @@ class farm_materials(models.Model):
             rec.m_order_cost = oline
         return rec.m_order_cost
 
+    def _compute_stock_move_count(self):
+        for rec in self:
+            vendor_bill_count = self.env['account.move'].search_count([('invoice_origin', '=', rec.name)])
+            rec.vendor_bill_count = vendor_bill_count
+
+    def _compute_stock_move_total(self):
+        for rec in self:
+            total = sum(
+                self.env['account.move'].search([('invoice_origin', '=', rec.name)]).mapped('amount_total_signed'))
+            rec.vendor_bill_total = total
+        return rec.vendor_bill_total
+
+    # -------------------------------------------------------------------------
+    # Create METHODS
+    # -------------------------------------------------------------------------
     @api.model
     def create(self, vals):
         if not vals.get('name') or vals['name'] == _('New'):
@@ -22,7 +41,29 @@ class farm_materials(models.Model):
         return super(farm_materials, self).create(vals)
 
     def button_farm_stock_out(self):
-    # send stock move out .. consumption.
+        # create vendor bill in background and open form view.
+        self.ensure_one()
+        move_type = self._context.get('default_move_type', 'direct')
+        warehouse = self.stock_warehouse
+        picking_type_id = self.env
+        location_id = self.env
+        if not warehouse:
+            raise UserError(_('Please define a warehouse for the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+
+        picking_vals = {
+            'origin': self.name,
+            'move_type': move_type,
+            'picking_type_id': picking_type_id,
+            'location_id': location_id,
+        }
+        stock_move = self.env['stock.picking'].create(picking_vals)
+        result = self.env['ir.actions.act_window']._for_xml_id('stock.view_picking_form')
+        res = self.env.ref('stock.view_picking_form', False)
+        form_view = [(res and res.id or False, 'form')]
+        result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
+        result['res_id'] = stock_move.id
+        return result
 
     name = fields.Char(string = 'Material Ref',
                        index = True,
@@ -31,7 +72,7 @@ class farm_materials(models.Model):
                        default = lambda x: _('New'))
     state = fields.Selection([
         ('order', 'Order'),
-        ('document', 'Document')],
+        ('lock', 'Locked')],
         string = 'State', readonly = False, copy = False,
         tracking = True, default = 'order')
     category_id = fields.Many2one('product.category',
@@ -46,7 +87,13 @@ class farm_materials(models.Model):
     partner_id = fields.Many2one('res.partner',
                                  string = 'Partner')
     stock_warehouse = fields.Many2one('stock.warehouse',
+                                      required = True,
                                       string = 'Warehouse')
+    location_id = fields.Many2one('stock.location',
+                                  "Source Location",
+                                  default=lambda self: self.env['stock.picking.type'].browse(self._context.get('default_picking_type_id')).default_location_src_id,
+                                  check_company=True,
+                                  required=True)
     m_order_cost = fields.Monetary(string = 'Order Cost',
                                    compute = '_compute_material_order_cost',
                                    currency_field = 'currency_id',

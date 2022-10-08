@@ -31,6 +31,7 @@
                             <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
                             <field name="partner_id" widget="selection"/>
                             <field name="stock_warehouse" widget="selection"/>
+                            <field name="location_id" widget="selection"/>
                         </group>
                     </group>
 
@@ -51,6 +52,22 @@
                                     <field name="price_subtotal" sum="Total Cost"/>
                                     <field name="equipments_id" widget="selection"/>
                                 </tree>
+                                <form>
+                                    <group>
+                                        <field name="sequence" widget="handle" invisible="1"/>
+                                        <field name="product_id" widget="selection"/>
+                                        <field name="name" widget="section_and_note_text"/>
+                                        <field name="categ_id" widget="selection" invisible="1"/>
+                                        <field name="price_unit" widget="monetary"/>
+                                        <field name="company_id" widget="selection" invisible="1"/>
+                                        <field name="currency_id" widget="selection" invisible="1"/>
+                                        <field name="product_uom"/>
+                                        <field name="qty"/>
+                                        <field name="note"/>
+                                        <field name="price_subtotal" sum="Total Cost"/>
+                                        <field name="equipments_id" widget="selection"/>
+                                    </group>
+                                </form>
                             </field>
                         </page>
                     </notebook>
@@ -129,14 +146,14 @@
     </record>
 
     <record id="farm_materials_view_graph" model="ir.ui.view">
-         <field name="name">farm.materials.graph</field>
-         <field name="model">farm.materials</field>
-         <field name="arch" type="xml">
-             <graph string="Material Analysis" type="line" sample="1">
-                 <field name="issue_date" interval="day"/>
-                 <field name="m_order_cost" type="measure"/>
-             </graph>
-         </field>
+        <field name="name">farm.materials.graph</field>
+        <field name="model">farm.materials</field>
+        <field name="arch" type="xml">
+            <graph string="Material Analysis" type="line" sample="1">
+                <field name="issue_date" interval="day"/>
+                <field name="m_order_cost" type="measure"/>
+            </graph>
+        </field>
     </record>
 
     <record id="farm_materials_view_search" model="ir.ui.view">
