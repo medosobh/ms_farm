@@ -54,6 +54,8 @@ class farm_produce(models.Model):
     user_id = fields.Many2one('res.users',
                               string = "Operation Man",
                               required = True)
+    notes = fields.Html(
+        'Terms and Conditions')
     produce_order_line_ids = fields.One2many('farm.produce.oline',
                                              'produce_id',
                                              string = "produce order lines")

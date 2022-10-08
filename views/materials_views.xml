@@ -15,6 +15,26 @@
                     <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_materials_box">
+                        <button name="action_stock_picking_list" type="object"
+                                class="oe_stat_button"
+                                icon="fa-truck">
+                            <div class="o_stat_info">
+                                <field name="materials_consumption_count"/>
+                                <span class="o_stat_text">Moves Count</span>
+                            </div>
+                        </button>
+                        <button name="action_stock_picking_list" type="object"
+                                class="oe_stat_button"
+                                icon="fa-dollar">
+                            <div class="o_stat_info">
+                                <field name="currency_id" invisible="1" groups="base.group_multi_currency"/>
+                                <field name="materials_consumption_total" widget='monetary'
+                                       options="{'currency_field': 'currency_id'}"/>
+                                <span class="o_stat_text">Moves Cost</span>
+                            </div>
+                        </button>
+                    </div>
                     <group>
                         <group string="Basic">
                             <field name="name"/>
@@ -33,6 +53,9 @@
                             <field name="stock_warehouse" widget="selection"/>
                             <field name="location_id" widget="selection"/>
                             <field name="picking_type_id" widget="selection"/>
+                        </group>
+                        <group>
+                            <field name="notes"/>
                         </group>
                     </group>
 

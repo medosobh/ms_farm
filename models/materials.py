@@ -21,15 +21,15 @@ class farm_materials(models.Model):
 
     def _compute_stock_move_count(self):
         for rec in self:
-            vendor_bill_count = self.env['account.move'].search_count([('invoice_origin', '=', rec.name)])
-            rec.vendor_bill_count = vendor_bill_count
+            materials_consumption_count = self.env['account.move'].search_count([('invoice_origin', '=', rec.name)])
+            rec.materials_consumption_count = materials_consumption_count
 
     def _compute_stock_move_total(self):
         for rec in self:
             total = sum(
                 self.env['account.move'].search([('invoice_origin', '=', rec.name)]).mapped('amount_total_signed'))
-            rec.vendor_bill_total = total
-        return rec.vendor_bill_total
+            rec.materials_consumption_total = total
+        return rec.materials_consumption_total
 
     # -------------------------------------------------------------------------
     # Create METHODS
@@ -45,28 +45,61 @@ class farm_materials(models.Model):
         self.ensure_one()
         move_type = self._context.get('default_move_type', 'direct')
         warehouse = self.stock_warehouse
-        picking_type_id = self.env.ref('ms_farm.farm_stock_consumption').id
-        # location_id = self.env['stock.picking.type'].search([('name', '=', 'Farm Stock Consumption')]).id
-        print('picking_type_id = ', picking_type_id)
 
         if not warehouse:
             raise UserError(_('Please define a warehouse for the company %s (%s).') % (
                 self.company_id.name, self.company_id.id))
 
-        # picking_vals = {
-        #     'origin': self.name,
-        #     'move_type': move_type,
-        #     'picking_type_id': picking_type_id,
-        #     'location_id': location_id,
-        # }
-        # stock_move = self.env['stock.picking'].create(picking_vals)
-        # result = self.env['ir.actions.act_window']._for_xml_id('stock.view_picking_form')
-        # res = self.env.ref('stock.view_picking_form', False)
-        # form_view = [(res and res.id or False, 'form')]
-        # result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
-        # result['res_id'] = stock_move.id
-        # return result
-        return
+        picking_vals = {
+            'picking_type_id': self.picking_type_id.id,
+            'partner_id': self.partner_id.id,
+            'origin': self.name,
+            # 'location_dest_id': self.partner_id.property_stock_customer.id,
+            'location_id': self.location_id.id,
+            'move_type': 'direct',
+            'note': self.notes,
+            'scheduled_date': self.issue_date,
+            'date_deadline': self.issue_date,
+            'user_id': self.user_id.id,
+            'state': 'draft',
+            'move_ids_without_package':[(0, 0, {
+                'name': self.materials_order_line_ids.name or '',
+                'product_id': self.materials_order_line_ids.product_id.id,
+                'product_uom': self.materials_order_line_ids.product_uom.id,
+                'location_id': self.picking_type_id.default_location_src_id.id,
+                'location_dest_id': self.picking_type_id.default_location_dest_id.id,
+                # 'picking_id': picking.id,
+                'state': 'draft',
+                'company_id': self.company_id.id,
+                'price_unit': self.materials_order_line_ids.price_unit,
+                'picking_type_id': self.picking_type_id.id,
+                'route_ids': 1 and [
+                    (6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
+                'warehouse_id': self.picking_type_id.warehouse_id.id,
+            })]
+        }
+        print('here...',picking_vals)
+        picking = self.env['stock.picking'].create(picking_vals)
+        result = self.env.ref('stock.view_picking_form')
+        res = self.env.ref('stock.view_picking_form', False)
+        form_view = [(res and res.id or False, 'form')]
+        result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
+        result['res_id'] = picking.id
+        return result
+        # return
+
+
+    def action_stock_picking_list(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Stock Moves',
+            'res_model': 'stock.picking',
+            'domain': [('invoice_origin', '=', self.name)],
+            'view_mode': 'tree,form',
+            'context': {},
+            'target': 'current'
+        }
+        print('hi')
 
     name = fields.Char(
         string = 'Material Ref',
@@ -128,6 +161,8 @@ class farm_materials(models.Model):
         'res.users',
         string = "Material Man",
         required = True)
+    notes = fields.Html(
+        'Terms and Conditions')
     materials_order_line_ids = fields.One2many(
         'farm.materials.oline',
         'materials_id',
@@ -146,6 +181,12 @@ class farm_materials(models.Model):
         readonly = True,
         ondelete = 'set null',
         help = "Used to display the currency when tracking monetary values")
+    materials_consumption_count = fields.Integer(
+        string = "Material Moves Count",
+        compute = '_compute_stock_move_count')
+    materials_consumption_total = fields.Integer(
+        string = "Material Moves Total",
+        compute = '_compute_stock_move_total')
 
 
 class farm_materials_oline(models.Model):

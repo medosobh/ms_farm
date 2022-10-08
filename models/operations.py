@@ -143,10 +143,12 @@ class farm_operations(models.Model):
     user_id = fields.Many2one('res.users',
                               string = "Operation Man",
                               required = True)
+    notes = fields.Html(
+        'Terms and Conditions')
     operation_order_line_ids = fields.One2many('farm.operations.oline',
                                                 'operations_id',
                                                 string = "order lines")
-    notes = fields.Html('Terms and Conditions')
+
     company_id = fields.Many2one('res.company',
                                  string = 'Company',
                                  change_default = True,

@@ -127,6 +127,8 @@ class farm_sales(models.Model):
     user_id = fields.Many2one('res.users',
                               string = "Operation Man",
                               required = True)
+    notes = fields.Html(
+        'Terms and Conditions')
     sales_order_line_ids = fields.One2many('farm.sales.oline',
                                            'sales_id',
                                            string = "order lines")

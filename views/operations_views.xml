@@ -60,6 +60,9 @@
                             <field name="payment_term_id" widget="selection"/>
                             <field name="stock_warehouse" widget="selection"/>
                         </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
                     </group>
 
                     <notebook>
