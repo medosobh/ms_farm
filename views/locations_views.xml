@@ -5,7 +5,6 @@
             <field name="arch" type="xml">
                 <form class="oe_form_configuration">
                     <sheet>
-
                         <div class="oe_title">
                             <label for="name" string="Location"/>
                             <h1>

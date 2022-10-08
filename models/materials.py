@@ -45,80 +45,107 @@ class farm_materials(models.Model):
         self.ensure_one()
         move_type = self._context.get('default_move_type', 'direct')
         warehouse = self.stock_warehouse
-        picking_type_id = self.env
-        location_id = self.env
+        picking_type_id = self.env.ref('ms_farm.farm_stock_consumption').id
+        # location_id = self.env['stock.picking.type'].search([('name', '=', 'Farm Stock Consumption')]).id
+        print('picking_type_id = ', picking_type_id)
+
         if not warehouse:
             raise UserError(_('Please define a warehouse for the company %s (%s).') % (
                 self.company_id.name, self.company_id.id))
 
-        picking_vals = {
-            'origin': self.name,
-            'move_type': move_type,
-            'picking_type_id': picking_type_id,
-            'location_id': location_id,
-        }
-        stock_move = self.env['stock.picking'].create(picking_vals)
-        result = self.env['ir.actions.act_window']._for_xml_id('stock.view_picking_form')
-        res = self.env.ref('stock.view_picking_form', False)
-        form_view = [(res and res.id or False, 'form')]
-        result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
-        result['res_id'] = stock_move.id
-        return result
+        # picking_vals = {
+        #     'origin': self.name,
+        #     'move_type': move_type,
+        #     'picking_type_id': picking_type_id,
+        #     'location_id': location_id,
+        # }
+        # stock_move = self.env['stock.picking'].create(picking_vals)
+        # result = self.env['ir.actions.act_window']._for_xml_id('stock.view_picking_form')
+        # res = self.env.ref('stock.view_picking_form', False)
+        # form_view = [(res and res.id or False, 'form')]
+        # result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
+        # result['res_id'] = stock_move.id
+        # return result
+        return
 
-    name = fields.Char(string = 'Material Ref',
-                       index = True,
-                       readonly = True,
-                       tracking = True,
-                       default = lambda x: _('New'))
+    name = fields.Char(
+        string = 'Material Ref',
+        index = True,
+        readonly = True,
+        tracking = True,
+        default = lambda x: _('New'))
     state = fields.Selection([
         ('order', 'Order'),
         ('lock', 'Locked')],
         string = 'State', readonly = False, copy = False,
         tracking = True, default = 'order')
-    category_id = fields.Many2one('product.category',
-                                  required = True,
-                                  string = 'Product Category')
-    projects_id = fields.Many2one('farm.projects',
-                                  required = True,
-                                  tracking = True)
-    short_name = fields.Char(related = 'projects_id.short_name',
-                             store = True)
-    issue_date = fields.Date(string = 'Date', default = fields.Datetime.today, tracking = True)
-    partner_id = fields.Many2one('res.partner',
-                                 string = 'Partner')
-    stock_warehouse = fields.Many2one('stock.warehouse',
-                                      required = True,
-                                      string = 'Warehouse')
-    location_id = fields.Many2one('stock.location',
-                                  "Source Location",
-                                  default=lambda self: self.env['stock.picking.type'].browse(self._context.get('default_picking_type_id')).default_location_src_id,
-                                  check_company=True,
-                                  required=True)
-    m_order_cost = fields.Monetary(string = 'Order Cost',
-                                   compute = '_compute_material_order_cost',
-                                   currency_field = 'currency_id',
-                                   store = True)
-    active = fields.Boolean(string = "Active",
-                            default = True,
-                            tracking = True)
-    user_id = fields.Many2one('res.users',
-                              string = "Material Man",
-                              required = True)
-    materials_order_line_ids = fields.One2many('farm.materials.oline',
-                                               'materials_id',
-                                               string = "order lines")
-    company_id = fields.Many2one('res.company',
-                                 string = 'Company',
-                                 change_default = True,
-                                 default = lambda self: self.env.company,
-                                 required = False,
-                                 readonly = True)
-    currency_id = fields.Many2one('res.currency',
-                                  'Currency',
-                                  related = 'company_id.currency_id',
-                                  readonly = True,
-                                  ondelete = 'set null',
-                                  help = "Used to display the currency when tracking monetary values")
+    category_id = fields.Many2one(
+        'product.category',
+        required = True,
+        string = 'Product Category')
+    projects_id = fields.Many2one(
+        'farm.projects',
+        required = True,
+        tracking = True)
+    short_name = fields.Char(
+        related = 'projects_id.short_name',
+        store = True)
+    issue_date = fields.Date(
+        string = 'Date',
+        default = fields.Datetime.today,
+        tracking = True)
+    partner_id = fields.Many2one(
+        'res.partner',
+        string = 'Partner')
+    stock_warehouse = fields.Many2one(
+        'stock.warehouse',
+        required = True,
+        string = 'Warehouse')
+    location_id = fields.Many2one(
+        'stock.location',
+        "Source Location",
+        default = lambda self: self.env['stock.picking.type'].browse(
+            self._context.get('default_picking_type_id')).default_location_src_id,
+        domain = [('usage', '=', 'internal')],
+        check_company = True,
+        required = True)
+    picking_type_id = fields.Many2one(
+        'stock.picking.type',
+        "Stock Picking Type",
+        default = lambda self: self.env['stock.picking.type'].search([
+            ('name', '=', 'Farm Stock Consumption')]).id,
+        required = True)
+    m_order_cost = fields.Monetary(
+        string = 'Order Cost',
+        compute = '_compute_material_order_cost',
+        currency_field = 'currency_id',
+        store = True)
+    active = fields.Boolean(
+        string = "Active",
+        default = True,
+        tracking = True)
+    user_id = fields.Many2one(
+        'res.users',
+        string = "Material Man",
+        required = True)
+    materials_order_line_ids = fields.One2many(
+        'farm.materials.oline',
+        'materials_id',
+        string = "order lines")
+    company_id = fields.Many2one(
+        'res.company',
+        string = 'Company',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False,
+        readonly = True)
+    currency_id = fields.Many2one(
+        'res.currency',
+        'Currency',
+        related = 'company_id.currency_id',
+        readonly = True,
+        ondelete = 'set null',
+        help = "Used to display the currency when tracking monetary values")
 
 
 class farm_materials_oline(models.Model):
@@ -130,35 +157,45 @@ class farm_materials_oline(models.Model):
         for rec in self:
             rec.price_subtotal = rec.price_unit * rec.qty
 
-    name = fields.Text(string = 'Description', required = True)
-    sequence = fields.Integer(string = 'Sequence', default = 10)
-    product_id = fields.Many2one('product.product',
-                                 required = True,
-                                 domain = "[('categ_id', '=', categ_id)]")
-    categ_id = fields.Many2one(related = 'materials_id.category_id',
-                               string = 'Category')
-    price_unit = fields.Float(related = 'product_id.standard_price',
-                              string = 'Price')
+    name = fields.Text(
+        string = 'Description',
+        required = True)
+    sequence = fields.Integer(
+        string = 'Sequence',
+        default = 10)
+    product_id = fields.Many2one(
+        'product.product',
+        required = True,
+        domain = "[('categ_id', '=', categ_id)]")
+    categ_id = fields.Many2one(
+        related = 'materials_id.category_id',
+        string = 'Category')
+    price_unit = fields.Float(
+        related = 'product_id.standard_price',
+        string = 'Price')
     product_uom = fields.Many2one(
         'uom.uom',
         'Unit of Measure',
         related = 'product_id.uom_id',
         domain = "[('category_id', '=', product_uom_category_id)]")
-    qty = fields.Float('Quantity')
-    company_id = fields.Many2one('res.company',
-                                 string = 'Company',
-                                 related = 'materials_id.company_id',
-                                 change_default = True,
-                                 default = lambda self: self.env.company,
-                                 required = False,
-                                 readonly = True)
+    qty = fields.Float(
+        'Quantity')
+    company_id = fields.Many2one(
+        'res.company',
+        string = 'Company',
+        related = 'materials_id.company_id',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False,
+        readonly = True)
     currency_id = fields.Many2one(
         'res.currency',
         string = 'Currency',
         related = 'materials_id.currency_id',
         readonly = True,
         help = "Used to display the currency when tracking monetary values")
-    note = fields.Char('Short Note')
+    note = fields.Char(
+        'Short Note')
     price_subtotal = fields.Monetary(
         string = 'Subtotal',
         compute = '_compute_subtotal',
