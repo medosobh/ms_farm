@@ -112,19 +112,19 @@ class farm_projects(models.Model):
             rec.material_budget = ope_line
         return rec.material_budget
 
+    def _compute_plan_produce_amount(self):
+        for rec in self:
+            sal_line = sum(
+                self.env['farm.produce'].search([('projects_id', '=', rec.id)]).mapped('p_order_cost'))
+            rec.plan_produce_amount = sal_line
+        return rec.plan_produce_amount
+
     def _compute_plan_sales_amount(self):
         for rec in self:
             sal_line = sum(
                 self.env['farm.sales'].search([('projects_id', '=', rec.id)]).mapped('s_order_cost'))
             rec.plan_sales_amount = sal_line
         return rec.plan_sales_amount
-
-    def _compute_plan_output_amount(self):
-        for rec in self:
-            sal_line = sum(
-                self.env['farm.produce'].search([('projects_id', '=', rec.id)]).mapped('p_order_cost'))
-            rec.plan_output_amount = sal_line
-        return rec.plan_output_amount
 
     def _compute_operations_actual(self):
         for rec in self:
@@ -140,13 +140,15 @@ class farm_projects(models.Model):
                     ('projects_id', '=', rec.id)]).mapped('materials_consumption_account_total'))
             rec.materials_actual = ope_line
         return rec.materials_actual
-    def _compute_produce_actual(self):
+
+    def _compute_actual_produce_amount(self):
         for rec in self:
             ope_line = sum(
                 self.env['farm.produce'].search([
                     ('projects_id', '=', rec.id)]).mapped('produce_consumption_account_total'))
-            rec.actual_output_amount = ope_line
-        return rec.actual_output_amount
+            rec.actual_produce_amount = ope_line
+        return rec.actual_produce_amount
+
     def _compute_actual_sales_amount(self):
         for rec in self:
             sal_line = sum(
@@ -348,14 +350,14 @@ class farm_projects(models.Model):
         currency_field = 'currency_id',
         required = False,
         tracking = True)
-    plan_output_qty = fields.Float(
+    plan_produce_qty = fields.Float(
         string = 'Produce Plan Qty',
         required = False,
         readonly = True,
         tracking = True)
-    plan_output_amount = fields.Monetary(
+    plan_produce_amount = fields.Monetary(
         string = 'Produce Budget',
-        compute = '_compute_plan_output_amount',
+        compute = '_compute_plan_produce_amount',
         currency_field = 'currency_id',
         required = False,
         readonly = True,
@@ -384,13 +386,13 @@ class farm_projects(models.Model):
         currency_field = 'currency_id',
         required = False,
         tracking = True)
-    actual_output_qty = fields.Float(
+    actual_produce_qty = fields.Float(
         string = 'Produce Act. Qty',
         required = False,
         readonly = True)
-    actual_output_amount = fields.Monetary(
+    actual_produce_amount = fields.Monetary(
         string = 'Produce Act. Amount',
-        compute = '_compute_produce_actual',
+        compute = '_compute_actual_produce_amount',
         currency_field = 'currency_id',
         required = False,
         readonly = True)

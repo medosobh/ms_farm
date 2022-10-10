@@ -51,115 +51,6 @@
                             </div>
                         </button>
                     </div>
-                    <div class="oe_button_box" name="button_box1">
-                        <button name="action_open_operation_orders" type="object"
-                                class="oe_stat_button"
-                                icon="fa-dollar"
-                                help="also create more orders">
-                            <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
-                                    <field name="operation_budget" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                </span>
-                                <span class="o_stat_text">Operation Orders</span>
-                            </div>
-                        </button>
-                        <button name="action_open_material_orders" type="object"
-                                class="oe_stat_button"
-                                icon="fa-dollar"
-                                help="also create more orders">
-                            <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
-                                    <field name="material_budget" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                </span>
-                                <span class="o_stat_text">Material Orders</span>
-                            </div>
-                        </button>
-                        <button name="action_open_produce_orders" type="object"
-                                class="oe_stat_button"
-                                icon="fa-dollar">
-                            <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
-                                    <field name="plan_output_amount" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                </span>
-                                <span class="o_stat_text">Produce Orders</span>
-                            </div>
-                        </button>
-                        <button name="action_open_sales_orders" type="object"
-                                class="oe_stat_button"
-                                icon="fa-dollar">
-                            <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
-                                    <field name="plan_sales_amount" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                </span>
-                                <span class="o_stat_text">Sales Orders</span>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="oe_button_box" name="button_box2">
-                        <button name="action_open_operation_orders" type="object"
-                                class="oe_stat_button"
-                                icon="fa-dollar">
-                            <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
-                                    <field name="operations_actual" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                </span>
-                                <span class="o_stat_text">Actual Operations</span>
-                            </div>
-                        </button>
-                        <button name="action_open_operation_orders" type="object"
-                                class="oe_stat_button"
-                                icon="fa-dollar">
-                            <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
-                                    <field name="materials_actual" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                </span>
-                                <span class="o_stat_text">Actual Materials</span>
-                            </div>
-                        </button>
-                        <button name="action_open_operation_orders" type="object"
-                                class="oe_stat_button"
-                                icon="fa-dollar">
-                            <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
-                                    <field name="actual_output_amount" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                </span>
-                                <span class="o_stat_text">Actual Produce</span>
-                            </div>
-                        </button>
-                        <button name="action_open_operation_orders" type="object"
-                                class="oe_stat_button"
-                                icon="fa-dollar">
-                            <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <field name="currency_id" invisible="1" groups="base.group_multi_currency"/>
-                                    <field name="actual_sales_amount" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                </span>
-                                <span class="o_stat_text">Actual Sales</span>
-                            </div>
-                        </button>
-                    </div>
                     <div class="oe_title">
                         <h3>
                             <field name="priority" widget="priority" class="mr-3"/>
@@ -394,8 +285,8 @@
                                 <group name="Budget">
                                     <field name="operation_budget" widget='monetary'/>
                                     <field name="material_budget" widget='monetary'/>
-                                    <field name="plan_output_amount" widget='monetary'/>
-                                    <field name="plan_output_qty"/>
+                                    <field name="plan_produce_amount" widget='monetary'/>
+                                    <field name="plan_produce_qty"/>
                                     <field name="plan_sales_amount" widget='monetary'/>
                                     <field name="plan_sales_qty"/>
                                     <field name="p_days" string="Plan Days"/>
@@ -403,8 +294,8 @@
                                 <group name="Actual">
                                     <field name="operations_actual" widget='monetary'/>
                                     <field name="materials_actual" widget='monetary'/>
-                                    <field name="actual_output_amount" widget='monetary'/>
-                                    <field name="actual_output_qty"/>
+                                    <field name="actual_produce_amount" widget='monetary'/>
+                                    <field name="actual_produce_qty"/>
                                     <field name="actual_sales_amount" widget='monetary'/>
                                     <field name="actual_sales_qty"/>
                                     <field name="g_days" string="Days Gone"/>
