@@ -49,7 +49,7 @@ class farm_materials(models.Model):
             sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
             am_total = sum(
                     self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
-            fam_total = fam_total + am_total
+            fam_total = fam_total - am_total
 
         mo_rec.materials_consumption_account_total = fam_total
         return mo_rec.materials_consumption_account_total
@@ -64,7 +64,6 @@ class farm_materials(models.Model):
         return super(farm_materials, self).create(vals)
 
     def button_farm_stock_out(self):
-        # create vendor bill in background and open form view.
         self.ensure_one()
         move_type = self._context.get('default_move_type', 'direct')
         warehouse = self.stock_warehouse
@@ -169,8 +168,7 @@ class farm_materials(models.Model):
     picking_type_id = fields.Many2one(
         'stock.picking.type',
         "Stock Picking Type",
-        default = lambda self: self.env['stock.picking.type'].search([
-            ('name', '=', 'Farm Stock Consumption')]).id,
+        default = lambda self: self.env.enf('ms_farm.farm_stock_consumption').id,
         required = True)
     m_order_cost = fields.Monetary(
         string = 'Order Cost',

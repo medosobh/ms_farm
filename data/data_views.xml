@@ -168,6 +168,12 @@
             <field name="usage">production</field>
             <field name="company_id"></field>
         </record>
+        <record model="stock.location" id="farm_location_produce">
+            <field name="name">Produce</field>
+            <field name="location_id" eval="ref('stock.stock_location_locations_virtual')"/>
+            <field name="usage">production</field>
+            <field name="company_id"></field>
+        </record>
     </data>
 
     <!-- stock picking type -->
@@ -177,6 +183,8 @@
             <field name="sequence_id" eval="ref('farm_stock_produce_seq')"/>
             <field name="sequence_code">F/PRO/%(year)s/</field>
             <field name="code">incoming</field>
+            <field name="default_location_src_id" eval="ref('farm_location_produce')"/>
+            <field name="default_location_dest_id" eval="ref('stock.stock_location_stock')"/>
             <field name="show_reserved" eval="True"/>
             <field name="default_location_dest_id" eval="ref('stock.stock_location_stock')"/>
         </record>

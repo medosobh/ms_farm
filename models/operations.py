@@ -1,6 +1,5 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
-from odoo.tools.float_utils import float_is_zero
 
 
 class farm_operations(models.Model):
@@ -32,6 +31,7 @@ class farm_operations(models.Model):
             rec.vendor_bill_total = total
         return rec.vendor_bill_total
 
+    # compute invoice without link to views
     @api.depends('operation_order_line_ids.invoice_lines.move_id')
     def _compute_invoice(self):
         for order in self:
@@ -66,10 +66,11 @@ class farm_operations(models.Model):
         journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
         if not journal:
             raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (
-            self.company_id.name, self.company_id.id))
+                self.company_id.name, self.company_id.id))
 
         partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
-        partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
+        partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
+            ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
         invoice_vals = {
             'state': 'draft',
             'ref': self.name or '',
@@ -100,81 +101,98 @@ class farm_operations(models.Model):
         result['res_id'] = bill.id
         return result
 
-    name = fields.Char(string = 'Operation Ref',
-                       index = True,
-                       readonly = True,
-                       tracking = True,
-                       default = lambda x: _('New'))
+    name = fields.Char(
+        string = 'Operation Ref',
+        index = True,
+        readonly = True,
+        tracking = True,
+        default = lambda x: _('New'))
     state = fields.Selection([
         ('order', 'Invoicing'),
         ('lock', 'Locked')],
+        default = 'order',
         string = 'Status',
         readonly = False,
         index = True,
         copy = False,
-        tracking = True,
-        default = 'purchase')
-    category_id = fields.Many2one('product.category',
-                                  required = True,
-                                  string = 'Product Category')
-    projects_id = fields.Many2one('farm.projects',
-                                  required = True,
-                                  tracking = True)
-    short_name = fields.Char(related = 'projects_id.short_name',
-                             store = True)
-    issue_date = fields.Date(string = 'Date',
-                             default = fields.Datetime.today,
-                             tracking = True)
-    partner_id = fields.Many2one('res.partner',
-                                 required = True,
-                                 string = 'Partner')
-    payment_term_id = fields.Many2one('account.payment.term',
-                                      'Payment Terms',
-                                      domain = "['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
-    stock_warehouse = fields.Many2one('stock.warehouse',
-                                      string = 'Warehouse')
-    o_order_cost = fields.Monetary(string = 'Order Cost',
-                                   compute = '_compute_operation_order_cost',
-                                   currency_field = 'currency_id',
-                                   store = True)
-    active = fields.Boolean(string = "Active",
-                            default = True,
-                            tracking = True)
-    user_id = fields.Many2one('res.users',
-                              string = "Operation Man",
-                              required = True)
+        tracking = True)
+    category_id = fields.Many2one(
+        'product.category',
+        required = True,
+        string = 'Product Category')
+    projects_id = fields.Many2one(
+        'farm.projects',
+        required = True,
+        tracking = True)
+    short_name = fields.Char(
+        related = 'projects_id.short_name',
+        store = True)
+    issue_date = fields.Date(
+        string = 'Date',
+        default = fields.Datetime.today,
+        tracking = True)
+    partner_id = fields.Many2one(
+        'res.partner',
+        required = True,
+        string = 'Partner')
+    payment_term_id = fields.Many2one(
+        'account.payment.term',
+        'Payment Terms',
+        domain = "['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+    stock_warehouse = fields.Many2one(
+        'stock.warehouse',
+        string = 'Warehouse')
+    o_order_cost = fields.Monetary(
+        string = 'Order Cost',
+        compute = '_compute_operation_order_cost',
+        currency_field = 'currency_id',
+        store = True)
+    active = fields.Boolean(
+        string = "Active",
+        default = True,
+        tracking = True)
+    user_id = fields.Many2one(
+        'res.users',
+        string = "Operation Man",
+        required = True)
     notes = fields.Html(
         'Terms and Conditions')
-    operation_order_line_ids = fields.One2many('farm.operations.oline',
-                                                'operations_id',
-                                                string = "order lines")
-
-    company_id = fields.Many2one('res.company',
-                                 string = 'Company',
-                                 change_default = True,
-                                 default = lambda self: self.env.company,
-                                 required = False,
-                                 readonly = True)
-    currency_id = fields.Many2one('res.currency',
-                                  'Currency',
-                                  related = 'company_id.currency_id',
-                                  readonly = True,
-                                  ondelete = 'set null',
-                                  help = "Used to display the currency when tracking monetary values")
-    vendor_bill_count = fields.Integer(string = "Vendor Bill Count",
-                                       compute = '_compute_vendor_bill_count')
-    vendor_bill_total = fields.Integer(string = "Vendor Bill Total",
-                                       compute = '_compute_vendor_bill_total')
-    invoice_count = fields.Integer(compute = "_compute_invoice",
-                                   string = 'Bill Count',
-                                   copy = False,
-                                   default = 0,
-                                   store = True)
-    invoice_ids = fields.Many2many('account.move',
-                                   compute = "_compute_invoice",
-                                   string = 'Bills',
-                                   copy = False,
-                                   store = True)
+    operation_order_line_ids = fields.One2many(
+        'farm.operations.oline',
+        'operations_id',
+        string = "order lines")
+    company_id = fields.Many2one(
+        'res.company',
+        string = 'Company',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False,
+        readonly = True)
+    currency_id = fields.Many2one(
+        'res.currency',
+        'Currency',
+        related = 'company_id.currency_id',
+        readonly = True,
+        ondelete = 'set null',
+        help = "Used to display the currency when tracking monetary values")
+    vendor_bill_count = fields.Integer(
+        string = "Vendor Bill Count",
+        compute = '_compute_vendor_bill_count')
+    vendor_bill_total = fields.Integer(
+        string = "Vendor Bill Total",
+        compute = '_compute_vendor_bill_total')
+    invoice_count = fields.Integer(
+        compute = "_compute_invoice",
+        string = 'Bill Count',
+        copy = False,
+        default = 0,
+        store = True)
+    invoice_ids = fields.Many2many(
+        'account.move',
+        compute = "_compute_invoice",
+        string = 'Bills',
+        copy = False,
+        store = True)
 
 
 class farm_operations_oline(models.Model):

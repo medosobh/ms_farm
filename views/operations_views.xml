@@ -6,17 +6,15 @@
         <field name="arch" type="xml">
             <form string="operations">
                 <header>
-                    <button name="button_farm_create_vendor_bill"
+                    <button name="button_farm_create_vendor_bill" type="object"
                             string="Create Vendor Bill"
-                            type="object"
                             class="oe_highlight"
                             help="Create service vendor bill"
-                            states="purchase"/>
-                    <field name="state"
+                            states="order"/>
+                    <field name="state" type="object"
                            widget="statusbar"
                            options="{'clickable': '0'}"
-                           clickable="True"
-                           type="object"/>
+                           clickable="True"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_operation_box">
@@ -25,7 +23,6 @@
                                 icon="fa-dollar">
                             <div class="o_stat_info">
                                 <field name="vendor_bill_count"/>
-                                <field name='invoice_ids' invisible="1"/>
                                 <span class="o_stat_text">Bill Count</span>
                             </div>
                         </button>

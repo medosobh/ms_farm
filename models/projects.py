@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta
+
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
@@ -38,6 +39,44 @@ class farm_projects(models.Model):
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
     # -------------------------------------------------------------------------
+    @api.depends('start_date', 'p_days', 'close_date')
+    def _get_end_date(self):
+        for r in self:
+            if not (r.start_date and r.p_days):
+                r.end_date = r.start_date
+                continue
+            # Add duration to start_date, but: Monday + 5 days = Saturday, so
+            # subtract one second to get on Friday instead
+            p_days = timedelta(days = r.p_days, seconds = 0)
+            r.end_date = r.start_date + p_days
+
+    def _set_end_date(self):
+        for r in self:
+            if not (r.start_date and r.end_date):
+                continue
+
+            # Compute the difference between dates, but: Friday - Monday = 4 days,
+            # so add one day to get 5 days instead
+            r.p_days = (r.end_date - r.start_date).days + 1
+
+    def _get_time_gone(self):
+        for r in self:
+            if not r.start_date:
+                continue
+
+            # Compute the difference between dates, but: Friday - Monday = 4 days,
+            # so add one day to get 5 days instead
+            r.g_days = (date.today() - r.start_date).days + 1
+
+    def _get_actual_gone(self):
+        for r in self:
+            if not (r.start_date and r.close_date):
+                r.close_date = r.end_date
+                continue
+
+            # Compute the difference between dates, but: Friday - Monday = 4 days,
+            # so add one day to get 5 days instead
+            r.a_days = (r.close_date - r.start_date).days + 1
 
     def _compute_operations_count(self):
         for rec in self:
@@ -86,6 +125,34 @@ class farm_projects(models.Model):
                 self.env['farm.produce'].search([('projects_id', '=', rec.id)]).mapped('p_order_cost'))
             rec.plan_output_amount = sal_line
         return rec.plan_output_amount
+
+    def _compute_operations_actual(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.operations'].search([('projects_id', '=', rec.id)]).mapped('vendor_bill_total'))
+            rec.operations_actual = ope_line
+        return rec.operations_actual
+
+    def _compute_materials_actual(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.materials'].search([
+                    ('projects_id', '=', rec.id)]).mapped('materials_consumption_account_total'))
+            rec.materials_actual = ope_line
+        return rec.materials_actual
+    def _compute_produce_actual(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.produce'].search([
+                    ('projects_id', '=', rec.id)]).mapped('produce_consumption_account_total'))
+            rec.actual_output_amount = ope_line
+        return rec.actual_output_amount
+    def _compute_actual_sales_amount(self):
+        for rec in self:
+            sal_line = sum(
+                self.env['farm.sales'].search([('projects_id', '=', rec.id)]).mapped('customer_invoice_total'))
+            rec.actual_sales_amount = sal_line
+        return rec.actual_sales_amount
 
     # -------------------------------------------------------------------------
     # Call Views METHODS
@@ -189,45 +256,6 @@ class farm_projects(models.Model):
             vals['name'] = self.env['ir.sequence'].next_by_code('farm.projects') or _('New')
         return super(farm_projects, self).create(vals)
 
-    @api.depends('start_date', 'p_days', 'close_date')
-    def _get_end_date(self):
-        for r in self:
-            if not (r.start_date and r.p_days):
-                r.end_date = r.start_date
-                continue
-            # Add duration to start_date, but: Monday + 5 days = Saturday, so
-            # subtract one second to get on Friday instead
-            p_days = timedelta(days = r.p_days, seconds = 0)
-            r.end_date = r.start_date + p_days
-
-    def _set_end_date(self):
-        for r in self:
-            if not (r.start_date and r.end_date):
-                continue
-
-            # Compute the difference between dates, but: Friday - Monday = 4 days,
-            # so add one day to get 5 days instead
-            r.p_days = (r.end_date - r.start_date).days + 1
-
-    def _get_time_gone(self):
-        for r in self:
-            if not r.start_date:
-                continue
-
-            # Compute the difference between dates, but: Friday - Monday = 4 days,
-            # so add one day to get 5 days instead
-            r.g_days = (date.today() - r.start_date).days + 1
-
-    def _get_actual_gone(self):
-        for r in self:
-            if not (r.start_date and r.close_date):
-                r.close_date = r.end_date
-                continue
-
-            # Compute the difference between dates, but: Friday - Monday = 4 days,
-            # so add one day to get 5 days instead
-            r.a_days = (r.close_date - r.start_date).days + 1
-
     priority = fields.Selection([
         ('0', 'Normal'),
         ('1', 'Low'),
@@ -238,149 +266,201 @@ class farm_projects(models.Model):
         ('draft', 'Draft'),
         ('in_operation', 'In Operation'),
         ('finish', 'Finished'),
-        ('on_hold', 'On hold')
-    ], string = 'Status', readonly = False, required = True,
-        tracking = True, copy = False, default = 'draft',
+        ('on_hold', 'On hold')],
+        string = 'Status',
+        readonly = False,
+        required = True,
+        tracking = True,
+        copy = False,
+        default = 'draft',
         help = "Set whether the project process is open or closed to start or end operations.")
-    name = fields.Char(string = 'Project Ref',
-                       index = True,
-                       tracking = True,
-                       default = lambda x: _('New'))
-    short_name = fields.Char(string = 'Project Name',
-                             required = True,
-                             help = "Enter a short name",
-                             translate = True,
-                             tracking = True)
-    project_type = fields.Selection([('create', 'Create an Pio/Asset'), ('operate', 'Operate an Pio/Asset')],
-                                    required = True,
-                                    string = 'Type',
-                                    default = 'operate',
-                                    tracking = True)
-    project_group_id = fields.Many2one(comodel_name = 'farm.project.group',
-                                       string = 'Project Group')
-    user_id = fields.Many2one('res.users', string = "Project Man",
-                                     required = True)
-    description = fields.Text(string = 'Description',
-                              required = False,
-                              help = "Enter the description",
-                              translate = True,
-                              tracking = True)
-    active = fields.Boolean(string = "Active",
-                            default = True,
-                            tracking = True)
-    start_date = fields.Date(string = 'Start Date',
-                             required = True,
-                             tracking = True,
-                             default = datetime.today(),
-                             inverse = '_get_time_gone')
-    end_date = fields.Date(string = 'End Date',
-                           required = True,
-                           store = True,
-                           compute = '_get_end_date',
-                           inverse = '_set_end_date')
-    close_date = fields.Date(string = 'Close Date',
-                             tracking = True,
-                             store = True,
-                             inverse = '_get_actual_gone')
-    p_days = fields.Integer(string = 'Plan Days',
-                            store = True)
-    g_days = fields.Integer(string = 'Days Gone',
-                            store = True,
-                            readonly = True)
-    a_days = fields.Integer(string = 'Actual Days',
-                            store = True,
-                            readonly = True,
-                            compute = '_get_time_gone')
-    operation_budget = fields.Monetary(string = 'Total Exp Order',
-                                       compute = '_compute_operation_budget',
-                                       currency_field = 'currency_id',
-                                       required = False,
-                                       tracking = True)
-    material_budget = fields.Monetary(string = 'Total Exp Order',
-                                      compute = '_compute_material_budget',
-                                      currency_field = 'currency_id',
-                                      required = False,
-                                      tracking = True)
-    plan_sales_qty = fields.Float(string = 'Sales Plan Qty',
-                                  required = False,
-                                  readonly = True,
-                                  tracking = True)
-    plan_sales_amount = fields.Monetary(string = 'Sales Plan Amount',
-                                        compute = '_compute_plan_sales_amount',
-                                        currency_field = 'currency_id',
-                                        readonly = True,
-                                        required = False,
-                                        tracking = True)
-    plan_output_qty = fields.Float(string = 'Output Plan Qty',
-                                   required = False,
-                                   readonly = True,
-                                   tracking = True)
-    plan_output_amount = fields.Monetary(string = 'Output Plan Amount',
-                                         compute = '_compute_plan_output_amount',
-                                         currency_field = 'currency_id',
-                                         required = False,
-                                         readonly = True,
-                                         tracking = True)
-    spent_actual = fields.Monetary(string = 'Total Act. Expense',
-                                   currency_field = 'currency_id',
-                                   required = False,
-                                   tracking = True)
-    actual_sales_qty = fields.Float(string = 'Sales Act. Qty',
-                                    required = False,
-                                    readonly = True)
-    actual_sales_amount = fields.Monetary(string = 'Sales Act. Amount',
-                                          currency_field = 'currency_id',
-                                          required = False,
-                                          readonly = True)
-    actual_output_qty = fields.Float(string = 'Output Act. Qty',
-                                     required = False,
-                                     readonly = True)
-    actual_output_amount = fields.Monetary(string = 'Output Act. Amount',
-                                           currency_field = 'currency_id',
-                                           required = False,
-                                           readonly = True)
-    operations_id = fields.Many2one('farm.operations',
-                                    string = "Project Operations")
-    operations_ids = fields.One2many('farm.operations',
-                                     'projects_id',
-                                     string = "Operation Orders")
-    operations_count = fields.Integer(string = "Operation Count",
-                                      compute = '_compute_operations_count')
-    materials_id = fields.Many2one('farm.materials',
-                                   string = "Project Materials")
-    materials_ids = fields.One2many('farm.materials',
-                                    'projects_id',
-                                    string = "Material Orders")
-    materials_count = fields.Integer(string = "Material Count",
-                                     compute = '_compute_materials_count')
-    produce_id = fields.Many2one('farm.produce',
-                                 string = "Produce Orders")
-    produce_ids = fields.One2many('farm.produce',
-                                  'projects_id',
-                                  string = "Produce Orders")
-    produce_count = fields.Integer(string = "Produce Count",
-                                   compute = '_compute_produce_count')
-    sales_id = fields.Many2one('farm.sales',
-                               string = "Sales Orders")
-    sales_ids = fields.One2many('farm.sales',
-                                'projects_id',
-                                string = "Sales Orders")
-    sales_count = fields.Integer(string = "Sales Count",
-                                 compute = '_compute_sales_count')
-    company_id = fields.Many2one('res.company',
-                                 string = 'Company',
-                                 change_default = True,
-                                 default = lambda self: self.env.company,
-                                 required = False)
-    currency_id = fields.Many2one('res.currency',
-                                  'Currency',
-                                  related = 'company_id.currency_id',
-                                  readonly = True,
-                                  ondelete = 'set null',
-                                  help = "Used to display the currency when tracking monetary values")
-    locations_ids = fields.Many2many('farm.locations',
-                                     'projects_id',
-                                     string = "Produce Orders")
+    name = fields.Char(
+        string = 'Project Ref',
+        index = True,
+        tracking = True,
+        default = lambda x: _('New'))
+    short_name = fields.Char(
+        string = 'Project Name',
+        required = True,
+        help = "Enter a short name",
+        translate = True,
+        tracking = True)
+    project_type = fields.Selection(
+        [('create', 'Create an Pio/Asset'), ('operate', 'Operate an Pio/Asset')],
+        required = True,
+        string = 'Type',
+        default = 'operate',
+        tracking = True)
+    project_group_id = fields.Many2one(
+        comodel_name = 'farm.project.group',
+        string = 'Project Group')
+    user_id = fields.Many2one(
+        'res.users', string = "Project Man",
+        required = True)
+    description = fields.Text(
+        string = 'Description',
+        required = False,
+        help = "Enter the description",
+        translate = True,
+        tracking = True)
+    active = fields.Boolean(
+        string = "Active",
+        default = True,
+        tracking = True)
+    start_date = fields.Date(
+        string = 'Start Date',
+        required = True,
+        tracking = True,
+        default = datetime.today(),
+        inverse = '_get_time_gone')
+    end_date = fields.Date(
+        string = 'End Date',
+        required = True,
+        store = True,
+        compute = '_get_end_date',
+        inverse = '_set_end_date')
+    close_date = fields.Date(
+        string = 'Close Date',
+        tracking = True,
+        store = True,
+        inverse = '_get_actual_gone')
+    p_days = fields.Integer(
+        string = 'Plan Days',
+        store = True)
+    g_days = fields.Integer(
+        string = 'Days Gone',
+        store = True,
+        readonly = True)
+    a_days = fields.Integer(
+        string = 'Actual Days',
+        store = True,
+        readonly = True,
+        compute = '_get_time_gone')
+    operation_budget = fields.Monetary(
+        string = 'Operation Budget',
+        compute = '_compute_operation_budget',
+        currency_field = 'currency_id',
+        required = False,
+        tracking = True)
+    material_budget = fields.Monetary(
+        string = 'Material Budget',
+        compute = '_compute_material_budget',
+        currency_field = 'currency_id',
+        required = False,
+        tracking = True)
+    plan_output_qty = fields.Float(
+        string = 'Produce Plan Qty',
+        required = False,
+        readonly = True,
+        tracking = True)
+    plan_output_amount = fields.Monetary(
+        string = 'Produce Budget',
+        compute = '_compute_plan_output_amount',
+        currency_field = 'currency_id',
+        required = False,
+        readonly = True,
+        tracking = True)
+    plan_sales_qty = fields.Float(
+        string = 'Sales Plan Qty',
+        required = False,
+        readonly = True,
+        tracking = True)
+    plan_sales_amount = fields.Monetary(
+        string = 'Sales Budget',
+        compute = '_compute_plan_sales_amount',
+        currency_field = 'currency_id',
+        readonly = True,
+        required = False,
+        tracking = True)
+    operations_actual = fields.Monetary(
+        string = 'Operation Actual',
+        compute = '_compute_operations_actual',
+        currency_field = 'currency_id',
+        required = False,
+        tracking = True)
+    materials_actual = fields.Monetary(
+        string = 'Material Actual',
+        compute = '_compute_materials_actual',
+        currency_field = 'currency_id',
+        required = False,
+        tracking = True)
+    actual_output_qty = fields.Float(
+        string = 'Produce Act. Qty',
+        required = False,
+        readonly = True)
+    actual_output_amount = fields.Monetary(
+        string = 'Produce Act. Amount',
+        compute = '_compute_produce_actual',
+        currency_field = 'currency_id',
+        required = False,
+        readonly = True)
+    actual_sales_qty = fields.Float(
+        string = 'Sales Act. Qty',
+        required = False,
+        readonly = True)
+    actual_sales_amount = fields.Monetary(
+        string = 'Sales Act. Amount',
+        compute = '_compute_actual_sales_amount',
+        currency_field = 'currency_id',
+        required = False,
+        readonly = True)
+    operations_id = fields.Many2one(
+        'farm.operations',
+        string = "Project Operations")
+    operations_ids = fields.One2many(
+        'farm.operations',
+        'projects_id',
+        string = "Operation Orders")
+    operations_count = fields.Integer(
+        string = "Operation Count",
+        compute = '_compute_operations_count')
+    materials_id = fields.Many2one(
+        'farm.materials',
+        string = "Project Materials")
+    materials_ids = fields.One2many(
+        'farm.materials',
+        'projects_id',
+        string = "Material Orders")
+    materials_count = fields.Integer(
+        string = "Material Count",
+        compute = '_compute_materials_count')
+    produce_id = fields.Many2one(
+        'farm.produce',
+        string = "Produce Orders")
+    produce_ids = fields.One2many(
+        'farm.produce',
+        'projects_id',
+        string = "Produce Orders")
+    produce_count = fields.Integer(
+        string = "Produce Count",
+        compute = '_compute_produce_count')
+    sales_id = fields.Many2one(
+        'farm.sales',
+        string = "Sales Orders")
+    sales_ids = fields.One2many(
+        'farm.sales',
+        'projects_id',
+        string = "Sales Orders")
+    sales_count = fields.Integer(
+        string = "Sales Count",
+        compute = '_compute_sales_count')
+    company_id = fields.Many2one(
+        'res.company',
+        string = 'Company',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False)
+    currency_id = fields.Many2one(
+        'res.currency',
+        'Currency',
+        related = 'company_id.currency_id',
+        readonly = True,
+        ondelete = 'set null',
+        help = "Used to display the currency when tracking monetary values")
+    locations_ids = fields.Many2many(
+        'farm.locations',
+        'projects_id',
+        string = "Produce Orders")
 
 
 class farm_project_group(models.Model):

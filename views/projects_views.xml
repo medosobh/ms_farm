@@ -115,10 +115,10 @@
                                 <span class="o_stat_value">
                                     <field name="currency_id" invisible="1"
                                            groups="base.group_multi_currency"/>
-                                    <field name="operation_budget" widget='monetary'
+                                    <field name="operations_actual" widget='monetary'
                                            options="{'currency_field': 'currency_id'}"/>
                                 </span>
-                                <span class="o_stat_text">Expenses</span>
+                                <span class="o_stat_text">Actual Operations</span>
                             </div>
                         </button>
                         <button name="action_open_operation_orders" type="object"
@@ -128,10 +128,10 @@
                                 <span class="o_stat_value">
                                     <field name="currency_id" invisible="1"
                                            groups="base.group_multi_currency"/>
-                                    <field name="operation_budget" widget='monetary'
+                                    <field name="materials_actual" widget='monetary'
                                            options="{'currency_field': 'currency_id'}"/>
                                 </span>
-                                <span class="o_stat_text">Expenses</span>
+                                <span class="o_stat_text">Actual Materials</span>
                             </div>
                         </button>
                         <button name="action_open_operation_orders" type="object"
@@ -141,10 +141,10 @@
                                 <span class="o_stat_value">
                                     <field name="currency_id" invisible="1"
                                            groups="base.group_multi_currency"/>
-                                    <field name="operation_budget" widget='monetary'
+                                    <field name="actual_output_amount" widget='monetary'
                                            options="{'currency_field': 'currency_id'}"/>
                                 </span>
-                                <span class="o_stat_text">Invoice</span>
+                                <span class="o_stat_text">Actual Produce</span>
                             </div>
                         </button>
                         <button name="action_open_operation_orders" type="object"
@@ -153,10 +153,10 @@
                             <div class="o_form_field o_stat_info">
                                 <span class="o_stat_value">
                                     <field name="currency_id" invisible="1" groups="base.group_multi_currency"/>
-                                    <field name="operation_budget" widget='monetary'
+                                    <field name="actual_sales_amount" widget='monetary'
                                            options="{'currency_field': 'currency_id'}"/>
                                 </span>
-                                <span class="o_stat_text">Actual Produce</span>
+                                <span class="o_stat_text">Actual Sales</span>
                             </div>
                         </button>
                     </div>
@@ -391,22 +391,22 @@
                         </page>
                         <page string="Summary">
                             <group>
-                                <group>
-                                    <field name="plan_sales_amount" widget='monetary'/>
-                                    <field name="actual_sales_amount" widget='monetary'/>
-                                    <field name="plan_output_amount" widget='monetary'/>
-                                    <field name="actual_output_amount" widget='monetary'/>
+                                <group name="Budget">
                                     <field name="operation_budget" widget='monetary'/>
-                                    <field name="spent_actual" widget='monetary'/>
-                                </group>
-                                <group>
-                                    <field name="plan_sales_qty"/>
-                                    <field name="actual_sales_qty"/>
+                                    <field name="material_budget" widget='monetary'/>
+                                    <field name="plan_output_amount" widget='monetary'/>
                                     <field name="plan_output_qty"/>
-                                    <field name="actual_output_qty"/>
-                                </group>
-                                <group>
+                                    <field name="plan_sales_amount" widget='monetary'/>
+                                    <field name="plan_sales_qty"/>
                                     <field name="p_days" string="Plan Days"/>
+                                </group>
+                                <group name="Actual">
+                                    <field name="operations_actual" widget='monetary'/>
+                                    <field name="materials_actual" widget='monetary'/>
+                                    <field name="actual_output_amount" widget='monetary'/>
+                                    <field name="actual_output_qty"/>
+                                    <field name="actual_sales_amount" widget='monetary'/>
+                                    <field name="actual_sales_qty"/>
                                     <field name="g_days" string="Days Gone"/>
                                     <field name="a_days" String="Actual Days"/>
                                 </group>
