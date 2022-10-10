@@ -3,13 +3,6 @@
 
     <record model="res.config.settings" id="res_config_settings">
         <field name="group_uom" eval="1"/>
-    </record>
-    <function model="res.config.settings"
-              name="execute"
-              eval="[ref('res_config_settings')]">
-    </function>
-
-    <record model="res.config.settings" id="res_config_settings">
         <field name="group_stock_multi_locations" eval="1"/>
     </record>
     <function model="res.config.settings"

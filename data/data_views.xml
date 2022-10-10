@@ -160,6 +160,16 @@
         </record>
     </data>
 
+    <!-- stock location -->
+    <data noupdate="0">
+        <record model="stock.location" id="farm_location_consumption">
+            <field name="name">Consumption</field>
+            <field name="location_id" eval="ref('stock.stock_location_locations_virtual')"/>
+            <field name="usage">production</field>
+            <field name="company_id"></field>
+        </record>
+    </data>
+
     <!-- stock picking type -->
     <data noupdate="0">
         <record model="stock.picking.type" id="farm_stock_produce">
@@ -200,15 +210,4 @@
             <field name="default_location_src_id" eval="ref('stock.stock_location_stock')"/>
         </record>
     </data>
-
-    <!-- stock location -->
-    <data noupdate="0">
-        <record model="stock.location" id="farm_location_consumption">
-            <field name="name">Consumption</field>
-            <field name="location_id" eval="ref('stock.stock_location_locations_virtual')"/>
-            <field name="usage">production</field>
-            <field name="company_id"></field>
-        </record>
-    </data>
-
 </odoo>

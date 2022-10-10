@@ -21,7 +21,8 @@
     'version': '15.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base',
+    'depends': ['stock',
+                'base',
                 'mail',
                 'l10n_eg',
                 'account',
@@ -29,7 +30,6 @@
                 'product',
                 'sale_management',
                 'purchase',
-                'stock',
                 ],
 
     # always loaded
@@ -38,7 +38,7 @@
         'data/sequence_views.xml',
         'data/data_views.xml',
         'data/account_data_views.xml',
-        # 'data/settings_views.xml',
+        'data/settings_views.xml',
         'views/menu.xml',
         'views/project_group_views.xml',
         'views/operations_views.xml',
