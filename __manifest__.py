@@ -37,7 +37,6 @@
         'security/ir.model.access.csv',
         'data/sequence_views.xml',
         'data/data_views.xml',
-        'data/account_data_views.xml',
         'data/settings_views.xml',
         'views/menu.xml',
         'views/project_group_views.xml',

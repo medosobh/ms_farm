@@ -23,7 +23,7 @@
                                 icon="fa-dollar">
                             <div class="o_stat_info">
                                 <field name="vendor_bill_count"/>
-                                <span class="o_stat_text">Bill Count</span>
+                                <span class="o_stat_text"># Bill</span>
                             </div>
                         </button>
                         <button name="action_vendor_bill" type="object"
@@ -38,7 +38,6 @@
                             </div>
                         </button>
                     </div>
-
                     <group>
                         <group string="Basic">
                             <field name="name"/>

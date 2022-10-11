@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo noupdate="1">
-
+<odoo noupdate="0">
     <record model="res.config.settings" id="res_config_settings">
         <field name="group_uom" eval="1"/>
         <field name="group_stock_multi_locations" eval="1"/>
@@ -9,9 +8,7 @@
               name="execute"
               eval="[ref('res_config_settings')]">
     </function>
-
     <record id="base.user_admin" model="res.users">
         <field name="groups_id" eval="[(4, ref('account.group_account_user'))]"/>
     </record>
-
 </odoo>

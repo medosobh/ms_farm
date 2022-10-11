@@ -168,7 +168,7 @@ class farm_produce(models.Model):
     picking_type_id = fields.Many2one(
         'stock.picking.type',
         "Stock Picking Type",
-        default = lambda self: self.env.ref('ms_farm.farm_stock_produce').id,
+        default = lambda self: self.env.ref('ms_farm.farm_location_produce').id,
         required = True)
     p_order_cost = fields.Float(
         string = 'Order Cost',
