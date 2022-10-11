@@ -168,7 +168,7 @@ class farm_materials(models.Model):
     picking_type_id = fields.Many2one(
         'stock.picking.type',
         "Stock Picking Type",
-        default = lambda self: self.env.env('ms_farm.farm_location_fertilize').id,
+        default = lambda self: self.env.ref('ms_farm.farm_location_fertilize').id,
         required = True)
     m_order_cost = fields.Monetary(
         string = 'Order Cost',

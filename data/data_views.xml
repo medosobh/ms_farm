@@ -286,6 +286,47 @@
             <field name="usage">production</field>
             <field name="company_id"></field>
         </record>
+        <record model="stock.location" id="farm_location_nutrients">
+            <field name="name">Nutrients</field>
+            <field name="location_id" eval="ref('farm_location_consume_view')"/>
+            <field name="valuation_in_account_id" eval="ref('farm_account_400402')"/>
+            <field name="valuation_out_account_id" eval="ref('farm_account_400402')"/>
+            <field name="usage">production</field>
+            <field name="company_id"></field>
+        </record>
+        <record model="stock.location" id="farm_location_pesticides">
+            <field name="name">Pesticides</field>
+            <field name="location_id" eval="ref('farm_location_consume_view')"/>
+            <field name="valuation_in_account_id" eval="ref('farm_account_400403')"/>
+            <field name="valuation_out_account_id" eval="ref('farm_account_400403')"/>
+            <field name="usage">production</field>
+            <field name="company_id"></field>
+        </record>
+        <record model="stock.location" id="farm_location_cure">
+            <field name="name">Cure</field>
+            <field name="location_id" eval="ref('farm_location_consume_view')"/>
+            <field name="valuation_in_account_id" eval="ref('farm_account_400404')"/>
+            <field name="valuation_out_account_id" eval="ref('farm_account_400404')"/>
+            <field name="usage">production</field>
+            <field name="company_id"></field>
+        </record>
+        <record model="stock.location" id="farm_location_sparepart">
+            <field name="name">SparePart</field>
+            <field name="location_id" eval="ref('farm_location_consume_view')"/>
+            <field name="valuation_in_account_id" eval="ref('farm_account_400405')"/>
+            <field name="valuation_out_account_id" eval="ref('farm_account_400405')"/>
+            <field name="usage">production</field>
+            <field name="company_id"></field>
+        </record>
+        <record model="stock.location" id="farm_location_utilities">
+            <field name="name">Utilities</field>
+            <field name="location_id" eval="ref('farm_location_consume_view')"/>
+            <field name="valuation_in_account_id" eval="ref('farm_account_400406')"/>
+            <field name="valuation_out_account_id" eval="ref('farm_account_400406')"/>
+            <field name="usage">production</field>
+            <field name="company_id"></field>
+        </record>
+
 
         <record model="stock.location" id="farm_location_produce">
             <field name="name">Produce</field>
@@ -333,10 +374,11 @@
             <field name="property_valuation">real_time</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
-            <field name="property_account_expense_categ_id" eval="ref('farm_account_400401')"/>
+            <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
             <field name="property_stock_valuation_account_id" eval="ref('farm_account_124100')"/>
             <field name="property_stock_account_input_categ_id" eval="ref('farm_account_124970')"/>
             <field name="property_stock_account_output_categ_id" eval="ref('farm_account_124980')"/>
+            <field name="location_id" eval="ref('farm_location_fertilize')"/>
         </record>
         <record id="product_category_nutrients" model="product.category">
             <field name="parent_id" ref="product_category_material"/>
@@ -345,10 +387,11 @@
             <field name="property_valuation">real_time</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
-            <field name="property_account_expense_categ_id" eval="ref('farm_account_400402')"/>
+            <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
             <field name="property_stock_valuation_account_id" eval="ref('farm_account_124200')"/>
             <field name="property_stock_account_input_categ_id" eval="ref('farm_account_124970')"/>
             <field name="property_stock_account_output_categ_id" eval="ref('farm_account_124980')"/>
+            <field name="location_id" eval="ref('farm_location_nutrients')"/>
         </record>
         <record id="product_category_pesticides" model="product.category">
             <field name="parent_id" ref="product_category_material"/>
@@ -357,10 +400,11 @@
             <field name="property_valuation">real_time</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
-            <field name="property_account_expense_categ_id" eval="ref('farm_account_400403')"/>
+            <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
             <field name="property_stock_valuation_account_id" eval="ref('farm_account_124300')"/>
             <field name="property_stock_account_input_categ_id" eval="ref('farm_account_124970')"/>
             <field name="property_stock_account_output_categ_id" eval="ref('farm_account_124980')"/>
+            <field name="location_id" eval="ref('farm_location_pesticides')"/>
         </record>
         <record id="product_category_cure" model="product.category">
             <field name="parent_id" ref="product_category_material"/>
@@ -369,10 +413,11 @@
             <field name="property_valuation">real_time</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
-            <field name="property_account_expense_categ_id" eval="ref('farm_account_400404')"/>
+            <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
             <field name="property_stock_valuation_account_id" eval="ref('farm_account_124400')"/>
             <field name="property_stock_account_input_categ_id" eval="ref('farm_account_124970')"/>
             <field name="property_stock_account_output_categ_id" eval="ref('farm_account_124980')"/>
+            <field name="location_id" eval="ref('farm_location_cure')"/>
         </record>
         <record id="product_category_spare" model="product.category">
             <field name="parent_id" ref="product_category_material"/>
@@ -381,10 +426,11 @@
             <field name="property_valuation">real_time</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
-            <field name="property_account_expense_categ_id" eval="ref('farm_account_400405')"/>
+            <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
             <field name="property_stock_valuation_account_id" eval="ref('farm_account_124500')"/>
             <field name="property_stock_account_input_categ_id" eval="ref('farm_account_124970')"/>
             <field name="property_stock_account_output_categ_id" eval="ref('farm_account_124980')"/>
+            <field name="location_id" eval="ref('farm_location_sparepart')"/>
         </record>
         <record id="product_category_utilities" model="product.category">
             <field name="parent_id" ref="product_category_material"/>
@@ -393,10 +439,11 @@
             <field name="property_valuation">real_time</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
-            <field name="property_account_expense_categ_id" eval="ref('farm_account_400406')"/>
+            <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
             <field name="property_stock_valuation_account_id" eval="ref('farm_account_124600')"/>
             <field name="property_stock_account_input_categ_id" eval="ref('farm_account_124970')"/>
             <field name="property_stock_account_output_categ_id" eval="ref('farm_account_124980')"/>
+            <field name="location_id" eval="ref('farm_location_utilities')"/>
         </record>
         <!-- Move in-->
         <record id="product_category_produce" model="product.category">
