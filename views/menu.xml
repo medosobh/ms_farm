@@ -36,8 +36,6 @@
                   parent="farm_menu_configuration"
                   sequence="44"/>
 
-
-
         <!-- Inherit account Move (vendor bill) Form View to Modify it -->
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="farm_menu_vendor_bill"
@@ -64,6 +62,19 @@
                   action="account.action_move_out_invoice_type"
                   sequence="34"/>
 
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="menu_product_category"
+                  name="Product Category"
+                  parent="farm_menu_product"
+                  action="product.product_category_action_form"
+                  sequence="42"/>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="menu_product_product"
+                  name="Product"
+                  parent="farm_menu_product"
+                  action="stock.product_template_action_product"
+                  sequence="43"/>
 
     </data>
 </odoo>

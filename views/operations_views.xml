@@ -228,19 +228,4 @@
               action="farm_operations_action"
               sequence="21"/>
 
-    <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="menu_product_category"
-              name="Product Category"
-              parent="farm_menu_product"
-              action="product.product_category_action_form"
-              sequence="42"/>
-
-    <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="menu_product_product"
-              name="Product"
-              parent="farm_menu_product"
-              action="stock.product_template_action_product"
-              sequence="43"/>
-
-
 </odoo>

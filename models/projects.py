@@ -539,3 +539,13 @@ class farm_locations(models.Model):
         if not self.env.context.get('hierarchical_naming', True):
             return [(record.id, record.name) for record in self]
         return super().name_get()
+
+
+class stockPicking(models.Model):
+    _inherit = 'stock.move'
+
+    reference_record = fields.Reference(selection = [('farm.operations', 'Operation Order'),
+                                                     ('farm.produce', 'Produce Order')],
+                                        string = 'Order Reference')
+
+

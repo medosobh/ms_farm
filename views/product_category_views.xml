@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_category_form_inherit" model="ir.ui.view">
+            <field name="name">ms_farm.product_category_form_view_inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='property_stock_account_output_categ_id']" position="after">
+                    <field name="location_id"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

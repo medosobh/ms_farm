@@ -252,11 +252,3 @@ class farm_operations_oline(models.Model):
         string = 'Equipments',
         related = 'product_id.equipments_id')
     state = fields.Selection(related = 'operations_id.state', store = True)
-
-
-class stockPicking(models.Model):
-    _inherit = 'stock.move'
-
-    reference_record = fields.Reference(selection = [('farm.operations', 'Operation Order'),
-                                                     ('farm.produce', 'Produce Order')],
-                                        string = 'Order Reference')

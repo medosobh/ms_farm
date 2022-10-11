@@ -40,6 +40,12 @@
             <field name="user_type_id" eval="ref('account.data_account_type_current_assets')"/>
         </record>
 
+        <record model="account.account" id="farm_account_400400">
+            <field name="code">400400</field>
+            <field name="name">Material Expense Account</field>
+            <field name="reconcile">False</field>
+            <field name="user_type_id" eval="ref('account.data_account_type_expenses')"/>
+        </record>
         <record model="account.account" id="farm_account_400401">
             <field name="code">400401</field>
             <field name="name">Fertilize Expense Account</field>
@@ -266,8 +272,8 @@
         <record model="stock.location" id="farm_location_consume">
             <field name="name">consume</field>
             <field name="location_id" eval="ref('farm_location_consume_view')"/>
-            <field name="valuation_in_account_id" eval="ref('farm_account_400401')"/>
-            <field name="valuation_out_account_id" eval="ref('farm_account_400401')"/>
+            <field name="valuation_in_account_id" eval="ref('farm_account_400400')"/>
+            <field name="valuation_out_account_id" eval="ref('farm_account_400400')"/>
             <field name="usage">production</field>
             <field name="company_id"></field>
         </record>

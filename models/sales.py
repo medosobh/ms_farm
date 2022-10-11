@@ -1,5 +1,5 @@
 from odoo import fields, models, api, _
-from odoo.exceptions import AccessError, UserError, ValidationError
+from odoo.exceptions import UserError
 
 
 class farm_sales(models.Model):
@@ -54,9 +54,11 @@ class farm_sales(models.Model):
         # create Customer Invoice in background and open form view.
         self.ensure_one()
         move_type = self._context.get('default_move_type', 'out_invoice')
-        journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
+        journal = self.env['account.move'].with_context(
+            default_move_type = move_type)._get_default_journal()
         if not journal:
-            raise UserError(_('Please define an accounting sales journal for the company %s (%s).', self.company_id.name,
+            raise UserError(
+                _('Please define an accounting sales journal for the company %s (%s).', self.company_id.name,
                   self.company_id.id))
 
         partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
@@ -93,62 +95,83 @@ class farm_sales(models.Model):
         result['res_id'] = invoice.id
         return result
 
-    name = fields.Char(string = 'Sales Ref',
-                       index = True,
-                       readonly = True,
-                       tracking = True,
-                       default = lambda x: _('New'))
+    name = fields.Char(
+        string = 'Sales Ref',
+        index = True,
+        readonly = True,
+        tracking = True,
+        default = lambda x: _('New'))
     state = fields.Selection([
         ('order', 'Invoicing'),
         ('lock', 'Locked')],
         string = 'State', readonly = False, copy = False,
         tracking = True, default = 'order')
-    category_id = fields.Many2one('product.category',
-                                  required = True,
-                                  string = 'Product Category')
-    projects_id = fields.Many2one('farm.projects',
-                                  required = True,
-                                  tracking = True)
-    short_name = fields.Char(related = 'projects_id.short_name',
-                             store = True)
-    issue_date = fields.Date(string = 'Date', default = fields.Datetime.today, tracking = True)
-    partner_id = fields.Many2one('res.partner',
-                                 required = True,
-                                 string = 'Partner')
-    payment_term_id = fields.Many2one('account.payment.term',
-                                      'Payment Terms',
-                                      domain = "['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
-    stock_warehouse = fields.Many2one('stock.warehouse',
-                                      string = 'Warehouse')
-    s_order_cost = fields.Float(string = 'Order Cost',
-                                compute = '_compute_sales_order_cost',
-                                store = True)
-    active = fields.Boolean(string = "Active", default = True, tracking = True)
-    user_id = fields.Many2one('res.users',
-                              string = "Operation Man",
-                              required = True)
+    category_id = fields.Many2one(
+        'product.category',
+        required = True,
+        string = 'Product Category')
+    projects_id = fields.Many2one(
+        'farm.projects',
+        required = True,
+        tracking = True)
+    short_name = fields.Char(
+        related = 'projects_id.short_name',
+        store = True)
+    issue_date = fields.Date(
+        string = 'Date',
+        default = fields.Datetime.today,
+        tracking = True)
+    partner_id = fields.Many2one(
+        'res.partner',
+        required = True,
+        string = 'Partner')
+    payment_term_id = fields.Many2one(
+        'account.payment.term',
+        'Payment Terms',
+        domain = "['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+    stock_warehouse = fields.Many2one(
+        'stock.warehouse',
+        string = 'Warehouse')
+    s_order_cost = fields.Float(
+        string = 'Order Cost',
+        compute = '_compute_sales_order_cost',
+        store = True)
+    active = fields.Boolean(
+        string = "Active",
+        default = True,
+        tracking = True)
+    user_id = fields.Many2one(
+        'res.users',
+        string = "Operation Man",
+        required = True)
     notes = fields.Html(
         'Terms and Conditions')
-    sales_order_line_ids = fields.One2many('farm.sales.oline',
-                                           'sales_id',
-                                           string = "order lines")
-    notes = fields.Html('Terms and Conditions')
-    company_id = fields.Many2one('res.company',
-                                 string = 'Company',
-                                 change_default = True,
-                                 default = lambda self: self.env.company,
-                                 required = False,
-                                 readonly = True)
-    currency_id = fields.Many2one('res.currency',
-                                  'Currency',
-                                  related = 'company_id.currency_id',
-                                  readonly = True,
-                                  ondelete = 'set null',
-                                  help = "Used to display the currency when tracking monetary values")
-    customer_invoice_count = fields.Integer(string = "Customer Invoice Count",
-                                            compute = '_compute_customer_invoice_count')
-    customer_invoice_total = fields.Integer(string = "Customer Invoice Total",
-                                            compute = '_compute_customer_invoice_total')
+    sales_order_line_ids = fields.One2many(
+        'farm.sales.oline',
+        'sales_id',
+        string = "order lines")
+    notes = fields.Html(
+        'Terms and Conditions')
+    company_id = fields.Many2one(
+        'res.company',
+        string = 'Company',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False,
+        readonly = True)
+    currency_id = fields.Many2one(
+        'res.currency',
+        'Currency',
+        related = 'company_id.currency_id',
+        readonly = True,
+        ondelete = 'set null',
+        help = "Used to display the currency when tracking monetary values")
+    customer_invoice_count = fields.Integer(
+        string = "Customer Invoice Count",
+        compute = '_compute_customer_invoice_count')
+    customer_invoice_total = fields.Integer(
+        string = "Customer Invoice Total",
+        compute = '_compute_customer_invoice_total')
 
 
 class farm_sales_oline(models.Model):
@@ -160,36 +183,48 @@ class farm_sales_oline(models.Model):
         for rec in self:
             rec.price_subtotal = rec.price_unit * rec.qty
 
-    name = fields.Text(string = 'Description', required = True)
-    sequence = fields.Integer(string = 'Sequence', default = 10)
-    product_id = fields.Many2one('product.product',
-                                 required = True,
-                                 domain = "[('categ_id', '=', categ_id)]")
-    categ_id = fields.Many2one(related = 'sales_id.category_id',
-                               string = 'Category')
-    price_unit = fields.Float(related = 'product_id.list_price',
-                              string = 'Price')
+    name = fields.Text(
+        string = 'Description',
+        required = True)
+    sequence = fields.Integer(
+        string = 'Sequence',
+        default = 10)
+    product_id = fields.Many2one(
+        'product.product',
+        required = True,
+        domain = "[('categ_id', '=', categ_id)]")
+    categ_id = fields.Many2one(
+        related = 'sales_id.category_id',
+        string = 'Category')
+    price_unit = fields.Float(
+        related = 'product_id.list_price',
+        string = 'Price')
     product_uom = fields.Many2one(
         'uom.uom', 'Unit of Measure',
         related = 'product_id.uom_id',
         domain = "[('category_id', '=', product_uom_category_id)]")
     qty = fields.Float('Quantity')
-    company_id = fields.Many2one('res.company',
-                                 string = 'Company',
-                                 related = 'sales_id.company_id',
-                                 change_default = True,
-                                 default = lambda self: self.env.company,
-                                 required = False,
-                                 readonly = True)
-    currency_id = fields.Many2one('res.currency',
-                                  string = 'Currency',
-                                  related = 'sales_id.currency_id',
-                                  readonly = True,
-                                  help = "Used to display the currency when tracking monetary values")
-    note = fields.Char('Short Note')
-    price_subtotal = fields.Monetary(string = 'Subtotal',
-                                     compute = '_compute_subtotal',
-                                     currency_field = 'currency_id',
-                                     store = True)
-    sales_id = fields.Many2one('farm.sales',
-                               string = 'Sales Order')
+    company_id = fields.Many2one(
+        'res.company',
+        string = 'Company',
+        related = 'sales_id.company_id',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False,
+        readonly = True)
+    currency_id = fields.Many2one(
+        'res.currency',
+        string = 'Currency',
+        related = 'sales_id.currency_id',
+        readonly = True,
+        help = "Used to display the currency when tracking monetary values")
+    note = fields.Char(
+        'Short Note')
+    price_subtotal = fields.Monetary(
+        string = 'Subtotal',
+        compute = '_compute_subtotal',
+        currency_field = 'currency_id',
+        store = True)
+    sales_id = fields.Many2one(
+        'farm.sales',
+        string = 'Sales Order')

@@ -28,6 +28,7 @@
                 'account',
                 'uom',
                 'product',
+                'sale',
                 'sale_management',
                 'purchase',
                 ],
@@ -47,6 +48,7 @@
         'views/equipments_views.xml',
         'views/locations_views.xml',
         'views/projects_views.xml',
+        'views/product_category_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

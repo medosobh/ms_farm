@@ -6,5 +6,6 @@ from . import materials
 from . import sales
 from . import produce
 from . import equipments
+from . import product_category
 
 
