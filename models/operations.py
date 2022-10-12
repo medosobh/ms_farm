@@ -27,7 +27,8 @@ class farm_operations(models.Model):
     def _compute_vendor_bill_total(self):
         for rec in self:
             total = sum(
-                self.env['account.move'].search([('invoice_origin', '=', rec.name)]).mapped('amount_total_signed'))
+                self.env['account.move'].search([
+                    ('invoice_origin', '=', rec.name)]).mapped('amount_total_signed'))
             rec.vendor_bill_total = total
         return rec.vendor_bill_total
 
@@ -234,17 +235,19 @@ class farm_operations_oline(models.Model):
         related = 'operations_id.currency_id',
         readonly = True,
         help = "Used to display the currency when tracking monetary values")
-    note = fields.Char('Short Note')
+    note = fields.Char(
+        'Short Note')
     price_subtotal = fields.Monetary(
         string = 'Subtotal',
         compute = '_compute_subtotal',
         currency_field = 'currency_id',
         store = True)
-    invoice_lines = fields.One2many('account.move.line',
-                                    'purchase_line_id',
-                                    string = "Bill Lines",
-                                    readonly = True,
-                                    copy = False)
+    invoice_lines = fields.One2many(
+        'account.move.line',
+        'purchase_line_id',
+        string = "Bill Lines",
+        readonly = True,
+        copy = False)
     operations_id = fields.Many2one(
         'farm.operations',
         string = 'Operations')
@@ -252,4 +255,6 @@ class farm_operations_oline(models.Model):
         'farm.equipments',
         string = 'Equipments',
         related = 'product_id.equipments_id')
-    state = fields.Selection(related = 'operations_id.state', store = True)
+    state = fields.Selection(
+        related = 'operations_id.state',
+        store = True)
