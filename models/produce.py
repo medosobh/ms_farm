@@ -138,6 +138,7 @@ class farm_produce(models.Model):
     category_id = fields.Many2one(
         'product.category',
         required = True,
+        domain = [('order_type', '=', 'produce')],
         string = 'Product Category')
     projects_id = fields.Many2one(
         'farm.projects',

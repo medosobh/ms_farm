@@ -24,6 +24,15 @@ class ProductCategory(models.Model):
         readonly = False,
         copy = False,
         default = 'product')
+    order_type = fields.Selection([
+        ('service', 'Service'),
+        ('material', 'Material'),
+        ('produce', 'Produce'),
+        ('sales', 'Sales')],
+        string = 'Order Type',
+        readonly = False,
+        copy = False)
+
 
 
 

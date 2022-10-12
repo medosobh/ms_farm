@@ -11,6 +11,9 @@
                     <field name="location_id"/>
                     <field name="company_id"/>
                 </field>
+                <field name="parent_id" position="after">
+                    <field name="order_type" class="oe_inline"/>
+                </field>
             </field>
         </record>
     </data>

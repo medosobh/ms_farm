@@ -41,22 +41,22 @@
                     </div>
                     <group>
                         <group string="Basic">
-                            <field name="name"/>
-                            <field name="projects_id" widget="selection"/>
+                            <field name="name" class="oe_inline"/>
+                            <field name="projects_id" widget="selection" class="oe_inline"/>
                             <field name="short_name"/>
-                            <field name="category_id" widget="selection"/>
-                            <field name="user_id" widget="selection"/>
+                            <field name="category_id" widget="selection" class="oe_inline"/>
+                            <field name="user_id" widget="selection" class="oe_inline"/>
                         </group>
                         <group string="Information">
-                            <field name="issue_date"/>
-                            <field name="p_order_cost" widget="monetary"/>
+                            <field name="issue_date" class="oe_inline"/>
+                            <field name="p_order_cost" widget="monetary" class="oe_inline"/>
                             <field name="active" invisible="1"/>
-                            <field name="company_id" groups="base.group_multi_company" widget="selection"/>
-                            <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
-                            <field name="partner_id" widget="selection"/>
-                            <field name="stock_warehouse" widget="selection"/>
-                            <field name="location_id" widget="selection"/>
-                            <field name="picking_type_id" widget="selection"/>
+                            <field name="company_id" groups="base.group_multi_company" widget="selection" class="oe_inline"/>
+                            <field name="currency_id" groups="base.group_multi_currency" widget="selection" class="oe_inline"/>
+                            <field name="partner_id" widget="selection" class="oe_inline"/>
+                            <field name="stock_warehouse" widget="selection" class="oe_inline"/>
+                            <field name="location_id" widget="selection" class="oe_inline"/>
+                            <field name="picking_type_id" widget="selection" class="oe_inline"/>
                         </group>
                         <group>
                             <field name="notes"/>
@@ -81,19 +81,23 @@
                                 </tree>
                                 <form>
                                     <group>
-                                        <field name="sequence" widget="handle" invisible="1"/>
-                                        <field name="product_id" widget="selection"/>
-                                        <field name="name" widget="section_and_note_text"/>
-                                        <field name="categ_id" widget="selection" invisible="1"/>
-                                        <field name="price_unit" widget="monetary"/>
-                                        <field name="company_id" widget="selection" invisible="1"/>
-                                        <field name="currency_id" widget="selection" invisible="1"/>
-                                        <field name="product_uom"/>
-                                        <field name="qty"/>
-                                        <field name="note"/>
-                                        <field name="price_subtotal" sum="Total Cost"/>
-                                        <field name="equipments_id" widget="selection"/>
+                                        <group>
+                                            <field name="sequence" widget="handle" invisible="1"/>
+                                            <field name="product_id" widget="selection" class="oe_inline"/>
+                                            <field name="name" widget="section_and_note_text" class="oe_inline"/>
+                                            <field name="product_uom" class="oe_inline"/>
+                                            <field name="qty" class="oe_inline"/>
+                                        </group>
+                                        <group>
+                                            <field name="price_unit" widget="monetary" class="oe_inline"/>
+                                            <field name="price_subtotal" sum="Total Cost" class="oe_inline"/>
+                                            <field name="categ_id" widget="selection" invisible="1"/>
+                                            <field name="company_id" widget="selection" invisible="1"/>
+                                            <field name="currency_id" widget="selection" invisible="1"/>
+                                            <field name="equipments_id" widget="selection" invisible="1"/>
+                                        </group>
                                     </group>
+                                    <field name="note"/>
                                 </form>
                             </field>
                         </page>

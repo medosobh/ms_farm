@@ -343,15 +343,15 @@
             <field name="name">Farm</field>
         </record>
 
+        <record id="product_category_service" model="product.category">
+            <field name="name">Service</field>
+            <field name="parent_id" ref="product_category_farm"/>
+        </record>
         <record id="product_category_material" model="product.category">
             <field name="name">Material</field>
             <field name="parent_id" ref="product_category_farm"/>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
-        </record>
-        <record id="product_category_service" model="product.category">
-            <field name="name">Service</field>
-            <field name="parent_id" ref="product_category_farm"/>
         </record>
         <record id="product_category_product" model="product.category">
             <field name="name">Product</field>
@@ -372,6 +372,7 @@
             <field name="name">Fertilize</field>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
+            <field name="order_type">material</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
@@ -385,6 +386,7 @@
             <field name="name">Nutrients</field>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
+            <field name="order_type">material</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
@@ -398,6 +400,7 @@
             <field name="name">Pesticides</field>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
+            <field name="order_type">material</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
@@ -411,6 +414,7 @@
             <field name="name">Cure</field>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
+            <field name="order_type">material</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
@@ -424,6 +428,7 @@
             <field name="name">Spar Parts</field>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
+            <field name="order_type">material</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
@@ -437,6 +442,7 @@
             <field name="name">Utilities</field>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
+            <field name="order_type">material</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500400')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400400')"/>
@@ -451,6 +457,7 @@
             <field name="name">Produce</field>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
+            <field name="order_type">produce</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500200')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400200')"/>
@@ -463,6 +470,7 @@
             <field name="name">Pio Asset</field>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
+            <field name="order_type">produce</field>
             <field name="property_account_creditor_price_difference_categ" eval="ref('farm_account_400500')"/>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500300')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400300')"/>
@@ -476,6 +484,7 @@
             <field name="name">Manpower</field>
             <field name="property_cost_method">standard</field>
             <field name="property_valuation">manual_periodic</field>
+            <field name="order_type">service</field>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500500')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400410')"/>
         </record>
@@ -484,6 +493,7 @@
             <field name="name">Equipment</field>
             <field name="property_cost_method">standard</field>
             <field name="property_valuation">manual_periodic</field>
+            <field name="order_type">service</field>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500500')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400420')"/>
         </record>
@@ -492,6 +502,7 @@
             <field name="name">Irrigate</field>
             <field name="property_cost_method">standard</field>
             <field name="property_valuation">manual_periodic</field>
+            <field name="order_type">service</field>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500500')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400430')"/>
         </record>
@@ -500,6 +511,7 @@
             <field name="name">Maintenance</field>
             <field name="property_cost_method">standard</field>
             <field name="property_valuation">manual_periodic</field>
+            <field name="order_type">service</field>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500500')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400440')"/>
         </record>
@@ -508,6 +520,7 @@
             <field name="name">Quality</field>
             <field name="property_cost_method">standard</field>
             <field name="property_valuation">manual_periodic</field>
+            <field name="order_type">service</field>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500500')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400450')"/>
         </record>
@@ -517,6 +530,7 @@
             <field name="name">Direct Sale</field>
             <field name="property_cost_method">standard</field>
             <field name="property_valuation">manual_periodic</field>
+            <field name="order_type">sales</field>
             <field name="property_account_income_categ_id" eval="ref('farm_account_500100')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400100')"/>
         </record>

@@ -62,18 +62,18 @@
                     </div>
                     <group>
                         <group string="Basic">
-                            <field name="project_type"/>
-                            <field name="project_group_id" widget="selection"/>
-                            <field name="user_id" widget="selection"/>
+                            <field name="project_type" class="oe_inline"/>
+                            <field name="project_group_id" widget="selection" class="oe_inline"/>
+                            <field name="user_id" widget="selection" class="oe_inline"/>
                             <field name="description"/>
                             <field name="active" invisible="1"/>
-                            <field name="company_id" widget="selection"/>
-                            <field name="currency_id" widget="selection"/>
+                            <field name="company_id" widget="selection" class="oe_inline"/>
+                            <field name="currency_id" widget="selection" class="oe_inline"/>
                         </group>
                         <group string="Time Frame">
-                            <field name="start_date" type="date"/>
-                            <field name="end_date" type="date"/>
-                            <field name="close_date" type="date"/>
+                            <field name="start_date" type="date" class="oe_inline"/>
+                            <field name="end_date" type="date" class="oe_inline"/>
+                            <field name="close_date" type="date" class="oe_inline"/>
                         </group>
                     </group>
                     <notebook string="Details">
