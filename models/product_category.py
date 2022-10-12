@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api, _
 
 
 class ProductCategory(models.Model):
@@ -16,3 +16,16 @@ class ProductCategory(models.Model):
         default = lambda self: self.env.company,
         required = False,
         readonly = True)
+    type = fields.Selection([
+        ('product', 'Storable Product'),
+        ('service', 'Service'),
+        ('consu', 'Consumable')],
+        string = 'Product Type',
+        readonly = False,
+        copy = False,
+        default = 'product')
+
+
+
+    # @api.onchange('categ_id')
+    # def _onchange_categ_id(self):

@@ -78,9 +78,7 @@
                     </group>
                     <notebook string="Details">
                         <page string="Operation Orders">
-                            <field name="operations_ids" context="{
-                            'default_user_id': user_id
-                            }">
+                            <field name="operations_ids" context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
                                     <field name="state"/>
@@ -113,8 +111,8 @@
                                             <field name="stock_warehouse" widget="selection"/>
                                         </group>
                                     </group>
-                                    <field name="operation_order_line_ids">
-                                        <tree editable="bottom">
+                                    <field name="operation_order_line_ids" readonly="1">
+                                        <tree>
                                             <field name="sequence" widget="handle"/>
                                             <field name="product_id" widget="selection"/>
                                             <field name="name" widget="section_and_note_text"/>
@@ -131,9 +129,7 @@
                             </field>
                         </page>
                         <page string="Material Orders">
-                            <field name="materials_ids" context="{
-                            'default_user_id': user_id
-                            }">
+                            <field name="materials_ids" context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
                                     <field name="state"/>
@@ -166,7 +162,7 @@
                                             <field name="stock_warehouse" widget="selection"/>
                                         </group>
                                     </group>
-                                    <field name="materials_order_line_ids">
+                                    <field name="materials_order_line_ids" readonly="1">
                                         <tree editable="bottom">
                                             <field name="sequence" widget="handle"/>
                                             <field name="product_id" widget="selection"/>
@@ -184,9 +180,7 @@
                             </field>
                         </page>
                         <page string="Sales Order">
-                            <field name="sales_ids" context="{
-                            'default_user_id': user_id
-                            }">
+                            <field name="sales_ids" context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
                                     <field name="state"/>
@@ -217,7 +211,7 @@
                                             <field name="stock_warehouse" widget="selection"/>
                                         </group>
                                     </group>
-                                    <field name="sales_order_line_ids">
+                                    <field name="sales_order_line_ids" readonly="1">
                                         <tree>
                                             <field name="sequence" widget="handle"/>
                                             <field name="product_id" widget="selection"/>
@@ -235,7 +229,7 @@
                             </field>
                         </page>
                         <page string="Produce Order">
-                            <field name="produce_ids">
+                            <field name="produce_ids" context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
                                     <field name="state"/>
@@ -264,7 +258,7 @@
                                             <field name="stock_warehouse" widget="selection"/>
                                         </group>
                                     </group>
-                                    <field name="produce_order_line_ids">
+                                    <field name="produce_order_line_ids" readonly="1">
                                         <tree>
                                             <field name="sequence" widget="handle"/>
                                             <field name="product_id" widget="selection"/>
