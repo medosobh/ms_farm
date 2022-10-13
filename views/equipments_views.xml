@@ -7,43 +7,15 @@
             <field name="arch" type="xml">
                 <form string="Equipments">
                     <sheet>
-                        <div class="oe_button_box" name="button_equipment_box">
-                            <button name="action_equipment_order_list" type="object"
-                                    class="oe_stat_button"
-                                    icon="fa-dollar">
-                                <div class="o_stat_info">
-                                    <field name="equipment_order_line_count"/>
-                                    <span class="o_stat_text"># order</span>
-                                </div>
-                            </button>
-                            <button name="action_equipment_order_list" type="object"
-                                    class="oe_stat_button"
-                                    icon="fa-dollar">
-                                <div class="o_stat_info">
-                                    <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
-                                    <field name="equipment_order_line_cost" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                    <span class="o_stat_text">Order Cost</span>
-                                </div>
-                            </button>
-                            <button name="action_equipment_order_list" type="object"
-                                    class="oe_stat_button"
-                                    icon="fa-dollar">
-                                <div class="o_stat_info">
-                                    <field name="currency_id" invisible="1"
-                                           groups="base.group_multi_currency"/>
-                                    <field name="equipment_order_line_cost" widget='monetary'
-                                           options="{'currency_field': 'currency_id'}"/>
-                                    <span class="o_stat_text">Actual Cost</span>
-                                </div>
-                            </button>
-                        </div>
                         <div class="oe_title">
                             <h3>
                                 <group>
                                     <field name="code"/>
                                     <field name="name"/>
+                                    <field name="currency_id" widget="selection" invisible="1"/>
+                                    <field name="order_line_count"/>
+                                    <field name="order_line_cost"/>
+                                    <field name="actual_line_cost"/>
                                 </group>
                             </h3>
                         </div>
@@ -54,22 +26,24 @@
                                 <field name="body_code"/>
                             </group>
                             <group>
+                                <field name="buy_sell_price"/>
                                 <field name="type"/>
+                                <field name="category_id" readonly="1"/>
                                 <field name="product_id"/>
                                 <div>
                                     <button name="create_equipment_product" string="Create Product" type="object"
                                             class="oe_highlight" attrs="{'invisible':[('product_id','!=', False)]}"/>
                                 </div>
                                 <div>
-                                    <button name="update_equipment_product_price_unit" string="Update Price Unit"
+                                    <button name="update_equipment_product_price_unit" string="Re/Link and Update Price Unit"
                                             type="object"/>
                                 </div>
                             </group>
                         </group>
                         <field name="operation_order_line_ids" readonly="1">
-                            <tree editable="bottom">
+                            <tree>
                                 <field name="operations_id"/>
-                                <field name="product_id"/>
+                                <field name="product_id" domain=""/>
                                 <field name="categ_id" widget="selection" invisible="1"/>
                                 <field name="price_unit" widget="monetary"/>
                                 <field name="currency_id" invisible="1"/>

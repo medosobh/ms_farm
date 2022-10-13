@@ -21,14 +21,18 @@ class farm_operations(models.Model):
 
     def _compute_vendor_bill_count(self):
         for rec in self:
-            vendor_bill_count = self.env['account.move'].search_count([('invoice_origin', '=', rec.name)])
+            vendor_bill_count = self.env['account.move'].search_count([
+                ('invoice_origin', '=', rec.name)
+            ])
             rec.vendor_bill_count = vendor_bill_count
 
     def _compute_vendor_bill_total(self):
         for rec in self:
             total = sum(
                 self.env['account.move'].search([
-                    ('invoice_origin', '=', rec.name)]).mapped('amount_total_signed'))
+                    ('invoice_origin', '=', rec.name)
+                ]).mapped('amount_total_signed')
+            )
             rec.vendor_bill_total = total
         return rec.vendor_bill_total
 
