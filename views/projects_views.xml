@@ -199,7 +199,7 @@
                                             <field name="short_name"/>
                                         </group>
                                         <group string="Basic">
-                                            <field name="user_id" widget="many2one_avatar_user"/>
+                                            <field name="user_id" widget="selection"/>
                                             <field name="issue_date"/>
                                             <field name="s_order_cost" widget="monetary"/>
                                             <field name="active" invisible="1"/>
@@ -248,7 +248,7 @@
                                             <field name="short_name"/>
                                         </group>
                                         <group string="Basic">
-                                            <field name="user_id" widget="many2one_avatar_user"/>
+                                            <field name="user_id" widget="selection"/>
                                             <field name="issue_date"/>
                                             <field name="p_order_cost" widget="monetary"/>
                                             <field name="active" invisible="1"/>
@@ -326,7 +326,7 @@
                 <field name="project_type" optional="show"/>
                 <field name="project_group_id" optional="show"/>
                 <field name="short_name"/>
-                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="user_id" widget="selection"/>
                 <field name="description" optional="show"/>
                 <field name="start_date" type="date"/>
                 <field name="end_date" type="date"/>
@@ -351,7 +351,7 @@
                 <field name="name"/>
                 <field name="project_type"/>
                 <field name="short_name"/>
-                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="user_id" widget="selection"/>
                 <field name="description"/>
                 <field name="start_date" type="date"/>
                 <field name="end_date" type="date"/>
@@ -372,7 +372,7 @@
                                         <field name="short_name"/>
                                     </li>
                                     <li>
-                                        <field name="user_id" widget="many2one_avatar_user"/>
+                                        <field name="user_id" widget="selection"/>
                                     </li>
                                     <li>
                                         Type:
@@ -420,7 +420,7 @@
                 <field name="short_name"/>
                 <field name="project_type"/>
                 <field name="project_group_id"/>
-                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="user_id" widget="selection"/>
                 <field name="description"/>
                 <field name="start_date" type="date"/>
                 <field name="end_date" type="date"/>

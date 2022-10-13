@@ -27,14 +27,23 @@
                                     <span class="o_stat_text">Order Cost</span>
                                 </div>
                             </button>
+                            <button name="action_action" type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-dollar">
+                                <div class="o_stat_info">
+                                    <field name="currency_id" invisible="1"
+                                           groups="base.group_multi_currency"/>
+                                    <field name="total_expense" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <span class="o_stat_text">Actual Cost</span>
+                                </div>
+                            </button>
                         </div>
                         <div class="oe_title">
                             <h3>
                                 <group>
                                     <field name="code"/>
                                     <field name="name"/>
-                                    <field name="actual_line_cost"/>
-                                    <field name="currency_id" widget="selection" invisible="1"/>
                                 </group>
                             </h3>
                         </div>
@@ -60,19 +69,29 @@
                                 </div>
                             </group>
                         </group>
-                        <field name="operation_order_line_ids" readonly="1">
-                            <tree>
-                                <field name="operations_id"/>
-                                <field name="product_id" domain=""/>
-                                <field name="categ_id" widget="selection" invisible="1"/>
-                                <field name="price_unit" widget="monetary"/>
-                                <field name="currency_id" invisible="1"/>
-                                <field name="product_uom"/>
-                                <field name="qty"/>
-                                <field name="note"/>
-                                <field name="price_subtotal" sum="Total Cost"/>
-                            </tree>
-                        </field>
+                        <notebook>
+                            <page name="farm_operation_olines" string="Order Line">
+                                <field name="operation_order_line_ids" readonly="1">
+                                    <tree>
+                                        <field name="operations_id"/>
+                                        <field name="product_id" domain=""/>
+                                        <field name="categ_id" widget="selection" invisible="1"/>
+                                        <field name="price_unit" widget="monetary"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="product_uom"/>
+                                        <field name="qty"/>
+                                        <field name="note"/>
+                                        <field name="price_subtotal" sum="Total Cost"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="Actual Line">
+
+                            </page>
+                            <page name="Direct Expense">
+
+                            </page>
+                        </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids"/>

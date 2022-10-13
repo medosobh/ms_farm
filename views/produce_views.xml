@@ -41,22 +41,22 @@
                     </div>
                     <group>
                         <group string="Basic">
-                            <field name="name" class="oe_inline"/>
-                            <field name="projects_id" widget="selection" class="oe_inline"/>
+                            <field name="name"/>
+                            <field name="projects_id" widget="selection"/>
                             <field name="short_name"/>
-                            <field name="category_id" widget="selection" class="oe_inline"/>
-                            <field name="user_id" widget="selection" class="oe_inline"/>
+                            <field name="category_id" widget="selection"/>
+                            <field name="user_id" widget="selection"/>
                         </group>
                         <group string="Information">
-                            <field name="issue_date" class="oe_inline"/>
-                            <field name="p_order_cost" widget="monetary" class="oe_inline"/>
+                            <field name="issue_date"/>
+                            <field name="p_order_cost" widget="monetary"/>
                             <field name="active" invisible="1"/>
-                            <field name="company_id" groups="base.group_multi_company" widget="selection" class="oe_inline"/>
-                            <field name="currency_id" groups="base.group_multi_currency" widget="selection" class="oe_inline"/>
-                            <field name="partner_id" widget="selection" class="oe_inline"/>
-                            <field name="stock_warehouse" widget="selection" class="oe_inline"/>
-                            <field name="location_id" widget="selection" class="oe_inline"/>
-                            <field name="picking_type_id" widget="selection" class="oe_inline"/>
+                            <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                            <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
+                            <field name="partner_id" widget="selection"/>
+                            <field name="stock_warehouse" widget="selection"/>
+                            <field name="location_id" widget="selection"/>
+                            <field name="picking_type_id" widget="selection"/>
                         </group>
                         <group>
                             <field name="notes"/>
@@ -188,7 +188,7 @@
             <search>
                 <field name="state"/>
                 <field name="projects_id"/>
-                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="user_id" widget="selection"/>
                 <field name="name"/>
                 <filter name="filter_orders" string="Orders" domain="[('state', '=', 'order')]"/>
                 <filter name="filter_documents" string="Documents" domain="[('state', '=', 'document')]"/>

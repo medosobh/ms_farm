@@ -35,21 +35,21 @@
                     </div>
                     <group>
                         <group string="Basic">
-                            <field name="name" class="oe_inline"/>
-                            <field name="projects_id" class="oe_inline"/>
-                            <field name="short_name" class="oe_inline"/>
-                            <field name="category_id" widget="selection" class="oe_inline"/>
-                            <field name="user_id" widget="many2one_avatar_user" class="oe_inline"/>
+                            <field name="name"/>
+                            <field name="projects_id"/>
+                            <field name="short_name"/>
+                            <field name="category_id" widget="selection"/>
+                            <field name="user_id" widget="selection"/>
                         </group>
                         <group string="Information">
-                            <field name="issue_date" class="oe_inline"/>
-                            <field name="s_order_cost" widget="monetary" class="oe_inline"/>
+                            <field name="issue_date"/>
+                            <field name="s_order_cost" widget="monetary"/>
                             <field name="active" invisible="1"/>
-                            <field name="company_id" groups="base.group_multi_company" class="oe_inline"/>
-                            <field name="currency_id" groups="base.group_multi_currency" class="oe_inline"/>
-                            <field name="partner_id" widget="selection" class="oe_inline"/>
-                            <field name="payment_term_id" widget="selection" class="oe_inline"/>
-                            <field name="stock_warehouse" widget="selection" class="oe_inline"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="partner_id" widget="selection"/>
+                            <field name="payment_term_id" widget="selection"/>
+                            <field name="stock_warehouse" widget="selection"/>
                         </group>
                         <group>
                             <field name="notes"/>
@@ -113,7 +113,7 @@
                 <field name="state"/>
                 <field name="projects_id"/>
                 <field name="short_name"/>
-                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="user_id" widget="selection"/>
                 <field name="activity_ids" widget="list_activity"/>
                 <field name="issue_date"/>
                 <field name="s_order_cost" sum="Total Order"/>
@@ -180,7 +180,7 @@
             <search>
                 <field name="state"/>
                 <field name="projects_id"/>
-                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="user_id" widget="selection"/>
                 <field name="name"/>
                 <filter name="filter_orders" string="Orders" domain="[('state', '=', 'order')]"/>
                 <filter name="filter_documents" string="Documents" domain="[('state', '=', 'document')]"/>

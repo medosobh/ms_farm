@@ -53,14 +53,14 @@ class farm_equipments(models.Model):
             rec.order_line_cost = cost
         return rec.order_line_cost
 
-    def _compute_actual_cost(self):
+    def _compute_total_expense(self):
         for record in self:
             costa = sum(
                 self.env['farm.operations.oline'].search([
-                    ('product_id', '=', record.product_id)
+                    ('equipments_id', '=', record.id)
                 ]).mapped('price_subtotal'))
-            record.actual_line_cost = costa
-        return record.actual_line_cost
+            record.total_expense = costa
+        return record.total_expense
 
     def update_equipment_product_price_unit(self):
         if self.product_id:
@@ -133,9 +133,9 @@ class farm_equipments(models.Model):
         string = 'Order Cost',
         compute = '_compute_order_cost',
         store = True)
-    actual_line_cost = fields.Monetary(
+    total_expense = fields.Monetary(
         string = 'Actual Cost',
-        compute = '_compute_actual_cost',
+        compute = '_compute_total_expense',
         store = True)
     operation_order_line_ids = fields.One2many(
         'farm.operations.oline',
