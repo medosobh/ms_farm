@@ -9,12 +9,14 @@
                         <div class="oe_title">
                             <label for="name" string="Location"/>
                             <h1>
-                                <field name="name" placeholder="Sector1, 2,.."/>
+                                <field name="name" placeholder="Sector 1, 2,.."/>
                             </h1>
                         </div>
                         <group name="first" col="2">
                             <field name="parent_id" class="oe_inline"/>
                             <field name="space" class="oe_inline"/>
+                            <field name="child_id" class="oe_inline" invisible="1"/>
+                            <field name="space_sum" attrs="{'readonly' : [('child_id', '!=', False)]}"/>
                         </group>
                     </sheet>
                 </form>
@@ -27,10 +29,9 @@
             <field name="priority">1</field>
             <field name="arch" type="xml">
                 <tree string="Project Locations">
-                    <field name="name" string="Project Locations"/>
-                    <field name="display_name" string="Project Locations"/>
-                    <field name="space" string="Project Locations"/>
-                    <field name="space_sum" string="Project Locations"/>
+                    <field name="name"/>
+                    <field name="display_name"/>
+                    <field name="space_sum"/>
                 </tree>
             </field>
         </record>
