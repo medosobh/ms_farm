@@ -17,6 +17,7 @@
                             <field name="space" class="oe_inline"/>
                             <field name="child_id" class="oe_inline" invisible="1"/>
                             <field name="space_sum" attrs="{'readonly' : [('child_id', '!=', False)]}"/>
+                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                         </group>
                     </sheet>
                 </form>
@@ -32,6 +33,7 @@
                     <field name="name"/>
                     <field name="display_name"/>
                     <field name="space_sum"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                 </tree>
             </field>
         </record>

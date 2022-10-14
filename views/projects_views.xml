@@ -62,13 +62,13 @@
                     </div>
                     <group>
                         <group string="Basic">
-                            <field name="project_type" class="oe_inline"/>
-                            <field name="project_group_id" widget="selection" class="oe_inline"/>
-                            <field name="user_id" widget="selection" class="oe_inline"/>
+                            <field name="project_type"/>
+                            <field name="project_group_id" widget="selection"/>
+                            <field name="user_id" widget="selection"/>
                             <field name="description"/>
                             <field name="active" invisible="1"/>
-                            <field name="company_id" widget="selection" class="oe_inline"/>
-                            <field name="currency_id" widget="selection" class="oe_inline"/>
+                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                            <field name="currency_id" widget="selection"/>
                         </group>
                         <group string="Time Frame">
                             <field name="start_date" type="date" class="oe_inline"/>
@@ -348,6 +348,8 @@
                 <field name="p_days" optional="hide"/>
                 <field name="g_days" optional="hide"/>
                 <field name="a_days" optional="hide"/>
+                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                <field name="currency_id" widget="selection"/>
             </tree>
         </field>
     </record>
@@ -369,6 +371,7 @@
                 <field name="description"/>
                 <field name="start_date" type="date"/>
                 <field name="end_date" type="date"/>
+                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_global_click">
@@ -421,6 +424,7 @@
                 <field name="user_id" filters="1" invisible="1"/>
                 <field name="name"/>
                 <field name="short_name"/>
+                <field name="company_id" widget="selection" groups="base.group_multi_company" invisible="1"/>
             </calendar>
         </field>
     </record>
@@ -438,6 +442,7 @@
                 <field name="description"/>
                 <field name="start_date" type="date"/>
                 <field name="end_date" type="date"/>
+                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                 <filter name="filter_create" string="Create Asset" domain="[('project_type', '=', 'create')]"/>
                 <filter name="filter_operate" string="Operate Asset" domain="[('project_type', '=', 'operate')]"/>
                 <separator/>
@@ -450,6 +455,7 @@
                 <separator/>
                 <group expand="0" string="Group by">
                     <filter string="Group" name="group_by_group" context="{'group_by':'project_group_id'}"/>
+                    <filter string="Company" name="group_by_company" context="{'group_by':'company_id'}"/>
                 </group>
                 <searchpanel>
                     <field name="project_group_id" select="multi" string="Project Group" enable_counters="1"/>

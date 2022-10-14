@@ -149,4 +149,4 @@ class ProductTemplate(models.Model):
     equipments_id = fields.Many2one(
         'farm.equipments',
         string = 'Equipments',
-        readonly = True)
+        readonly = False)

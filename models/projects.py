@@ -1,5 +1,4 @@
 from datetime import date, datetime, timedelta
-
 from odoo import api, fields, models, _
 
 
@@ -7,6 +6,7 @@ class farm_projects(models.Model):
     _name = 'farm.projects'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Create a project to followup all operations'
+    _check_company_auto = True
     _sql_constraints = [
         ('short_name_uniq', 'unique(short_name)', "A short name can only be assigned to one equipments !"),
     ]
@@ -447,10 +447,11 @@ class farm_projects(models.Model):
         compute = '_compute_sales_count')
     company_id = fields.Many2one(
         'res.company',
-        string = 'Company',
+        'Company',
+        index = True,
+        required = True,
         change_default = True,
-        default = lambda self: self.env.company,
-        required = False)
+        default = lambda self: self.env.company)
     currency_id = fields.Many2one(
         'res.currency',
         'Currency',
@@ -484,6 +485,7 @@ class farm_location_used(models.Model):
 class farm_project_group(models.Model):
     _name = 'farm.project.group'
     _description = 'Create a Group of project like Calf, Poultry , Grape , fruit ,etc.'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string = 'Group Name',
                        required = True,

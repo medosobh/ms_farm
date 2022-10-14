@@ -9,6 +9,7 @@ class farm_locations(models.Model):
     _parent_store = True
     _rec_name = 'complete_name'
     _order = 'complete_name'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     @api.depends('name', 'parent_id.complete_name')
     def _compute_complete_name(self):
@@ -73,3 +74,17 @@ class farm_locations(models.Model):
         'farm.locations',
         'parent_id',
         'Child location')
+    company_id = fields.Many2one(
+        'res.company',
+        string = 'Company',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False,
+        readonly = True)
+    currency_id = fields.Many2one(
+        'res.currency',
+        'Currency',
+        related = 'company_id.currency_id',
+        readonly = True,
+        ondelete = 'set null',
+        help = "Used to display the currency when tracking monetary values")
