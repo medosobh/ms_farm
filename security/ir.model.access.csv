@@ -11,4 +11,5 @@ access.farm_produce,access_farm_produce,ms_farm.model_farm_produce,base.group_us
 access.farm_produce_oline,access_farm_produce_oline,ms_farm.model_farm_produce_oline,base.group_user,1,1,1,1
 access.farm_equipments,access_farm_equipments,ms_farm.model_farm_equipments,base.group_user,1,1,1,1
 access.farm_locations,access_farm_locations,ms_farm.model_farm_locations,base.group_user,1,1,1,1
+access.farm_location_used,access_farm_location_used,ms_farm.model_farm_location_used,base.group_user,1,1,1,1
 

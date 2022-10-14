@@ -85,10 +85,10 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page name="Actual Line">
+                            <page string="Actual Line">
 
                             </page>
-                            <page name="Direct Expense">
+                            <page string="Direct Expense">
 
                             </page>
                         </notebook>

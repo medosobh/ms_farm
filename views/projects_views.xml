@@ -179,6 +179,53 @@
                                 </form>
                             </field>
                         </page>
+                        <page string="Produce Order">
+                            <field name="produce_ids" context="{'default_user_id': user_id}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="state"/>
+                                    <field name="short_name"/>
+                                    <field name="user_id" widget="selection"/>
+                                    <field name="activity_ids" widget="list_activity"/>
+                                    <field name="issue_date"/>
+                                    <field name="p_order_cost" sum="Total Order"/>
+                                    <field name="partner_id" widget="selection"/>
+                                    <field name="stock_warehouse" widget="selection"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="short_name"/>
+                                        </group>
+                                        <group string="Basic">
+                                            <field name="user_id" widget="selection"/>
+                                            <field name="issue_date"/>
+                                            <field name="p_order_cost" widget="monetary"/>
+                                            <field name="active" invisible="1"/>
+                                            <field name="company_id" groups="base.group_multi_company"/>
+                                            <field name="currency_id" groups="base.group_multi_currency"/>
+                                            <field name="partner_id" widget="selection"/>
+                                            <field name="stock_warehouse" widget="selection"/>
+                                        </group>
+                                    </group>
+                                    <field name="produce_order_line_ids" readonly="1">
+                                        <tree>
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="product_id" widget="selection"/>
+                                            <field name="name" widget="section_and_note_text"/>
+                                            <field name="categ_id" widget="selection" invisible="1"/>
+                                            <field name="price_unit" widget="monetary"/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="product_uom"/>
+                                            <field name="qty"/>
+                                            <field name="note"/>
+                                            <field name="price_subtotal" sum="Total Cost"/>
+                                        </tree>
+                                    </field>
+                                </form>
+                            </field>
+                        </page>
                         <page string="Sales Order">
                             <field name="sales_ids" context="{'default_user_id': user_id}">
                                 <tree>
@@ -228,50 +275,17 @@
                                 </form>
                             </field>
                         </page>
-                        <page string="Produce Order">
-                            <field name="produce_ids" context="{'default_user_id': user_id}">
+                        <page string="Locations">
+                            <field name="locations_used_ids">
                                 <tree>
-                                    <field name="name"/>
-                                    <field name="state"/>
-                                    <field name="short_name"/>
-                                    <field name="user_id" widget="selection"/>
-                                    <field name="activity_ids" widget="list_activity"/>
-                                    <field name="issue_date"/>
-                                    <field name="p_order_cost" sum="Total Order"/>
-                                    <field name="partner_id" widget="selection"/>
-                                    <field name="stock_warehouse" widget="selection"/>
+                                    <field name="locations_id" widget="selection"/>
+                                    <field name="space_sum" sum="Total Space"/>
                                 </tree>
                                 <form>
                                     <group>
-                                        <group>
-                                            <field name="name"/>
-                                            <field name="short_name"/>
-                                        </group>
-                                        <group string="Basic">
-                                            <field name="user_id" widget="selection"/>
-                                            <field name="issue_date"/>
-                                            <field name="p_order_cost" widget="monetary"/>
-                                            <field name="active" invisible="1"/>
-                                            <field name="company_id" groups="base.group_multi_company"/>
-                                            <field name="currency_id" groups="base.group_multi_currency"/>
-                                            <field name="partner_id" widget="selection"/>
-                                            <field name="stock_warehouse" widget="selection"/>
-                                        </group>
+                                        <field name="locations_id" widget="selection"/>
+                                        <field name="space_sum" readonly="1"/>
                                     </group>
-                                    <field name="produce_order_line_ids" readonly="1">
-                                        <tree>
-                                            <field name="sequence" widget="handle"/>
-                                            <field name="product_id" widget="selection"/>
-                                            <field name="name" widget="section_and_note_text"/>
-                                            <field name="categ_id" widget="selection" invisible="1"/>
-                                            <field name="price_unit" widget="monetary"/>
-                                            <field name="currency_id" invisible="1"/>
-                                            <field name="product_uom"/>
-                                            <field name="qty"/>
-                                            <field name="note"/>
-                                            <field name="price_subtotal" sum="Total Cost"/>
-                                        </tree>
-                                    </field>
                                 </form>
                             </field>
                         </page>
