@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 class farm_materials(models.Model):
     _name = 'farm.materials'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = 'Handel all operation orders'
+    _description = 'operation orders'
     _order = 'issue_date'
 
     # -------------------------------------------------------------------------
@@ -217,7 +217,7 @@ class farm_materials(models.Model):
 
 class farm_materials_oline(models.Model):
     _name = 'farm.materials.oline'
-    _description = 'handel all material order line'
+    _description = 'material order line'
 
     @api.onchange('product_id')
     def onchange_price_unit(self):

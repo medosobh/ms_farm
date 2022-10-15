@@ -34,6 +34,19 @@ class farm_equipments(models.Model):
         self.product_id = new_product.id
         return
 
+    def update_equipment_product_price_unit(self):
+        if self.product_id:
+            update = self.env['product.template'].browse(
+                self.product_id.id).write({
+                'standard_price': self.buy_sell_price,
+                'list_price': self.buy_sell_price,
+                'equipments_id': self.id,
+                'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
+                'detailed_type': 'service'
+            })
+            print(update)
+        return update
+
     def action_action(self):
         print('action')
 
@@ -61,19 +74,6 @@ class farm_equipments(models.Model):
                 ]).mapped('price_subtotal'))
             record.total_expense = costa
         return record.total_expense
-
-    def update_equipment_product_price_unit(self):
-        if self.product_id:
-            update = self.env['product.template'].browse(
-                self.product_id.id).write({
-                'standard_price': self.buy_sell_price,
-                'list_price': self.buy_sell_price,
-                'equipments_id': self.id,
-                'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
-                'detailed_type': 'service'
-            })
-            print(update)
-        return update
 
     code = fields.Char(
         string = 'Internal Code',
@@ -143,10 +143,4 @@ class farm_equipments(models.Model):
         string = "order lines")
 
 
-class ProductTemplate(models.Model):
-    _inherit = "product.template"
 
-    equipments_id = fields.Many2one(
-        'farm.equipments',
-        string = 'Equipments',
-        readonly = False)

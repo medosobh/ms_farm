@@ -261,7 +261,7 @@
     </data>
 
     <!-- stock location -->
-    <data noupdate="1">
+    <data noupdate="0">
         <record model="stock.location" id="farm_location_consume_view">
             <field name="name">Consume</field>
             <field name="location_id" eval="ref('stock.stock_location_locations_virtual')"/>
@@ -352,6 +352,10 @@
             <field name="parent_id" ref="product_category_farm"/>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
+        </record>
+        <record id="product_category_expense" model="product.category">
+            <field name="name">Expense</field>
+            <field name="parent_id" ref="product_category_farm"/>
         </record>
         <record id="product_category_product" model="product.category">
             <field name="name">Product</field>
@@ -534,6 +538,14 @@
             <field name="property_account_income_categ_id" eval="ref('farm_account_500100')"/>
             <field name="property_account_expense_categ_id" eval="ref('farm_account_400100')"/>
         </record>
+        <!-- direct expense-->
+        <record id="product_category_expenses" model="product.category">
+            <field name="parent_id" ref="product_category_expense"/>
+            <field name="name">Expense Item</field>
+            <field name="property_cost_method">standard</field>
+            <field name="property_valuation">manual_periodic</field>
+            <field name="order_type">expense</field>
+        </record>
     </data>
 
     <!-- stock picking type -->
@@ -581,7 +593,7 @@
 
 
     <!-- Company-restricted Records -->
-    <data>
+    <data noupdate="0">
         <record model="ir.rule" id="farm_projects_restricted_company_rule">
             <field name="name">Farm Projects: multi-company</field>
             <field name="model_id" ref="ms_farm.model_farm_projects"/>

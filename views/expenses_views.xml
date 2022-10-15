@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="farm_materials_view_form" model="ir.ui.view">
-        <field name="name">farm.materials.form</field>
-        <field name="model">farm.materials</field>
+    <record id="farm_expenses_view_form" model="ir.ui.view">
+        <field name="name">farm.expenses.form</field>
+        <field name="model">farm.expenses</field>
         <field name="arch" type="xml">
-            <form string="materials">
+            <form string="expenses">
                 <header>
-                    <button name="button_farm_stock_out"
-                            string="Stock Issue"
+                    <button name="button_farm_expense_issue"
+                            string="Expense Issue"
                             type="object"
                             class="oe_highlight"
-                            help="Create Stock Picking Out"
+                            help="Create Expense Ticket"
                             states="order"/>
-                    <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
+                    <field name="state" widget="statusbar"
+                           options="{'clickable': '0'}" clickable="True" type="object"/>
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="button_materials_box">
+                    <div class="oe_button_box" name="button_expenses_box">
                         <button name="action_stock_picking_list" type="object"
                                 class="oe_stat_button"
-                                icon="fa-truck">
+                                icon="fa-file-text-o">
                             <div class="o_stat_info">
-                                <field name="materials_consumption_count"/>
-                                <span class="o_stat_text">Moves Count</span>
+                                <field name="expenses_consumption_count"/>
+                                <span class="o_stat_text">Expense Ticket</span>
                             </div>
                         </button>
                         <button name="action_stock_picking_list" type="object"
                                 class="oe_stat_button"
                                 icon="fa-dollar">
                             <div class="o_stat_info">
-                                <field name="materials_consumption_account_count"/>
+                                <field name="expenses_consumption_account_count"/>
                                 <span class="o_stat_text">Account Count</span>
                             </div>
                         </button>
@@ -37,7 +38,7 @@
                                 icon="fa-dollar">
                             <div class="o_stat_info">
                                 <field name="currency_id" invisible="1" groups="base.group_multi_currency"/>
-                                <field name="materials_consumption_account_total" widget='monetary'
+                                <field name="expenses_consumption_account_total" widget='monetary'
                                        options="{'currency_field': 'currency_id'}"/>
                                 <span class="o_stat_text">Account Cost</span>
                             </div>
@@ -68,8 +69,8 @@
                     </group>
 
                     <notebook>
-                        <page name="farm_material_olines" string="Order Lines">
-                            <field name="materials_order_line_ids">
+                        <page name="farm_expense_olines" string="Order Lines">
+                            <field name="expenses_order_line_ids">
                                 <tree>
                                     <field name="sequence" widget="handle"/>
                                     <field name="product_id" widget="selection"/>
@@ -117,11 +118,11 @@
         </field>
     </record>
 
-    <record id="farm_materials_view_tree" model="ir.ui.view">
-        <field name="name">farm.materials.tree</field>
-        <field name="model">farm.materials</field>
+    <record id="farm_expenses_view_tree" model="ir.ui.view">
+        <field name="name">farm.expenses.tree</field>
+        <field name="model">farm.expenses</field>
         <field name="arch" type="xml">
-            <tree string="materials">
+            <tree string="expenses">
                 <field name="name"/>
                 <field name="state"/>
                 <field name="projects_id"/>
@@ -137,11 +138,11 @@
         </field>
     </record>
 
-    <record id="farm_materials_view_calendar" model="ir.ui.view">
-        <field name="name">farm.materials.calendar</field>
-        <field name="model">farm.materials</field>
+    <record id="farm_expenses_view_calendar" model="ir.ui.view">
+        <field name="name">farm.expenses.calendar</field>
+        <field name="model">farm.expenses</field>
         <field name="arch" type="xml">
-            <calendar string="materials"
+            <calendar string="expenses"
                       date_start="issue_date"
                       create="1"
                       quick_add="False"
@@ -149,7 +150,7 @@
                       color="category_id"
                       hide_time="true"
                       event_limit="5"
-                      form_view_id="%(farm_materials_view_form)d"
+                      form_view_id="%(farm_expenses_view_form)d"
                       event_open_popup="False">
                 <field name="category_id" filters="1" invisible="1"/>
                 <field name="user_id" filters="1" invisible="1"/>
@@ -161,11 +162,11 @@
         </field>
     </record>
 
-    <record id="farm_materials_view_pivot" model="ir.ui.view">
-        <field name="name">farm.materials.pivot</field>
-        <field name="model">farm.materials</field>
+    <record id="farm_expenses_view_pivot" model="ir.ui.view">
+        <field name="name">farm.expenses.pivot</field>
+        <field name="model">farm.expenses</field>
         <field name="arch" type="xml">
-            <pivot string="materials">
+            <pivot string="expenses">
                 <field name="projects_id" type="row" interval="month"/>
                 <field name="short_name" type="row"/>
                 <field name="name" type="row"/>
@@ -181,20 +182,20 @@
         </field>
     </record>
 
-    <record id="farm_materials_view_graph" model="ir.ui.view">
-        <field name="name">farm.materials.graph</field>
-        <field name="model">farm.materials</field>
+    <record id="farm_expenses_view_graph" model="ir.ui.view">
+        <field name="name">farm.expenses.graph</field>
+        <field name="model">farm.expenses</field>
         <field name="arch" type="xml">
-            <graph string="Material Analysis" type="line" sample="1">
+            <graph string="expense Analysis" type="line" sample="1">
                 <field name="issue_date" interval="day"/>
                 <field name="m_order_cost" type="measure"/>
             </graph>
         </field>
     </record>
 
-    <record id="farm_materials_view_search" model="ir.ui.view">
-        <field name="name">farm.materials.search</field>
-        <field name="model">farm.materials</field>
+    <record id="farm_expenses_view_search" model="ir.ui.view">
+        <field name="name">farm.expenses.search</field>
+        <field name="model">farm.expenses</field>
         <field name="arch" type="xml">
             <search>
                 <field name="state"/>
@@ -216,25 +217,24 @@
         </field>
     </record>
 
-    <record id="farm_materials_action" model="ir.actions.act_window">
-        <field name="name">Farm Materials Order</field>
+    <record id="farm_expenses_action" model="ir.actions.act_window">
+        <field name="name">Farm expenses Order</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">farm.materials</field>
+        <field name="res_model">farm.expenses</field>
         <field name="view_mode">tree,form,calendar,pivot,graph</field>
         <field name="context">{'search_default_filter_order': 1, 'default_state': 'order'}</field>
         <field name="domain">[]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create your first material order!
+                Create your first expense order!
             </p>
         </field>
     </record>
 
     <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="menu_materials_"
-              name="Material Orders"
+    <menuitem id="menu_expenses_"
+              name="Expense Orders"
               parent="farm_menu_orders"
-              action="farm_materials_action"
-              sequence="22"/>
-
+              action="farm_expenses_action"
+              sequence="23"/>
 </odoo>

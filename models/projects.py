@@ -1,5 +1,5 @@
 from datetime import date, datetime, timedelta
-
+from odoo.exceptions import UserError
 from odoo import api, fields, models, _
 
 
@@ -496,8 +496,68 @@ class farm_projects(models.Model):
         string = 'Actual Spend')
     cost_progress = fields.Integer(
         string = 'Cost vs Budget',
-        compute = '_compute_cost_progress'
+        compute = '_compute_cost_progress')
+    product_id = fields.Many2one(
+        'product.product',
+        domain = "[('categ_id', '=', category_id)]",
+        store = True)
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account',
     )
+
+    def create_project_product(self):
+        # if it is existed and send error message
+        new_name = self.project_type + " " + self.short_name
+        search_name = self.env['product.template'].search([
+            ('name', '=', new_name)])
+        if search_name:
+            raise UserError(_('Product already exist in the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+        # elif create
+        product_vals = {
+            'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
+            'detailed_type': 'service',
+            'name': new_name,
+            'equipments_id': self.id,
+            'default_code': self.name
+        }
+        new_product = self.env['product.template'].create(product_vals)
+        # link service product to equipment
+        self.product_id = new_product.id
+        return
+
+    def update_project_product_price_unit(self):
+        if self.product_id:
+            update = self.env['product.template'].browse(
+                self.product_id.id).write({
+                'standard_price': self.buy_sell_price,
+                'list_price': self.buy_sell_price,
+                'equipments_id': self.id,
+                'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
+                'detailed_type': 'service'
+            })
+            print(update)
+        return update
+
+    def create_project_analytic_account(self):
+        # if it is existed and send error message
+        new_name = self.code + " " + self.type + " " + self.name
+        search_name = self.env['product.template'].search([
+            ('name', '=', new_name)])
+        if search_name:
+            raise UserError(_('Product already exist in the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+        # elif create
+        product_vals = {
+            'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
+            'detailed_type': 'service',
+            'name': new_name,
+            'equipments_id': self.id,
+        }
+        new_product = self.env['product.template'].create(product_vals)
+        # link service product to equipment
+        self.product_id = new_product.id
+        return
 
 
 class farm_location_used(models.Model):

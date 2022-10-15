@@ -8,7 +8,7 @@ class ProductCategory(models.Model):
         'stock.location',
         string = "Stock Consume Location",
         check_company = True,
-        required = True)
+        required = False)
     company_id = fields.Many2one(
         'res.company',
         string = 'Company',
@@ -27,14 +27,22 @@ class ProductCategory(models.Model):
     order_type = fields.Selection([
         ('service', 'Service'),
         ('material', 'Material'),
+        ('expense', 'Expense'),
         ('produce', 'Produce'),
         ('sales', 'Sales')],
         string = 'Order Type',
         readonly = False,
         copy = False)
 
+    class ProductTemplate(models.Model):
+        _inherit = "product.template"
 
+        equipments_id = fields.Many2one(
+            'farm.equipments',
+            string = 'Equipments',
+            readonly = False)
+        projects_id = fields.Many2one(
+            'farm.projects',
+            string = 'Farm Project',
+            readonly = False)
 
-
-    # @api.onchange('categ_id')
-    # def _onchange_categ_id(self):

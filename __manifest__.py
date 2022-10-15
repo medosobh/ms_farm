@@ -45,6 +45,7 @@
         'views/project_group_views.xml',
         'views/operations_views.xml',
         'views/materials_views.xml',
+        'views/expenses_views.xml',
         'views/sales_views.xml',
         'views/produce_views.xml',
         'views/equipments_views.xml',

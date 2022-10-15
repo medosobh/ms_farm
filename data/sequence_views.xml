@@ -9,6 +9,7 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+
         <!-- Sequences for operations order -->
         <record id="farm_operations_seq" model="ir.sequence">
             <field name="name">Farm Operations</field>
@@ -17,6 +18,7 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+
         <!-- Sequences for material order -->
         <record id="farm_materials_seq" model="ir.sequence">
             <field name="name">Farm Materials</field>
@@ -25,6 +27,16 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+
+        <!-- Sequences for expense order -->
+        <record id="farm_expenses_seq" model="ir.sequence">
+            <field name="name">Farm Expenses</field>
+            <field name="code">farm.expenses</field>
+            <field name="prefix">EXP/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
         <!-- Sequences for sales order -->
         <record id="farm_sales_seq" model="ir.sequence">
             <field name="name">Farm Sales</field>
@@ -33,6 +45,7 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+
         <!-- Sequences for produce order -->
         <record id="farm_produce_seq" model="ir.sequence">
             <field name="name">Farm Produce</field>
