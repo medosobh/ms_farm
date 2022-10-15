@@ -454,7 +454,7 @@
         <!-- Move in-->
         <record id="product_category_produce" model="product.category">
             <field name="parent_id" ref="product_category_product"/>
-            <field name="name">Produce</field>
+            <field name="name">Produce and Semi</field>
             <field name="property_cost_method">fifo</field>
             <field name="property_valuation">real_time</field>
             <field name="order_type">produce</field>

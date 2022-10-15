@@ -181,6 +181,8 @@
                                 </form>
                             </field>
                         </page>
+                        <page string="Expense Budget">
+                        </page>
                         <page string="Produce Order">
                             <field name="produce_ids" context="{'default_user_id': user_id}">
                                 <tree>
