@@ -91,3 +91,20 @@ class farm_locations(models.Model):
         readonly = True,
         ondelete = 'set null',
         help = "Used to display the currency when tracking monetary values")
+
+
+class farm_location_used(models.Model):
+    _name = 'farm.location.used'
+    _description = 'Location Used'
+
+    projects_id = fields.Many2one(
+        'farm.projects',
+        string = 'Project',
+    )
+    locations_id = fields.Many2one(
+        'farm.locations',
+        string = 'Location',
+        required = True)
+    space_sum = fields.Float(
+        related = 'locations_id.space_sum'
+    )

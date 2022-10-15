@@ -33,7 +33,7 @@ class farm_operations(models.Model):
                     ('invoice_origin', '=', rec.name)
                 ]).mapped('amount_total_signed')
             )
-            rec.vendor_bill_total = total
+            rec.vendor_bill_total = -total
         return rec.vendor_bill_total
 
     # compute invoice without link to views

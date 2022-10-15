@@ -1,6 +1,7 @@
 from datetime import date, datetime, timedelta
-from odoo.exceptions import UserError
+
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class farm_projects(models.Model):
@@ -105,6 +106,11 @@ class farm_projects(models.Model):
             materials_count = self.env['farm.materials'].search_count([('projects_id', '=', rec.id)])
             rec.materials_count = materials_count
 
+    def _compute_expenses_count(self):
+        for rec in self:
+            expenses_count = self.env['farm.expenses'].search_count([('projects_id', '=', rec.id)])
+            rec.expenses_count = expenses_count
+
     def _compute_produce_count(self):
         for rec in self:
             produce_count = self.env['farm.produce'].search_count([('projects_id', '=', rec.id)])
@@ -128,6 +134,13 @@ class farm_projects(models.Model):
                 self.env['farm.materials'].search([('projects_id', '=', rec.id)]).mapped('m_order_cost'))
             rec.material_budget = ope_line
         return rec.material_budget
+
+    def _compute_expense_budget(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.expenses'].search([('projects_id', '=', rec.id)]).mapped('e_order_cost'))
+            rec.expense_budget = ope_line
+        return rec.expense_budget
 
     def _compute_plan_produce_amount(self):
         for rec in self:
@@ -157,6 +170,14 @@ class farm_projects(models.Model):
                     ('projects_id', '=', rec.id)]).mapped('materials_consumption_account_total'))
             rec.materials_actual = ope_line
         return rec.materials_actual
+
+    def _compute_expenses_actual(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.expenses'].search([
+                    ('projects_id', '=', rec.id)]).mapped('expenses_consumption_account_total'))
+            rec.expenses_actual = ope_line
+        return rec.expenses_actual
 
     def _compute_actual_produce_amount(self):
         for rec in self:
@@ -192,6 +213,16 @@ class farm_projects(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Orders',
             'res_model': 'farm.materials',
+            'domain': [('projects_id', '=', self.id)],
+            'view_mode': 'calendar,graph,tree,form',
+            'target': 'new'
+        }
+
+    def action_open_expense_orders_timeframe(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Orders',
+            'res_model': 'farm.expenses',
             'domain': [('projects_id', '=', self.id)],
             'view_mode': 'calendar,graph,tree,form',
             'target': 'new'
@@ -278,6 +309,61 @@ class farm_projects(models.Model):
     def _group_expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
 
+    def create_project_product(self):
+        # if it is existed and send error message
+        new_name = self.project_group_id.name + " " + self.short_name
+        search_name = self.env['product.template'].search([
+            ('name', '=', new_name)])
+        if search_name:
+            raise UserError(_('Product already exist in the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+        # elif create
+        product_vals = {
+            'categ_id': self.env.ref('ms_farm.product_category_produce').id,
+            'detailed_type': 'product',
+            'equipments_id': False,
+            'projects_id': self.id,
+            'name': new_name,
+            'default_code': self.name,
+        }
+        new_product = self.env['product.template'].create(product_vals)
+        # link stockable product to project
+        self.product_id = new_product.id
+        return
+
+    def update_project_product_price_unit(self):
+        if self.product_id:
+            update = self.env['product.template'].browse(
+                self.product_id.id).write({
+                'standard_price': self.buy_sell_price,
+                'list_price': self.buy_sell_price,
+                'equipments_id': self.id,
+                'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
+                'detailed_type': 'service'
+            })
+            print(update)
+        return update
+
+    def create_project_analytic_account(self):
+        # if it is existed and send error message
+        new_name = self.code + " " + self.type + " " + self.name
+        search_name = self.env['product.template'].search([
+            ('name', '=', new_name)])
+        if search_name:
+            raise UserError(_('Product already exist in the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+        # elif create
+        product_vals = {
+            'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
+            'detailed_type': 'product',
+            'name': new_name,
+            'equipments_id': self.id,
+        }
+        new_product = self.env['product.template'].create(product_vals)
+        # link service product to equipment
+        self.product_id = new_product.id
+        return
+
     priority = fields.Selection([
         ('0', 'Normal'),
         ('1', 'Low'),
@@ -316,7 +402,8 @@ class farm_projects(models.Model):
         tracking = True)
     project_group_id = fields.Many2one(
         comodel_name = 'farm.project.group',
-        string = 'Project Group')
+        string = 'Project Group',
+        required = True)
     user_id = fields.Many2one(
         'res.users', string = "Project Man",
         required = True)
@@ -371,6 +458,12 @@ class farm_projects(models.Model):
         currency_field = 'currency_id',
         required = False,
         tracking = True)
+    expense_budget = fields.Monetary(
+        string = 'Expense Budget',
+        compute = '_compute_expense_budget',
+        currency_field = 'currency_id',
+        required = False,
+        tracking = True)
     plan_produce_qty = fields.Float(
         string = 'Produce Plan Qty',
         required = False,
@@ -404,6 +497,12 @@ class farm_projects(models.Model):
     materials_actual = fields.Monetary(
         string = 'Material Actual',
         compute = '_compute_materials_actual',
+        currency_field = 'currency_id',
+        required = False,
+        tracking = True)
+    expenses_actual = fields.Monetary(
+        string = 'Expense Actual',
+        compute = '_compute_expenses_actual',
         currency_field = 'currency_id',
         required = False,
         tracking = True)
@@ -447,6 +546,16 @@ class farm_projects(models.Model):
     materials_count = fields.Integer(
         string = "Material Count",
         compute = '_compute_materials_count')
+    expenses_id = fields.Many2one(
+        'farm.expenses',
+        string = "Project Expenses")
+    expenses_ids = fields.One2many(
+        'farm.expenses',
+        'projects_id',
+        string = "Expenses Orders")
+    expenses_count = fields.Integer(
+        string = "Expense Count",
+        compute = '_compute_expenses_count')
     produce_id = fields.Many2one(
         'farm.produce',
         string = "Produce Orders")
@@ -499,82 +608,17 @@ class farm_projects(models.Model):
         compute = '_compute_cost_progress')
     product_id = fields.Many2one(
         'product.product',
-        domain = "[('categ_id', '=', category_id)]",
+        domain = "[('categ_id', '=', category_id)]")
+    category_id = fields.Many2one(
+        'product.category',
+        required = True,
+        default = lambda self: self.env.ref('ms_farm.product_category_produce'),
+        string = 'Product Category')
+    buy_sell_price = fields.Float(
+        string = 'buy  and sell price',
         store = True)
     analytic_account_id = fields.Many2one(
-        'account.analytic.account',
-    )
-
-    def create_project_product(self):
-        # if it is existed and send error message
-        new_name = self.project_type + " " + self.short_name
-        search_name = self.env['product.template'].search([
-            ('name', '=', new_name)])
-        if search_name:
-            raise UserError(_('Product already exist in the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
-        # elif create
-        product_vals = {
-            'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
-            'detailed_type': 'service',
-            'name': new_name,
-            'equipments_id': self.id,
-            'default_code': self.name
-        }
-        new_product = self.env['product.template'].create(product_vals)
-        # link service product to equipment
-        self.product_id = new_product.id
-        return
-
-    def update_project_product_price_unit(self):
-        if self.product_id:
-            update = self.env['product.template'].browse(
-                self.product_id.id).write({
-                'standard_price': self.buy_sell_price,
-                'list_price': self.buy_sell_price,
-                'equipments_id': self.id,
-                'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
-                'detailed_type': 'service'
-            })
-            print(update)
-        return update
-
-    def create_project_analytic_account(self):
-        # if it is existed and send error message
-        new_name = self.code + " " + self.type + " " + self.name
-        search_name = self.env['product.template'].search([
-            ('name', '=', new_name)])
-        if search_name:
-            raise UserError(_('Product already exist in the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
-        # elif create
-        product_vals = {
-            'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
-            'detailed_type': 'service',
-            'name': new_name,
-            'equipments_id': self.id,
-        }
-        new_product = self.env['product.template'].create(product_vals)
-        # link service product to equipment
-        self.product_id = new_product.id
-        return
-
-
-class farm_location_used(models.Model):
-    _name = 'farm.location.used'
-    _description = 'Location Used'
-
-    projects_id = fields.Many2one(
-        'farm.projects',
-        string = 'Project',
-    )
-    locations_id = fields.Many2one(
-        'farm.locations',
-        string = 'Location',
-        required = True)
-    space_sum = fields.Float(
-        related = 'locations_id.space_sum'
-    )
+        'account.analytic.account')
 
 
 class farm_project_group(models.Model):

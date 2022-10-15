@@ -28,6 +28,7 @@ class farm_equipments(models.Model):
             'detailed_type': 'service',
             'name': new_name,
             'equipments_id': self.id,
+            'default_code': self.name,
         }
         new_product = self.env['product.template'].create(product_vals)
         # link service product to equipment
@@ -94,8 +95,7 @@ class farm_equipments(models.Model):
         required = True)
     product_id = fields.Many2one(
         'product.product',
-        domain = "[('categ_id', '=', category_id)]",
-        store = True)
+        domain = "[('categ_id', '=', category_id)]")
     acq_date = fields.Date(
         string = 'Acquisition Date',
         required = True)

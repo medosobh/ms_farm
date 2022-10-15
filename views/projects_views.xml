@@ -35,6 +35,14 @@
                                 <span class="o_stat_text">Material TF</span>
                             </div>
                         </button>
+                        <button name="action_open_expense_orders_timeframe" type="object"
+                                class="oe_stat_button"
+                                icon="fa-calendar">
+                            <div class="o_stat_info">
+                                <field name="expenses_count"/>
+                                <span class="o_stat_text">Expense TF</span>
+                            </div>
+                        </button>
                         <button name="action_open_produce_orders_timeframe" type="object"
                                 class="oe_stat_button"
                                 icon="fa-calendar">
@@ -182,6 +190,20 @@
                             </field>
                         </page>
                         <page string="Expense Budget">
+                            <field name="expenses_ids" context="{'default_user_id': user_id}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="state"/>
+                                    <field name="category_id"/>
+                                    <field name="user_id" widget="selection"/>
+                                    <field name="activity_ids" widget="list_activity"/>
+                                    <field name="issue_date"/>
+                                    <field name="e_order_cost" widget="monetary"/>
+                                    <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
+                                    <field name="partner_id" widget="selection"/>
+                                    <field name="stock_warehouse" widget="selection"/>
+                                </tree>
+                            </field>
                         </page>
                         <page string="Produce Order">
                             <field name="produce_ids" context="{'default_user_id': user_id}">
@@ -298,6 +320,7 @@
                                 <group name="Budget">
                                     <field name="operation_budget" widget='monetary'/>
                                     <field name="material_budget" widget='monetary'/>
+                                    <field name="expense_budget" widget='monetary'/>
                                     <field name="total_budget" widget='monetary'/>
                                     <field name="plan_produce_amount" widget='monetary'/>
                                     <field name="plan_produce_qty"/>
@@ -308,6 +331,7 @@
                                 <group name="Actual">
                                     <field name="operations_actual" widget='monetary'/>
                                     <field name="materials_actual" widget='monetary'/>
+                                    <field name="expenses_actual" widget='monetary'/>
                                     <field name="actual_produce_amount" widget='monetary'/>
                                     <field name="actual_produce_qty"/>
                                     <field name="actual_sales_amount" widget='monetary'/>
@@ -327,6 +351,30 @@
                                     <field name="total_actual" widget="gauge"
                                            options="{'max_field': 'total_budget', 'label_field': 'Days Gone', 'style': 'width:160px; height: 120px;'}"/>
                                 </div>
+                            </group>
+                        </page>
+                        <page string="Settings">
+                            <group string="Product and Category">
+                                <group>
+                                    <field name="product_id" widget="selection" class="oe_inline"/>
+                                    <field name="buy_sell_price" class="oe_inline"/>
+                                    <field name="category_id" widget="selection" class="oe_inline"/>
+                                </group>
+                                <group>
+                                    <div>
+                                        <button name="create_project_product" string="Create Product" type="object"
+                                                class="oe_highlight"
+                                                attrs="{'invisible':[('product_id','!=', False)]}"/>
+                                    </div>
+                                    <div>
+                                        <button name="update_project_product_price_unit"
+                                                string="Re/Link and Update Price Unit"
+                                                type="object"/>
+                                    </div>
+                                </group>
+                            </group>
+                            <group string="Analytic Account">
+                                <field name="analytic_account_id" widget="selection" class="oe_inline"/>
                             </group>
                         </page>
                     </notebook>

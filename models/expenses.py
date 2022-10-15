@@ -16,8 +16,8 @@ class farm_expenses(models.Model):
         for rec in self:
             oline = sum(
                 self.env['farm.expenses.oline'].search([('expenses_id', '=', rec.id)]).mapped('price_subtotal'))
-            rec.m_order_cost = oline
-        return rec.m_order_cost
+            rec.e_order_cost = oline
+        return rec.e_order_cost
 
     def _compute_stock_move_count(self):
         for rec in self:
@@ -50,9 +50,8 @@ class farm_expenses(models.Model):
             am_total = sum(
                 self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
             fam_total = fam_total - am_total
-
-        mo_rec.expenses_consumption_account_total = fam_total
-        return mo_rec.expenses_consumption_account_total
+        self.expenses_consumption_account_total = fam_total
+        return self.expenses_consumption_account_total
 
     # -------------------------------------------------------------------------
     # Create METHODS
@@ -126,7 +125,7 @@ class farm_expenses(models.Model):
         "Stock Picking Type",
         default = lambda self: self.env.ref('ms_farm.farm_location_fertilize').id,
         required = False)
-    m_order_cost = fields.Monetary(
+    e_order_cost = fields.Monetary(
         string = 'Budget Cost',
         compute = '_compute_expense_order_cost',
         currency_field = 'currency_id',

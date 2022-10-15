@@ -39,10 +39,8 @@ class ProductCategory(models.Model):
 
         equipments_id = fields.Many2one(
             'farm.equipments',
-            string = 'Equipments',
-            readonly = False)
+            string = 'Equipments')
         projects_id = fields.Many2one(
             'farm.projects',
-            string = 'Farm Project',
-            readonly = False)
+            string = 'Farm Project')
 
