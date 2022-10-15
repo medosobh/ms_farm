@@ -74,6 +74,8 @@
                             <field name="start_date" type="date" class="oe_inline"/>
                             <field name="end_date" type="date" class="oe_inline"/>
                             <field name="close_date" type="date" class="oe_inline"/>
+                            <field name="time_progress" widget="progressbar">Time</field>
+                            <field name="cost_progress" widget="progressbar">Cost</field>
                         </group>
                     </group>
                     <notebook string="Details">
@@ -294,6 +296,7 @@
                                 <group name="Budget">
                                     <field name="operation_budget" widget='monetary'/>
                                     <field name="material_budget" widget='monetary'/>
+                                    <field name="total_budget" widget='monetary'/>
                                     <field name="plan_produce_amount" widget='monetary'/>
                                     <field name="plan_produce_qty"/>
                                     <field name="plan_sales_amount" widget='monetary'/>
@@ -307,11 +310,22 @@
                                     <field name="actual_produce_qty"/>
                                     <field name="actual_sales_amount" widget='monetary'/>
                                     <field name="actual_sales_qty"/>
-                                    <field name="g_days" string="Days Gone"/>
                                     <field name="a_days" String="Actual Days"/>
                                 </group>
                             </group>
 
+                        </page>
+                        <page string="KPIs">
+                            <group>
+                                <div>
+                                    <field name="g_days" widget="gauge"
+                                           options="{'max_field': 'p_days', 'label_field': 'Days Gone', 'style': 'width:160px; height: 120px;'}"/>
+                                </div>
+                                <div>
+                                    <field name="total_actual" widget="gauge"
+                                           options="{'max_field': 'total_budget', 'label_field': 'Days Gone', 'style': 'width:160px; height: 120px;'}"/>
+                                </div>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
@@ -320,6 +334,36 @@
                     <field name="activity_ids"/>
                     <field name="message_ids"/>
                 </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="quick_create_farm_projects_view_form" model="ir.ui.view">
+        <field name="name">farm.projects.form.quick_create</field>
+        <field name="model">farm.projects</field>
+        <field name="arch" type="xml">
+            <form string="Project">
+                <sheet>
+                    <group>
+                        <field name="priority" widget="priority" class="mr-3"/>
+                        <field name="name"/>
+                        <separator/>
+                        <field name="short_name"/>
+                        <group string="Basic">
+                            <field name="project_type"/>
+                            <field name="project_group_id" widget="selection"/>
+                            <field name="user_id" widget="selection"/>
+                            <field name="description"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                            <field name="currency_id" widget="selection"/>
+                        </group>
+                        <group string="Time Frame">
+                            <field name="start_date" type="date" class="oe_inline"/>
+                            <field name="end_date" type="date" class="oe_inline"/>
+                        </group>
+                    </group>
+                </sheet>
             </form>
         </field>
     </record>
@@ -359,9 +403,10 @@
         <field name="model">farm.projects</field>
         <field name="arch" type="xml">
             <kanban default_group_by="state"
-                    class="o_farm_projects_kanban"
-                    sample="1" on_create="quick_create"
-                    quick_create_view="farm_projects_view_form">
+                    class="o_kanban_small_column o_kanban_project_tasks"
+                    sample="1"
+                    on_create="quick_create"
+                    quick_create_view="ms_farm.quick_create_farm_projects_view_form">
                 <field name="state"/>
                 <field name="priority" widget="priority" class="mr-3"/>
                 <field name="name"/>
@@ -405,6 +450,12 @@
                                     </li>
                                 </ul>
                             </div>
+                            <li>
+                                Time Progress:
+                                <field name="time_progress" widget="progressbar"/>
+                                Cost Progress:
+                                <field name="cost_progress" widget="progressbar">Cost</field>
+                            </li>
                         </div>
                     </t>
                 </templates>
@@ -418,7 +469,7 @@
         <field name="arch" type="xml">
             <calendar string="Projects" date_start="start_date" date_stop="end_date" create="1" quick_add="False"
                       mode="month" color="project_group_id" hide_time="true" event_limit="5"
-                      form_view_id="%(farm_projects_view_form)d" event_open_popup="False">
+                      form_view_id="%(quick_create_farm_projects_view_form)d" event_open_popup="False">
                 <field name="project_type" filters="1" invisible="1"/>
                 <field name="project_group_id" filters="1" invisible="1"/>
                 <field name="user_id" filters="1" invisible="1"/>

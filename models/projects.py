@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta
+
 from odoo import api, fields, models, _
 
 
@@ -67,6 +68,13 @@ class farm_projects(models.Model):
             # so add one day to get 5 days instead
             r.g_days = (date.today() - r.start_date).days + 1
 
+    def _compute_time_progress(self):
+        for r in self:
+            if not r.start_date:
+                continue
+            # Compute integar of time gone vs planned days
+            r.time_progress = abs(r.g_days / r.p_days * 100)
+
     def _get_actual_gone(self):
         for r in self:
             if not (r.start_date and r.close_date):
@@ -76,6 +84,16 @@ class farm_projects(models.Model):
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
             r.a_days = (r.close_date - r.start_date).days + 1
+
+    def _compute_cost_progress(self):
+        for r in self:
+            if not (r.operation_budget or r.material_budget):
+                r.cost_progress = 0
+                continue
+            # Compute the percent based on major cost till add expense module,
+            r.total_actual = (r.operations_actual + r.materials_actual)
+            r.total_budget = (r.operation_budget + r.material_budget)
+            r.cost_progress = abs(r.total_actual / r.total_budget * 100)
 
     def _compute_operations_count(self):
         for rec in self:
@@ -257,6 +275,9 @@ class farm_projects(models.Model):
             vals['name'] = self.env['ir.sequence'].next_by_code('farm.projects') or _('New')
         return super(farm_projects, self).create(vals)
 
+    def _group_expand_states(self, states, domain, order):
+        return [key for key, val in type(self).state.selection]
+
     priority = fields.Selection([
         ('0', 'Normal'),
         ('1', 'Low'),
@@ -269,6 +290,7 @@ class farm_projects(models.Model):
         ('finish', 'Finished'),
         ('on_hold', 'On hold')],
         string = 'Status',
+        group_expand = '_group_expand_states',
         readonly = False,
         required = True,
         tracking = True,
@@ -451,6 +473,7 @@ class farm_projects(models.Model):
         index = True,
         required = True,
         change_default = True,
+        readonly = True,
         default = lambda self: self.env.company)
     currency_id = fields.Many2one(
         'res.currency',
@@ -463,6 +486,18 @@ class farm_projects(models.Model):
         'farm.location.used',
         'projects_id',
         string = "locations Used")
+    # set of Key performance indicators
+    time_progress = fields.Integer(
+        string = 'Time Gone',
+        compute = '_compute_time_progress')
+    total_budget = fields.Float(
+        string = 'Order Budget')
+    total_actual = fields.Float(
+        string = 'Actual Spend')
+    cost_progress = fields.Integer(
+        string = 'Cost vs Budget',
+        compute = '_compute_cost_progress'
+    )
 
 
 class farm_location_used(models.Model):

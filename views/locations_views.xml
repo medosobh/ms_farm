@@ -10,6 +10,7 @@
                             <label for="name" string="Location"/>
                             <h1>
                                 <field name="name" placeholder="Sector 1, 2,.."/>
+                                <field name="address" placeholder=" North West East South of ..."/>
                             </h1>
                         </div>
                         <group name="first" col="2">
@@ -31,6 +32,7 @@
             <field name="arch" type="xml">
                 <tree string="Project Locations">
                     <field name="name"/>
+                    <field name="address" placeholder=" North West East South of ..."/>
                     <field name="display_name"/>
                     <field name="space_sum"/>
                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>

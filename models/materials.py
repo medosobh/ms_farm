@@ -48,7 +48,7 @@ class farm_materials(models.Model):
         for sm_rec in sp_count:
             sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
             am_total = sum(
-                    self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
+                self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
             fam_total = fam_total - am_total
 
         mo_rec.materials_consumption_account_total = fam_total
@@ -219,6 +219,13 @@ class farm_materials_oline(models.Model):
     _name = 'farm.materials.oline'
     _description = 'handel all material order line'
 
+    @api.onchange('product_id')
+    def onchange_price_unit(self):
+        if not self.product_id:
+            self.price_unit = 0
+            return
+        self.price_unit = self.product_id.standard_price
+
     @api.depends('price_unit', 'qty')
     def _compute_subtotal(self):
         for rec in self:
@@ -238,7 +245,6 @@ class farm_materials_oline(models.Model):
         related = 'materials_id.category_id',
         string = 'Category')
     price_unit = fields.Float(
-        related = 'product_id.standard_price',
         string = 'Price')
     product_uom = fields.Many2one(
         'uom.uom',

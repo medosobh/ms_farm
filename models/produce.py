@@ -218,6 +218,13 @@ class farm_produce_oline(models.Model):
     _name = 'farm.produce.oline'
     _description = 'handel all produce order line'
 
+    @api.onchange('product_id')
+    def onchange_price_unit(self):
+        if not self.product_id:
+            self.price_unit = 0
+            return
+        self.price_unit = self.product_id.standard_price
+
     @api.depends('price_unit', 'qty')
     def _compute_subtotal(self):
         for rec in self:
@@ -237,7 +244,6 @@ class farm_produce_oline(models.Model):
         related = 'produce_id.category_id',
         string = 'Category')
     price_unit = fields.Float(
-        related = 'product_id.standard_price',
         string = 'Price')
     product_uom = fields.Many2one(
         'uom.uom', 'Unit of Measure',

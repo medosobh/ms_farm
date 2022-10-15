@@ -55,6 +55,9 @@ class farm_locations(models.Model):
         compute = '_compute_complete_name',
         recursive = True,
         store = True)
+    address = fields.Text(
+        'Address',
+        help = "Wrtie down the address of this location")
     space = fields.Float(
         string = 'Space in acre',
         help = "The Acre space under this location (Does not consider the children location)")

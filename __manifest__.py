@@ -31,6 +31,8 @@
                 'sale',
                 'sale_management',
                 'purchase',
+                'hr_expense',
+                'web_kanban_gauge',
                 ],
 
     # always loaded

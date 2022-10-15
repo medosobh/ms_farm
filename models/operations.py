@@ -205,34 +205,50 @@ class farm_operations_oline(models.Model):
     _name = 'farm.operations.oline'
     _description = 'handel all operation order line'
 
+    @api.onchange('product_id')
+    def onchange_price_unit(self):
+        if not self.product_id:
+            self.price_unit = 0
+            return
+        self.price_unit = self.product_id.standard_price
+
     @api.depends('price_unit', 'qty')
     def _compute_subtotal(self):
         for rec in self:
             rec.price_subtotal = rec.price_unit * rec.qty
+        return rec.price_subtotal
 
-    sequence = fields.Integer(string = 'Sequence', default = 10)
-    product_id = fields.Many2one('product.product',
-                                 required = True,
-                                 domain = "[('categ_id', '=', categ_id)]")
-    name = fields.Text(string = 'Description',
-                       required = False)
-    categ_id = fields.Many2one(related = 'operations_id.category_id',
-                               string = 'Category')
-    price_unit = fields.Float(related = 'product_id.standard_price',
-                              string = 'Price')
+    sequence = fields.Integer(
+        string = 'Sequence',
+        default = 10)
+    product_id = fields.Many2one(
+        'product.product',
+        required = True,
+        domain = "[('categ_id', '=', categ_id), ('purchase_ok', '=', True)]",
+        change_default = True)
+    name = fields.Text(
+        string = 'Description',
+        required = False)
+    categ_id = fields.Many2one(
+        related = 'operations_id.category_id',
+        string = 'Category')
+    price_unit = fields.Float(
+        string = 'Price')
     product_uom = fields.Many2one(
         'uom.uom',
         'Unit of Measure',
         related = 'product_id.uom_id',
         domain = "[('category_id', '=', product_uom_category_id)]")
-    qty = fields.Float('Quantity')
-    company_id = fields.Many2one('res.company',
-                                 string = 'Company',
-                                 related = 'operations_id.company_id',
-                                 change_default = True,
-                                 default = lambda self: self.env.company,
-                                 required = False,
-                                 readonly = True)
+    qty = fields.Float(
+        'Quantity')
+    company_id = fields.Many2one(
+        'res.company',
+        string = 'Company',
+        related = 'operations_id.company_id',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False,
+        readonly = True)
     currency_id = fields.Many2one(
         'res.currency',
         string = 'Currency',
