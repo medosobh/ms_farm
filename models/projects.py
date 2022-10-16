@@ -344,7 +344,7 @@ class farm_projects(models.Model):
 
     def create_project_analytic_account(self):
         # if it is existed and send error message
-        new_name = self.code + " " + self.type + " " + self.name
+        new_name = self.project_group_id.name + " " + self.short_name
         search_name = self.env['product.template'].search([
             ('name', '=', new_name)])
         if search_name:
@@ -352,15 +352,14 @@ class farm_projects(models.Model):
                 self.company_id.name, self.company_id.id))
         # elif create
         product_vals = dict(
-            categ_id = self.env.ref('ms_farm.product_category_equipment').id,
+            categ_id = self.category_id.id,
             detailed_type = 'product',
             name = new_name,
             reference_record = '% s,% s' % ('farm.projects', self.id),
-            default_code = self.name,
+            default_code = self.name + " " + self.short_name,
         )
         new_product = self.env['product.template'].create(product_vals)
-        # link service product to equipment
-        self.product_id = new_product.id
+        self.product_id = '% s,% s' % ('product.template', new_product.id)
         return
 
     priority = fields.Selection([
@@ -618,8 +617,11 @@ class farm_projects(models.Model):
     buy_sell_price = fields.Float(
         string = 'buy  and sell price',
         store = True)
-    analytic_account_id = fields.Many2one(
-        'account.analytic.account')
+    analytic_account_id = fields.Reference(
+        selection = [
+            ('account.analytic.account', 'Analytic Account')
+        ],
+        string = 'Reference Analytic Account')
 
 
 class farm_project_group(models.Model):
@@ -645,3 +647,15 @@ class stockPicking(models.Model):
     reference_record = fields.Reference(selection = [('farm.operations', 'Operation Order'),
                                                      ('farm.produce', 'Produce Order')],
                                         string = 'Order Reference')
+
+
+class AccountAnalyticAccount(models.Model):
+    _inherit = 'account.analytic.account'
+
+    project_reference = fields.Reference(
+        [
+            ('farm.projects', 'Project')
+        ],
+        string = 'Project'
+    )
+

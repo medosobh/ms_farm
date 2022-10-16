@@ -51,7 +51,7 @@
         'views/equipments_views.xml',
         'views/locations_views.xml',
         'views/projects_views.xml',
-        'views/product_category_views.xml',
+        'views/inherit_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
