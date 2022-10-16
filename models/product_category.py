@@ -1,4 +1,4 @@
-from odoo import fields, models, api, _
+from odoo import fields, models
 
 
 class ProductCategory(models.Model):
@@ -37,10 +37,9 @@ class ProductCategory(models.Model):
     class ProductTemplate(models.Model):
         _inherit = "product.template"
 
-        equipments_id = fields.Many2one(
-            'farm.equipments',
-            string = 'Equipments')
-        projects_id = fields.Many2one(
-            'farm.projects',
-            string = 'Farm Project')
-
+        reference_record = fields.Reference([
+            ('farm.projects', 'Projects'),
+            ('farm.equipments', 'Equipments')
+        ],
+            string = 'Related Module'
+        )

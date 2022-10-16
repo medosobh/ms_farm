@@ -231,7 +231,4 @@ class farm_expenses_oline(models.Model):
     expenses_id = fields.Many2one(
         'farm.expenses',
         string = 'expenses')
-    equipments_id = fields.Many2one(
-        'farm.equipments',
-        string = 'Equipments',
-        related = 'product_id.equipments_id')
+

@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 class farm_projects(models.Model):
     _name = 'farm.projects'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = 'Create a project to followup all operations'
+    _description = 'Farm Projects Management'
     _check_company_auto = True
     _sql_constraints = [
         ('short_name_uniq', 'unique(short_name)', "A short name can only be assigned to one equipments !"),
@@ -318,29 +318,27 @@ class farm_projects(models.Model):
             raise UserError(_('Product already exist in the company %s (%s).') % (
                 self.company_id.name, self.company_id.id))
         # elif create
-        product_vals = {
-            'categ_id': self.env.ref('ms_farm.product_category_produce').id,
-            'detailed_type': 'product',
-            'equipments_id': False,
-            'projects_id': self.id,
-            'name': new_name,
-            'default_code': self.name,
-        }
+        product_vals = dict(
+            categ_id = self.category_id.id,
+            detailed_type = 'product',
+            name = new_name,
+            reference_record = '% s,% s' % ('farm.projects', self.id),
+            default_code = self.name + " " + self.short_name,
+        )
         new_product = self.env['product.template'].create(product_vals)
-        # link stockable product to project
-        self.product_id = new_product.id
+        self.product_id = '% s,% s' % ('product.template', new_product.id)
         return
 
     def update_project_product_price_unit(self):
         if self.product_id:
             update = self.env['product.template'].browse(
-                self.product_id.id).write({
-                'standard_price': self.buy_sell_price,
-                'list_price': self.buy_sell_price,
-                'equipments_id': self.id,
-                'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
-                'detailed_type': 'service'
-            })
+                self.product_id.id).write(
+                dict(
+                    standard_price = self.buy_sell_price,
+                    list_price = self.buy_sell_price,
+                    detailed_type = 'product'
+                )
+            )
             print(update)
         return update
 
@@ -353,12 +351,13 @@ class farm_projects(models.Model):
             raise UserError(_('Product already exist in the company %s (%s).') % (
                 self.company_id.name, self.company_id.id))
         # elif create
-        product_vals = {
-            'categ_id': self.env.ref('ms_farm.product_category_equipment').id,
-            'detailed_type': 'product',
-            'name': new_name,
-            'equipments_id': self.id,
-        }
+        product_vals = dict(
+            categ_id = self.env.ref('ms_farm.product_category_equipment').id,
+            detailed_type = 'product',
+            name = new_name,
+            reference_record = '% s,% s' % ('farm.projects', self.id),
+            default_code = self.name,
+        )
         new_product = self.env['product.template'].create(product_vals)
         # link service product to equipment
         self.product_id = new_product.id
@@ -606,9 +605,11 @@ class farm_projects(models.Model):
     cost_progress = fields.Integer(
         string = 'Cost vs Budget',
         compute = '_compute_cost_progress')
-    product_id = fields.Many2one(
-        'product.product',
-        domain = "[('categ_id', '=', category_id)]")
+    product_id = fields.Reference(
+        selection = [
+            ('product.template', 'Product')
+        ],
+        string = 'Reference Product')
     category_id = fields.Many2one(
         'product.category',
         required = True,

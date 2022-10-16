@@ -271,10 +271,6 @@ class farm_operations_oline(models.Model):
     operations_id = fields.Many2one(
         'farm.operations',
         string = 'Operations')
-    equipments_id = fields.Many2one(
-        'farm.equipments',
-        string = 'Equipments',
-        related = 'product_id.equipments_id')
     state = fields.Selection(
         related = 'operations_id.state',
         store = True)

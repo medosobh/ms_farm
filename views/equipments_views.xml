@@ -72,19 +72,7 @@
                         </group>
                         <notebook>
                             <page name="farm_operation_olines" string="Order Line">
-                                <field name="operation_order_line_ids" readonly="1">
-                                    <tree>
-                                        <field name="operations_id"/>
-                                        <field name="product_id" domain=""/>
-                                        <field name="categ_id" widget="selection" invisible="1"/>
-                                        <field name="price_unit" widget="monetary"/>
-                                        <field name="currency_id" invisible="1"/>
-                                        <field name="product_uom"/>
-                                        <field name="qty"/>
-                                        <field name="note"/>
-                                        <field name="price_subtotal" sum="Total Cost"/>
-                                    </tree>
-                                </field>
+
                             </page>
                             <page string="Actual Line">
 
