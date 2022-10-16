@@ -37,6 +37,9 @@ class farm_projects(models.Model):
         for rec in self:
             rec.state = 'on_hold'
 
+    def _group_expand_states(self, states, domain, order):
+        return [key for key, val in type(self).state.selection]
+
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
     # -------------------------------------------------------------------------
@@ -195,125 +198,20 @@ class farm_projects(models.Model):
         return rec.actual_sales_amount
 
     # -------------------------------------------------------------------------
-    # Call Views METHODS
+    # CREATE METHODS
     # -------------------------------------------------------------------------
-
-    def action_open_operation_orders_timeframe(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Orders',
-            'res_model': 'farm.operations',
-            'domain': [('projects_id', '=', self.id)],
-            'view_mode': 'calendar,graph,tree,form',
-            'target': 'new'
-        }
-
-    def action_open_material_orders_timeframe(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Orders',
-            'res_model': 'farm.materials',
-            'domain': [('projects_id', '=', self.id)],
-            'view_mode': 'calendar,graph,tree,form',
-            'target': 'new'
-        }
-
-    def action_open_expense_orders_timeframe(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Orders',
-            'res_model': 'farm.expenses',
-            'domain': [('projects_id', '=', self.id)],
-            'view_mode': 'calendar,graph,tree,form',
-            'target': 'new'
-        }
-
-    def action_open_produce_orders_timeframe(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Orders',
-            'res_model': 'farm.produce',
-            'domain': [('projects_id', '=', self.id)],
-            'view_mode': 'calendar,graph,tree,form',
-            'target': 'new'
-        }
-
-    def action_open_sales_orders_timeframe(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Orders',
-            'res_model': 'farm.sales',
-            'domain': [('projects_id', '=', self.id)],
-            'view_mode': 'calendar,graph,tree,form',
-            'target': 'new'
-        }
-
-    def action_open_operation_orders(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Operation Orders',
-            'res_model': 'farm.operations',
-            'domain': [('projects_id', '=', self.id)],
-            'view_mode': 'form',
-            'view_type': 'form',
-            'context': {'default_projects_id': self.id,
-                        'default_user_id': self.user_id.id},
-            'target': 'new'
-        }
-
-    def action_open_material_orders(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Material Orders',
-            'res_model': 'farm.materials',
-            'domain': [('materials_id', '=', self.id)],
-            'view_mode': 'form',
-            'view_type': 'form',
-            'context': {'default_projects_id': self.id,
-                        'default_user_id': self.user_id.id},
-            'target': 'new'
-        }
-
-    def action_open_sales_orders(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Sales Orders',
-            'res_model': 'farm.sales',
-            'domain': [('projects_id', '=', self.id)],
-            'view_mode': 'form',
-            'view_type': 'form',
-            'context': {'default_projects_id': self.id,
-                        'default_user_id': self.user_id.id},
-            'target': 'new'
-        }
-
-    def action_open_produce_orders(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Produce Orders',
-            'res_model': 'farm.produce',
-            'domain': [('projects_id', '=', self.id)],
-            'view_mode': 'form',
-            'view_type': 'form',
-            'context': {'default_projects_id': self.id,
-                        'default_user_id': self.user_id.id},
-            'target': 'new'
-        }
-
     @api.model
     def create(self, vals):
         if not vals.get('name') or vals['name'] == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('farm.projects') or _('New')
         return super(farm_projects, self).create(vals)
 
-    def _group_expand_states(self, states, domain, order):
-        return [key for key, val in type(self).state.selection]
-
     def create_project_product(self):
         # if it is existed and send error message
         new_name = self.project_group_id.name + " " + self.short_name
         search_name = self.env['product.template'].search([
-            ('name', '=', new_name)])
+            ('name', '=', new_name)
+        ])
         if search_name:
             raise UserError(_('Product already exist in the company %s (%s).') % (
                 self.company_id.name, self.company_id.id))
@@ -345,21 +243,19 @@ class farm_projects(models.Model):
     def create_project_analytic_account(self):
         # if it is existed and send error message
         new_name = self.project_group_id.name + " " + self.short_name
-        search_name = self.env['product.template'].search([
-            ('name', '=', new_name)])
+        search_name = self.env['account.analytic.account'].search([
+            ('name', '=', new_name)
+        ])
         if search_name:
             raise UserError(_('Product already exist in the company %s (%s).') % (
                 self.company_id.name, self.company_id.id))
         # elif create
-        product_vals = dict(
-            categ_id = self.category_id.id,
-            detailed_type = 'product',
+        analytic_account_vals = dict(
             name = new_name,
-            reference_record = '% s,% s' % ('farm.projects', self.id),
-            default_code = self.name + " " + self.short_name,
+            project_reference = '% s,% s' % ('farm.projects', self.id),
         )
-        new_product = self.env['product.template'].create(product_vals)
-        self.product_id = '% s,% s' % ('product.template', new_product.id)
+        new_analytic_account = self.env['account.analytic.account'].create(analytic_account_vals)
+        self.analytic_account_id = '% s,% s' % ('account.analytic.account', new_analytic_account.id)
         return
 
     priority = fields.Selection([
@@ -623,6 +519,112 @@ class farm_projects(models.Model):
         ],
         string = 'Reference Analytic Account')
 
+    # -------------------------------------------------------------------------
+    # Call Views METHODS
+    # -------------------------------------------------------------------------
+
+    def action_open_operation_orders_timeframe(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Orders',
+            'res_model': 'farm.operations',
+            'domain': [('projects_id', '=', self.id)],
+            'view_mode': 'calendar,graph,tree,form',
+            'target': 'new'
+        }
+
+    def action_open_material_orders_timeframe(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Orders',
+            'res_model': 'farm.materials',
+            'domain': [('projects_id', '=', self.id)],
+            'view_mode': 'calendar,graph,tree,form',
+            'target': 'new'
+        }
+
+    def action_open_expense_orders_timeframe(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Orders',
+            'res_model': 'farm.expenses',
+            'domain': [('projects_id', '=', self.id)],
+            'view_mode': 'calendar,graph,tree,form',
+            'target': 'new'
+        }
+
+    def action_open_produce_orders_timeframe(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Orders',
+            'res_model': 'farm.produce',
+            'domain': [('projects_id', '=', self.id)],
+            'view_mode': 'calendar,graph,tree,form',
+            'target': 'new'
+        }
+
+    def action_open_sales_orders_timeframe(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Orders',
+            'res_model': 'farm.sales',
+            'domain': [('projects_id', '=', self.id)],
+            'view_mode': 'calendar,graph,tree,form',
+            'target': 'new'
+        }
+
+    def action_open_operation_orders(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Operation Orders',
+            'res_model': 'farm.operations',
+            'domain': [('projects_id', '=', self.id)],
+            'view_mode': 'form',
+            'view_type': 'form',
+            'context': {'default_projects_id': self.id,
+                        'default_user_id': self.user_id.id},
+            'target': 'new'
+        }
+
+    def action_open_material_orders(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Material Orders',
+            'res_model': 'farm.materials',
+            'domain': [('materials_id', '=', self.id)],
+            'view_mode': 'form',
+            'view_type': 'form',
+            'context': {'default_projects_id': self.id,
+                        'default_user_id': self.user_id.id},
+            'target': 'new'
+        }
+
+    def action_open_sales_orders(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Sales Orders',
+            'res_model': 'farm.sales',
+            'domain': [('projects_id', '=', self.id)],
+            'view_mode': 'form',
+            'view_type': 'form',
+            'context': {'default_projects_id': self.id,
+                        'default_user_id': self.user_id.id},
+            'target': 'new'
+        }
+
+    def action_open_produce_orders(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Produce Orders',
+            'res_model': 'farm.produce',
+            'domain': [('projects_id', '=', self.id)],
+            'view_mode': 'form',
+            'view_type': 'form',
+            'context': {'default_projects_id': self.id,
+                        'default_user_id': self.user_id.id},
+            'target': 'new'
+        }
+
 
 class farm_project_group(models.Model):
     _name = 'farm.project.group'
@@ -653,9 +655,8 @@ class AccountAnalyticAccount(models.Model):
     _inherit = 'account.analytic.account'
 
     project_reference = fields.Reference(
-        [
+        selection = [
             ('farm.projects', 'Project')
         ],
         string = 'Project'
     )
-
