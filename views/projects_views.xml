@@ -356,7 +356,7 @@
                         <page string="Settings">
                             <group string="Product and Category">
                                 <group>
-                                    <field name="product_id" class="oe_inline"/>
+                                    <field name="product_id"/>
                                     <field name="buy_sell_price" class="oe_inline"/>
                                     <field name="category_id" widget="selection" class="oe_inline"/>
                                 </group>
@@ -376,7 +376,7 @@
                             </group>
                             <group string="Analytic Account">
                                 <group>
-                                  <field name="analytic_account_id" widget="selection" class="oe_inline"/>
+                                  <field name="analytic_account_id"/>
                                 </group>
                                 <group>
                                     <div>

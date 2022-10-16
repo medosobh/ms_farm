@@ -95,8 +95,8 @@ class farm_projects(models.Model):
                 r.cost_progress = 0
                 continue
             # Compute the percent based on major cost till add expense module,
-            r.total_actual = (r.operations_actual + r.materials_actual)
-            r.total_budget = (r.operation_budget + r.material_budget)
+            r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
+            r.total_budget = (r.operation_budget + r.material_budget + r.expense_budget)
             r.cost_progress = abs(r.total_actual / r.total_budget * 100)
 
     def _compute_operations_count(self):
