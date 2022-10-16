@@ -305,6 +305,8 @@
                             <field name="locations_used_ids">
                                 <tree>
                                     <field name="locations_id" widget="selection"/>
+                                    <field name="complete_name" widget="selection"/>
+                                    <field name="address" widget="selection"/>
                                     <field name="space_sum" sum="Total Space"/>
                                 </tree>
                                 <form>

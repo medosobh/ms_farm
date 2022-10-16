@@ -106,5 +106,8 @@ class farm_location_used(models.Model):
         string = 'Location',
         required = True)
     space_sum = fields.Float(
-        related = 'locations_id.space_sum'
-    )
+        related = 'locations_id.space_sum')
+    complete_name = fields.Char(
+        related = 'locations_id.complete_name')
+    address = fields.Text(
+        related = 'locations_id.address')
