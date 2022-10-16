@@ -383,7 +383,7 @@
                                         <button name="create_project_analytic_account" type="object"
                                                 string="Create Analytic Account"
                                                 class="oe_highlight"
-                                                attrs="{'invisible':[('product_id','!=', False)]}"/>
+                                                attrs="{'invisible':[('analytic_account_id','!=', False)]}"/>
                                     </div>
                                 </group>
                             </group>
