@@ -8,104 +8,6 @@ class farm_operations(models.Model):
     _description = 'operation orders'
     _order = 'issue_date'
 
-    # -------------------------------------------------------------------------
-    # COMPUTE METHODS
-    # -------------------------------------------------------------------------
-    @api.depends('operation_order_line_ids')
-    def _compute_operation_order_cost(self):
-        for rec in self:
-            oline = sum(
-                self.env['farm.operations.oline'].search([('operations_id', '=', rec.id)]).mapped('price_subtotal'))
-            rec.o_order_cost = oline
-        return rec.o_order_cost
-
-    def _compute_vendor_bill_count(self):
-        for rec in self:
-            vendor_bill_count = self.env['account.move'].search_count([
-                ('invoice_origin', '=', rec.name)
-            ])
-            rec.vendor_bill_count = vendor_bill_count
-
-    def _compute_vendor_bill_total(self):
-        for rec in self:
-            total = sum(
-                self.env['account.move'].search([
-                    ('invoice_origin', '=', rec.name)
-                ]).mapped('amount_total_signed')
-            )
-            rec.vendor_bill_total = -total
-        return rec.vendor_bill_total
-
-    # compute invoice without link to views
-    @api.depends('operation_order_line_ids.invoice_lines.move_id')
-    def _compute_invoice(self):
-        for order in self:
-            invoices = order.mapped('operation_order_line_ids.invoice_lines.move_id')
-            order.invoice_ids = invoices
-            order.invoice_count = len(invoices)
-
-    # -------------------------------------------------------------------------
-    # Create METHODS
-    # -------------------------------------------------------------------------
-    @api.model
-    def create(self, vals):
-        if not vals.get('name') or vals['name'] == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('farm.operations') or _('New')
-        return super(farm_operations, self).create(vals)
-
-    def action_vendor_bill(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Vendor Bills',
-            'res_model': 'account.move',
-            'domain': [('invoice_origin', '=', self.name)],
-            'view_mode': 'tree,form',
-            'context': {},
-            'target': 'current'
-        }
-
-    def button_farm_create_vendor_bill(self):
-        # create vendor bill in background and open form view.
-        self.ensure_one()
-        move_type = self._context.get('default_move_type', 'in_invoice')
-        journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
-        if not journal:
-            raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
-
-        partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
-        partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
-            ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
-        invoice_vals = {
-            'state': 'draft',
-            'ref': self.name or '',
-            'move_type': move_type,
-            'narration': self.notes,
-            'currency_id': self.currency_id.id,
-            'invoice_user_id': self.user_id and self.user_id.id or self.env.user.id,
-            'partner_id': partner_invoice_id,
-            # 'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id.get_fiscal_position(partner_invoice_id)).id,
-            'payment_reference': self.name or '',
-            'partner_bank_id': partner_bank_id.id,
-            'invoice_origin': self.name,
-            'invoice_payment_term_id': self.payment_term_id.id,
-            'invoice_line_ids': [(0, 0, {
-                'sequence': self.operation_order_line_ids.sequence,
-                'product_id': self.operation_order_line_ids.product_id.id,
-                'product_uom_id': self.operation_order_line_ids.product_uom.id,
-                'quantity': self.operation_order_line_ids.qty,
-                'price_unit': self.operation_order_line_ids.price_unit,
-            })],
-            'company_id': self.company_id.id,
-        }
-        bill = self.env['account.move'].create(invoice_vals)
-        result = self.env['ir.actions.act_window']._for_xml_id('account.action_move_in_invoice_type')
-        res = self.env.ref('account.view_move_form', False)
-        form_view = [(res and res.id or False, 'form')]
-        result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
-        result['res_id'] = bill.id
-        return result
-
     name = fields.Char(
         string = 'Operation Ref',
         index = True,
@@ -199,6 +101,107 @@ class farm_operations(models.Model):
         string = 'Bills',
         copy = False,
         store = True)
+    analytic_account_id = fields.Reference(
+        related = 'projects_id.analytic_account_id')
+
+    # -------------------------------------------------------------------------
+    # COMPUTE METHODS
+    # -------------------------------------------------------------------------
+    @api.depends('operation_order_line_ids')
+    def _compute_operation_order_cost(self):
+        for rec in self:
+            oline = sum(
+                self.env['farm.operations.oline'].search([('operations_id', '=', rec.id)]).mapped('price_subtotal'))
+            rec.o_order_cost = oline
+        return rec.o_order_cost
+
+    def _compute_vendor_bill_count(self):
+        for rec in self:
+            vendor_bill_count = self.env['account.move'].search_count([
+                ('invoice_origin', '=', rec.name)
+            ])
+            rec.vendor_bill_count = vendor_bill_count
+
+    def _compute_vendor_bill_total(self):
+        for rec in self:
+            total = sum(
+                self.env['account.move'].search([
+                    ('invoice_origin', '=', rec.name)
+                ]).mapped('amount_total_signed')
+            )
+            rec.vendor_bill_total = -total
+        return rec.vendor_bill_total
+
+    # compute invoice without link to views
+    @api.depends('operation_order_line_ids.invoice_lines.move_id')
+    def _compute_invoice(self):
+        for order in self:
+            invoices = order.mapped('operation_order_line_ids.invoice_lines.move_id')
+            order.invoice_ids = invoices
+            order.invoice_count = len(invoices)
+
+    # -------------------------------------------------------------------------
+    # Create METHODS
+    # -------------------------------------------------------------------------
+    @api.model
+    def create(self, vals):
+        if not vals.get('name') or vals['name'] == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('farm.operations') or _('New')
+        return super(farm_operations, self).create(vals)
+
+    def action_vendor_bill(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Vendor Bills',
+            'res_model': 'account.move',
+            'domain': [('invoice_origin', '=', self.name)],
+            'view_mode': 'tree,form',
+            'context': {},
+            'target': 'current'
+        }
+
+    def button_farm_create_vendor_bill(self):
+        # create vendor bill in background and open form view.
+        self.ensure_one()
+        move_type = self._context.get('default_move_type', 'in_invoice')
+        journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
+        if not journal:
+            raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+
+        partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
+        partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
+            ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
+        invoice_vals = {
+            'state': 'draft',
+            'ref': self.name or '',
+            'move_type': move_type,
+            'narration': self.notes,
+            'currency_id': self.currency_id.id,
+            'invoice_user_id': self.user_id and self.user_id.id or self.env.user.id,
+            'partner_id': partner_invoice_id,
+            # 'fiscal_position_id': (self.fiscal_position_id or self.fiscal_position_id.get_fiscal_position(partner_invoice_id)).id,
+            'payment_reference': self.name or '',
+            'partner_bank_id': partner_bank_id.id,
+            'invoice_origin': self.name,
+            'invoice_payment_term_id': self.payment_term_id.id,
+            'invoice_line_ids': [(0, 0, {
+                'sequence': self.operation_order_line_ids.sequence,
+                'product_id': self.operation_order_line_ids.product_id.id,
+                'product_uom_id': self.operation_order_line_ids.product_uom.id,
+                'quantity': self.operation_order_line_ids.qty,
+                'price_unit': self.operation_order_line_ids.price_unit,
+                'analytic_account_id': self.analytic_account_id.id,
+            })],
+            'company_id': self.company_id.id,
+        }
+        bill = self.env['account.move'].create(invoice_vals)
+        result = self.env['ir.actions.act_window']._for_xml_id('account.action_move_in_invoice_type')
+        res = self.env.ref('account.view_move_form', False)
+        form_view = [(res and res.id or False, 'form')]
+        result['views'] = form_view + [(state, view) for state, view in result['views'] if view != 'form']
+        result['res_id'] = bill.id
+        return result
 
 
 class farm_operations_oline(models.Model):

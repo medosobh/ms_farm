@@ -13,251 +13,6 @@ class farm_projects(models.Model):
         ('short_name_uniq', 'unique(short_name)', "A short name can only be assigned to one equipments !"),
     ]
 
-    @api.depends('state')
-    def button_draft(self):
-        for rec in self:
-            rec.state = 'draft'
-
-    def button_in_operation(self):
-        for rec in self:
-            rec.state = 'in_operation'
-
-    def button_finish(self):
-        for rec in self:
-            rec.state = 'finish'
-        return {
-            'effect': {
-                'fadeout': 'slow',
-                'message': 'Congratulation!',
-                'type': 'rainbow_man',
-            }
-        }
-
-    def button_on_hold(self):
-        for rec in self:
-            rec.state = 'on_hold'
-
-    def _group_expand_states(self, states, domain, order):
-        return [key for key, val in type(self).state.selection]
-
-    # -------------------------------------------------------------------------
-    # COMPUTE METHODS
-    # -------------------------------------------------------------------------
-    @api.depends('start_date', 'p_days', 'close_date')
-    def _get_end_date(self):
-        for r in self:
-            if not (r.start_date and r.p_days):
-                r.end_date = r.start_date
-                continue
-            # Add duration to start_date, but: Monday + 5 days = Saturday, so
-            # subtract one second to get on Friday instead
-            p_days = timedelta(days = r.p_days, seconds = 0)
-            r.end_date = r.start_date + p_days
-
-    def _set_end_date(self):
-        for r in self:
-            if not (r.start_date and r.end_date):
-                continue
-
-            # Compute the difference between dates, but: Friday - Monday = 4 days,
-            # so add one day to get 5 days instead
-            r.p_days = (r.end_date - r.start_date).days + 1
-
-    def _get_time_gone(self):
-        for r in self:
-            if not r.start_date:
-                continue
-
-            # Compute the difference between dates, but: Friday - Monday = 4 days,
-            # so add one day to get 5 days instead
-            r.g_days = (date.today() - r.start_date).days + 1
-
-    def _compute_time_progress(self):
-        for r in self:
-            if not r.start_date:
-                continue
-            # Compute integar of time gone vs planned days
-            r.time_progress = abs(r.g_days / r.p_days * 100)
-
-    def _get_actual_gone(self):
-        for r in self:
-            if not (r.start_date and r.close_date):
-                r.close_date = r.end_date
-                continue
-
-            # Compute the difference between dates, but: Friday - Monday = 4 days,
-            # so add one day to get 5 days instead
-            r.a_days = (r.close_date - r.start_date).days + 1
-
-    def _compute_cost_progress(self):
-        for r in self:
-            if not (r.operation_budget or r.material_budget):
-                r.cost_progress = 0
-                continue
-            # Compute the percent based on major cost till add expense module,
-            r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
-            r.total_budget = (r.operation_budget + r.material_budget + r.expense_budget)
-            r.cost_progress = abs(r.total_actual / r.total_budget * 100)
-
-    def _compute_operations_count(self):
-        for rec in self:
-            operations_count = self.env['farm.operations'].search_count([('projects_id', '=', rec.id)])
-            rec.operations_count = operations_count
-
-    def _compute_materials_count(self):
-        for rec in self:
-            materials_count = self.env['farm.materials'].search_count([('projects_id', '=', rec.id)])
-            rec.materials_count = materials_count
-
-    def _compute_expenses_count(self):
-        for rec in self:
-            expenses_count = self.env['farm.expenses'].search_count([('projects_id', '=', rec.id)])
-            rec.expenses_count = expenses_count
-
-    def _compute_produce_count(self):
-        for rec in self:
-            produce_count = self.env['farm.produce'].search_count([('projects_id', '=', rec.id)])
-            rec.produce_count = produce_count
-
-    def _compute_sales_count(self):
-        for rec in self:
-            sales_count = self.env['farm.sales'].search_count([('projects_id', '=', rec.id)])
-            rec.sales_count = sales_count
-
-    def _compute_operation_budget(self):
-        for rec in self:
-            ope_line = sum(
-                self.env['farm.operations'].search([('projects_id', '=', rec.id)]).mapped('o_order_cost'))
-            rec.operation_budget = ope_line
-        return rec.operation_budget
-
-    def _compute_material_budget(self):
-        for rec in self:
-            ope_line = sum(
-                self.env['farm.materials'].search([('projects_id', '=', rec.id)]).mapped('m_order_cost'))
-            rec.material_budget = ope_line
-        return rec.material_budget
-
-    def _compute_expense_budget(self):
-        for rec in self:
-            ope_line = sum(
-                self.env['farm.expenses'].search([('projects_id', '=', rec.id)]).mapped('e_order_cost'))
-            rec.expense_budget = ope_line
-        return rec.expense_budget
-
-    def _compute_plan_produce_amount(self):
-        for rec in self:
-            sal_line = sum(
-                self.env['farm.produce'].search([('projects_id', '=', rec.id)]).mapped('p_order_cost'))
-            rec.plan_produce_amount = sal_line
-        return rec.plan_produce_amount
-
-    def _compute_plan_sales_amount(self):
-        for rec in self:
-            sal_line = sum(
-                self.env['farm.sales'].search([('projects_id', '=', rec.id)]).mapped('s_order_cost'))
-            rec.plan_sales_amount = sal_line
-        return rec.plan_sales_amount
-
-    def _compute_operations_actual(self):
-        for rec in self:
-            ope_line = sum(
-                self.env['farm.operations'].search([('projects_id', '=', rec.id)]).mapped('vendor_bill_total'))
-            rec.operations_actual = ope_line
-        return rec.operations_actual
-
-    def _compute_materials_actual(self):
-        for rec in self:
-            ope_line = sum(
-                self.env['farm.materials'].search([
-                    ('projects_id', '=', rec.id)]).mapped('materials_consumption_account_total'))
-            rec.materials_actual = ope_line
-        return rec.materials_actual
-
-    def _compute_expenses_actual(self):
-        for rec in self:
-            ope_line = sum(
-                self.env['farm.expenses'].search([
-                    ('projects_id', '=', rec.id)]).mapped('expenses_consumption_account_total'))
-            rec.expenses_actual = ope_line
-        return rec.expenses_actual
-
-    def _compute_actual_produce_amount(self):
-        for rec in self:
-            ope_line = sum(
-                self.env['farm.produce'].search([
-                    ('projects_id', '=', rec.id)]).mapped('produce_consumption_account_total'))
-            rec.actual_produce_amount = ope_line
-        return rec.actual_produce_amount
-
-    def _compute_actual_sales_amount(self):
-        for rec in self:
-            sal_line = sum(
-                self.env['farm.sales'].search([('projects_id', '=', rec.id)]).mapped('customer_invoice_total'))
-            rec.actual_sales_amount = sal_line
-        return rec.actual_sales_amount
-
-    # -------------------------------------------------------------------------
-    # CREATE METHODS
-    # -------------------------------------------------------------------------
-    @api.model
-    def create(self, vals):
-        if not vals.get('name') or vals['name'] == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('farm.projects') or _('New')
-        return super(farm_projects, self).create(vals)
-
-    def create_project_product(self):
-        # if it is existed and send error message
-        new_name = self.project_group_id.name + " " + self.short_name
-        search_name = self.env['product.template'].search([
-            ('name', '=', new_name)
-        ])
-        if search_name:
-            raise UserError(_('Product already exist in the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
-        # elif create
-        product_vals = dict(
-            categ_id = self.category_id.id,
-            detailed_type = 'product',
-            name = new_name,
-            reference_record = '% s,% s' % ('farm.projects', self.id),
-            default_code = self.name + " " + self.short_name,
-        )
-        new_product = self.env['product.template'].create(product_vals)
-        self.product_id = '% s,% s' % ('product.template', new_product.id)
-        return
-
-    def update_project_product_price_unit(self):
-        if self.product_id:
-            update = self.env['product.template'].browse(
-                self.product_id.id).write(
-                dict(
-                    standard_price = self.buy_sell_price,
-                    list_price = self.buy_sell_price,
-                    detailed_type = 'product'
-                )
-            )
-            print(update)
-        return update
-
-    def create_project_analytic_account(self):
-        # if it is existed and send error message
-        new_name = self.project_group_id.name + " " + self.short_name
-        search_name = self.env['account.analytic.account'].search([
-            ('name', '=', new_name)
-        ])
-        if search_name:
-            raise UserError(_('Product already exist in the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
-        # elif create
-        analytic_account_vals = dict(
-            name = new_name,
-            project_reference = '% s,% s' % ('farm.projects', self.id),
-        )
-        new_analytic_account = self.env['account.analytic.account'].create(analytic_account_vals)
-        self.analytic_account_id = '% s,% s' % ('account.analytic.account', new_analytic_account.id)
-        return
-
     priority = fields.Selection([
         ('0', 'Normal'),
         ('1', 'Low'),
@@ -517,7 +272,257 @@ class farm_projects(models.Model):
         selection = [
             ('account.analytic.account', 'Analytic Account')
         ],
-        string = 'Reference Analytic Account')
+        string = 'Analytic Account')
+
+    @api.depends('state')
+    def button_draft(self):
+        for rec in self:
+            rec.state = 'draft'
+
+    def button_in_operation(self):
+        for rec in self:
+            rec.state = 'in_operation'
+
+    def button_finish(self):
+        for rec in self:
+            rec.state = 'finish'
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'Congratulation!',
+                'type': 'rainbow_man',
+            }
+        }
+
+    def button_on_hold(self):
+        for rec in self:
+            rec.state = 'on_hold'
+
+    def _group_expand_states(self, states, domain, order):
+        return [key for key, val in type(self).state.selection]
+
+    # -------------------------------------------------------------------------
+    # COMPUTE METHODS
+    # -------------------------------------------------------------------------
+    @api.depends('start_date', 'p_days', 'close_date')
+    def _get_end_date(self):
+        for r in self:
+            if not (r.start_date and r.p_days):
+                r.end_date = r.start_date
+                continue
+            # Add duration to start_date, but: Monday + 5 days = Saturday, so
+            # subtract one second to get on Friday instead
+            p_days = timedelta(days = r.p_days, seconds = 0)
+            r.end_date = r.start_date + p_days
+
+    def _set_end_date(self):
+        for r in self:
+            if not (r.start_date and r.end_date):
+                continue
+
+            # Compute the difference between dates, but: Friday - Monday = 4 days,
+            # so add one day to get 5 days instead
+            r.p_days = (r.end_date - r.start_date).days + 1
+
+    def _get_time_gone(self):
+        for r in self:
+            if not r.start_date:
+                continue
+
+            # Compute the difference between dates, but: Friday - Monday = 4 days,
+            # so add one day to get 5 days instead
+            r.g_days = (date.today() - r.start_date).days + 1
+
+    def _compute_time_progress(self):
+        for r in self:
+            if not r.start_date:
+                continue
+            # Compute integar of time gone vs planned days
+            r.time_progress = abs(r.g_days / r.p_days * 100)
+
+    def _get_actual_gone(self):
+        for r in self:
+            if not (r.start_date and r.close_date):
+                r.close_date = r.end_date
+                continue
+
+            # Compute the difference between dates, but: Friday - Monday = 4 days,
+            # so add one day to get 5 days instead
+            r.a_days = (r.close_date - r.start_date).days + 1
+
+    def _compute_cost_progress(self):
+        for r in self:
+            if not (r.operation_budget or r.material_budget):
+                r.cost_progress = 0
+                continue
+            # Compute the percent based on major cost till add expense module,
+            r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
+            r.total_budget = (r.operation_budget + r.material_budget + r.expense_budget)
+            r.cost_progress = abs(r.total_actual / r.total_budget * 100)
+
+    def _compute_operations_count(self):
+        for rec in self:
+            operations_count = self.env['farm.operations'].search_count([('projects_id', '=', rec.id)])
+            rec.operations_count = operations_count
+
+    def _compute_materials_count(self):
+        for rec in self:
+            materials_count = self.env['farm.materials'].search_count([('projects_id', '=', rec.id)])
+            rec.materials_count = materials_count
+
+    def _compute_expenses_count(self):
+        for rec in self:
+            expenses_count = self.env['farm.expenses'].search_count([('projects_id', '=', rec.id)])
+            rec.expenses_count = expenses_count
+
+    def _compute_produce_count(self):
+        for rec in self:
+            produce_count = self.env['farm.produce'].search_count([('projects_id', '=', rec.id)])
+            rec.produce_count = produce_count
+
+    def _compute_sales_count(self):
+        for rec in self:
+            sales_count = self.env['farm.sales'].search_count([('projects_id', '=', rec.id)])
+            rec.sales_count = sales_count
+
+    def _compute_operation_budget(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.operations'].search([('projects_id', '=', rec.id)]).mapped('o_order_cost'))
+            rec.operation_budget = ope_line
+        return rec.operation_budget
+
+    def _compute_material_budget(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.materials'].search([('projects_id', '=', rec.id)]).mapped('m_order_cost'))
+            rec.material_budget = ope_line
+        return rec.material_budget
+
+    def _compute_expense_budget(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.expenses'].search([('projects_id', '=', rec.id)]).mapped('e_order_cost'))
+            rec.expense_budget = ope_line
+        return rec.expense_budget
+
+    def _compute_plan_produce_amount(self):
+        for rec in self:
+            sal_line = sum(
+                self.env['farm.produce'].search([('projects_id', '=', rec.id)]).mapped('p_order_cost'))
+            rec.plan_produce_amount = sal_line
+        return rec.plan_produce_amount
+
+    def _compute_plan_sales_amount(self):
+        for rec in self:
+            sal_line = sum(
+                self.env['farm.sales'].search([('projects_id', '=', rec.id)]).mapped('s_order_cost'))
+            rec.plan_sales_amount = sal_line
+        return rec.plan_sales_amount
+
+    def _compute_operations_actual(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.operations'].search([('projects_id', '=', rec.id)]).mapped('vendor_bill_total'))
+            rec.operations_actual = ope_line
+        return rec.operations_actual
+
+    def _compute_materials_actual(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.materials'].search([
+                    ('projects_id', '=', rec.id)]).mapped('materials_consumption_account_total'))
+            rec.materials_actual = ope_line
+        return rec.materials_actual
+
+    def _compute_expenses_actual(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.expenses'].search([
+                    ('projects_id', '=', rec.id)]).mapped('expenses_consumption_account_total'))
+            rec.expenses_actual = ope_line
+        return rec.expenses_actual
+
+    def _compute_actual_produce_amount(self):
+        for rec in self:
+            ope_line = sum(
+                self.env['farm.produce'].search([
+                    ('projects_id', '=', rec.id)]).mapped('produce_consumption_account_total'))
+            rec.actual_produce_amount = ope_line
+        return rec.actual_produce_amount
+
+    def _compute_actual_sales_amount(self):
+        for rec in self:
+            sal_line = sum(
+                self.env['farm.sales'].search([('projects_id', '=', rec.id)]).mapped('customer_invoice_total'))
+            rec.actual_sales_amount = sal_line
+        return rec.actual_sales_amount
+
+    # -------------------------------------------------------------------------
+    # CREATE METHODS
+    # -------------------------------------------------------------------------
+    @api.model
+    def create(self, vals):
+        if not vals.get('name') or vals['name'] == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('farm.projects') or _('New')
+        return super(farm_projects, self).create(vals)
+
+    def create_project_product(self):
+        # if it is existed and send error message
+        new_name = self.project_group_id.name + " " + self.short_name
+        search_name = self.env['product.template'].search([
+            ('name', '=', new_name)
+        ])
+        if search_name:
+            raise UserError(_('Product already exist in the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+        # elif create
+        product_vals = dict(
+            categ_id = self.category_id.id,
+            detailed_type = 'product',
+            name = new_name,
+            reference_record = '% s,% s' % ('farm.projects', self.id),
+            default_code = self.name + " " + self.short_name,
+        )
+        new_product = self.env['product.template'].create(product_vals)
+        self.product_id = '% s,% s' % ('product.template', new_product.id)
+        return
+
+    def update_project_product_price_unit(self):
+        if self.product_id:
+            update = self.env['product.template'].browse(
+                self.product_id.id).write(
+                dict(
+                    standard_price = self.buy_sell_price,
+                    list_price = self.buy_sell_price,
+                    detailed_type = 'product'
+                )
+            )
+            print(update)
+        return update
+
+    def get_reference_field_date(self):
+        print(self.analytic_account_id)
+        print(self.analytic_account_id.id)
+        print(self.analytic_account_id._name)
+
+    def create_project_analytic_account(self):
+        # if it is existed and send error message
+        new_name = self.project_group_id.name + " " + self.short_name
+        search_name = self.env['account.analytic.account'].search([
+            ('name', '=', new_name)
+        ])
+        if search_name:
+            raise UserError(_('Product already exist in the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+        # elif create
+        analytic_account_vals = dict(
+            name = new_name,
+            project_reference = '% s,% s' % ('farm.projects', self.id),
+        )
+        new_analytic_account = self.env['account.analytic.account'].create(analytic_account_vals)
+        self.analytic_account_id = '% s,% s' % ('account.analytic.account', new_analytic_account.id)
+        return
 
     # -------------------------------------------------------------------------
     # Call Views METHODS

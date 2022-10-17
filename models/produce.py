@@ -209,9 +209,11 @@ class farm_produce(models.Model):
     produce_consumption_account_count = fields.Integer(
         string = "Material Moves Count",
         compute = '_compute_account_move_count')
-    produce_consumption_account_total = fields.Integer(
+    produce_consumption_account_total = fields.Float(
         string = "Material Moves Total",
         compute = '_compute_account_move_total')
+    analytic_account_id = fields.Reference(
+        related = 'projects_id.analytic_account_id')
 
 
 class farm_produce_oline(models.Model):

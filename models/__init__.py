@@ -8,6 +8,6 @@ from . import sales
 from . import produce
 from . import equipments
 from . import locations
-from . import product_category
+from . import inherit
 
 

@@ -34,7 +34,7 @@ class ProductCategory(models.Model):
         readonly = False,
         copy = False)
 
-    class ProductTemplate(models.Model):
+class ProductTemplate(models.Model):
         _inherit = "product.template"
 
         reference_record = fields.Reference([

@@ -46,6 +46,7 @@
                             <field name="short_name"/>
                             <field name="category_id" widget="selection"/>
                             <field name="user_id" widget="selection"/>
+                            <field name="analytic_account_id"/>
                         </group>
                         <group string="Information">
                             <field name="issue_date"/>

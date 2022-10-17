@@ -1,5 +1,4 @@
 from odoo import fields, models, api, _
-from odoo.exceptions import UserError
 
 
 class farm_expenses(models.Model):
@@ -7,76 +6,6 @@ class farm_expenses(models.Model):
     _description = 'Budget General Expenses'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'issue_date'
-
-    # -------------------------------------------------------------------------
-    # COMPUTE METHODS
-    # -------------------------------------------------------------------------
-    @api.depends('expenses_order_line_ids')
-    def _compute_expense_order_cost(self):
-        for rec in self:
-            oline = sum(
-                self.env['farm.expenses.oline'].search([('expenses_id', '=', rec.id)]).mapped('price_subtotal'))
-            rec.e_order_cost = oline
-        return rec.e_order_cost
-
-    def _compute_stock_move_count(self):
-        for rec in self:
-            count = self.env['stock.picking'].search_count([('origin', '=', rec.name)])
-            rec.expenses_consumption_count = count
-        return rec.expenses_consumption_count
-
-    def _compute_account_move_count(self):
-        am_count = 0
-        fam_count = 0
-        for mo_rec in self:
-            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
-
-        for sm_rec in sp_count:
-            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
-            am_count = self.env['account.move'].search_count([('stock_move_id', '=', sm_count.id)])
-            fam_count = fam_count + am_count
-
-        mo_rec.expenses_consumption_account_count = fam_count
-        return mo_rec.expenses_consumption_account_count
-
-    def _compute_account_move_total(self):
-        am_total = 0
-        fam_total = 0
-        for mo_rec in self:
-            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
-
-        for sm_rec in sp_count:
-            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
-            am_total = sum(
-                self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
-            fam_total = fam_total - am_total
-        self.expenses_consumption_account_total = fam_total
-        return self.expenses_consumption_account_total
-
-    # -------------------------------------------------------------------------
-    # Create METHODS
-    # -------------------------------------------------------------------------
-    @api.model
-    def create(self, vals):
-        if not vals.get('name') or vals['name'] == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('farm.expenses') or _('New')
-        return super(farm_expenses, self).create(vals)
-
-    def button_farm_expense_issue(self):
-        self.ensure_one()
-        print('expense ticket')
-        return
-
-    def action_stock_picking_list(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Stock Moves',
-            'res_model': 'stock.picking',
-            'domain': [('origin', '=', self.name)],
-            'view_mode': 'tree,form',
-            'context': {},
-            'target': 'current'
-        }
 
     name = fields.Char(
         string = 'expense Ref',
@@ -167,6 +96,78 @@ class farm_expenses(models.Model):
     expenses_consumption_account_total = fields.Integer(
         string = "expense Moves Total",
         compute = '_compute_account_move_total')
+    analytic_account_id = fields.Reference(
+        related = 'projects_id.analytic_account_id')
+
+    # -------------------------------------------------------------------------
+    # COMPUTE METHODS
+    # -------------------------------------------------------------------------
+    @api.depends('expenses_order_line_ids')
+    def _compute_expense_order_cost(self):
+        for rec in self:
+            oline = sum(
+                self.env['farm.expenses.oline'].search([('expenses_id', '=', rec.id)]).mapped('price_subtotal'))
+            rec.e_order_cost = oline
+        return rec.e_order_cost
+
+    def _compute_stock_move_count(self):
+        for rec in self:
+            count = self.env['stock.picking'].search_count([('origin', '=', rec.name)])
+            rec.expenses_consumption_count = count
+        return rec.expenses_consumption_count
+
+    def _compute_account_move_count(self):
+        am_count = 0
+        fam_count = 0
+        for mo_rec in self:
+            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
+
+        for sm_rec in sp_count:
+            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
+            am_count = self.env['account.move'].search_count([('stock_move_id', '=', sm_count.id)])
+            fam_count = fam_count + am_count
+
+        mo_rec.expenses_consumption_account_count = fam_count
+        return mo_rec.expenses_consumption_account_count
+
+    def _compute_account_move_total(self):
+        am_total = 0
+        fam_total = 0
+        for mo_rec in self:
+            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
+
+        for sm_rec in sp_count:
+            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
+            am_total = sum(
+                self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
+            fam_total = fam_total - am_total
+        self.expenses_consumption_account_total = fam_total
+        return self.expenses_consumption_account_total
+
+    # -------------------------------------------------------------------------
+    # Create METHODS
+    # -------------------------------------------------------------------------
+    @api.model
+    def create(self, vals):
+        if not vals.get('name') or vals['name'] == _('New'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('farm.expenses') or _('New')
+        return super(farm_expenses, self).create(vals)
+
+    def button_farm_expense_issue(self):
+        self.ensure_one()
+        print('expense ticket')
+        return
+
+    def action_stock_picking_list(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Stock Moves',
+            'res_model': 'stock.picking',
+            'domain': [('origin', '=', self.name)],
+            'view_mode': 'tree,form',
+            'context': {},
+            'target': 'current'
+        }
 
 
 class farm_expenses_oline(models.Model):
@@ -231,4 +232,3 @@ class farm_expenses_oline(models.Model):
     expenses_id = fields.Many2one(
         'farm.expenses',
         string = 'expenses')
-
