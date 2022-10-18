@@ -3,7 +3,7 @@
     <data>
         !-- Inherit Form View to Modify it -->
         <record id="product_category_form_inherit" model="ir.ui.view">
-            <field name="name">product_category_form_view_inherit</field>
+            <field name="name">product.category.form.inherit</field>
             <field name="model">product.category</field>
             <field name="inherit_id" ref="product.product_category_form_view"/>
             <field name="arch" type="xml">
@@ -19,7 +19,7 @@
 
         <!-- Inherit Form View to Modify it -->
         <record id="product_template_form_view_inherit" model="ir.ui.view">
-            <field name="name">product.template.product.form</field>
+            <field name="name">product.template.product.form.inherit</field>
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
@@ -33,7 +33,7 @@
         </record>
 
         <record id="view_account_analytic_account_form_inherit" model="ir.ui.view">
-            <field name="name">analytic.analytic.account.form</field>
+            <field name="name">analytic.analytic.account.form.inherit</field>
             <field name="model">account.analytic.account</field>
             <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
             <field name="arch" type="xml">
@@ -44,6 +44,55 @@
             </field>
         </record>
 
+        <record id="farm_view_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form.farm.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_id']" position="after">
+                    <field name="user_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- new inherit-->
+        <record id="view_move_line_tree" model="ir.ui.view">
+            <field name="name">stock.move.line.tree (in stock_analytic)</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="analytic_account_id" optional="show"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="stock_move_line_view_search" model="ir.ui.view">
+            <field name="name">stock.move.line.search (in stock_analytic)</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="analytic_account_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- In picking lines -->
+        <record id="view_move_line_detailed_tree" model="ir.ui.view">
+            <field name="name">stock.move.line.detailed.tree (in stock_analytic)</field>
+            <field name="model">stock.move.line</field>
+            <field
+                    name="inherit_id"
+                    ref="stock.view_stock_move_line_detailed_operation_tree"
+            />
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="analytic_account_id" optional="show"/>
+                </field>
+            </field>
+        </record>
 
     </data>
 </odoo>
