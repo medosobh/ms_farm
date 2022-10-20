@@ -89,7 +89,8 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     analytic_account_id = fields.Many2one(
-        string = "Analytic Account", comodel_name = "account.analytic.account",
+        comodel_name = "account.analytic.account",
+        string = "Analytic Account"
     )
 
     def _prepare_account_move_line(
@@ -119,14 +120,17 @@ class StockMove(models.Model):
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
-    analytic_account_id = fields.Many2one(related = "move_id.analytic_account_id")
+    analytic_account_id = fields.Many2one(
+        related = "move_id.analytic_account_id")
 
 
 class StockScrap(models.Model):
     _inherit = "stock.scrap"
 
     analytic_account_id = fields.Many2one(
-        string = "Analytic Account", comodel_name = "account.analytic.account"
+        comodel_name = "account.analytic.account",
+        string = "Analytic Account"
+
     )
 
     def _prepare_move_values(self):
@@ -137,3 +141,12 @@ class StockScrap(models.Model):
             }
         )
         return res
+
+
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
+
+    equipments_id = fields.Many2one(
+        comodel_name = 'farm.equipments',
+        string = "Equipment"
+    )

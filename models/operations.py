@@ -192,6 +192,7 @@ class farm_operations(models.Model):
                 'quantity': self.operation_order_line_ids.qty,
                 'price_unit': self.operation_order_line_ids.price_unit,
                 'analytic_account_id': self.analytic_account_id.id,
+                'equipments_id': self.operation_order_line_ids.equipments_id.id
             })],
             'company_id': self.company_id.id,
         }
@@ -207,19 +208,6 @@ class farm_operations(models.Model):
 class farm_operations_oline(models.Model):
     _name = 'farm.operations.oline'
     _description = 'operation order line'
-
-    @api.onchange('product_id')
-    def onchange_price_unit(self):
-        if not self.product_id:
-            self.price_unit = 0
-            return
-        self.price_unit = self.product_id.standard_price
-
-    @api.depends('price_unit', 'qty')
-    def _compute_subtotal(self):
-        for rec in self:
-            rec.price_subtotal = rec.price_unit * rec.qty
-        return rec.price_subtotal
 
     sequence = fields.Integer(
         string = 'Sequence',
@@ -277,3 +265,21 @@ class farm_operations_oline(models.Model):
     state = fields.Selection(
         related = 'operations_id.state',
         store = True)
+    equipments_id = fields.Reference(
+        related = 'product_id.reference_record',
+        string = 'Equipment')
+    analytic_account_id = fields.Reference(
+        related = 'operations_id.analytic_account_id')
+
+    @api.onchange('product_id')
+    def onchange_price_unit(self):
+        if not self.product_id:
+            self.price_unit = 0
+            return
+        self.price_unit = self.product_id.standard_price
+
+    @api.depends('price_unit', 'qty')
+    def _compute_subtotal(self):
+        for rec in self:
+            rec.price_subtotal = rec.price_unit * rec.qty
+        return rec.price_subtotal

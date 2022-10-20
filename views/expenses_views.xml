@@ -6,18 +6,12 @@
         <field name="arch" type="xml">
             <form string="expenses">
                 <header>
-                    <button name="button_farm_expense_issue"
-                            string="Expense Issue"
-                            type="object"
-                            class="oe_highlight"
-                            help="Create Expense Ticket"
-                            states="order"/>
                     <field name="state" widget="statusbar"
                            options="{'clickable': '0'}" clickable="True" type="object"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_expenses_box">
-                        <button name="action_stock_picking_list" type="object"
+                        <button name="action_expense_list" type="object"
                                 class="oe_stat_button"
                                 icon="fa-file-text-o">
                             <div class="o_stat_info">
@@ -25,44 +19,44 @@
                                 <span class="o_stat_text">Expense Ticket</span>
                             </div>
                         </button>
-                        <button name="action_stock_picking_list" type="object"
+                        <button name="action_expense_account_line" type="object"
                                 class="oe_stat_button"
-                                icon="fa-dollar">
+                                icon="fa-money">
                             <div class="o_stat_info">
                                 <field name="expenses_consumption_account_count"/>
-                                <span class="o_stat_text">Account Count</span>
+                                <span class="o_stat_text">Count</span>
                             </div>
                         </button>
-                        <button name="action_stock_picking_list" type="object"
+                        <button name="action_expense_list" type="object"
                                 class="oe_stat_button"
-                                icon="fa-dollar">
+                                icon="fa-money">
                             <div class="o_stat_info">
                                 <field name="currency_id" invisible="1" groups="base.group_multi_currency"/>
                                 <field name="expenses_consumption_account_total" widget='monetary'
                                        options="{'currency_field': 'currency_id'}"/>
-                                <span class="o_stat_text">Account Cost</span>
+                                <span class="o_stat_text">Amount</span>
                             </div>
                         </button>
                     </div>
                     <group>
                         <group string="Basic">
-                            <field name="name" />
-                            <field name="projects_id" widget="selection" />
+                            <field name="name"/>
+                            <field name="projects_id" widget="selection"/>
                             <field name="short_name"/>
-                            <field name="category_id" widget="selection" />
-                            <field name="user_id" widget="selection" />
+                            <field name="category_id" widget="selection"/>
+                            <field name="user_id" widget="selection"/>
                             <field name="analytic_account_id"/>
                         </group>
                         <group string="Information ">
-                            <field name="issue_date" />
-                            <field name="e_order_cost" widget="monetary" />
+                            <field name="issue_date"/>
+                            <field name="e_order_cost" widget="monetary"/>
                             <field name="active" invisible="1"/>
-                            <field name="company_id" groups="base.group_multi_company" widget="selection" />
-                            <field name="currency_id" groups="base.group_multi_currency" widget="selection" />
-                            <field name="partner_id" widget="selection" />
-                            <field name="stock_warehouse" widget="selection" />
-                            <field name="location_id" widget="selection" />
-                            <field name="picking_type_id" widget="selection" />
+                            <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                            <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
+                            <field name="partner_id" widget="selection"/>
+                            <field name="stock_warehouse" widget="selection"/>
+                            <field name="location_id" widget="selection"/>
+                            <field name="picking_type_id" widget="selection"/>
                         </group>
                         <group>
                             <field name="notes"/>
@@ -73,6 +67,7 @@
                         <page name="farm_expense_olines" string="Order Lines">
                             <field name="expenses_order_line_ids">
                                 <tree>
+                                    <field name="state" invisible="1"/>
                                     <field name="sequence" widget="handle"/>
                                     <field name="product_id" widget="selection"/>
                                     <field name="name" widget="section_and_note_text"/>
@@ -84,16 +79,24 @@
                                     <field name="qty"/>
                                     <field name="note"/>
                                     <field name="price_subtotal" sum="Total Cost"/>
-
+                                    <field name="employee_id"/>
+                                    <field name="expense_id"/>
+                                    <button name="button_farm_expense_issue"
+                                            string="Expense Issue"
+                                            type="object"
+                                            class="fa fa-magic"
+                                            help="Create Expense Ticket"
+                                            attrs="{'invisible' : ['|', ('state', '!=', 'order'),('expense_id', '!=', False)]}"/>
                                 </tree>
                                 <form>
                                     <group>
                                         <group>
+                                            <field name="state" invisible="1"/>
                                             <field name="sequence" widget="handle" invisible="1"/>
                                             <field name="product_id" widget="selection"/>
                                             <field name="name" widget="section_and_note_text"/>
-                                            <field name="product_uom" />
-                                            <field name="qty" />
+                                            <field name="product_uom"/>
+                                            <field name="qty"/>
                                         </group>
                                         <group>
                                             <field name="price_unit" widget="monetary"/>
@@ -101,9 +104,17 @@
                                             <field name="categ_id" widget="selection" invisible="1"/>
                                             <field name="company_id" widget="selection" invisible="1"/>
                                             <field name="currency_id" widget="selection" invisible="1"/>
+                                            <field name="employee_id"/>
                                         </group>
                                     </group>
                                     <field name="note"/>
+                                    <field name="expense_id"/>
+                                    <button name="button_farm_expense_issue"
+                                            string="Expense Issue"
+                                            type="object"
+                                            class="fa fa-magic"
+                                            help="Create Expense Ticket"
+                                            attrs="{'invisible' : ['|', ('state', '!=', 'order'),('expense_id', '!=', False)]}"/>
                                 </form>
                             </field>
                         </page>

@@ -17,7 +17,7 @@
                                 icon="fa-truck">
                             <div class="o_stat_info">
                                 <field name="produce_consumption_count"/>
-                                <span class="o_stat_text">Moves Count</span>
+                                <span class="o_stat_text">Count</span>
                             </div>
                         </button>
                         <button name="action_stock_picking_list" type="object"
@@ -25,7 +25,7 @@
                                 icon="fa-dollar">
                             <div class="o_stat_info">
                                 <field name="produce_consumption_account_count"/>
-                                <span class="o_stat_text">Account Count</span>
+                                <span class="o_stat_text">Journal Count</span>
                             </div>
                         </button>
                         <button name="action_stock_picking_list" type="object"
@@ -35,7 +35,7 @@
                                 <field name="currency_id" invisible="1" groups="base.group_multi_currency"/>
                                 <field name="produce_consumption_account_total" widget='monetary'
                                        options="{'currency_field': 'currency_id'}"/>
-                                <span class="o_stat_text">Account Cost</span>
+                                <span class="o_stat_text">Amount</span>
                             </div>
                         </button>
                     </div>

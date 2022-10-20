@@ -20,21 +20,21 @@
                     <div class="oe_button_box" name="button_operation_box">
                         <button name="action_vendor_bill" type="object"
                                 class="oe_stat_button"
-                                icon="fa-dollar">
+                                icon="fa-file-text-o">
                             <div class="o_stat_info">
                                 <field name="vendor_bill_count"/>
-                                <span class="o_stat_text"># Bill</span>
+                                <span class="o_stat_text">Count</span>
                             </div>
                         </button>
                         <button name="action_vendor_bill" type="object"
                                 class="oe_stat_button"
-                                icon="fa-dollar">
+                                icon="fa-money">
                             <div class="o_stat_info">
                                 <field name="currency_id" invisible="1"
                                        groups="base.group_multi_currency"/>
                                 <field name="vendor_bill_total" widget='monetary'
                                        options="{'currency_field': 'currency_id'}"/>
-                                <span class="o_stat_text">Bills</span>
+                                <span class="o_stat_text">Amount</span>
                             </div>
                         </button>
                     </div>
@@ -62,7 +62,6 @@
                             <field name="notes"/>
                         </group>
                     </group>
-
                     <notebook>
                         <page name="farm_operation_olines" string="Order Lines">
                             <field name="operation_order_line_ids">
@@ -78,7 +77,7 @@
                                     <field name="qty"/>
                                     <field name="note"/>
                                     <field name="price_subtotal" sum="Total Cost"/>
-
+                                    <field name="equipments_id"/>
                                 </tree>
                                 <form>
                                     <group>
@@ -95,6 +94,7 @@
                                             <field name="categ_id" widget="selection" invisible="1"/>
                                             <field name="company_id" widget="selection" invisible="1"/>
                                             <field name="currency_id" widget="selection" invisible="1"/>
+                                            <field name="equipments_id"/>
                                         </group>
                                     </group>
                                     <field name="note"/>

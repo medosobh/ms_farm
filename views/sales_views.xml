@@ -15,21 +15,21 @@
                     <div class="oe_button_box" name="button_sales_box">
                         <button name="action_customer_invoice" type="object"
                                 class="oe_stat_button"
-                                icon="fa-dollar">
+                                icon="fa-file-text-o">
                             <div class="o_stat_info">
                                 <field name="customer_invoice_count"/>
-                                <span class="o_stat_text">Invoice Count</span>
+                                <span class="o_stat_text">Count</span>
                             </div>
                         </button>
                         <button name="action_customer_invoice" type="object"
                                 class="oe_stat_button"
-                                icon="fa-dollar">
+                                icon="fa-money">
                             <div class="o_stat_info">
                                 <field name="currency_id" invisible="1"
                                        groups="base.group_multi_currency"/>
                                 <field name="customer_invoice_total" widget='monetary'
                                        options="{'currency_field': 'currency_id'}"/>
-                                <span class="o_stat_text">Invoices</span>
+                                <span class="o_stat_text">Amount</span>
                             </div>
                         </button>
                     </div>

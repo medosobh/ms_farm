@@ -11,71 +11,6 @@ class farm_equipments(models.Model):
         ('name_uniq', 'unique(name)', "A name can only be assigned to one equipments !"),
     ]
 
-    # create a related product under equipment category
-    # to use in operation order
-    def create_equipment_product(self):
-        # if it is existed and send error message
-        new_name = self.code + " " + self.type + " " + self.name
-        search_name = self.env['product.template'].search([
-            ('name', '=', new_name)])
-        if search_name:
-            raise UserError(_('Product already exist in the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
-        # elif create
-        product_vals = dict(
-            categ_id = self.category_id.id,
-            detailed_type = 'service',
-            name = new_name,
-            reference_record = '% s,% s' % ('farm.equipments', self.id),
-            default_code = self.code + " " + self.name,
-        )
-        new_product = self.env['product.template'].create(product_vals)
-        self.product_id = '% s,% s' % ('product.template', new_product.id)
-        return
-
-    def update_equipment_product_price_unit(self):
-        new_name = self.code + " " + self.type + " " + self.name
-        search_name = self.env['product.template'].search([
-            ('name', '=', new_name)]).id
-        if search_name:
-            update = self.env['product.template'].browse(
-                self.product_id.id).write(
-                dict(
-                    standard_price = self.buy_sell_price,
-                    list_price = self.buy_sell_price,
-                )
-            )
-            print(update)
-        return
-
-    def action_action(self):
-        print('action')
-
-    def _compute_order_line_count(self):
-        for rec in self:
-            count = self.env['farm.operations.oline'].search_count([
-                ('product_id', '=', rec.product_id.id)])
-            rec.order_line_count = count
-        return rec.order_line_count
-
-    def _compute_order_cost(self):
-        for rec in self:
-            cost = sum(
-                self.env['farm.operations.oline'].search([
-                    ('product_id', '=', rec.product_id.id)
-                ]).mapped('price_subtotal'))
-            rec.order_line_cost = cost
-        return rec.order_line_cost
-
-    def _compute_total_expense(self):
-        for record in self:
-            costa = sum(
-                self.env['farm.operations.oline'].search([
-                    ('product_id', '=', record.product_id.id)
-                ]).mapped('price_subtotal'))
-            record.total_expense = costa
-        return record.total_expense
-
     code = fields.Char(
         string = 'Internal Code',
         required = True)
@@ -139,3 +74,86 @@ class farm_equipments(models.Model):
         string = 'Actual Cost',
         compute = '_compute_total_expense',
         store = True)
+    operation_order_line_ids = fields.One2many(
+        'farm.operations.oline',
+        'operations_id',
+        domain =
+        "[('product_id', '=', product_id.id)]",
+        readonly = True,
+        string = "Order lines")
+    operation_actual_line_ids = fields.One2many(
+        'account.move.line',
+        'equipments_id',
+        domain =
+        "[('equipments_id', '=', id)]",
+        string = "Actual lines"
+    )
+
+    # create a related product under equipment category
+    # to use in operation order
+    def create_equipment_product(self):
+        # if it is existed and send error message
+        new_name = self.code + " " + self.type + " " + self.name
+        search_name = self.env['product.template'].search([
+            ('name', '=', new_name)])
+        if search_name:
+            raise UserError(_('Product already exist in the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+        # elif create
+        product_vals = dict(
+            categ_id = self.category_id.id,
+            detailed_type = 'service',
+            name = new_name,
+            reference_record = '% s,% s' % ('farm.equipments', self.id),
+            default_code = self.code + " " + self.name,
+        )
+        new_product = self.env['product.template'].create(product_vals)
+        self.product_id = '% s,% s' % ('product.template', new_product.id)
+        return
+
+    def update_equipment_product_price_unit(self):
+        new_name = self.code + " " + self.type + " " + self.name
+        search_name = self.env['product.template'].search([
+            ('name', '=', new_name)]).id
+        if search_name:
+            update = self.env['product.template'].browse(
+                self.product_id.id).write(
+                dict(
+                    standard_price = self.buy_sell_price,
+                    list_price = self.buy_sell_price,
+                )
+            )
+            print(update)
+        return
+
+    def action_action(self):
+        print('action')
+
+    def _compute_order_line_count(self):
+        for rec in self:
+            count = self.env['farm.operations.oline'].search_count([
+                ('product_id', '=', rec.product_id.id)])
+            rec.order_line_count = count
+        return rec.order_line_count
+
+    def _compute_order_cost(self):
+        for rec in self:
+            cost = sum(
+                self.env['farm.operations.oline'].search([
+                    ('product_id', '=', rec.product_id.id)
+                ]).mapped('price_subtotal'))
+            rec.order_line_cost = cost
+        return rec.order_line_cost
+
+    def _compute_total_expense(self):
+        for rec in self:
+            cost_debit = sum(
+                self.env['account.move.line'].search([
+                    ('equipments_id', '=', rec.id)
+                ]).mapped('debit'))
+            cost_credit = sum(
+                self.env['account.move.line'].search([
+                    ('equipments_id', '=', rec.id)
+                ]).mapped('credit'))
+            rec.total_expense = cost_debit - cost_credit
+        return rec.total_expense

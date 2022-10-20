@@ -7,13 +7,17 @@
         <field name="arch" type="xml">
             <form string="Project">
                 <header>
-                    <button name="button_draft" string="Set Draft" type="object" class="oe_highlight"
+                    <button name="button_draft" string="Set Draft" type="object"
+                            class="oe_highlight"
                             help="Move Project to In Draft State" states="on_hold"/>
-                    <button name="button_in_operation" string="Set In Operation" type="object" class="oe_highlight"
+                    <button name="button_in_operation" string="Set In Operation" type="object"
+                            class="oe_highlight"
                             help="Move Project to In operation State" states="draft,finish"/>
-                    <button name="button_finish" string="Set Finish" type="object" class="oe_highlight"
+                    <button name="button_finish" string="Set Finish" type="object"
+                            class="oe_highlight"
                             help="Move Project to In Finish State" states="in_operation"/>
-                    <button name="button_on_hold" string="Set On hold" type="object" class="oe_highlight"
+                    <button name="button_on_hold" string="Set On hold" type="object"
+                            class="oe_highlight"
                             help="Move Project to On Hold State" states="in_operation"/>
                     <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
                 </header>

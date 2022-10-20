@@ -141,7 +141,7 @@ class farm_materials(models.Model):
             sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
             am_total = sum(
                 self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
-            fam_total = fam_total - am_total
+            fam_total = fam_total + am_total
 
         mo_rec.materials_consumption_account_total = fam_total
         return mo_rec.materials_consumption_account_total

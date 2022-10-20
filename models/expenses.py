@@ -89,7 +89,7 @@ class farm_expenses(models.Model):
         help = "Used to display the currency when tracking monetary values")
     expenses_consumption_count = fields.Integer(
         string = "expense Moves Count",
-        compute = '_compute_stock_move_count')
+        compute = '_compute_expense_ticket_count')
     expenses_consumption_account_count = fields.Integer(
         string = "expense Moves Count",
         compute = '_compute_account_move_count')
@@ -110,37 +110,37 @@ class farm_expenses(models.Model):
             rec.e_order_cost = oline
         return rec.e_order_cost
 
-    def _compute_stock_move_count(self):
+    def _compute_expense_ticket_count(self):
         for rec in self:
-            count = self.env['stock.picking'].search_count([('origin', '=', rec.name)])
+            count = self.env['hr.expense'].search_count([('analytic_account_id', '=', rec.analytic_account_id.id)])
             rec.expenses_consumption_count = count
         return rec.expenses_consumption_count
 
     def _compute_account_move_count(self):
-        am_count = 0
-        fam_count = 0
         for mo_rec in self:
-            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
+            sp_count = self.env['account.move.line'].search_count([
+                ('expense_id', '!=', False),
+                ('analytic_account_id', '=', mo_rec.analytic_account_id.id)
+            ])
 
-        for sm_rec in sp_count:
-            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
-            am_count = self.env['account.move'].search_count([('stock_move_id', '=', sm_count.id)])
-            fam_count = fam_count + am_count
-
-        mo_rec.expenses_consumption_account_count = fam_count
+        mo_rec.expenses_consumption_account_count = sp_count
         return mo_rec.expenses_consumption_account_count
 
     def _compute_account_move_total(self):
-        am_total = 0
-        fam_total = 0
+        debit_total = 0
+        credit_total = 0
         for mo_rec in self:
-            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
-
-        for sm_rec in sp_count:
-            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
-            am_total = sum(
-                self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
-            fam_total = fam_total - am_total
+            debit_total = sum(
+                self.env['account.move.line'].search([
+                    ('expense_id', '!=', False),
+                    ('analytic_account_id', '=', mo_rec.analytic_account_id.id)
+                ]).mapped('debit'))
+            credit_total = sum(
+                self.env['account.move.line'].search([
+                    ('expense_id', '!=', False),
+                    ('analytic_account_id', '=', mo_rec.analytic_account_id.id)
+                ]).mapped('credit'))
+            fam_total = debit_total - credit_total
         self.expenses_consumption_account_total = fam_total
         return self.expenses_consumption_account_total
 
@@ -158,12 +158,26 @@ class farm_expenses(models.Model):
         print('expense ticket')
         return
 
-    def action_stock_picking_list(self):
+    def action_expense_list(self):
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Stock Moves',
-            'res_model': 'stock.picking',
-            'domain': [('origin', '=', self.name)],
+            'name': 'Expenses to Report',
+            'res_model': 'hr.expense',
+            'domain': [('analytic_account_id', '=', self.analytic_account_id.id)],
+            'view_mode': 'tree,form',
+            'context': {},
+            'target': 'current'
+        }
+
+    def action_expense_account_line(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Expenses to Report',
+            'res_model': 'account.move.line',
+            'domain': [
+                ('expense_id', '!=', False),
+                ('analytic_account_id', '=', self.analytic_account_id.id)
+            ],
             'view_mode': 'tree,form',
             'context': {},
             'target': 'current'
@@ -174,21 +188,12 @@ class farm_expenses_oline(models.Model):
     _name = 'farm.expenses.oline'
     _description = 'expense order line'
 
-    @api.onchange('product_id')
-    def onchange_price_unit(self):
-        if not self.product_id:
-            self.price_unit = 0
-            return
-        self.price_unit = self.product_id.standard_price
-
-    @api.depends('price_unit', 'qty')
-    def _compute_subtotal(self):
-        for rec in self:
-            rec.price_subtotal = rec.price_unit * rec.qty
-
     name = fields.Text(
         string = 'Description',
         required = True)
+    state = fields.Selection(
+        related = 'expenses_id.state',
+    )
     sequence = fields.Integer(
         string = 'Sequence',
         default = 10)
@@ -232,3 +237,57 @@ class farm_expenses_oline(models.Model):
     expenses_id = fields.Many2one(
         'farm.expenses',
         string = 'expenses')
+    analytic_account_id = fields.Reference(
+        related = 'expenses_id.analytic_account_id')
+    employee_id = fields.Many2one(
+        'hr.employee',
+        string = "Advance to Employee", )
+    expense_id = fields.Many2one(
+        'hr.expense', string = 'Expense Ref', copy = False, help = "Expense where the move line come from")
+
+    @api.onchange('product_id')
+    def onchange_price_unit(self):
+        if not self.product_id:
+            self.price_unit = 0
+            return
+        self.price_unit = self.product_id.standard_price
+
+    @api.depends('price_unit', 'qty')
+    def _compute_subtotal(self):
+        for rec in self:
+            rec.price_subtotal = rec.price_unit * rec.qty
+
+    def button_farm_expense_issue(self):
+        # This will make sure we have on record, not multiple records.
+        self.ensure_one()
+        if not self.employee_id.id:
+            expense_vals = {
+                'state': 'draft',
+                'name': self.name,
+                'product_id': self.product_id.id,
+                'quantity': self.qty,
+                'unit_amount': self.price_unit,
+                'payment_mode': 'company_account',
+                'analytic_account_id': self.analytic_account_id.id,
+            }
+        else:
+            expense_vals = {
+                'state': 'draft',
+                'name': self.name,
+                'product_id': self.product_id.id,
+                'quantity': self.qty,
+                'unit_amount': self.price_unit,
+                'payment_mode': 'own_account',
+                'employee_id': self.employee_id.id,
+                'analytic_account_id': self.analytic_account_id.id,
+            }
+        expense = self.env['hr.expense'].create(expense_vals)
+        print('expense ticket')
+        self.expense_id = expense.id
+        return {
+            'res_model': 'hr.expense',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'view_id': self.env.ref('hr_expense.hr_expense_view_form').id,
+            'res_id': expense.id,
+        }
