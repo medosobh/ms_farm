@@ -56,7 +56,7 @@ class farm_sales(models.Model):
         tracking = True)
     user_id = fields.Many2one(
         'res.users',
-        string = "Operation Man",
+        string = "Order Man",
         required = True)
     notes = fields.Html(
         'Terms and Conditions')

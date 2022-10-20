@@ -8,6 +8,97 @@ class farm_produce(models.Model):
     _description = 'produce order'
     _order = 'issue_date'
 
+    name = fields.Char(
+        string = 'Produce Ref',
+        index = True,
+        readonly = True,
+        tracking = True,
+        default = lambda x: _('New'))
+    state = fields.Selection([
+        ('order', 'Invoicing'),
+        ('lock', 'Locked')],
+        string = 'State', readonly = False, copy = False,
+        tracking = True, default = 'order')
+    category_id = fields.Many2one(
+        'product.category',
+        required = True,
+        domain = [('order_type', '=', 'produce')],
+        string = 'Product Category')
+    projects_id = fields.Many2one(
+        'farm.projects',
+        required = True,
+        tracking = True)
+    short_name = fields.Char(
+        related = 'projects_id.short_name',
+        store = True)
+    issue_date = fields.Date(
+        string = 'Date',
+        default = fields.Datetime.today,
+        tracking = True)
+    partner_id = fields.Many2one(
+        'res.partner',
+        string = 'Partner')
+    stock_warehouse = fields.Many2one(
+        'stock.warehouse',
+        required = True,
+        string = 'Warehouse')
+    location_id = fields.Many2one(
+        'stock.location',
+        "Destination Location",
+        default = lambda self: self.env['stock.picking.type'].browse(
+            self._context.get('default_picking_type_id')).default_location_dest_id,
+        domain = [('usage', '=', 'internal')],
+        check_company = True,
+        required = True)
+    picking_type_id = fields.Many2one(
+        'stock.picking.type',
+        "Stock Picking Type",
+        default = lambda self: self.env.ref('ms_farm.farm_location_produce').id,
+        required = True)
+    p_order_cost = fields.Float(
+        string = 'Order Cost',
+        compute = '_compute_produce_order_cost',
+        store = True)
+    active = fields.Boolean(
+        string = "Active",
+        default = True,
+        tracking = True)
+    user_id = fields.Many2one(
+        'res.users',
+        string = "Order Man",
+        required = True)
+    notes = fields.Html(
+        'Terms and Conditions')
+    produce_order_line_ids = fields.One2many(
+        'farm.produce.oline',
+        'produce_id',
+        string = "produce order lines")
+    company_id = fields.Many2one(
+        'res.company',
+        string = 'Company',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False,
+        readonly = True)
+    currency_id = fields.Many2one(
+        'res.currency',
+        'Currency',
+        related = 'company_id.currency_id',
+        readonly = True,
+        ondelete = 'set null',
+        help = "Used to display the currency when tracking monetary values")
+    produce_consumption_count = fields.Integer(
+        string = "Material Moves Count",
+        compute = '_compute_stock_move_count')
+    produce_consumption_account_count = fields.Integer(
+        string = "Material Moves Count",
+        compute = '_compute_account_move_count')
+    produce_consumption_account_total = fields.Float(
+        string = "Material Moves Total",
+        compute = '_compute_account_move_total')
+    analytic_account_id = fields.Reference(
+        related = 'projects_id.analytic_account_id')
+
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
     # -------------------------------------------------------------------------
@@ -113,6 +204,7 @@ class farm_produce(models.Model):
             'target': 'current'
         }
         return action
+
     def action_stock_picking_list(self):
         return {
             'type': 'ir.actions.act_window',
@@ -123,97 +215,6 @@ class farm_produce(models.Model):
             'context': {},
             'target': 'current'
         }
-
-    name = fields.Char(
-        string = 'Produce Ref',
-        index = True,
-        readonly = True,
-        tracking = True,
-        default = lambda x: _('New'))
-    state = fields.Selection([
-        ('order', 'Invoicing'),
-        ('lock', 'Locked')],
-        string = 'State', readonly = False, copy = False,
-        tracking = True, default = 'order')
-    category_id = fields.Many2one(
-        'product.category',
-        required = True,
-        domain = [('order_type', '=', 'produce')],
-        string = 'Product Category')
-    projects_id = fields.Many2one(
-        'farm.projects',
-        required = True,
-        tracking = True)
-    short_name = fields.Char(
-        related = 'projects_id.short_name',
-        store = True)
-    issue_date = fields.Date(
-        string = 'Date',
-        default = fields.Datetime.today,
-        tracking = True)
-    partner_id = fields.Many2one(
-        'res.partner',
-        string = 'Partner')
-    stock_warehouse = fields.Many2one(
-        'stock.warehouse',
-        required = True,
-        string = 'Warehouse')
-    location_id = fields.Many2one(
-        'stock.location',
-        "Destination Location",
-        default = lambda self: self.env['stock.picking.type'].browse(
-            self._context.get('default_picking_type_id')).default_location_dest_id,
-        domain = [('usage', '=', 'internal')],
-        check_company = True,
-        required = True)
-    picking_type_id = fields.Many2one(
-        'stock.picking.type',
-        "Stock Picking Type",
-        default = lambda self: self.env.ref('ms_farm.farm_location_produce').id,
-        required = True)
-    p_order_cost = fields.Float(
-        string = 'Order Cost',
-        compute = '_compute_produce_order_cost',
-        store = True)
-    active = fields.Boolean(
-        string = "Active",
-        default = True,
-        tracking = True)
-    user_id = fields.Many2one(
-        'res.users',
-        string = "Operation Man",
-        required = True)
-    notes = fields.Html(
-        'Terms and Conditions')
-    produce_order_line_ids = fields.One2many(
-        'farm.produce.oline',
-        'produce_id',
-        string = "produce order lines")
-    company_id = fields.Many2one(
-        'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True)
-    currency_id = fields.Many2one(
-        'res.currency',
-        'Currency',
-        related = 'company_id.currency_id',
-        readonly = True,
-        ondelete = 'set null',
-        help = "Used to display the currency when tracking monetary values")
-    produce_consumption_count = fields.Integer(
-        string = "Material Moves Count",
-        compute = '_compute_stock_move_count')
-    produce_consumption_account_count = fields.Integer(
-        string = "Material Moves Count",
-        compute = '_compute_account_move_count')
-    produce_consumption_account_total = fields.Float(
-        string = "Material Moves Total",
-        compute = '_compute_account_move_total')
-    analytic_account_id = fields.Reference(
-        related = 'projects_id.analytic_account_id')
 
 
 class farm_produce_oline(models.Model):
@@ -276,4 +277,3 @@ class farm_produce_oline(models.Model):
         store = True)
     produce_id = fields.Many2one(
         'farm.produce', string = 'Produce Order')
-

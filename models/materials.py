@@ -66,7 +66,7 @@ class farm_materials(models.Model):
         tracking = True)
     user_id = fields.Many2one(
         'res.users',
-        string = "Material Man",
+        string = "Order Man",
         required = True)
     notes = fields.Html(
         'Terms and Conditions')

@@ -216,9 +216,11 @@
                 <filter name="filter_orders" string="Orders" domain="[('state', '=', 'order')]"/>
                 <filter name="filter_documents" string="Documents" domain="[('state', '=', 'document')]"/>
                 <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <filter name="filter_user" string="User" domain="[('user_id', '=', uid)]"/>
                 <group expand="0" string="Group by">
                     <filter string="Project" name="group_by_project" context="{'group_by':'projects_id'}"/>
                     <filter string="Category" name="group_by_category" context="{'group_by':'category_id'}"/>
+                    <filter string="Order Man" name="group_by_user" context="{'group_by':'user_id'}"/>
                 </group>
                 <searchpanel>
                     <field name="projects_id" select="multi" string="Relative Project" enable_counters="1"/>
@@ -233,7 +235,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">farm.expenses</field>
         <field name="view_mode">tree,form,calendar,pivot,graph</field>
-        <field name="context">{'search_default_filter_order': 1, 'default_state': 'order'}</field>
+        <field name="context">{'search_default_filter_user': 1}</field>
         <field name="domain">[]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

@@ -4,7 +4,7 @@
     'name': 'Farming and Agriculture Management',
 
     'summary': """
-        Organize farm and control several kind agriculture business.
+        Organize farm and control several kind of agriculture business.
         """,
 
     'description': """
@@ -38,9 +38,10 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
+        'data/settings_views.xml',
         'data/sequence_views.xml',
         'data/data_views.xml',
-        'data/settings_views.xml',
         'views/menu.xml',
         'views/project_group_views.xml',
         'views/operations_views.xml',
