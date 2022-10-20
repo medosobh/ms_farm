@@ -266,8 +266,9 @@ class farm_operations_oline(models.Model):
         related = 'operations_id.state',
         store = True)
     equipments_id = fields.Reference(
-        related = 'product_id.reference_record',
-        string = 'Equipment')
+        related = 'product_id.equipments_id',
+        string = 'Equipment',
+        readonly = True)
     analytic_account_id = fields.Reference(
         related = 'operations_id.analytic_account_id')
 

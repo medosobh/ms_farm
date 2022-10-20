@@ -4,7 +4,7 @@
     'name': 'Farming and Agriculture Management',
 
     'summary': """
-        Farm Management is a step ahead to make upper hand and control all agriculture operations.
+        Organize farm and control several kind agriculture business.
         """,
 
     'description': """

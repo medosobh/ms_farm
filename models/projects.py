@@ -255,11 +255,6 @@ class farm_projects(models.Model):
     cost_progress = fields.Integer(
         string = 'Cost vs Budget',
         compute = '_compute_cost_progress')
-    product_id = fields.Reference(
-        selection = [
-            ('product.template', 'Product')
-        ],
-        string = 'Reference Product')
     category_id = fields.Many2one(
         'product.category',
         required = True,
@@ -481,30 +476,13 @@ class farm_projects(models.Model):
             categ_id = self.category_id.id,
             detailed_type = 'product',
             name = new_name,
-            reference_record = '% s,% s' % ('farm.projects', self.id),
+            projects_id = self.id,
             default_code = self.name + " " + self.short_name,
+            standard_price = self.buy_sell_price,
+            list_price = self.buy_sell_price,
         )
         new_product = self.env['product.template'].create(product_vals)
-        self.product_id = '% s,% s' % ('product.template', new_product.id)
-        return
-
-    def update_project_product_price_unit(self):
-        if self.product_id:
-            update = self.env['product.template'].browse(
-                self.product_id.id).write(
-                dict(
-                    standard_price = self.buy_sell_price,
-                    list_price = self.buy_sell_price,
-                    detailed_type = 'product'
-                )
-            )
-            print(update)
-        return update
-
-    def get_reference_field_date(self):
-        print(self.analytic_account_id)
-        print(self.analytic_account_id.id)
-        print(self.analytic_account_id._name)
+        return new_product
 
     def create_project_analytic_account(self):
         # if it is existed and send error message

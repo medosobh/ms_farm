@@ -363,7 +363,6 @@
                         <page string="Settings">
                             <group string="Product and Category">
                                 <group>
-                                    <field name="product_id"/>
                                     <field name="buy_sell_price" class="oe_inline"/>
                                     <field name="category_id" widget="selection" class="oe_inline"/>
                                 </group>
@@ -371,13 +370,7 @@
                                     <div>
                                         <button name="create_project_product" type="object"
                                                 string="Create Product"
-                                                class="oe_highlight"
-                                                attrs="{'invisible':[('product_id','!=', False)]}"/>
-                                    </div>
-                                    <div>
-                                        <button name="update_project_product_price_unit"
-                                                string="Re/Link and Update Price Unit"
-                                                type="object"/>
+                                                class="oe_highlight"/>
                                     </div>
                                 </group>
                             </group>

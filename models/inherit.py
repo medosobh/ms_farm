@@ -38,11 +38,26 @@ class ProductCategory(models.Model):
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    reference_record = fields.Reference([
-        ('farm.projects', 'Projects'),
-        ('farm.equipments', 'Equipments')
-    ],
-        string = 'Related Module')
+    projects_id = fields.Many2one(
+        'farm.projects',
+        string = 'Projects'
+    )
+    equipments_id = fields.Many2one(
+        'farm.equipments',
+        string = 'Equipments'
+    )
+
+class ProductProduct(models.Model):
+    _inherit = "product.product"
+
+    projects_id = fields.Many2one(
+        'farm.projects',
+        string = 'Projects'
+    )
+    equipments_id = fields.Many2one(
+        'farm.equipments',
+        string = 'Equipments'
+    )
 
 
 class ProductProduct(models.Model):

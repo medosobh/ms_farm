@@ -50,17 +50,23 @@
                   action="stock.action_picking_tree_all"
                   sequence="32"/>
 
+        <menuitem id="farm_menu_hr_expense"
+                  name="Expense Tickets"
+                  parent="farm_menu_documents"
+                  action="hr_expense.hr_expense_actions_my_all"
+                  sequence="33"/>
+
         <menuitem id="farm_menu_product_move"
                   name="Produce stock move"
                   parent="farm_menu_documents"
                   action="stock.action_picking_tree_all"
-                  sequence="33"/>
+                  sequence="34"/>
 
         <menuitem id="farm_menu_customer_invoice"
                   name="Customer Invoice"
                   parent="farm_menu_documents"
                   action="account.action_move_out_invoice_type"
-                  sequence="34"/>
+                  sequence="35"/>
 
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="menu_product_category"

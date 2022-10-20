@@ -28,11 +28,6 @@ class farm_equipments(models.Model):
     body_code = fields.Char(
         string = 'Body Code',
         required = True)
-    product_id = fields.Reference(
-        selection = [
-            ('product.template', 'Product')
-        ],
-        string = 'Reference Product')
     acq_date = fields.Date(
         string = 'Acquisition Date',
         required = True)
@@ -64,19 +59,16 @@ class farm_equipments(models.Model):
         store = True)
     order_line_count = fields.Integer(
         string = '# of Order',
-        compute = '_compute_order_line_count',
-        store = True)
+        compute = '_compute_order_line_count')
     order_line_cost = fields.Monetary(
         string = 'Order Cost',
-        compute = '_compute_order_cost',
-        store = True)
+        compute = '_compute_order_cost')
     total_expense = fields.Monetary(
         string = 'Actual Cost',
-        compute = '_compute_total_expense',
-        store = True)
+        compute = '_compute_total_expense')
     operation_order_line_ids = fields.One2many(
         'farm.operations.oline',
-        'operations_id',
+        'product_id',
         domain =
         "[('product_id', '=', product_id.id)]",
         readonly = True,
@@ -86,6 +78,7 @@ class farm_equipments(models.Model):
         'equipments_id',
         domain =
         "[('equipments_id', '=', id)]",
+        readonly = True,
         string = "Actual lines"
     )
 
@@ -104,27 +97,13 @@ class farm_equipments(models.Model):
             categ_id = self.category_id.id,
             detailed_type = 'service',
             name = new_name,
-            reference_record = '% s,% s' % ('farm.equipments', self.id),
+            equipments_id = self.id,
             default_code = self.code + " " + self.name,
+            standard_price = self.buy_sell_price,
+            list_price = self.buy_sell_price,
         )
         new_product = self.env['product.template'].create(product_vals)
-        self.product_id = '% s,% s' % ('product.template', new_product.id)
-        return
-
-    def update_equipment_product_price_unit(self):
-        new_name = self.code + " " + self.type + " " + self.name
-        search_name = self.env['product.template'].search([
-            ('name', '=', new_name)]).id
-        if search_name:
-            update = self.env['product.template'].browse(
-                self.product_id.id).write(
-                dict(
-                    standard_price = self.buy_sell_price,
-                    list_price = self.buy_sell_price,
-                )
-            )
-            print(update)
-        return
+        return new_product
 
     def action_action(self):
         print('action')
@@ -132,7 +111,8 @@ class farm_equipments(models.Model):
     def _compute_order_line_count(self):
         for rec in self:
             count = self.env['farm.operations.oline'].search_count([
-                ('product_id', '=', rec.product_id.id)])
+                ('equipments_id', '=', rec.id)
+            ])
             rec.order_line_count = count
         return rec.order_line_count
 
@@ -140,8 +120,9 @@ class farm_equipments(models.Model):
         for rec in self:
             cost = sum(
                 self.env['farm.operations.oline'].search([
-                    ('product_id', '=', rec.product_id.id)
-                ]).mapped('price_subtotal'))
+                    ('equipments_id', '=', rec.id)
+                ]).mapped('price_subtotal')
+            )
             rec.order_line_cost = cost
         return rec.order_line_cost
 

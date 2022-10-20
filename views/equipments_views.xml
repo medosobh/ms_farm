@@ -57,15 +57,9 @@
                             <group>
                                 <field name="buy_sell_price"/>
                                 <field name="category_id" readonly="1"/>
-                                <field name="product_id"/>
                                 <div>
                                     <button name="create_equipment_product" string="Create Product" type="object"
-                                            class="oe_highlight" attrs="{'invisible':[('product_id','!=', False)]}"/>
-                                </div>
-                                <div>
-                                    <button name="update_equipment_product_price_unit"
-                                            string="Re/Link and Update Price Unit"
-                                            type="object"/>
+                                            class="oe_highlight"/>
                                 </div>
                                 <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                             </group>
@@ -102,6 +96,7 @@
                                         <field name="date"/>
                                         <field name="company_id" widget="selection" invisible="1"/>
                                         <field name="currency_id" widget="selection" invisible="1"/>
+                                        <field name="equipments_id"/>
                                     </tree>
                                 </field>
                             </page>
@@ -127,7 +122,6 @@
                     <field name="acq_date"/>
                     <field name="body_code"/>
                     <field name="type"/>
-                    <field name="product_id"/>
                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                 </tree>
             </field>
