@@ -268,6 +268,10 @@ class farm_projects(models.Model):
             ('account.analytic.account', 'Analytic Account')
         ],
         string = 'Analytic Account')
+    create_lock = fields.Boolean(
+        string = 'Create Lock',
+        default = False
+    )
 
     @api.depends('state')
     def button_draft(self):
@@ -482,6 +486,7 @@ class farm_projects(models.Model):
             list_price = self.buy_sell_price,
         )
         new_product = self.env['product.template'].create(product_vals)
+        self.create_lock = True
         return new_product
 
     def create_project_analytic_account(self):

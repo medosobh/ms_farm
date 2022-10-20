@@ -58,8 +58,11 @@
                                 <field name="buy_sell_price"/>
                                 <field name="category_id" readonly="1"/>
                                 <div>
-                                    <button name="create_equipment_product" string="Create Product" type="object"
-                                            class="oe_highlight"/>
+                                    <field name="create_lock" invisible="1"/>
+                                    <button name="create_equipment_product" type="object"
+                                            string="Create Product"
+                                            class="oe_highlight"
+                                            attrs="{'invisible':[('create_lock','!=', True)]}"/>
                                 </div>
                                 <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                             </group>
@@ -79,7 +82,7 @@
                                         <field name="qty"/>
                                         <field name="note"/>
                                         <field name="price_subtotal" sum="Total Cost"/>
-                                        <field name="equipments_id"/>
+                                        <field name="equipments_id" invisible="1"/>
                                         <field name="analytic_account_id"/>
                                     </tree>
                                 </field>
@@ -96,7 +99,7 @@
                                         <field name="date"/>
                                         <field name="company_id" widget="selection" invisible="1"/>
                                         <field name="currency_id" widget="selection" invisible="1"/>
-                                        <field name="equipments_id"/>
+                                        <field name="equipments_id" invisible="1"/>
                                     </tree>
                                 </field>
                             </page>

@@ -368,9 +368,11 @@
                                 </group>
                                 <group>
                                     <div>
+                                        <field name="create_lock" invisible="1"/>
                                         <button name="create_project_product" type="object"
                                                 string="Create Product"
-                                                class="oe_highlight"/>
+                                                class="oe_highlight"
+                                        attrs="{'invisible':[('create_lock','!=', True)]}"/>
                                     </div>
                                 </group>
                             </group>

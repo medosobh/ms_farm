@@ -79,7 +79,9 @@ class farm_equipments(models.Model):
         domain =
         "[('equipments_id', '=', id)]",
         readonly = True,
-        string = "Actual lines"
+        string = "Actual lines")
+    create_lock = fields.Boolean(
+        string = 'Create Lock'
     )
 
     # create a related product under equipment category
@@ -103,6 +105,7 @@ class farm_equipments(models.Model):
             list_price = self.buy_sell_price,
         )
         new_product = self.env['product.template'].create(product_vals)
+        self.create_lock = True
         return new_product
 
     def action_action(self):
