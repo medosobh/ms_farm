@@ -40,23 +40,11 @@ class ProductTemplate(models.Model):
 
     projects_id = fields.Many2one(
         'farm.projects',
-        string = 'Projects'
+        string = 'Project'
     )
     equipments_id = fields.Many2one(
         'farm.equipments',
-        string = 'Equipments'
-    )
-
-class ProductProduct(models.Model):
-    _inherit = "product.product"
-
-    projects_id = fields.Many2one(
-        'farm.projects',
-        string = 'Projects'
-    )
-    equipments_id = fields.Many2one(
-        'farm.equipments',
-        string = 'Equipments'
+        string = 'Equipment'
     )
 
 

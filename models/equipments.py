@@ -68,9 +68,9 @@ class farm_equipments(models.Model):
         compute = '_compute_total_expense')
     operation_order_line_ids = fields.One2many(
         'farm.operations.oline',
-        'product_id',
+        'equipments_id',
         domain =
-        "[('product_id', '=', product_id.id)]",
+        "[('equipments_id', '=', id)]",
         readonly = True,
         string = "Order lines")
     operation_actual_line_ids = fields.One2many(

@@ -265,10 +265,10 @@ class farm_operations_oline(models.Model):
     state = fields.Selection(
         related = 'operations_id.state',
         store = True)
-    equipments_id = fields.Reference(
-        related = 'product_id.equipments_id',
+    equipments_id = fields.Many2one(
+        'farm.equipments',
         string = 'Equipment',
-        readonly = True)
+        related = 'product_id.equipments_id')
     analytic_account_id = fields.Reference(
         related = 'operations_id.analytic_account_id')
 

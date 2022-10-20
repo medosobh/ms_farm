@@ -25,7 +25,8 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='detailed_type']" position="before">
-                    <field name="reference_record"/>
+                    <field name="projects_id"/>
+                    <field name="equipments_id"/>
                     <!-- Add your fields or attributes here -->
                 </xpath>
 
