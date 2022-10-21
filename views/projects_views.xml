@@ -372,13 +372,13 @@
                                         <button name="create_project_product" type="object"
                                                 string="Create Product"
                                                 class="oe_highlight"
-                                        attrs="{'invisible':[('create_lock','=', True)]}"/>
+                                                attrs="{'invisible':[('create_lock','=', True)]}"/>
                                     </div>
                                 </group>
                             </group>
                             <group string="Analytic Account">
                                 <group>
-                                  <field name="analytic_account_id"/>
+                                    <field name="analytic_account_id"/>
                                 </group>
                                 <group>
                                     <div>
@@ -560,6 +560,7 @@
                 <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                 <filter name="filter_create" string="Create Asset" domain="[('project_type', '=', 'create')]"/>
                 <filter name="filter_operate" string="Operate Asset" domain="[('project_type', '=', 'operate')]"/>
+                <filter name="filter_user" string="User" domain="[('user_id', '=', uid)]"/>
                 <separator/>
                 <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
                 <separator/>
@@ -571,6 +572,7 @@
                 <group expand="0" string="Group by">
                     <filter string="Group" name="group_by_group" context="{'group_by':'project_group_id'}"/>
                     <filter string="Company" name="group_by_company" context="{'group_by':'company_id'}"/>
+                    <filter string="Order Man" name="group_by_user" context="{'group_by':'user_id'}"/>
                 </group>
                 <searchpanel>
                     <field name="project_group_id" select="multi" string="Project Group" enable_counters="1"/>
@@ -584,7 +586,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">farm.projects</field>
         <field name="view_mode">kanban,tree,form,calendar</field>
-        <field name="context">{}</field>
+        <field name="context">{'search_default_filter_user': 1}</field>
         <field name="domain">[]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Create your first project!</p>
