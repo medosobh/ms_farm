@@ -124,12 +124,17 @@ class farm_operations(models.Model):
 
     def _compute_vendor_bill_total(self):
         for rec in self:
-            total = sum(
-                self.env['account.move'].search([
-                    ('invoice_origin', '=', rec.name)
-                ]).mapped('amount_total_signed')
+            total_debit = sum(
+                self.env['account.move.line'].search([
+                    ('operations_id', '=', rec.id)
+                ]).mapped('debit')
             )
-            rec.vendor_bill_total = -total
+            total_credit = sum(
+                self.env['account.move.line'].search([
+                    ('operations_id', '=', rec.id)
+                ]).mapped('credit')
+            )
+            rec.vendor_bill_total = total_debit - total_credit
         return rec.vendor_bill_total
 
     # compute invoice without link to views
@@ -163,8 +168,16 @@ class farm_operations(models.Model):
     def button_farm_create_vendor_bill(self):
         # create vendor bill in background and open form view.
         self.ensure_one()
+
+        # check analytic_account_id created
+        analytic = self.analytic_account_id
+        if not analytic:
+            raise UserError(_('Please define an analytic account for the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+
         move_type = self._context.get('default_move_type', 'in_invoice')
-        journal = self.env['account.move'].with_context(default_move_type = move_type)._get_default_journal()
+        journal = self.env['account.move'].with_context(
+            default_move_type = move_type)._get_default_journal()
         if not journal:
             raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (
                 self.company_id.name, self.company_id.id))
@@ -192,7 +205,8 @@ class farm_operations(models.Model):
                 'quantity': self.operation_order_line_ids.qty,
                 'price_unit': self.operation_order_line_ids.price_unit,
                 'analytic_account_id': self.analytic_account_id.id,
-                'equipments_id': self.operation_order_line_ids.equipments_id.id
+                'equipments_id': self.operation_order_line_ids.equipments_id.id,
+                'operations_id': self.id,
             })],
             'company_id': self.company_id.id,
         }

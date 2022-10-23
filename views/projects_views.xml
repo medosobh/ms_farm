@@ -22,6 +22,7 @@
                     <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
                 </header>
                 <sheet>
+
                     <div class="oe_button_box" name="button_box">
                         <button name="action_open_operation_orders_timeframe" type="object"
                                 class="oe_stat_button"
@@ -63,6 +64,10 @@
                                 <span class="o_stat_text">Sales TF</span>
                             </div>
                         </button>
+                    </div>
+                    <div role="alert" class="alert alert-warning"
+                         attrs="{'invisible': [('analytic_account_id', '!=', False)]}">
+                        Create analytic account, creating bills, invoices and stock move depending on that.
                     </div>
                     <div class="oe_title">
                         <h3>
@@ -339,6 +344,7 @@
                                     <field name="operations_actual" widget='monetary'/>
                                     <field name="materials_actual" widget='monetary'/>
                                     <field name="expenses_actual" widget='monetary'/>
+                                    <field name="total_actual" widget='monetary'/>
                                     <field name="actual_produce_amount" widget='monetary'/>
                                     <field name="actual_produce_qty"/>
                                     <field name="actual_sales_amount" widget='monetary'/>
@@ -347,18 +353,6 @@
                                 </group>
                             </group>
 
-                        </page>
-                        <page string="KPIs">
-                            <group>
-                                <div>
-                                    <field name="g_days" widget="gauge"
-                                           options="{'max_field': 'p_days', 'label_field': 'Days Gone', 'style': 'width:160px; height: 120px;'}"/>
-                                </div>
-                                <div>
-                                    <field name="total_actual" widget="gauge"
-                                           options="{'max_field': 'total_budget', 'label_field': 'Days Gone', 'style': 'width:160px; height: 120px;'}"/>
-                                </div>
-                            </group>
                         </page>
                         <page string="Settings">
                             <group string="Product and Category">

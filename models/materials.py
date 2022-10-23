@@ -132,19 +132,19 @@ class farm_materials(models.Model):
         return mo_rec.materials_consumption_account_count
 
     def _compute_account_move_total(self):
-        am_total = 0
-        fam_total = 0
-        for mo_rec in self:
-            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
-
-        for sm_rec in sp_count:
-            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
-            am_total = sum(
-                self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
-            fam_total = fam_total + am_total
-
-        mo_rec.materials_consumption_account_total = fam_total
-        return mo_rec.materials_consumption_account_total
+        for rec in self:
+            total_debit = sum(
+                self.env['account.move.line'].search([
+                    ('materials_id', '=', rec.id)
+                ]).mapped('debit')
+            )
+            total_credit = sum(
+                self.env['account.move.line'].search([
+                    ('materials_id', '=', rec.id)
+                ]).mapped('credit')
+            )
+        rec.materials_consumption_account_total = total_debit + total_credit
+        return rec.materials_consumption_account_total
 
     # -------------------------------------------------------------------------
     # Create METHODS
@@ -157,6 +157,13 @@ class farm_materials(models.Model):
 
     def button_farm_stock_out(self):
         self.ensure_one()
+
+        # check analytic_account_id created
+        analytic = self.analytic_account_id
+        if not analytic:
+            raise UserError(_('Please define an analytic account for the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+
         move_type = self._context.get('default_move_type', 'direct')
         warehouse = self.stock_warehouse
 
@@ -183,7 +190,7 @@ class farm_materials(models.Model):
                 'product_uom': self.materials_order_line_ids.product_uom.id,
                 'location_id': self.picking_type_id.default_location_src_id.id,
                 'location_dest_id': self.category_id.location_id.id,
-                # 'picking_id': picking.id,
+                # 'picking_id': self.picking.id,
                 'state': 'draft',
                 'company_id': self.company_id.id,
                 'picking_type_id': self.picking_type_id.id,
@@ -191,6 +198,7 @@ class farm_materials(models.Model):
                     (6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
                 'warehouse_id': self.picking_type_id.warehouse_id.id,
                 'analytic_account_id': self.analytic_account_id.id,
+                'materials_id': self.id,
             })]
         }
         create_picking = self.env['stock.picking'].create(picking_vals)
@@ -222,9 +230,6 @@ class farm_materials_oline(models.Model):
     _name = 'farm.materials.oline'
     _description = 'material order line'
 
-    name = fields.Text(
-        string = 'Description',
-        required = True)
     sequence = fields.Integer(
         string = 'Sequence',
         default = 10)
@@ -232,6 +237,9 @@ class farm_materials_oline(models.Model):
         'product.product',
         required = True,
         domain = "[('categ_id', '=', categ_id)]")
+    name = fields.Text(
+        string = 'Description',
+        required = False)
     categ_id = fields.Many2one(
         related = 'materials_id.category_id',
         string = 'Category')

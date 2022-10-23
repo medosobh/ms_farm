@@ -95,20 +95,32 @@ class farm_sales(models.Model):
     @api.depends('sales_order_line_ids')
     def _compute_sales_order_cost(self):
         for rec in self:
-            sline = sum(self.env['farm.sales.oline'].search([('sales_id', '=', rec.id)]).mapped('price_subtotal'))
+            sline = sum(self.env['farm.sales.oline'].search([
+                ('sales_id', '=', rec.id)
+            ]).mapped('price_subtotal'))
             rec.s_order_cost = sline
         return rec.s_order_cost
 
     def _compute_customer_invoice_count(self):
         for rec in self:
-            customer_invoice_count = self.env['account.move'].search_count([('invoice_origin', '=', rec.name)])
+            customer_invoice_count = self.env['account.move'].search_count([
+                ('invoice_origin', '=', rec.name)
+            ])
             rec.customer_invoice_count = customer_invoice_count
 
     def _compute_customer_invoice_total(self):
         for rec in self:
-            total = sum(
-                self.env['account.move'].search([('invoice_origin', '=', rec.name)]).mapped('amount_total_signed'))
-            rec.customer_invoice_total = total
+            total_debit = sum(
+                self.env['account.move.line'].search([
+                    ('sales_id', '=', rec.id)
+                ]).mapped('debit')
+            )
+            total_credit = sum(
+                self.env['account.move.line'].search([
+                    ('sales_id', '=', rec.id)
+                ]).mapped('credit')
+            )
+            rec.customer_invoice_total = total_debit + total_credit
         return rec.customer_invoice_total
 
     # -------------------------------------------------------------------------
@@ -134,6 +146,13 @@ class farm_sales(models.Model):
     def button_farm_customer_invoice(self):
         # create Customer Invoice in background and open form view.
         self.ensure_one()
+
+        # check analytic_account_id created
+        analytic = self.analytic_account_id
+        if not analytic:
+            raise UserError(_('Please define an analytic account for the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+
         move_type = self._context.get('default_move_type', 'out_invoice')
         journal = self.env['account.move'].with_context(
             default_move_type = move_type)._get_default_journal()
@@ -166,6 +185,7 @@ class farm_sales(models.Model):
                 'quantity': self.sales_order_line_ids.qty,
                 'price_unit': self.sales_order_line_ids.price_unit,
                 'analytic_account_id': self.analytic_account_id.id,
+                'sales_id': self.id,
             })],
             'company_id': self.company_id.id,
         }

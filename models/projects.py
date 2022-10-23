@@ -10,7 +10,7 @@ class farm_projects(models.Model):
     _description = 'Farm Projects Management'
     _check_company_auto = True
     _sql_constraints = [
-        ('short_name_uniq', 'unique(short_name)', "A short name can only be assigned to one equipments !"),
+        ('short_name_uniq', 'unique(short_name)', "A short name can only be assigned to one project !"),
     ]
 
     priority = fields.Selection([
@@ -70,8 +70,7 @@ class farm_projects(models.Model):
         string = 'Start Date',
         required = True,
         tracking = True,
-        default = datetime.today(),
-        inverse = '_get_time_gone')
+        default = datetime.today())
     end_date = fields.Date(
         string = 'End Date',
         required = True,
@@ -303,7 +302,7 @@ class farm_projects(models.Model):
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
     # -------------------------------------------------------------------------
-    @api.depends('start_date', 'p_days', 'close_date')
+    @api.depends('start_date', 'close_date')
     def _get_end_date(self):
         for r in self:
             if not (r.start_date and r.p_days):
@@ -317,20 +316,37 @@ class farm_projects(models.Model):
     def _set_end_date(self):
         for r in self:
             if not (r.start_date and r.end_date):
+                raise UserError(_('Please define start and End date for current project for the company %s (%s).') % (
+                    self.company_id.name, self.company_id.id))
                 continue
 
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
-            r.p_days = (r.end_date - r.start_date).days + 1
+            r.p_days = (r.end_date - r.start_date).days
 
+    @api.depends('end_date')
     def _get_time_gone(self):
-        for r in self:
-            if not r.start_date:
-                continue
-
+        self.ensure_one()
+        if not self.end_date:
+            self.g_days = 0
+        elif not self.start_date:
+            raise UserError(_('Please define start date for current project for the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+        elif not self.close_date:
+            self.g_days = 0
+        else:
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
-            r.g_days = (date.today() - r.start_date).days + 1
+            self.g_days = (date.today() - self.start_date).days + 1
+
+    def _get_actual_gone(self):
+        self.ensure_one()
+        if not self.close_date:
+            self.a_days = 0
+        else:
+            # Compute the difference between dates, but: Friday - Monday = 4 days,
+            # so add one day to get 5 days instead
+            self.a_days = (self.close_date - self.start_date).days
 
     def _compute_time_progress(self):
         for r in self:
@@ -338,16 +354,6 @@ class farm_projects(models.Model):
                 continue
             # Compute integar of time gone vs planned days
             r.time_progress = abs(r.g_days / r.p_days * 100)
-
-    def _get_actual_gone(self):
-        for r in self:
-            if not (r.start_date and r.close_date):
-                r.close_date = r.end_date
-                continue
-
-            # Compute the difference between dates, but: Friday - Monday = 4 days,
-            # so add one day to get 5 days instead
-            r.a_days = (r.close_date - r.start_date).days + 1
 
     def _compute_cost_progress(self):
         for r in self:

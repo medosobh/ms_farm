@@ -95,6 +95,10 @@ class StockMove(models.Model):
         comodel_name = "account.analytic.account",
         string = "Analytic Account"
     )
+    materials_id = fields.Many2one(
+        comodel_name = "farm.materials",
+        string = "Material Order"
+    )
 
     def _prepare_account_move_line(
             self, qty, cost, credit_account_id, debit_account_id, description
@@ -111,12 +115,14 @@ class StockMove(models.Model):
                 # Add analytic account in debit line
                 if self.analytic_account_id:
                     line[2].update({"analytic_account_id": self.analytic_account_id.id})
+                    line[2].update({"materials_id": self.materials_id.id})
         return res
 
     @api.model
     def _prepare_merge_moves_distinct_fields(self):
         fields = super()._prepare_merge_moves_distinct_fields()
         fields.append("analytic_account_id")
+        fields.append("materials_id")
         return fields
 
 
@@ -125,6 +131,8 @@ class StockMoveLine(models.Model):
 
     analytic_account_id = fields.Many2one(
         related = "move_id.analytic_account_id")
+    materials_id = fields.Many2one(
+        related = "move_id.materials_id")
 
 
 class StockScrap(models.Model):
@@ -135,12 +143,17 @@ class StockScrap(models.Model):
         string = "Analytic Account"
 
     )
+    materials_id = fields.Many2one(
+        comodel_name = "farm.materials",
+        string = "Material Order"
+    )
 
     def _prepare_move_values(self):
         res = super()._prepare_move_values()
         res.update(
             {
                 "analytic_account_id": self.analytic_account_id.id,
+                "materials_id": self.materials_id.id,
             }
         )
         return res
@@ -149,7 +162,19 @@ class StockScrap(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
+    # expense already maintained in he.expense model
     equipments_id = fields.Many2one(
         comodel_name = 'farm.equipments',
-        string = "Equipment"
-    )
+        string = "Farm Equipment")
+    operations_id = fields.Many2one(
+        comodel_name = 'farm.operations',
+        string = "Farm Operation")
+    materials_id = fields.Many2one(
+        comodel_name = 'farm.materials',
+        string = "Farm Material")
+    produce_id = fields.Many2one(
+        comodel_name = 'farm.produce',
+        string = "Farm Produce")
+    sales_id = fields.Many2one(
+        comodel_name = 'farm.sales',
+        string = "Farm Sales")

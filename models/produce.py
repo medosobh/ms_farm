@@ -190,6 +190,8 @@ class farm_produce(models.Model):
                 'route_ids': 1 and [
                     (6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
                 'warehouse_id': self.picking_type_id.warehouse_id.id,
+                'analytic_account_id': self.analytic_account_id.id,
+                'produce_id': self.id,
             })]
         }
         create_picking = self.env['stock.picking'].create(picking_vals)

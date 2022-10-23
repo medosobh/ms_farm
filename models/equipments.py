@@ -7,8 +7,8 @@ class farm_equipments(models.Model):
     _description = 'Manage all Equipments'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _sql_constraints = [
-        ('code_uniq', 'unique(code)', "A code can only be assigned to one equipments !"),
-        ('name_uniq', 'unique(name)', "A name can only be assigned to one equipments !"),
+        ('code_uniq', 'unique(code)', "A code can only be assigned to one equipment !"),
+        ('name_uniq', 'unique(name)', "A name can only be assigned to one equipment !"),
     ]
 
     code = fields.Char(
