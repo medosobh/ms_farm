@@ -113,20 +113,14 @@ class farm_materials(models.Model):
 
     def _compute_stock_move_count(self):
         for rec in self:
-            count = self.env['stock.picking'].search_count([('origin', '=', rec.name)])
+            count = self.env['stock.picking'].search_count([('material_id', '=', rec.id)])
             rec.materials_consumption_count = count
         return rec.materials_consumption_count
 
     def _compute_account_move_count(self):
-        am_count = 0
         fam_count = 0
         for mo_rec in self:
-            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
-
-        for sm_rec in sp_count:
-            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
-            am_count = self.env['account.move'].search_count([('stock_move_id', '=', sm_count.id)])
-            fam_count = fam_count + am_count
+            fam_count = self.env['account.move'].search_count([('materials_id', '=', mo_rec.id)])
 
         mo_rec.materials_consumption_account_count = fam_count
         return mo_rec.materials_consumption_account_count
@@ -183,6 +177,7 @@ class farm_materials(models.Model):
             'date_deadline': self.issue_date,
             'user_id': self.user_id.id,
             'state': 'draft',
+            'materials_id': self.id,
             'move_ids_without_package': [(0, 0, {
                 'name': self.materials_order_line_ids.name or '',
                 'product_id': self.materials_order_line_ids.product_id.id,

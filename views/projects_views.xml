@@ -22,7 +22,6 @@
                     <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
                 </header>
                 <sheet>
-
                     <div class="oe_button_box" name="button_box">
                         <button name="action_open_operation_orders_timeframe" type="object"
                                 class="oe_stat_button"
@@ -92,8 +91,8 @@
                             <field name="start_date" type="date" class="oe_inline"/>
                             <field name="end_date" type="date" class="oe_inline"/>
                             <field name="close_date" type="date" class="oe_inline"/>
-                            <field name="time_progress" widget="progressbar">Time</field>
-                            <field name="cost_progress" widget="progressbar">Cost</field>
+                            <field name="time_progress" widget="progress_bar_widget">Time</field>
+                            <field name="cost_progress" widget="progress_bar_widget">Cost</field>
                         </group>
                     </group>
                     <notebook string="Details">

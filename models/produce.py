@@ -112,38 +112,33 @@ class farm_produce(models.Model):
 
     def _compute_stock_move_count(self):
         for rec in self:
-            count = self.env['stock.picking'].search_count([('origin', '=', rec.name)])
-            rec.produce_consumption_count = count
+            count = self.env['stock.picking'].search_count([('produce_id', '=', rec.id)])
+
+        rec.produce_consumption_count = count
         return rec.produce_consumption_count
 
     def _compute_account_move_count(self):
-        am_count = 0
         fam_count = 0
-        for mo_rec in self:
-            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
+        for po_rec in self:
+            fam_count = self.env['account.move'].search_count([('produce_id', '=', po_rec.id)])
 
-        for sm_rec in sp_count:
-            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
-            am_count = self.env['account.move'].search_count([('stock_move_id', '=', sm_count.id)])
-            fam_count = fam_count + am_count
-
-        mo_rec.produce_consumption_account_count = fam_count
-        return mo_rec.produce_consumption_account_count
+        po_rec.produce_consumption_account_count = fam_count
+        return po_rec.produce_consumption_account_count
 
     def _compute_account_move_total(self):
-        am_total = 0
-        fam_total = 0
-        for mo_rec in self:
-            sp_count = self.env['stock.picking'].search([('origin', '=', mo_rec.name)])
-
-        for sm_rec in sp_count:
-            sm_count = self.env['stock.move'].search([('picking_id', '=', sm_rec.id)])
-            am_total = sum(
-                self.env['account.move'].search([('stock_move_id', '=', sm_count.id)]).mapped('amount_total_signed'))
-            fam_total = fam_total + am_total
-
-        mo_rec.produce_consumption_account_total = fam_total
-        return mo_rec.produce_consumption_account_total
+        for rec in self:
+            total_debit = sum(
+                self.env['account.move.line'].search([
+                    ('produce_id', '=', rec.id)
+                ]).mapped('debit')
+            )
+            total_credit = sum(
+                self.env['account.move.line'].search([
+                    ('produce_id', '=', rec.id)
+                ]).mapped('credit')
+            )
+            rec.produce_consumption_account_total = total_debit + total_credit
+            return rec.produce_consumption_account_total
 
     # -------------------------------------------------------------------------
     # Create METHODS
@@ -176,6 +171,7 @@ class farm_produce(models.Model):
             'date_deadline': self.issue_date,
             'user_id': self.user_id.id,
             'state': 'draft',
+            'produce_id': self.id,
             'move_ids_without_package': [(0, 0, {
                 'name': self.produce_order_line_ids.name or '',
                 'product_id': self.produce_order_line_ids.product_id.id,
@@ -235,9 +231,6 @@ class farm_produce_oline(models.Model):
         for rec in self:
             rec.price_subtotal = rec.price_unit * rec.qty
 
-    name = fields.Text(
-        string = 'Description',
-        required = True)
     sequence = fields.Integer(
         string = 'Sequence',
         default = 10)
@@ -245,6 +238,9 @@ class farm_produce_oline(models.Model):
         'product.product',
         required = True,
         domain = "[('categ_id', '=', categ_id)]")
+    name = fields.Text(
+        string = 'Description',
+        required = False)
     categ_id = fields.Many2one(
         related = 'produce_id.category_id',
         string = 'Category')

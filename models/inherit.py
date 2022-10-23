@@ -88,17 +88,47 @@ class ProductProduct(models.Model):
         return res
 
 
+class StockPicking(models.Model):
+    _inherit = "stock.picking"
+
+    analytic_account_id = fields.Many2one(
+        comodel_name = "account.analytic.account",
+        string = "Analytic Account")
+    materials_id = fields.Many2one(
+        comodel_name = "farm.materials",
+        string = "Material Order")
+    produce_id = fields.Many2one(
+        comodel_name = "farm.produce",
+        string = "Produce Order")
+
+
 class StockMove(models.Model):
     _inherit = "stock.move"
 
     analytic_account_id = fields.Many2one(
         comodel_name = "account.analytic.account",
-        string = "Analytic Account"
-    )
+        string = "Analytic Account")
     materials_id = fields.Many2one(
         comodel_name = "farm.materials",
-        string = "Material Order"
-    )
+        string = "Material Order")
+    produce_id = fields.Many2one(
+        comodel_name = "farm.produce",
+        string = "Produce Order")
+
+    def _prepare_account_move_vals(
+            self, credit_account_id, debit_account_id, journal_id, qty, description, svl_id, cost
+    ):
+        self.ensure_one()
+        res = super(StockMove, self)._prepare_account_move_vals(
+            credit_account_id, debit_account_id, journal_id, qty, description, svl_id, cost
+        )
+        res.update({
+            "materials_id": self.materials_id.id,
+            "produce_id": self.produce_id.id,
+        })
+        # fields.append("materials_id")
+        # fields.append("produce_id")
+        return res
 
     def _prepare_account_move_line(
             self, qty, cost, credit_account_id, debit_account_id, description
@@ -107,6 +137,7 @@ class StockMove(models.Model):
         res = super(StockMove, self)._prepare_account_move_line(
             qty, cost, credit_account_id, debit_account_id, description
         )
+
         for line in res:
             if (
                     line[2]["account_id"]
@@ -114,8 +145,11 @@ class StockMove(models.Model):
             ):
                 # Add analytic account in debit line
                 if self.analytic_account_id:
-                    line[2].update({"analytic_account_id": self.analytic_account_id.id})
-                    line[2].update({"materials_id": self.materials_id.id})
+                    line[2].update({
+                        "analytic_account_id": self.analytic_account_id.id,
+                        "materials_id": self.materials_id.id,
+                        "produce_id": self.produce_id.id,
+                    })
         return res
 
     @api.model
@@ -123,6 +157,7 @@ class StockMove(models.Model):
         fields = super()._prepare_merge_moves_distinct_fields()
         fields.append("analytic_account_id")
         fields.append("materials_id")
+        fields.append("produce_id")
         return fields
 
 
@@ -133,6 +168,8 @@ class StockMoveLine(models.Model):
         related = "move_id.analytic_account_id")
     materials_id = fields.Many2one(
         related = "move_id.materials_id")
+    produce_id = fields.Many2one(
+        related = "move_id.produce_id")
 
 
 class StockScrap(models.Model):
@@ -140,13 +177,13 @@ class StockScrap(models.Model):
 
     analytic_account_id = fields.Many2one(
         comodel_name = "account.analytic.account",
-        string = "Analytic Account"
-
-    )
+        string = "Analytic Account")
     materials_id = fields.Many2one(
         comodel_name = "farm.materials",
-        string = "Material Order"
-    )
+        string = "Material Order")
+    produce_id = fields.Many2one(
+        comodel_name = "farm.produce",
+        string = "Produce Order")
 
     def _prepare_move_values(self):
         res = super()._prepare_move_values()
@@ -154,9 +191,21 @@ class StockScrap(models.Model):
             {
                 "analytic_account_id": self.analytic_account_id.id,
                 "materials_id": self.materials_id.id,
+                "produce_id": self.produce_id.id,
             }
         )
         return res
+
+
+class AccountMove(models.Model):
+    _inherit = "account.move"
+
+    materials_id = fields.Many2one(
+        comodel_name = 'farm.materials',
+        string = "Farm Material")
+    produce_id = fields.Many2one(
+        comodel_name = 'farm.produce',
+        string = "Farm Produce")
 
 
 class AccountMoveLine(models.Model):
