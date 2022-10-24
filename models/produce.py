@@ -106,22 +106,26 @@ class farm_produce(models.Model):
     def _compute_produce_order_cost(self):
         self.p_order_cost = 0
         for rec in self:
-            pline = sum(self.env['farm.produce.oline'].search([('produce_id', '=', rec.id)]).mapped('price_subtotal'))
+            pline = sum(self.env['farm.produce.oline'].search([
+                ('produce_id', '=', rec.id)
+            ]).mapped('price_subtotal'))
             rec.p_order_cost = pline
         return rec.p_order_cost
 
     def _compute_stock_move_count(self):
         for rec in self:
-            count = self.env['stock.picking'].search_count([('produce_id', '=', rec.id)])
-
+            count = self.env['stock.move'].search_count([
+                ('produce_id', '=', rec.id)
+            ])
         rec.produce_consumption_count = count
         return rec.produce_consumption_count
 
     def _compute_account_move_count(self):
         fam_count = 0
         for po_rec in self:
-            fam_count = self.env['account.move'].search_count([('produce_id', '=', po_rec.id)])
-
+            fam_count = self.env['account.move'].search_count([
+                ('produce_id', '=', po_rec.id)
+            ])
         po_rec.produce_consumption_account_count = fam_count
         return po_rec.produce_consumption_account_count
 

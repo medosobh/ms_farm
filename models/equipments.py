@@ -18,13 +18,14 @@ class farm_equipments(models.Model):
         string = 'Name',
         required = True)
     description = fields.Text(
-        'description')
+        string = 'Description')
     type = fields.Selection([
         ('device', 'Device'),
         ('truck', 'Truck'),
         ('vehicle', 'Vehicle')
     ],
-        required = True)
+        required = True,
+        string = 'Type')
     body_code = fields.Char(
         string = 'Body Code',
         required = True)
@@ -36,20 +37,20 @@ class farm_equipments(models.Model):
         default = True,
         tracking = True)
     category_id = fields.Many2one(
-        'product.category',
+        comodel_name = 'product.category',
         required = True,
         default = lambda self: self.env.ref('ms_farm.product_category_equipment'),
         string = 'Product Category')
     company_id = fields.Many2one(
-        'res.company',
+        comodel_name = 'res.company',
         string = 'Company',
         change_default = True,
         default = lambda self: self.env.company,
         required = False,
         readonly = True)
     currency_id = fields.Many2one(
-        'res.currency',
-        'Currency',
+        comodel_name = 'res.currency',
+        string = 'Currency',
         related = 'company_id.currency_id',
         readonly = True,
         ondelete = 'set null',
@@ -67,22 +68,19 @@ class farm_equipments(models.Model):
         string = 'Actual Cost',
         compute = '_compute_total_expense')
     operation_order_line_ids = fields.One2many(
-        'farm.operations.oline',
-        'equipments_id',
-        domain =
-        "[('equipments_id', '=', id)]",
+        comodel_name = 'farm.operations.oline',
+        inverse_name = 'equipments_id',
+        domain = "[('equipments_id', '=', id)]",
         readonly = True,
         string = "Order lines")
     operation_actual_line_ids = fields.One2many(
-        'account.move.line',
-        'equipments_id',
-        domain =
-        "[('equipments_id', '=', id)]",
+        comodel_name = 'account.move.line',
+        inverse_name = 'equipments_id',
+        domain = "[('equipments_id', '=', id)]",
         readonly = True,
         string = "Actual lines")
     create_lock = fields.Boolean(
-        string = 'Create Lock'
-    )
+        string = 'Create Lock')
 
     # create a related product under equipment category
     # to use in operation order

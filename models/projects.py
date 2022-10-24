@@ -43,9 +43,15 @@ class farm_projects(models.Model):
         help = "Enter a short name",
         translate = True,
         tracking = True)
-    project_type = fields.Selection(
-        [('create', 'Create an Pio/Asset'), ('operate', 'Operate an Pio/Asset')],
+    project_type = fields.Selection([
+        ('create', 'Produce a Pio-Asset or Crop'),  # produce only, product must be storable
+        ('operate', 'Produce and Sell'),  # produce and sell , product must be storable
+        ('sale', 'Sell only from the Project'),  # product must be service
+        ('service', 'Service of an Asset or a Function'),
+        # product must be service and the bills will be collected as invoices
+    ],
         required = True,
+        help = "Select the type Produce, Sell or Both, either Service",
         string = 'Type',
         default = 'operate',
         tracking = True)
@@ -54,7 +60,8 @@ class farm_projects(models.Model):
         string = 'Project Group',
         required = True)
     user_id = fields.Many2one(
-        'res.users', string = "Project Man",
+        comodel_name = 'res.users',
+        string = "Project Man",
         required = True)
     description = fields.Text(
         string = 'Description',
@@ -175,7 +182,7 @@ class farm_projects(models.Model):
         required = False,
         readonly = True)
     operations_id = fields.Many2one(
-        'farm.operations',
+        comodel_name = 'farm.operations',
         string = "Project Operations")
     operations_ids = fields.One2many(
         'farm.operations',
@@ -185,21 +192,21 @@ class farm_projects(models.Model):
         string = "Operation Count",
         compute = '_compute_operations_count')
     materials_id = fields.Many2one(
-        'farm.materials',
+        comodel_name = 'farm.materials',
         string = "Project Materials")
     materials_ids = fields.One2many(
-        'farm.materials',
-        'projects_id',
+        comodel_name = 'farm.materials',
+        inverse_name = 'projects_id',
         string = "Material Orders")
     materials_count = fields.Integer(
         string = "Material Count",
         compute = '_compute_materials_count')
     expenses_id = fields.Many2one(
-        'farm.expenses',
+        comodel_name = 'farm.expenses',
         string = "Project Expenses")
     expenses_ids = fields.One2many(
-        'farm.expenses',
-        'projects_id',
+        comodel_name = 'farm.expenses',
+        inverse_name = 'projects_id',
         string = "Expenses Orders")
     expenses_count = fields.Integer(
         string = "Expense Count",
@@ -208,40 +215,40 @@ class farm_projects(models.Model):
         'farm.produce',
         string = "Produce Orders")
     produce_ids = fields.One2many(
-        'farm.produce',
-        'projects_id',
+        comodel_name = 'farm.produce',
+        inverse_name = 'projects_id',
         string = "Produce Orders")
     produce_count = fields.Integer(
         string = "Produce Count",
         compute = '_compute_produce_count')
     sales_id = fields.Many2one(
-        'farm.sales',
+        comodel_name = 'farm.sales',
         string = "Sales Orders")
     sales_ids = fields.One2many(
-        'farm.sales',
-        'projects_id',
+        comodel_name = 'farm.sales',
+        inverse_name = 'projects_id',
         string = "Sales Orders")
     sales_count = fields.Integer(
         string = "Sales Count",
         compute = '_compute_sales_count')
     company_id = fields.Many2one(
-        'res.company',
-        'Company',
+        comodel_name = 'res.company',
+        string = 'Company',
         index = True,
         required = True,
         change_default = True,
         readonly = True,
         default = lambda self: self.env.company)
     currency_id = fields.Many2one(
-        'res.currency',
-        'Currency',
+        comodel_name = 'res.currency',
+        string = 'Currency',
         related = 'company_id.currency_id',
         readonly = True,
         ondelete = 'set null',
         help = "Used to display the currency when tracking monetary values")
     locations_used_ids = fields.One2many(
-        'farm.location.used',
-        'projects_id',
+        comodel_name = 'farm.location.used',
+        inverse_name = 'projects_id',
         string = "locations Used")
     # set of Key performance indicators
     time_progress = fields.Integer(
@@ -255,7 +262,7 @@ class farm_projects(models.Model):
         string = 'Cost vs Budget',
         compute = '_compute_cost_progress')
     category_id = fields.Many2one(
-        'product.category',
+        comodel_name = 'product.category',
         required = True,
         default = lambda self: self.env.ref('ms_farm.product_category_produce'),
         string = 'Product Category')
@@ -269,8 +276,34 @@ class farm_projects(models.Model):
         string = 'Analytic Account')
     create_lock = fields.Boolean(
         string = 'Create Lock',
-        default = False
-    )
+        default = False)
+    product_id = fields.Many2one(
+        comodel_name = 'product.product',
+        string = "Relative Product")
+    order_ids = fields.One2many(
+        comodel_name = 'farm.operations.oline',
+        inverse_name = 'product_id',
+        string = "Operation Order Lines",
+        compute = '_operations_order_lines',
+        store = True)
+    bills_ids = fields.One2many(
+        comodel_name = 'account.move.line',
+        inverse_name = 'product_id',
+        string = "Bill Lines",
+        compute = '_purchase_order_lines',
+        store = True)
+
+    def _operations_order_lines(self):
+        for rec in self:
+            ope_line = self.env['farm.operations.oline'].search([('product_id', '=', rec.product_id.id)])
+            rec.order_ids = ope_line
+        return rec.order_ids
+
+    def _purchase_order_lines(self):
+        for rec in self:
+            ope_line = self.env['account.move.line'].search([('product_id', '=', rec.product_id.id)])
+            rec.bills_ids = ope_line
+        return rec.bills_ids
 
     @api.depends('state')
     def button_draft(self):
@@ -493,6 +526,7 @@ class farm_projects(models.Model):
         )
         new_product = self.env['product.template'].create(product_vals)
         self.create_lock = True
+        self.product_id = new_product.id
         return new_product
 
     def create_project_analytic_account(self):
@@ -652,5 +686,4 @@ class AccountAnalyticAccount(models.Model):
         selection = [
             ('farm.projects', 'Project')
         ],
-        string = 'Project'
-    )
+        string = 'Project')

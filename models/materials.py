@@ -107,20 +107,26 @@ class farm_materials(models.Model):
     def _compute_material_order_cost(self):
         for rec in self:
             oline = sum(
-                self.env['farm.materials.oline'].search([('materials_id', '=', rec.id)]).mapped('price_subtotal'))
+                self.env['farm.materials.oline'].search([
+                    ('materials_id', '=', rec.id)
+                ]).mapped('price_subtotal'))
             rec.m_order_cost = oline
         return rec.m_order_cost
 
     def _compute_stock_move_count(self):
         for rec in self:
-            count = self.env['stock.picking'].search_count([('material_id', '=', rec.id)])
+            count = self.env['stock.move'].search_count([
+                ('materials_id', '=', rec.id)
+            ])
             rec.materials_consumption_count = count
         return rec.materials_consumption_count
 
     def _compute_account_move_count(self):
         fam_count = 0
         for mo_rec in self:
-            fam_count = self.env['account.move'].search_count([('materials_id', '=', mo_rec.id)])
+            fam_count = self.env['account.move'].search_count([
+                ('materials_id', '=', mo_rec.id)
+            ])
 
         mo_rec.materials_consumption_account_count = fam_count
         return mo_rec.materials_consumption_account_count

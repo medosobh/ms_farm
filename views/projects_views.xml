@@ -66,7 +66,11 @@
                     </div>
                     <div role="alert" class="alert alert-warning"
                          attrs="{'invisible': [('analytic_account_id', '!=', False)]}">
-                        Create analytic account, creating bills, invoices and stock move depending on that.
+                        Create analytic account. bills, invoices and stock move depending on that.
+                    </div>
+                    <div role="alert" class="alert alert-warning"
+                         attrs="{'invisible': [('product_id', '!=', False)]}">
+                        Create product with type service. bills, invoices and stock move depending on that.
                     </div>
                     <div class="oe_title">
                         <h3>
@@ -85,6 +89,7 @@
                             <field name="active" invisible="1"/>
                             <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                             <field name="currency_id" widget="selection"/>
+                            <field name="product_id"/>
                             <field name="analytic_account_id"/>
                         </group>
                         <group string="Time Frame">
@@ -214,7 +219,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Produce Order">
+                        <page string="Produce Order" attrs="{'invisible':[('project_type','=', 'service')]}">
                             <field name="produce_ids" context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
@@ -261,7 +266,7 @@
                                 </form>
                             </field>
                         </page>
-                        <page string="Sales Order">
+                        <page string="Sales Order" attrs="{'invisible':[('project_type','=', 'service')]}">
                             <field name="sales_ids" context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
@@ -308,6 +313,42 @@
                                         </tree>
                                     </field>
                                 </form>
+                            </field>
+                        </page>
+                        <page string="Operation order lines" attrs="{'invisible':[('project_type','!=', 'service')]}">
+                            <field name="order_ids" readonly="1">
+                                <tree>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="state"/>
+                                    <field name="operations_id"/>
+                                    <field name="product_id"/>
+                                    <field name="name" widget="section_and_note_text"/>
+                                    <field name="categ_id" invisible="1"/>
+                                    <field name="price_unit" widget="monetary"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="product_uom"/>
+                                    <field name="qty"/>
+                                    <field name="note"/>
+                                    <field name="price_subtotal" sum="Total Cost"/>
+                                    <field name="equipments_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Bill Lines" attrs="{'invisible':[('project_type','!=', 'service')]}">
+                            <field name="bills_ids" readonly="1">
+                                <tree>
+                                    <field name="move_id"/>
+                                    <field name="date"/>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="ref"/>
+                                    <field name="debit" optional="hide"/>
+                                    <field name="debit" optional="hide"/>
+                                    <field name="move_name" optional="hide"/>
+                                </tree>
                             </field>
                         </page>
                         <page string="Locations">

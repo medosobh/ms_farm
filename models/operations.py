@@ -275,7 +275,7 @@ class farm_operations_oline(models.Model):
         copy = False)
     operations_id = fields.Many2one(
         'farm.operations',
-        string = 'Operations')
+        string = 'Operation Order')
     state = fields.Selection(
         related = 'operations_id.state',
         store = True)
