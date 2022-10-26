@@ -98,6 +98,9 @@
                             <field name="close_date" type="date" class="oe_inline"/>
                             <field name="time_progress" widget="progress_bar_widget">Time</field>
                             <field name="cost_progress" widget="progress_bar_widget">Cost</field>
+                            <field name="service_progress" widget="progress_bar_widget"
+                                   attrs="{'invisible':[('project_type','!=', 'service')]}">Cost
+                            </field>
                         </group>
                     </group>
                     <notebook string="Details">
@@ -353,22 +356,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Locations">
-                            <field name="locations_used_ids">
-                                <tree>
-                                    <field name="locations_id" widget="selection"/>
-                                    <field name="complete_name" widget="selection"/>
-                                    <field name="address" widget="selection"/>
-                                    <field name="space_sum" sum="Total Space"/>
-                                </tree>
-                                <form>
-                                    <group>
-                                        <field name="locations_id" widget="selection"/>
-                                        <field name="space_sum" readonly="1"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
+
                         <page string="Summary">
                             <group>
                                 <group name="Budget">
@@ -384,7 +372,8 @@
                                            attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
                                     <field name="plan_sales_qty"
                                            attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
-                                    <field name="total_actual_service"/>
+                                    <field name="total_actual_service"
+                                           attrs="{'invisible':[('project_type','!=', 'service')]}"/>
                                     <field name="p_days" string="Plan Days"/>
                                 </group>
                                 <group name="Actual">
@@ -403,7 +392,22 @@
                                     <field name="a_days" String="Actual Days"/>
                                 </group>
                             </group>
-
+                        </page>
+                        <page string="Locations">
+                            <field name="locations_used_ids">
+                                <tree>
+                                    <field name="locations_id" widget="selection"/>
+                                    <field name="complete_name" widget="selection"/>
+                                    <field name="address" widget="selection"/>
+                                    <field name="space_sum" sum="Total Space"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="locations_id" widget="selection"/>
+                                        <field name="space_sum" readonly="1"/>
+                                    </group>
+                                </form>
+                            </field>
                         </page>
                         <page string="Settings">
                             <group string="Product and Category">
@@ -564,6 +568,10 @@
                                 <field name="time_progress" widget="progressbar"/>
                                 Cost Progress:
                                 <field name="cost_progress" widget="progressbar">Cost</field>
+                                Service Progress:
+                                <field name="service_progress" widget="progressbar"
+                                       attrs="{'invisible':[('project_type','!=', 'service')]}">Cost
+                                </field>
                             </li>
                         </div>
                     </t>

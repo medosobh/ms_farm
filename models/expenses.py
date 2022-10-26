@@ -191,7 +191,7 @@ class farm_expenses_oline(models.Model):
 
     name = fields.Text(
         string = 'Description',
-        required = True)
+        required = False)
     state = fields.Selection(
         related = 'expenses_id.state', )
     sequence = fields.Integer(

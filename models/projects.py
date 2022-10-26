@@ -255,9 +255,12 @@ class farm_projects(models.Model):
         string = 'Time Gone',
         compute = '_compute_time_progress')
     total_budget = fields.Float(
-        string = 'Order Budget')
+        string = 'Order Budget',
+        compute = '_compute_total_budget')
     total_actual = fields.Float(
-        string = 'Actual Spend')
+        string = 'Actual Spend',
+        compute = '_compute_total_actual'
+    )
     cost_progress = fields.Integer(
         string = 'Expenses Actual vs Budget',
         compute = '_compute_cost_progress')
@@ -266,8 +269,8 @@ class farm_projects(models.Model):
         help = 'Total Credit of Service internal plus external.',
         compute = '_compute_total_actual_service')
     service_progress = fields.Integer(
-
-    )
+        string = 'Expenses Actual vs Plan',
+        compute = '_compute_service_progress')
     category_id = fields.Many2one(
         comodel_name = 'product.category',
         required = True,
@@ -305,6 +308,7 @@ class farm_projects(models.Model):
                 ('product_id', '=', rec.product_id.id)
             ])
             rec.order_ids = ope_line
+        return rec.order_ids
 
     @api.depends('product_id')
     def _bills_order_lines(self):
@@ -314,6 +318,7 @@ class farm_projects(models.Model):
                 ('move_type', '=', 'in_invoice'),
             ])
             rec.bills_ids = ope_line
+        return rec.bills_ids
 
     @api.depends('state')
     def button_draft(self):
@@ -355,6 +360,7 @@ class farm_projects(models.Model):
             # subtract one second to get on Friday instead
             p_days = timedelta(days = r.p_days, seconds = 0)
             r.end_date = r.start_date + p_days
+        return r.end_date
 
     def _set_end_date(self):
         for r in self:
@@ -366,6 +372,7 @@ class farm_projects(models.Model):
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
             r.p_days = (r.end_date - r.start_date).days
+        return r.p_days
 
     @api.depends('end_date')
     def _get_time_gone(self):
@@ -379,6 +386,7 @@ class farm_projects(models.Model):
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
             self.g_days = (date.today() - self.start_date).days + 1
+        return self.g_days
 
     def _get_actual_gone(self):
         self.ensure_one()
@@ -388,61 +396,87 @@ class farm_projects(models.Model):
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
             self.a_days = (self.close_date - self.start_date).days
+        return self.a_days
 
+    @api.model
     def _compute_time_progress(self):
         for r in self:
             if not r.start_date:
+                r.time_progress = 0
                 continue
-            # Compute integar of time gone vs planned days
+            # Compute integer of time gone vs planned days
             r.time_progress = abs(r.g_days / r.p_days * 100)
+        return r.time_progress
 
+    @api.model
+    def _compute_total_budget(self):
+        for r in self:
+            # Compute the percent based on major cost till add expense module,
+            r.total_budget = (r.operation_budget + r.material_budget + r.expense_budget)
+        return r.total_budget
+
+    @api.model
+    def _compute_total_actual(self):
+        for r in self:
+            # Compute the percent based on major cost till add expense module,
+            r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
+        return r.total_actual
+
+    @api.model
     def _compute_cost_progress(self):
         for r in self:
-            if not (r.operation_budget or r.material_budget):
+            if not r.total_budget:
                 r.cost_progress = 0
                 continue
             # Compute the percent based on major cost till add expense module,
-            r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
-            r.total_budget = (r.operation_budget + r.material_budget + r.expense_budget)
             r.cost_progress = abs(r.total_actual / r.total_budget * 100)
+        return r.cost_progress
+
+    @api.model
+    def _compute_service_progress(self):
+        for r in self:
+            if not r.total_actual_service:
+                r.service_progress = 0
+                continue
+            # Compute the percent based on major cost till add expense module,
+            r.service_progress = abs(r.total_actual / r.total_actual_service * 100)
+        return r.service_progress
 
     # compute amount of operation orders plus sales
+    @api.model
     def _compute_total_actual_service(self):
-        self.ensure_one()
+        for r in self:
+            if not r.product_id:
+                print('need a product')
+            else:
+                bills_amount_debit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'in_invoice'),
+                    ]).mapped('debit')
+                )
+                bills_amount_credit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'in_invoice'),
+                    ]).mapped('credit')
+                )
 
-        if not self.product_id:
-            raise UserError(_('Please define a Product for current project for the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
-        else:
-            bills_amount_debit = sum(
-                self.env['account.move.line'].search([
-                    ('product_id', '=', self.product_id.id),
-                    ('move_type', '=', 'in_invoice'),
-                ]).mapped('debit')
-            )
-            bills_amount_credit = sum(
-                self.env['account.move.line'].search([
-                    ('product_id', '=', self.product_id.id),
-                    ('move_type', '=', 'in_invoice'),
-                ]).mapped('credit')
-            )
-
-            invoice_amount_debit = sum(
-                self.env['account.move.line'].search([
-                    ('product_id', '=', self.product_id.id),
-                    ('move_type', '=', 'out_invoice'),
-                ]).mapped('debit')
-            )
-            invoice_amount_credit = sum(
-                self.env['account.move.line'].search([
-                    ('product_id', '=', self.product_id.id),
-                    ('move_type', '=', 'out_invoice'),
-                ]).mapped('credit')
-            )
-
-            self.total_actual_service = (
-                        bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
-        return self.total_actual_service
+                invoice_amount_debit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'out_invoice'),
+                    ]).mapped('debit')
+                )
+                invoice_amount_credit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'out_invoice'),
+                    ]).mapped('credit')
+                )
+                r.total_actual_service = (
+                            bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
+        return r.total_actual_service
 
     def _compute_operations_count(self):
         for rec in self:
@@ -521,10 +555,10 @@ class farm_projects(models.Model):
 
     def _compute_expenses_actual(self):
         for rec in self:
-            ope_line = sum(
+            expenses_actual = sum(
                 self.env['farm.expenses'].search([
                     ('projects_id', '=', rec.id)]).mapped('expenses_consumption_account_total'))
-            rec.expenses_actual = ope_line
+            rec.expenses_actual = expenses_actual
         return rec.expenses_actual
 
     def _compute_actual_produce_amount(self):
