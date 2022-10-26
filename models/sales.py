@@ -20,12 +20,12 @@ class farm_sales(models.Model):
         string = 'State', readonly = False, copy = False,
         tracking = True, default = 'order')
     category_id = fields.Many2one(
-        'product.category',
+        comodel_name = 'product.category',
         required = True,
         domain = [('order_type', '=', 'sales')],
         string = 'Product Category')
     projects_id = fields.Many2one(
-        'farm.projects',
+        comodel_name = 'farm.projects',
         required = True,
         tracking = True)
     short_name = fields.Char(
@@ -36,15 +36,15 @@ class farm_sales(models.Model):
         default = fields.Datetime.today,
         tracking = True)
     partner_id = fields.Many2one(
-        'res.partner',
+        comodel_name = 'res.partner',
         required = True,
         string = 'Partner')
     payment_term_id = fields.Many2one(
-        'account.payment.term',
-        'Payment Terms',
+        comodel_name = 'account.payment.term',
+        string = 'Payment Terms',
         domain = "['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
     stock_warehouse = fields.Many2one(
-        'stock.warehouse',
+        comodel_name = 'stock.warehouse',
         string = 'Warehouse')
     s_order_cost = fields.Float(
         string = 'Order Cost',
@@ -55,27 +55,25 @@ class farm_sales(models.Model):
         default = True,
         tracking = True)
     user_id = fields.Many2one(
-        'res.users',
+        comodel_name = 'res.users',
         string = "Order Man",
         required = True)
     notes = fields.Html(
-        'Terms and Conditions')
+        string = 'Terms and Conditions')
     sales_order_line_ids = fields.One2many(
-        'farm.sales.oline',
-        'sales_id',
+        comodel_name = 'farm.sales.oline',
+        inverse_name = 'sales_id',
         string = "order lines")
-    notes = fields.Html(
-        'Terms and Conditions')
     company_id = fields.Many2one(
-        'res.company',
+        comodel_name = 'res.company',
         string = 'Company',
         change_default = True,
         default = lambda self: self.env.company,
         required = False,
         readonly = True)
     currency_id = fields.Many2one(
-        'res.currency',
-        'Currency',
+        comodel_name = 'res.currency',
+        string = 'Currency',
         related = 'company_id.currency_id',
         readonly = True,
         ondelete = 'set null',
@@ -209,7 +207,7 @@ class farm_sales_oline(models.Model):
         string = 'Sequence',
         default = 10)
     product_id = fields.Many2one(
-        'product.product',
+        comodel_name = 'product.product',
         required = True,
         domain = "[('categ_id', '=', categ_id)]")
     categ_id = fields.Many2one(
@@ -218,12 +216,14 @@ class farm_sales_oline(models.Model):
     price_unit = fields.Float(
         string = 'Price')
     product_uom = fields.Many2one(
-        'uom.uom', 'Unit of Measure',
+        comodel_name = 'uom.uom',
+        string = 'Unit of Measure',
         related = 'product_id.uom_id',
         domain = "[('category_id', '=', product_uom_category_id)]")
-    qty = fields.Float('Quantity')
+    qty = fields.Float(
+        string = 'Quantity')
     company_id = fields.Many2one(
-        'res.company',
+        comodel_name = 'res.company',
         string = 'Company',
         related = 'sales_id.company_id',
         change_default = True,
@@ -231,20 +231,20 @@ class farm_sales_oline(models.Model):
         required = False,
         readonly = True)
     currency_id = fields.Many2one(
-        'res.currency',
+        comodel_name = 'res.currency',
         string = 'Currency',
         related = 'sales_id.currency_id',
         readonly = True,
         help = "Used to display the currency when tracking monetary values")
     note = fields.Char(
-        'Short Note')
+        string = 'Short Note')
     price_subtotal = fields.Monetary(
         string = 'Subtotal',
         compute = '_compute_subtotal',
         currency_field = 'currency_id',
         store = True)
     sales_id = fields.Many2one(
-        'farm.sales',
+        comodel_name = 'farm.sales',
         string = 'Sales Order')
 
     @api.onchange('product_id')

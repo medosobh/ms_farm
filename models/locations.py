@@ -11,6 +11,51 @@ class farm_locations(models.Model):
     _order = 'complete_name'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    name = fields.Char(
+        string = 'Location',
+        required = True)
+    complete_name = fields.Char(
+        string = 'Complete Name',
+        compute = '_compute_complete_name',
+        recursive = True,
+        store = True)
+    address = fields.Text(
+        string = 'Address',
+        help = "Wrtie down the address of this location")
+    space = fields.Float(
+        string = 'Space in acre',
+        help = "The Acre space under this location (Does not consider the children location)")
+    space_sum = fields.Float(
+        string = 'Total Space in acre',
+        compute = '_compute_space',
+        inverse = '_compute_space',
+        help = "The Acre space under this location (Does not consider the children location)")
+    parent_id = fields.Many2one(
+        comodel_name = 'farm.locations',
+        string = 'Parent Location',
+        index = True,
+        ondelete = 'cascade')
+    parent_path = fields.Char(
+        index = True)
+    child_id = fields.One2many(
+        comodel_name = 'farm.locations',
+        inverse_name = 'parent_id',
+        string = 'Child location')
+    company_id = fields.Many2one(
+        comodel_name = 'res.company',
+        string = 'Company',
+        change_default = True,
+        default = lambda self: self.env.company,
+        required = False,
+        readonly = True)
+    currency_id = fields.Many2one(
+        comodel_name = 'res.currency',
+        string = 'Currency',
+        related = 'company_id.currency_id',
+        readonly = True,
+        ondelete = 'set null',
+        help = "Used to display the currency when tracking monetary values")
+
     @api.depends('name', 'parent_id.complete_name')
     def _compute_complete_name(self):
         for location in self:
@@ -47,62 +92,17 @@ class farm_locations(models.Model):
                 rec.space_sum = rec.space
         return rec.space_sum
 
-    name = fields.Char(
-        string = 'Location',
-        required = True)
-    complete_name = fields.Char(
-        'Complete Name',
-        compute = '_compute_complete_name',
-        recursive = True,
-        store = True)
-    address = fields.Text(
-        'Address',
-        help = "Wrtie down the address of this location")
-    space = fields.Float(
-        string = 'Space in acre',
-        help = "The Acre space under this location (Does not consider the children location)")
-    space_sum = fields.Float(
-        string = 'Total Space in acre',
-        compute = '_compute_space',
-        inverse = '_compute_space',
-        help = "The Acre space under this location (Does not consider the children location)")
-    parent_id = fields.Many2one(
-        'farm.locations',
-        'Parent Location',
-        index = True,
-        ondelete = 'cascade')
-    parent_path = fields.Char(
-        index = True)
-    child_id = fields.One2many(
-        'farm.locations',
-        'parent_id',
-        'Child location')
-    company_id = fields.Many2one(
-        'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True)
-    currency_id = fields.Many2one(
-        'res.currency',
-        'Currency',
-        related = 'company_id.currency_id',
-        readonly = True,
-        ondelete = 'set null',
-        help = "Used to display the currency when tracking monetary values")
-
 
 class farm_location_used(models.Model):
     _name = 'farm.location.used'
     _description = 'Location Used'
 
     projects_id = fields.Many2one(
-        'farm.projects',
+        comodel_name = 'farm.projects',
         string = 'Project',
     )
     locations_id = fields.Many2one(
-        'farm.locations',
+        comodel_name = 'farm.locations',
         string = 'Location',
         required = True)
     space_sum = fields.Float(

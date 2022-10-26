@@ -5,12 +5,12 @@ class ProductCategory(models.Model):
     _inherit = 'product.category'
 
     location_id = fields.Many2one(
-        'stock.location',
+        comodel_name = 'stock.location',
         string = "Stock Consume Location",
         check_company = True,
         required = False)
     company_id = fields.Many2one(
-        'res.company',
+        comodel_name = 'res.company',
         string = 'Company',
         change_default = True,
         default = lambda self: self.env.company,
@@ -39,11 +39,11 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     projects_id = fields.Many2one(
-        'farm.projects',
+        comodel_name = 'farm.projects',
         string = 'Project'
     )
     equipments_id = fields.Many2one(
-        'farm.equipments',
+        comodel_name = 'farm.equipments',
         string = 'Equipment'
     )
 
@@ -227,3 +227,5 @@ class AccountMoveLine(models.Model):
     sales_id = fields.Many2one(
         comodel_name = 'farm.sales',
         string = "Farm Sales")
+    move_type = fields.Selection(
+        related = "move_id.move_type")

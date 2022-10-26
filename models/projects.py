@@ -46,7 +46,7 @@ class farm_projects(models.Model):
     project_type = fields.Selection([
         ('create', 'Produce a Pio-Asset or Crop'),  # produce only, product must be storable
         ('operate', 'Produce and Sell'),  # produce and sell , product must be storable
-        ('sale', 'Sell only from the Project'),  # product must be service
+        ('sale', 'Sell directly product  as consumable'),  # product must be consumable
         ('service', 'Service of an Asset or a Function'),
         # product must be service and the bills will be collected as invoices
     ],
@@ -185,8 +185,8 @@ class farm_projects(models.Model):
         comodel_name = 'farm.operations',
         string = "Project Operations")
     operations_ids = fields.One2many(
-        'farm.operations',
-        'projects_id',
+        comodel_name = 'farm.operations',
+        inverse_name = 'projects_id',
         string = "Operation Orders")
     operations_count = fields.Integer(
         string = "Operation Count",
@@ -212,7 +212,7 @@ class farm_projects(models.Model):
         string = "Expense Count",
         compute = '_compute_expenses_count')
     produce_id = fields.Many2one(
-        'farm.produce',
+        comodel_name = 'farm.produce',
         string = "Produce Orders")
     produce_ids = fields.One2many(
         comodel_name = 'farm.produce',
@@ -259,8 +259,15 @@ class farm_projects(models.Model):
     total_actual = fields.Float(
         string = 'Actual Spend')
     cost_progress = fields.Integer(
-        string = 'Cost vs Budget',
+        string = 'Expenses Actual vs Budget',
         compute = '_compute_cost_progress')
+    total_actual_service = fields.Float(
+        string = 'Total Service Plan',
+        help = 'Total Credit of Service internal plus external.',
+        compute = '_compute_total_actual_service')
+    service_progress = fields.Integer(
+
+    )
     category_id = fields.Many2one(
         comodel_name = 'product.category',
         required = True,
@@ -284,26 +291,29 @@ class farm_projects(models.Model):
         comodel_name = 'farm.operations.oline',
         inverse_name = 'product_id',
         string = "Operation Order Lines",
-        compute = '_operations_order_lines',
-        store = True)
+        compute = '_operations_order_lines')
     bills_ids = fields.One2many(
         comodel_name = 'account.move.line',
         inverse_name = 'product_id',
         string = "Bill Lines",
-        compute = '_purchase_order_lines',
-        store = True)
+        compute = '_bills_order_lines')
 
+    @api.depends('product_id')
     def _operations_order_lines(self):
         for rec in self:
-            ope_line = self.env['farm.operations.oline'].search([('product_id', '=', rec.product_id.id)])
+            ope_line = self.env['farm.operations.oline'].search([
+                ('product_id', '=', rec.product_id.id)
+            ])
             rec.order_ids = ope_line
-        return rec.order_ids
 
-    def _purchase_order_lines(self):
+    @api.depends('product_id')
+    def _bills_order_lines(self):
         for rec in self:
-            ope_line = self.env['account.move.line'].search([('product_id', '=', rec.product_id.id)])
+            ope_line = self.env['account.move.line'].search([
+                ('product_id', '=', rec.product_id.id),
+                ('move_type', '=', 'in_invoice'),
+            ])
             rec.bills_ids = ope_line
-        return rec.bills_ids
 
     @api.depends('state')
     def button_draft(self):
@@ -365,8 +375,6 @@ class farm_projects(models.Model):
         elif not self.start_date:
             raise UserError(_('Please define start date for current project for the company %s (%s).') % (
                 self.company_id.name, self.company_id.id))
-        elif not self.close_date:
-            self.g_days = 0
         else:
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
@@ -397,6 +405,44 @@ class farm_projects(models.Model):
             r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
             r.total_budget = (r.operation_budget + r.material_budget + r.expense_budget)
             r.cost_progress = abs(r.total_actual / r.total_budget * 100)
+
+    # compute amount of operation orders plus sales
+    def _compute_total_actual_service(self):
+        self.ensure_one()
+
+        if not self.product_id:
+            raise UserError(_('Please define a Product for current project for the company %s (%s).') % (
+                self.company_id.name, self.company_id.id))
+        else:
+            bills_amount_debit = sum(
+                self.env['account.move.line'].search([
+                    ('product_id', '=', self.product_id.id),
+                    ('move_type', '=', 'in_invoice'),
+                ]).mapped('debit')
+            )
+            bills_amount_credit = sum(
+                self.env['account.move.line'].search([
+                    ('product_id', '=', self.product_id.id),
+                    ('move_type', '=', 'in_invoice'),
+                ]).mapped('credit')
+            )
+
+            invoice_amount_debit = sum(
+                self.env['account.move.line'].search([
+                    ('product_id', '=', self.product_id.id),
+                    ('move_type', '=', 'out_invoice'),
+                ]).mapped('debit')
+            )
+            invoice_amount_credit = sum(
+                self.env['account.move.line'].search([
+                    ('product_id', '=', self.product_id.id),
+                    ('move_type', '=', 'out_invoice'),
+                ]).mapped('credit')
+            )
+
+            self.total_actual_service = (
+                        bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
+        return self.total_actual_service
 
     def _compute_operations_count(self):
         for rec in self:
@@ -659,24 +705,27 @@ class farm_project_group(models.Model):
     _description = 'Create a Group of project like Calf, Poultry , Grape , fruit ,etc.'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string = 'Group Name',
-                       required = True,
-                       help = "Enter the name",
-                       translate = True,
-                       tracking = True)
-    description = fields.Text(string = 'Description',
-                              required = False,
-                              help = "Enter the description",
-                              translate = True,
-                              tracking = True)
+    name = fields.Char(
+        string = 'Group Name',
+        required = True,
+        help = "Enter the name",
+        translate = True,
+        tracking = True)
+    description = fields.Text(
+        string = 'Description',
+        required = False,
+        help = "Enter the description",
+        translate = True,
+        tracking = True)
 
 
 class stockPicking(models.Model):
     _inherit = 'stock.move'
 
-    reference_record = fields.Reference(selection = [('farm.operations', 'Operation Order'),
-                                                     ('farm.produce', 'Produce Order')],
-                                        string = 'Order Reference')
+    reference_record = fields.Reference(
+        selection = [('farm.operations', 'Operation Order'),
+                     ('farm.produce', 'Produce Order')],
+        string = 'Order Reference')
 
 
 class AccountAnalyticAccount(models.Model):

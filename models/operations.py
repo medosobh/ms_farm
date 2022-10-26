@@ -24,12 +24,12 @@ class farm_operations(models.Model):
         copy = False,
         tracking = True)
     category_id = fields.Many2one(
-        'product.category',
+        comodel_name = 'product.category',
         required = True,
         domain = [('order_type', '=', 'service')],
         string = 'Product Category')
     projects_id = fields.Many2one(
-        'farm.projects',
+        comodel_name = 'farm.projects',
         required = True,
         tracking = True)
     short_name = fields.Char(
@@ -40,15 +40,15 @@ class farm_operations(models.Model):
         default = fields.Datetime.today,
         tracking = True)
     partner_id = fields.Many2one(
-        'res.partner',
+        comodel_name = 'res.partner',
         required = True,
         string = 'Partner')
     payment_term_id = fields.Many2one(
-        'account.payment.term',
-        'Payment Terms',
+        comodel_name = 'account.payment.term',
+        string = 'Payment Terms',
         domain = "['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
     stock_warehouse = fields.Many2one(
-        'stock.warehouse',
+        comodel_name = 'stock.warehouse',
         string = 'Warehouse')
     o_order_cost = fields.Monetary(
         string = 'Order Cost',
@@ -60,25 +60,25 @@ class farm_operations(models.Model):
         default = True,
         tracking = True)
     user_id = fields.Many2one(
-        'res.users',
+        comodel_name = 'res.users',
         string = "Order Man",
         required = True)
     notes = fields.Html(
-        'Terms and Conditions')
+        string = 'Terms and Conditions')
     operation_order_line_ids = fields.One2many(
-        'farm.operations.oline',
-        'operations_id',
+        comodel_name = 'farm.operations.oline',
+        inverse_name = 'operations_id',
         string = "order lines")
     company_id = fields.Many2one(
-        'res.company',
+        comodel_name = 'res.company',
         string = 'Company',
         change_default = True,
         default = lambda self: self.env.company,
         required = False,
         readonly = True)
     currency_id = fields.Many2one(
-        'res.currency',
-        'Currency',
+        comodel_name = 'res.currency',
+        string = 'Currency',
         related = 'company_id.currency_id',
         readonly = True,
         ondelete = 'set null',
@@ -227,7 +227,7 @@ class farm_operations_oline(models.Model):
         string = 'Sequence',
         default = 10)
     product_id = fields.Many2one(
-        'product.product',
+        comodel_name = 'product.product',
         required = True,
         domain = "[('categ_id', '=', categ_id), ('purchase_ok', '=', True)]",
         change_default = True)
@@ -240,14 +240,14 @@ class farm_operations_oline(models.Model):
     price_unit = fields.Float(
         string = 'Price')
     product_uom = fields.Many2one(
-        'uom.uom',
-        'Unit of Measure',
+        comodel_name = 'uom.uom',
+        string = 'Unit of Measure',
         related = 'product_id.uom_id',
         domain = "[('category_id', '=', product_uom_category_id)]")
     qty = fields.Float(
-        'Quantity')
+        string = 'Quantity')
     company_id = fields.Many2one(
-        'res.company',
+        comodel_name = 'res.company',
         string = 'Company',
         related = 'operations_id.company_id',
         change_default = True,
@@ -255,32 +255,32 @@ class farm_operations_oline(models.Model):
         required = False,
         readonly = True)
     currency_id = fields.Many2one(
-        'res.currency',
+        comodel_name = 'res.currency',
         string = 'Currency',
         related = 'operations_id.currency_id',
         readonly = True,
         help = "Used to display the currency when tracking monetary values")
     note = fields.Char(
-        'Short Note')
+        string = 'Short Note')
     price_subtotal = fields.Monetary(
         string = 'Subtotal',
         compute = '_compute_subtotal',
         currency_field = 'currency_id',
         store = True)
     invoice_lines = fields.One2many(
-        'account.move.line',
-        'purchase_line_id',
+        comodel_name = 'account.move.line',
+        inverse_name = 'purchase_line_id',
         string = "Bill Lines",
         readonly = True,
         copy = False)
     operations_id = fields.Many2one(
-        'farm.operations',
+        comodel_name = 'farm.operations',
         string = 'Operation Order')
     state = fields.Selection(
         related = 'operations_id.state',
         store = True)
     equipments_id = fields.Many2one(
-        'farm.equipments',
+        comodel_name = 'farm.equipments',
         string = 'Equipment',
         related = 'product_id.equipments_id')
     analytic_account_id = fields.Reference(
