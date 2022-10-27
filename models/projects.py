@@ -261,6 +261,15 @@ class farm_projects(models.Model):
     total_actual = fields.Float(
         string = 'Actual Spend',
         compute = '_compute_total_actual')
+    total_actual04 = fields.Float(
+        related = 'total_actual',
+        string = 'Actual Spend vs Budget')
+    total_actual05 = fields.Float(
+        related = 'total_actual',
+        string = 'Actual Spend vs Executed Order')
+    total_actual06 = fields.Float(
+        related = 'total_actual',
+        string = 'Actual Spend vs Sales')
     cost_progress = fields.Integer(
         string = 'Expenses Actual vs Budget',
         compute = '_compute_cost_progress')

@@ -136,29 +136,66 @@
                             </group>
                         </page>
                         <page string="Ratios">
-                            <div>
-                                <group string="Progress">
-                                    <field name="time_progress" widget="progress_bar_widget"/>
-                                    <field name="cost_progress" widget="progress_bar_widget"/>
-                                    <field name="service_progress" widget="progress_bar_widget"
-                                           attrs="{'invisible':[('project_type','!=', 'service')]}"/>
-                                </group>
-                            </div>
-                            <div>
-                                <group string="Average Price">
-                                    <field name="average_produce_price" widget='monetary'
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
-                                    <field name="average_sales_price" widget='monetary'
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
-                                </group>
-                            </div>
-                            <div>
-                                <group string="Cost of Goods">
-                                    <field name="cog_produce_price"
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
-                                    <field name="cog_sales_price"
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
-                                </group>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Plan Price">
+
+                                        </group>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Average Price">
+                                            <field name="average_produce_price" widget='monetary'
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                            <field name="average_sales_price" widget='monetary'
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                        </group>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Cost of Goods">
+                                            <field name="cog_produce_price"
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                            <field name="cog_sales_price"
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                        </group>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group>
+                                            <field name="time_progress" widget="progress_bar_widget"/>
+                                        </group>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group>
+                                            <field name="cost_progress" widget="progress_bar_widget"/>
+                                        </group>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group>
+                                            <field name="service_progress" widget="progress_bar_widget"
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                        </group>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <field name="total_actual04" widget="gauge"
+                                               options="{'max_field': 'total_budget'}"
+                                               string="Actual Spend vs Budget"/>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <field name="total_actual06" widget="gauge"
+                                               options="{'max_field': 'actual_sales_amount'}"
+                                               String="Actual Spend vs Sales"/>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <field name="total_actual05" widget="gauge"
+                                               attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                               options="{'max_field': 'total_actual_service'}"
+                                               string="Actual Spend vs Executed Order"/>
+                                    </div>
+                                </div>
                             </div>
                         </page>
                         <page string="Operation Orders">
