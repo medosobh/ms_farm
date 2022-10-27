@@ -65,8 +65,10 @@
     'license': 'LGPL-3',
     'assets': {
         'web.assets_backend': {
-            'ms_farm/static/src/css/progress_bar_widget.css',
+            '/ms_farm/static/src/css/progress_bar_widget.css',
             '/ms_farm/static/src/js/progress_bar_widget.js',
+            '/ms_farm/static/src/css/progressbar.css',
+            '/ms_farm/static/src/js/progressbar.js',
         },
         'web.assets_qweb': {
             '/ms_farm/static/src/xml/progress_bar_widget.xml',

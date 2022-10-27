@@ -163,17 +163,17 @@
                                 <div class="row">
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group>
-                                            <field name="time_progress" widget="progress_bar_widget"/>
+                                            <field name="time_progress" widget="progressbar"/>
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group>
-                                            <field name="cost_progress" widget="progress_bar_widget"/>
+                                            <field name="cost_progress" widget="progressbar"/>
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group>
-                                            <field name="service_progress" widget="progress_bar_widget"
+                                            <field name="service_progress" widget="progressbar"
                                                    attrs="{'invisible':[('project_type','!=', 'service')]}"/>
                                         </group>
                                     </div>
