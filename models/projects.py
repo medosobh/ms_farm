@@ -163,6 +163,7 @@ class farm_projects(models.Model):
         tracking = True)
     actual_produce_qty = fields.Float(
         string = 'Produce Act. Qty',
+        compute = '_compute_sum_produce_qty',
         required = False,
         readonly = True)
     actual_produce_amount = fields.Monetary(
@@ -259,18 +260,39 @@ class farm_projects(models.Model):
         compute = '_compute_total_budget')
     total_actual = fields.Float(
         string = 'Actual Spend',
-        compute = '_compute_total_actual'
-    )
+        compute = '_compute_total_actual')
     cost_progress = fields.Integer(
         string = 'Expenses Actual vs Budget',
         compute = '_compute_cost_progress')
     total_actual_service = fields.Float(
         string = 'Total Service Plan',
-        help = 'Total Credit of Service internal plus external.',
+        help = 'Total of Service internal bills plus external invoices.',
         compute = '_compute_total_actual_service')
     service_progress = fields.Integer(
         string = 'Expenses Actual vs Plan',
+        help = 'compute % of actual spent vs actual bills and invoices',
         compute = '_compute_service_progress')
+    average_produce_price = fields.Float(
+        string = 'Average Produce Price',
+        help = 'compute average price of stock move',
+        compute = '_compute_average_produce_price'
+    )
+    average_sales_price = fields.Float(
+        string = 'Average Sales Price',
+        help = 'compute average price of sales invoices',
+        compute = '_compute_average_sales_price'
+    )
+    cog_produce_price = fields.Float(
+        string = 'Cost of Goods Produce Price',
+        help = 'compute price of cost of goods produce based on actual produce qty and current actual spending',
+        compute = '_compute_cog_produce_price'
+    )
+    # actual spend divided by sales volume
+    cog_sales_price = fields.Float(
+        string = 'Cost of Goods Sold Price',
+        help = 'compute price of cost of goods sold based on actual sold qty and current actual spending',
+        compute = '_compute_cog_sales_price')
+
     category_id = fields.Many2one(
         comodel_name = 'product.category',
         required = True,
@@ -475,73 +497,95 @@ class farm_projects(models.Model):
                     ]).mapped('credit')
                 )
                 r.total_actual_service = (
-                            bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
+                        bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
         return r.total_actual_service
 
     def _compute_operations_count(self):
         for rec in self:
-            operations_count = self.env['farm.operations'].search_count([('projects_id', '=', rec.id)])
+            operations_count = self.env['farm.operations'].search_count([
+                ('projects_id', '=', rec.id)
+            ])
             rec.operations_count = operations_count
 
     def _compute_materials_count(self):
         for rec in self:
-            materials_count = self.env['farm.materials'].search_count([('projects_id', '=', rec.id)])
+            materials_count = self.env['farm.materials'].search_count([
+                ('projects_id', '=', rec.id)
+            ])
             rec.materials_count = materials_count
 
     def _compute_expenses_count(self):
         for rec in self:
-            expenses_count = self.env['farm.expenses'].search_count([('projects_id', '=', rec.id)])
+            expenses_count = self.env['farm.expenses'].search_count([
+                ('projects_id', '=', rec.id)
+            ])
             rec.expenses_count = expenses_count
 
     def _compute_produce_count(self):
         for rec in self:
-            produce_count = self.env['farm.produce'].search_count([('projects_id', '=', rec.id)])
+            produce_count = self.env['farm.produce'].search_count([
+                ('projects_id', '=', rec.id)
+            ])
             rec.produce_count = produce_count
 
     def _compute_sales_count(self):
         for rec in self:
-            sales_count = self.env['farm.sales'].search_count([('projects_id', '=', rec.id)])
+            sales_count = self.env['farm.sales'].search_count([
+                ('projects_id', '=', rec.id)
+            ])
             rec.sales_count = sales_count
 
     def _compute_operation_budget(self):
         for rec in self:
             ope_line = sum(
-                self.env['farm.operations'].search([('projects_id', '=', rec.id)]).mapped('o_order_cost'))
+                self.env['farm.operations'].search([
+                    ('projects_id', '=', rec.id)
+                ]).mapped('o_order_cost'))
             rec.operation_budget = ope_line
         return rec.operation_budget
 
     def _compute_material_budget(self):
         for rec in self:
             ope_line = sum(
-                self.env['farm.materials'].search([('projects_id', '=', rec.id)]).mapped('m_order_cost'))
+                self.env['farm.materials'].search([
+                    ('projects_id', '=', rec.id)
+                ]).mapped('m_order_cost'))
             rec.material_budget = ope_line
         return rec.material_budget
 
     def _compute_expense_budget(self):
         for rec in self:
             ope_line = sum(
-                self.env['farm.expenses'].search([('projects_id', '=', rec.id)]).mapped('e_order_cost'))
+                self.env['farm.expenses'].search([
+                    ('projects_id', '=', rec.id)
+                ]).mapped('e_order_cost'))
             rec.expense_budget = ope_line
         return rec.expense_budget
 
     def _compute_plan_produce_amount(self):
         for rec in self:
             sal_line = sum(
-                self.env['farm.produce'].search([('projects_id', '=', rec.id)]).mapped('p_order_cost'))
+                self.env['farm.produce'].search([
+                    ('projects_id', '=', rec.id)
+                ]).mapped('p_order_cost'))
             rec.plan_produce_amount = sal_line
         return rec.plan_produce_amount
 
     def _compute_plan_sales_amount(self):
         for rec in self:
             sal_line = sum(
-                self.env['farm.sales'].search([('projects_id', '=', rec.id)]).mapped('s_order_cost'))
+                self.env['farm.sales'].search([
+                    ('projects_id', '=', rec.id)
+                ]).mapped('s_order_cost'))
             rec.plan_sales_amount = sal_line
         return rec.plan_sales_amount
 
     def _compute_operations_actual(self):
         for rec in self:
             ope_line = sum(
-                self.env['farm.operations'].search([('projects_id', '=', rec.id)]).mapped('vendor_bill_total'))
+                self.env['farm.operations'].search([
+                    ('projects_id', '=', rec.id)
+                ]).mapped('vendor_bill_total'))
             rec.operations_actual = ope_line
         return rec.operations_actual
 
@@ -549,7 +593,8 @@ class farm_projects(models.Model):
         for rec in self:
             ope_line = sum(
                 self.env['farm.materials'].search([
-                    ('projects_id', '=', rec.id)]).mapped('materials_consumption_account_total'))
+                    ('projects_id', '=', rec.id)
+                ]).mapped('materials_consumption_account_total'))
             rec.materials_actual = ope_line
         return rec.materials_actual
 
@@ -557,24 +602,107 @@ class farm_projects(models.Model):
         for rec in self:
             expenses_actual = sum(
                 self.env['farm.expenses'].search([
-                    ('projects_id', '=', rec.id)]).mapped('expenses_consumption_account_total'))
+                    ('projects_id', '=', rec.id)
+                ]).mapped('expenses_consumption_account_total')
+            )
             rec.expenses_actual = expenses_actual
         return rec.expenses_actual
 
+    def _compute_sum_produce_qty(self):
+        for rec in self:
+            sum_produce_qty = sum(
+                self.env['stock.move.line'].search([
+                    ('product_id', '=', rec.product_id.id),
+                    ('analytic_account_id', '=', rec.analytic_account_id.id),
+                    # ('location_id', '=', self.env.ref('ms_farm.farm_location_produce').id),
+                    ('produce_id', '!=', False),
+                ]).mapped('qty_done')
+            )
+            rec.actual_produce_qty = sum_produce_qty
+        return rec.actual_produce_qty
+
     def _compute_actual_produce_amount(self):
         for rec in self:
-            ope_line = sum(
-                self.env['farm.produce'].search([
-                    ('projects_id', '=', rec.id)]).mapped('produce_consumption_account_total'))
-            rec.actual_produce_amount = ope_line
+            produce_debit = sum(
+                self.env['account.move.line'].search([
+                    ('product_id', '=', rec.product_id.id),
+                    ('analytic_account_id', '=', rec.analytic_account_id.id),
+                    ('produce_id', '!=', False),
+                ]).mapped('debit')
+            )
+            produce_credit = sum(
+                self.env['account.move.line'].search([
+                    ('product_id', '=', rec.product_id.id),
+                    ('analytic_account_id', '=', rec.analytic_account_id.id),
+                    ('produce_id', '!=', False),
+                ]).mapped('credit')
+            )
+            rec.actual_produce_amount = produce_debit + produce_credit
         return rec.actual_produce_amount
+
+    def _compute_average_produce_price(self):
+        for rec in self:
+            if not rec.actual_produce_qty:
+                rec.average_produce_price = 0
+                continue
+            rec.average_produce_price = rec.actual_produce_amount / rec.actual_produce_qty
+        return rec.average_produce_price
+
+    def _compute_cog_produce_price(self):
+        for rec in self:
+            if not rec.cog_produce_price:
+                rec.cog_produce_price = 0
+                continue
+            rec.cog_produce_price = rec.total_actual / rec.actual_produce_qty
+        return rec.cog_produce_price
+
+    def _compute_sum_sales_qty(self):
+        for rec in self:
+            sum_sales_qty = sum(
+                self.env['account.move.line'].search([
+                    ('product_id', '=', rec.product_id.id),
+                    ('analytic_account_id', '=', rec.analytic_account_id.id),
+                    # ('move_type', '=', 'out_invoice'),
+                    ('sales_id', '!=', False),
+                ]).mapped('quantity')
+            )
+            rec.actual_sales_qty = sum_sales_qty
+        return rec.actual_sales_qty
 
     def _compute_actual_sales_amount(self):
         for rec in self:
-            sal_line = sum(
-                self.env['farm.sales'].search([('projects_id', '=', rec.id)]).mapped('customer_invoice_total'))
-            rec.actual_sales_amount = sal_line
+            sales_debit = sum(
+                self.env['account.move.line'].search([
+                    ('product_id', '=', rec.product_id.id),
+                    ('analytic_account_id', '=', rec.analytic_account_id.id),
+                    ('sales_id', '!=', False),
+                ]).mapped('debit')
+            )
+            sales_credit = sum(
+                self.env['account.move.line'].search([
+                    ('product_id', '=', rec.product_id.id),
+                    ('analytic_account_id', '=', rec.analytic_account_id.id),
+                    ('sales_id', '!=', False),
+                ]).mapped('credit')
+            )
+            rec.actual_sales_amount = sales_debit + sales_credit
         return rec.actual_sales_amount
+
+    def _compute_average_sales_price(self):
+        for rec in self:
+            if not rec.actual_sales_qty:
+                rec.average_sales_price = 0
+                continue
+            rec.average_sales_price = rec.actual_sales_amount / rec.actual_sales_qty
+        return rec.average_sales_price
+
+    def _compute_cog_sales_price(self):
+        for rec in self:
+            if not rec.cog_sales_price:
+                rec.cog_sales_price = 0
+                continue
+            rec.cog_sales_price = rec.total_actual / rec.actual_sales_qty
+        return rec.cog_sales_price
 
     # -------------------------------------------------------------------------
     # CREATE METHODS
