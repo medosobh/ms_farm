@@ -140,7 +140,10 @@
                                 <div class="row">
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Plan Price">
-
+                                            <field name="plan_produce_price" widget='monetary'
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                            <field name="plan_sales_price" widget='monetary'
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">

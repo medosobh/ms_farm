@@ -281,6 +281,14 @@ class farm_projects(models.Model):
         string = 'Expenses Actual vs Plan',
         help = 'compute % of actual spent vs actual bills and invoices',
         compute = '_compute_service_progress')
+    plan_produce_price = fields.Float(
+        string = 'Plan Produce Price',
+        help = 'Average Plan Cost Order divided by Qty of Produce Orders',
+    )
+    plan_sales_price = fields.Float(
+        string = 'Plan Sales Price',
+        help = 'Average Plan Sales Orders',
+    )
     average_produce_price = fields.Float(
         string = 'Average Produce Price',
         help = 'compute average price of stock move',

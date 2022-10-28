@@ -69,6 +69,8 @@
             '/ms_farm/static/src/js/progress_bar_widget.js',
             '/ms_farm/static/src/css/progressbar.css',
             '/ms_farm/static/src/js/progressbar.js',
+            '/ms_farm/static/src/css/gauge.css',
+            '/ms_farm/static/src/js/gauge.js',
         },
         'web.assets_qweb': {
             '/ms_farm/static/src/xml/progress_bar_widget.xml',

@@ -1,6 +1,5 @@
 odoo.define('progress_bar_colour.progress_bar_color', function (require) {
     "use strict";
-    console.log("hhhhhhhhhh")
     var core = require('web.core');
     var utils = require('web.utils');
     var Widget = require('web.Widget');
