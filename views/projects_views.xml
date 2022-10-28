@@ -100,40 +100,52 @@
                     </group>
                     <notebook string="Details">
                         <page string="Summary">
-                            <group>
-                                <group name="Budget">
-                                    <field name="operation_budget" widget='monetary'/>
-                                    <field name="material_budget" widget='monetary'/>
-                                    <field name="expense_budget" widget='monetary'/>
-                                    <field name="total_budget" widget='monetary'/>
-                                    <field name="plan_produce_amount" widget='monetary'
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
-                                    <field name="plan_produce_qty"
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
-                                    <field name="plan_sales_amount" widget='monetary'
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
-                                    <field name="plan_sales_qty"
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
-                                    <field name="total_actual_service"
-                                           attrs="{'invisible':[('project_type','!=', 'service')]}"/>
-                                    <field name="p_days" string="Plan Days"/>
-                                </group>
-                                <group name="Actual">
-                                    <field name="operations_actual" widget='monetary'/>
-                                    <field name="materials_actual" widget='monetary'/>
-                                    <field name="expenses_actual" widget='monetary'/>
-                                    <field name="total_actual" widget='monetary'/>
-                                    <field name="actual_produce_amount" widget='monetary'
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
-                                    <field name="actual_produce_qty"
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
-                                    <field name="actual_sales_amount" widget='monetary'
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
-                                    <field name="actual_sales_qty"
-                                           attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
-                                    <field name="a_days" String="Actual Days"/>
-                                </group>
-                            </group>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col" name="Budget">
+                                        <group string="Budget">
+                                            <field name="operation_budget" widget='monetary'/>
+                                            <field name="material_budget" widget='monetary'/>
+                                            <field name="expense_budget" widget='monetary'/>
+                                            <field name="total_budget" widget='monetary'/>
+                                            <field name="plan_produce_amount" widget='monetary'
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                            <field name="plan_produce_qty"
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                            <field name="plan_sales_amount" widget='monetary'
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                            <field name="plan_sales_qty"
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                            <field name="plan_service_amount" widget='monetary'
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                            <field name="plan_service_qty"
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                            <field name="p_days" string="Plan Days"/>
+                                        </group>
+                                    </div>
+                                    <div class="col" name="Actual">
+                                        <group string="Actual">
+                                            <field name="operations_actual" widget='monetary'/>
+                                            <field name="materials_actual" widget='monetary'/>
+                                            <field name="expenses_actual" widget='monetary'/>
+                                            <field name="total_actual" widget='monetary'/>
+                                            <field name="actual_produce_amount" widget='monetary'
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                            <field name="actual_produce_qty"
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                            <field name="actual_sales_amount" widget='monetary'
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                            <field name="actual_sales_qty"
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                            <field name="actual_service_amount" widget='monetary'
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                            <field name="actual_service_qty"
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                            <field name="a_days" String="Actual Days"/>
+                                        </group>
+                                    </div>
+                                </div>
+                            </div>
                         </page>
                         <page string="Ratios">
                             <div class="container">
@@ -144,10 +156,12 @@
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
                                             <field name="plan_sales_price" widget='monetary'
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                            <field name="plan_service_price" widget='monetary'
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
-                                        <group string="Average Price">
+                                        <group string="Actual Order Price">
                                             <field name="average_produce_price" widget='monetary'
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
                                             <field name="average_sales_price" widget='monetary'
@@ -155,7 +169,7 @@
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
-                                        <group string="Cost of Goods">
+                                        <group string="Actual Price">
                                             <field name="cog_produce_price"
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
                                             <field name="cog_sales_price"
@@ -195,7 +209,7 @@
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <field name="total_actual05" widget="gauge"
                                                attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                               options="{'max_field': 'total_actual_service'}"
+                                               options="{'max_field': 'actual_service_amount'}"
                                                string="Actual Spend vs Executed Order"/>
                                     </div>
                                 </div>
@@ -472,7 +486,6 @@
                         <page string="Settings">
                             <group string="Product and Category">
                                 <group>
-                                    <field name="buy_sell_price" class="oe_inline"/>
                                     <field name="category_id" widget="selection" class="oe_inline"/>
                                 </group>
                                 <group>

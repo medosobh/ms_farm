@@ -100,6 +100,10 @@ class StockPicking(models.Model):
     produce_id = fields.Many2one(
         comodel_name = "farm.produce",
         string = "Produce Order")
+    reference_record = fields.Reference(
+        selection = [('farm.operations', 'Operation Order'),
+                     ('farm.produce', 'Produce Order')],
+        string = 'Order Reference')
 
 
 class StockMove(models.Model):
@@ -229,3 +233,13 @@ class AccountMoveLine(models.Model):
         string = "Farm Sales")
     move_type = fields.Selection(
         related = "move_id.move_type")
+
+
+class AccountAnalyticAccount(models.Model):
+    _inherit = 'account.analytic.account'
+
+    project_reference = fields.Reference(
+        selection = [
+            ('farm.projects', 'Project')
+        ],
+        string = 'Project')

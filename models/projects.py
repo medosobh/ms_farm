@@ -117,31 +117,6 @@ class farm_projects(models.Model):
         string = 'Expense Budget',
         compute = '_compute_expense_budget',
         currency_field = 'currency_id',
-        required = False,
-        tracking = True)
-    plan_produce_qty = fields.Float(
-        string = 'Produce Plan Qty',
-        required = False,
-        readonly = True,
-        tracking = True)
-    plan_produce_amount = fields.Monetary(
-        string = 'Produce Budget',
-        compute = '_compute_plan_produce_amount',
-        currency_field = 'currency_id',
-        required = False,
-        readonly = True,
-        tracking = True)
-    plan_sales_qty = fields.Float(
-        string = 'Sales Plan Qty',
-        required = False,
-        readonly = True,
-        tracking = True)
-    plan_sales_amount = fields.Monetary(
-        string = 'Sales Budget',
-        compute = '_compute_plan_sales_amount',
-        currency_field = 'currency_id',
-        readonly = True,
-        required = False,
         tracking = True)
     operations_actual = fields.Monetary(
         string = 'Operation Actual',
@@ -161,6 +136,30 @@ class farm_projects(models.Model):
         currency_field = 'currency_id',
         required = False,
         tracking = True)
+    plan_produce_qty = fields.Float(
+        string = 'Produce Plan Qty',
+        compute = '_compute_plan_produce_qty',
+        readonly = True)
+    plan_produce_amount = fields.Monetary(
+        string = 'Produce Budget',
+        compute = '_compute_plan_produce_amount',
+        currency_field = 'currency_id',
+        readonly = True)
+    plan_sales_qty = fields.Float(
+        string = 'Sales Plan Qty',
+        compute = '_compute_plan_sales_qty',
+        readonly = True)
+    plan_sales_amount = fields.Monetary(
+        string = 'Sales Budget',
+        compute = '_compute_plan_sales_amount',
+        currency_field = 'currency_id')
+    plan_service_qty = fields.Float(
+        string = 'Service Plan Qty',
+        compute = '_compute_plan_service_qty')
+    plan_service_amount = fields.Monetary(
+        string = 'Service Budget',
+        compute = '_compute_plan_service_amount',
+        currency_field = 'currency_id')
     actual_produce_qty = fields.Float(
         string = 'Produce Act. Qty',
         compute = '_compute_sum_produce_qty',
@@ -182,6 +181,14 @@ class farm_projects(models.Model):
         currency_field = 'currency_id',
         required = False,
         readonly = True)
+    actual_service_qty = fields.Float(
+        string = 'Total service Qty',
+        compute = '_compute_sum_service_qty',
+        required = False)
+    actual_service_amount = fields.Float(
+        string = 'Total Service Plan',
+        compute = '_compute_actual_service_amount',
+        help = 'Total of Service internal bills plus external invoices.')
     operations_id = fields.Many2one(
         comodel_name = 'farm.operations',
         string = "Project Operations")
@@ -273,51 +280,46 @@ class farm_projects(models.Model):
     cost_progress = fields.Integer(
         string = 'Expenses Actual vs Budget',
         compute = '_compute_cost_progress')
-    total_actual_service = fields.Float(
-        string = 'Total Service Plan',
-        help = 'Total of Service internal bills plus external invoices.',
-        compute = '_compute_total_actual_service')
     service_progress = fields.Integer(
         string = 'Expenses Actual vs Plan',
         help = 'compute % of actual spent vs actual bills and invoices',
         compute = '_compute_service_progress')
     plan_produce_price = fields.Float(
         string = 'Plan Produce Price',
-        help = 'Average Plan Cost Order divided by Qty of Produce Orders',
-    )
+        help = 'Average Plan Cost Order divided by Qty of Produce Orders', )
     plan_sales_price = fields.Float(
         string = 'Plan Sales Price',
-        help = 'Average Plan Sales Orders',
-    )
+        help = 'Average Plan Sales Price', )
+    plan_service_price = fields.Float(
+        string = 'Plan Service Price',
+        help = 'Average Plan Service Price', )
+    # average plan order product price
     average_produce_price = fields.Float(
         string = 'Average Produce Price',
         help = 'compute average price of stock move',
-        compute = '_compute_average_produce_price'
-    )
+        compute = '_compute_average_produce_price')
     average_sales_price = fields.Float(
         string = 'Average Sales Price',
         help = 'compute average price of sales invoices',
-        compute = '_compute_average_sales_price'
-    )
+        compute = '_compute_average_sales_price')
+    average_service_price = fields.Float(
+        string = 'Average Service Price',
+        help = 'compute average price of Service internal and external',
+        compute = '_compute_average_service_price')
     cog_produce_price = fields.Float(
-        string = 'Cost of Goods Produce Price',
+        string = 'Actual Produce Price',
         help = 'compute price of cost of goods produce based on actual produce qty and current actual spending',
-        compute = '_compute_cog_produce_price'
-    )
+        compute = '_compute_cog_produce_price')
     # actual spend divided by sales volume
     cog_sales_price = fields.Float(
-        string = 'Cost of Goods Sold Price',
+        string = 'Cost of Sold Price',
         help = 'compute price of cost of goods sold based on actual sold qty and current actual spending',
         compute = '_compute_cog_sales_price')
-
     category_id = fields.Many2one(
         comodel_name = 'product.category',
         required = True,
         default = lambda self: self.env.ref('ms_farm.product_category_produce'),
         string = 'Product Category')
-    buy_sell_price = fields.Float(
-        string = 'buy  and sell price',
-        store = True)
     analytic_account_id = fields.Reference(
         selection = [
             ('account.analytic.account', 'Analytic Account')
@@ -340,24 +342,8 @@ class farm_projects(models.Model):
         string = "Bill Lines",
         compute = '_bills_order_lines')
 
-    @api.depends('product_id')
-    def _operations_order_lines(self):
-        for rec in self:
-            ope_line = self.env['farm.operations.oline'].search([
-                ('product_id', '=', rec.product_id.id)
-            ])
-            rec.order_ids = ope_line
-        return rec.order_ids
-
-    @api.depends('product_id')
-    def _bills_order_lines(self):
-        for rec in self:
-            ope_line = self.env['account.move.line'].search([
-                ('product_id', '=', rec.product_id.id),
-                ('move_type', '=', 'in_invoice'),
-            ])
-            rec.bills_ids = ope_line
-        return rec.bills_ids
+    def _group_expand_states(self, states, domain, order):
+        return [key for key, val in type(self).state.selection]
 
     @api.depends('state')
     def button_draft(self):
@@ -382,9 +368,6 @@ class farm_projects(models.Model):
     def button_on_hold(self):
         for rec in self:
             rec.state = 'on_hold'
-
-    def _group_expand_states(self, states, domain, order):
-        return [key for key, val in type(self).state.selection]
 
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
@@ -437,86 +420,6 @@ class farm_projects(models.Model):
             self.a_days = (self.close_date - self.start_date).days
         return self.a_days
 
-    @api.model
-    def _compute_time_progress(self):
-        for r in self:
-            if not r.start_date:
-                r.time_progress = 0
-                continue
-            # Compute integer of time gone vs planned days
-            r.time_progress = abs(r.g_days / r.p_days * 100)
-        return r.time_progress
-
-    @api.model
-    def _compute_total_budget(self):
-        for r in self:
-            # Compute the percent based on major cost till add expense module,
-            r.total_budget = (r.operation_budget + r.material_budget + r.expense_budget)
-        return r.total_budget
-
-    @api.model
-    def _compute_total_actual(self):
-        for r in self:
-            # Compute the percent based on major cost till add expense module,
-            r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
-        return r.total_actual
-
-    @api.model
-    def _compute_cost_progress(self):
-        for r in self:
-            if not r.total_budget:
-                r.cost_progress = 0
-                continue
-            # Compute the percent based on major cost till add expense module,
-            r.cost_progress = abs(r.total_actual / r.total_budget * 100)
-        return r.cost_progress
-
-    @api.model
-    def _compute_service_progress(self):
-        for r in self:
-            if not r.total_actual_service:
-                r.service_progress = 0
-                continue
-            # Compute the percent based on major cost till add expense module,
-            r.service_progress = abs(r.total_actual / r.total_actual_service * 100)
-        return r.service_progress
-
-    # compute amount of operation orders plus sales
-    @api.model
-    def _compute_total_actual_service(self):
-        for r in self:
-            if not r.product_id:
-                print('need a product')
-            else:
-                bills_amount_debit = sum(
-                    self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
-                        ('move_type', '=', 'in_invoice'),
-                    ]).mapped('debit')
-                )
-                bills_amount_credit = sum(
-                    self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
-                        ('move_type', '=', 'in_invoice'),
-                    ]).mapped('credit')
-                )
-
-                invoice_amount_debit = sum(
-                    self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
-                        ('move_type', '=', 'out_invoice'),
-                    ]).mapped('debit')
-                )
-                invoice_amount_credit = sum(
-                    self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
-                        ('move_type', '=', 'out_invoice'),
-                    ]).mapped('credit')
-                )
-                r.total_actual_service = (
-                        bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
-        return r.total_actual_service
-
     def _compute_operations_count(self):
         for rec in self:
             operations_count = self.env['farm.operations'].search_count([
@@ -552,6 +455,10 @@ class farm_projects(models.Model):
             ])
             rec.sales_count = sales_count
 
+    # -------------------------------------------------------------------------
+    # Amount Calculation METHODS
+    # -------------------------------------------------------------------------
+
     def _compute_operation_budget(self):
         for rec in self:
             ope_line = sum(
@@ -579,23 +486,12 @@ class farm_projects(models.Model):
             rec.expense_budget = ope_line
         return rec.expense_budget
 
-    def _compute_plan_produce_amount(self):
-        for rec in self:
-            sal_line = sum(
-                self.env['farm.produce'].search([
-                    ('projects_id', '=', rec.id)
-                ]).mapped('p_order_cost'))
-            rec.plan_produce_amount = sal_line
-        return rec.plan_produce_amount
-
-    def _compute_plan_sales_amount(self):
-        for rec in self:
-            sal_line = sum(
-                self.env['farm.sales'].search([
-                    ('projects_id', '=', rec.id)
-                ]).mapped('s_order_cost'))
-            rec.plan_sales_amount = sal_line
-        return rec.plan_sales_amount
+    @api.model
+    def _compute_total_budget(self):
+        for r in self:
+            # Compute the percent based on major cost till add expense module,
+            r.total_budget = (r.operation_budget + r.material_budget + r.expense_budget)
+        return r.total_budget
 
     def _compute_operations_actual(self):
         for rec in self:
@@ -625,6 +521,145 @@ class farm_projects(models.Model):
             rec.expenses_actual = expenses_actual
         return rec.expenses_actual
 
+    @api.model
+    def _compute_total_actual(self):
+        for r in self:
+            # Compute the percent based on major cost till add expense module,
+            r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
+        return r.total_actual
+
+    @api.model
+    def _compute_time_progress(self):
+        for r in self:
+            if not r.start_date:
+                r.time_progress = 0
+                continue
+            # Compute integer of time gone vs planned days
+            r.time_progress = abs(r.g_days / r.p_days * 100)
+        return r.time_progress
+
+    # -------------------------------------------------------------------------
+    # KPIs Calculation METHODS
+    # -------------------------------------------------------------------------
+    @api.model
+    def _compute_cost_progress(self):
+        for r in self:
+            if not r.total_budget:
+                r.cost_progress = 0
+                continue
+            # Compute the percent based on major cost till add expense module,
+            r.cost_progress = abs(r.total_actual / r.total_budget * 100)
+        return r.cost_progress
+
+    @api.model
+    def _compute_service_progress(self):
+        for r in self:
+            if not r.actual_service_amount:
+                r.service_progress = 0
+                continue
+            # Compute the percent based on major cost till add expense module,
+            r.service_progress = abs(r.total_actual / r.actual_service_amount * 100)
+        return r.service_progress
+
+    # compute amount of operation orders plus sales
+    @api.model
+    def _compute_actual_service_amount(self):
+        for r in self:
+            if not r.product_id:
+                print('need a product')
+            else:
+                bills_amount_debit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'in_invoice'),
+                    ]).mapped('debit')
+                )
+                bills_amount_credit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'in_invoice'),
+                    ]).mapped('credit')
+                )
+
+                invoice_amount_debit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'out_invoice'),
+                    ]).mapped('debit')
+                )
+                invoice_amount_credit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'out_invoice'),
+                    ]).mapped('credit')
+                )
+                r.actual_service_amount = (
+                        bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
+        return r.actual_service_amount
+
+    # -------------------------------------------------------------------------
+    # Budget order Calculation
+    # -------------------------------------------------------------------------
+    def _compute_plan_produce_qty(self):
+        for rec in self:
+            pro_sum = sum(
+                self.env['farm.produce.oline'].search([
+                    ('product_id', '=', rec.product_id.id)
+                ]).mapped('qty')
+            )
+            rec.plan_produce_qty = pro_sum
+        return rec.plan_produce_qty
+
+    def _compute_plan_produce_amount(self):
+        for rec in self:
+            pro_line = sum(
+                self.env['farm.produce'].search([
+                    ('projects_id', '=', rec.id)
+                ]).mapped('p_order_cost')
+            )
+            rec.plan_produce_amount = pro_line
+        return rec.plan_produce_amount
+
+    def _compute_plan_sales_qty(self):
+        for rec in self:
+            sal_line = sum(
+                self.env['farm.sales.oline'].search([
+                    ('product_id', '=', rec.product_id.id)
+                ]).mapped('qty')
+            )
+            rec.plan_sales_qty = sal_line
+        return rec.plan_sales_qty
+
+    def _compute_plan_sales_amount(self):
+        for rec in self:
+            sal_line = sum(
+                self.env['farm.sales'].search([
+                    ('projects_id', '=', rec.id)
+                ]).mapped('s_order_cost'))
+            rec.plan_sales_amount = sal_line
+        return rec.plan_sales_amount
+
+    def _compute_plan_service_qty(self):
+        for rec in self:
+            prod_line = sum(
+                self.env['farm.operations.oline'].search([
+                    ('product_id', '=', rec.product_id.id)
+                ]).mapped('qty'))
+            rec.plan_service_qty = prod_line
+        return rec.plan_service_qty
+
+    def _compute_plan_service_amount(self):
+        for rec in self:
+            serv_line = sum(
+                self.env['farm.operations.oline'].search([
+                    ('product_id', '=', rec.product_id.id)
+                ]).mapped('price_subtotal'))
+            rec.plan_service_amount = serv_line
+        return rec.plan_service_amount
+
+    # -------------------------------------------------------------------------
+    # actual order Price Calculation METHODS
+    # -------------------------------------------------------------------------
     def _compute_sum_produce_qty(self):
         for rec in self:
             sum_produce_qty = sum(
@@ -664,14 +699,6 @@ class farm_projects(models.Model):
                 continue
             rec.average_produce_price = rec.actual_produce_amount / rec.actual_produce_qty
         return rec.average_produce_price
-
-    def _compute_cog_produce_price(self):
-        for rec in self:
-            if not rec.cog_produce_price:
-                rec.cog_produce_price = 0
-                continue
-            rec.cog_produce_price = rec.total_actual / rec.actual_produce_qty
-        return rec.cog_produce_price
 
     def _compute_sum_sales_qty(self):
         for rec in self:
@@ -713,6 +740,45 @@ class farm_projects(models.Model):
             rec.average_sales_price = rec.actual_sales_amount / rec.actual_sales_qty
         return rec.average_sales_price
 
+    def _compute_sum_service_qty(self):
+        for r in self:
+            if not r.product_id:
+                r.actual_service_qty = 0
+            else:
+                bills_quantity = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'in_invoice'),
+                    ]).mapped('quantity')
+                )
+                invoice_quantity = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'out_invoice'),
+                    ]).mapped('quantity')
+                )
+                r.actual_service_qty = (bills_quantity + invoice_quantity)
+        return r.actual_service_qty
+
+    def _compute_average_service_price(self):
+        for rec in self:
+            if not rec.actual_service_qty:
+                rec.actual_service_qty = 0
+                continue
+            rec.average_service_price = rec.actual_service_amount / rec.actual_service_qty
+        return rec.average_service_price
+
+    # -------------------------------------------------------------------------
+    # Cost of Goods Price Calculation METHODS
+    # -------------------------------------------------------------------------
+    def _compute_cog_produce_price(self):
+        for rec in self:
+            if not rec.cog_produce_price:
+                rec.cog_produce_price = 0
+                continue
+            rec.cog_produce_price = rec.total_actual / rec.actual_produce_qty
+        return rec.cog_produce_price
+
     def _compute_cog_sales_price(self):
         for rec in self:
             if not rec.cog_sales_price:
@@ -739,20 +805,31 @@ class farm_projects(models.Model):
         if search_name:
             raise UserError(_('Product already exist in the company %s (%s).') % (
                 self.company_id.name, self.company_id.id))
-        # elif create
-        product_vals = dict(
-            categ_id = self.category_id.id,
-            detailed_type = 'product',
-            name = new_name,
-            projects_id = self.id,
-            default_code = self.name + " " + self.short_name,
-            standard_price = self.buy_sell_price,
-            list_price = self.buy_sell_price,
-        )
-        new_product = self.env['product.template'].create(product_vals)
-        self.create_lock = True
-        self.product_id = new_product.id
-        return new_product
+        else:
+            if self.project_type == "service":
+                product_vals = dict(
+                    categ_id = self.category_id.id,
+                    detailed_type = 'product',
+                    name = new_name,
+                    projects_id = self.id,
+                    default_code = self.name + " " + self.short_name,
+                    standard_price = self.plan_service_price,
+                    list_price = self.plan_service_price,
+                )
+            else:
+                product_vals = dict(
+                    categ_id = self.category_id.id,
+                    detailed_type = 'product',
+                    name = new_name,
+                    projects_id = self.id,
+                    default_code = self.name + " " + self.short_name,
+                    standard_price = self.plan_produce_price,
+                    list_price = self.plan_sales_price,
+                )
+            new_product = self.env['product.template'].create(product_vals)
+            self.create_lock = True
+            self.product_id = new_product.id
+        return
 
     def create_project_analytic_account(self):
         # if it is existed and send error message
@@ -773,7 +850,29 @@ class farm_projects(models.Model):
         return
 
     # -------------------------------------------------------------------------
-    # Call Views METHODS
+    # Call Bills and Invoices of service project
+    # -------------------------------------------------------------------------
+    @api.depends('product_id')
+    def _operations_order_lines(self):
+        for rec in self:
+            ope_line = self.env['farm.operations.oline'].search([
+                ('product_id', '=', rec.product_id.id)
+            ])
+            rec.order_ids = ope_line
+        return rec.order_ids
+
+    @api.depends('product_id')
+    def _bills_order_lines(self):
+        for rec in self:
+            ope_line = self.env['account.move.line'].search([
+                ('product_id', '=', rec.product_id.id),
+                ('move_type', '=', 'in_invoice'),
+            ])
+            rec.bills_ids = ope_line
+        return rec.bills_ids
+
+    # -------------------------------------------------------------------------
+    # Call Views
     # -------------------------------------------------------------------------
 
     def action_open_operation_orders_timeframe(self):
@@ -896,22 +995,3 @@ class farm_project_group(models.Model):
         help = "Enter the description",
         translate = True,
         tracking = True)
-
-
-class stockPicking(models.Model):
-    _inherit = 'stock.move'
-
-    reference_record = fields.Reference(
-        selection = [('farm.operations', 'Operation Order'),
-                     ('farm.produce', 'Produce Order')],
-        string = 'Order Reference')
-
-
-class AccountAnalyticAccount(models.Model):
-    _inherit = 'account.analytic.account'
-
-    project_reference = fields.Reference(
-        selection = [
-            ('farm.projects', 'Project')
-        ],
-        string = 'Project')

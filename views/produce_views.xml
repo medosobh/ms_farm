@@ -63,7 +63,6 @@
                             <field name="notes"/>
                         </group>
                     </group>
-
                     <notebook>
                         <page name="farm_operation_olines" string="Order Lines">
                             <field name="produce_order_line_ids">
@@ -76,7 +75,7 @@
                                     <field name="company_id" widget="selection" invisible="1"/>
                                     <field name="currency_id" invisible="1" widget="selection"/>
                                     <field name="product_uom"/>
-                                    <field name="qty"/>
+                                    <field name="qty" sum="Total QTY"/>
                                     <field name="note"/>
                                     <field name="price_subtotal" sum="Total Cost"/>
                                 </tree>
