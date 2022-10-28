@@ -98,16 +98,52 @@
                             <field name="close_date" type="date" class="oe_inline"/>
                         </group>
                     </group>
-                    <notebook string="Details">
-                        <page string="Summary">
+                    <notebook string="Project Brief">
+                        <page string="Summary and Ratios">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col" name="Budget">
-                                        <group string="Budget">
+                                    <div class="col" style="border:1px solid #cccccc;">
+
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Plan Time">
+                                            <field name="p_days" string="Plan Days"/>
+                                        </group>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Actual Time">
+                                            <field name="g_days" String="Actual Days"/>
+                                            <field name="a_days" String="Actual Days"/>
+                                        </group>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" style="border:1px solid #cccccc;">
+
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Plan">
                                             <field name="operation_budget" widget='monetary'/>
                                             <field name="material_budget" widget='monetary'/>
                                             <field name="expense_budget" widget='monetary'/>
                                             <field name="total_budget" widget='monetary'/>
+                                        </group>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Actual">
+                                            <field name="operations_actual" widget='monetary'/>
+                                            <field name="materials_actual" widget='monetary'/>
+                                            <field name="expenses_actual" widget='monetary'/>
+                                            <field name="total_actual" widget='monetary'/>
+                                        </group>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" style="border:1px solid #cccccc;">
+
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Plan Amount and Qty">
                                             <field name="plan_produce_amount" widget='monetary'
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
                                             <field name="plan_produce_qty"
@@ -120,15 +156,10 @@
                                                    attrs="{'invisible':[('project_type','!=', 'service')]}"/>
                                             <field name="plan_service_qty"
                                                    attrs="{'invisible':[('project_type','!=', 'service')]}"/>
-                                            <field name="p_days" string="Plan Days"/>
                                         </group>
                                     </div>
-                                    <div class="col" name="Actual">
-                                        <group string="Actual">
-                                            <field name="operations_actual" widget='monetary'/>
-                                            <field name="materials_actual" widget='monetary'/>
-                                            <field name="expenses_actual" widget='monetary'/>
-                                            <field name="total_actual" widget='monetary'/>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Actual Amount and Qty">
                                             <field name="actual_produce_amount" widget='monetary'
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
                                             <field name="actual_produce_qty"
@@ -141,14 +172,9 @@
                                                    attrs="{'invisible':[('project_type','!=', 'service')]}"/>
                                             <field name="actual_service_qty"
                                                    attrs="{'invisible':[('project_type','!=', 'service')]}"/>
-                                            <field name="a_days" String="Actual Days"/>
                                         </group>
                                     </div>
                                 </div>
-                            </div>
-                        </page>
-                        <page string="Ratios">
-                            <div class="container">
                                 <div class="row">
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Plan Price">
