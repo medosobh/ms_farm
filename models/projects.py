@@ -137,56 +137,56 @@ class farm_projects(models.Model):
         required = False,
         tracking = True)
     plan_produce_qty = fields.Float(
-        string = 'Produce Plan Qty',
+        string = 'Produce Order Qty',
         compute = '_compute_plan_produce_qty',
         readonly = True)
     plan_produce_amount = fields.Monetary(
-        string = 'Produce Budget',
+        string = 'Produce Order Budget',
         compute = '_compute_plan_produce_amount',
         currency_field = 'currency_id',
         readonly = True)
     plan_sales_qty = fields.Float(
-        string = 'Sales Plan Qty',
+        string = 'Sales Order Qty',
         compute = '_compute_plan_sales_qty',
         readonly = True)
     plan_sales_amount = fields.Monetary(
-        string = 'Sales Budget',
+        string = 'Sales Order Budget',
         compute = '_compute_plan_sales_amount',
         currency_field = 'currency_id')
     plan_service_qty = fields.Float(
-        string = 'Service Plan Qty',
+        string = 'Service Order Qty',
         compute = '_compute_plan_service_qty')
     plan_service_amount = fields.Monetary(
-        string = 'Service Budget',
+        string = 'Service Order Budget',
         compute = '_compute_plan_service_amount',
         currency_field = 'currency_id')
     actual_produce_qty = fields.Float(
-        string = 'Produce Act. Qty',
+        string = 'Produce Actual Qty',
         compute = '_compute_sum_produce_qty',
         required = False,
         readonly = True)
     actual_produce_amount = fields.Monetary(
-        string = 'Produce Act. Amount',
+        string = 'Produce Actual Amount',
         compute = '_compute_actual_produce_amount',
         currency_field = 'currency_id',
         required = False,
         readonly = True)
     actual_sales_qty = fields.Float(
-        string = 'Sales Act. Qty',
+        string = 'Sales Actual Qty',
         required = False,
         readonly = True)
     actual_sales_amount = fields.Monetary(
-        string = 'Sales Act. Amount',
+        string = 'Sales Actual Amount',
         compute = '_compute_actual_sales_amount',
         currency_field = 'currency_id',
         required = False,
         readonly = True)
     actual_service_qty = fields.Float(
-        string = 'Total service Qty',
+        string = 'Service Actual Qty',
         compute = '_compute_sum_service_qty',
         required = False)
     actual_service_amount = fields.Float(
-        string = 'Total Service Plan',
+        string = 'Service Actual Amount',
         compute = '_compute_actual_service_amount',
         help = 'Total of Service internal bills plus external invoices.')
     operations_id = fields.Many2one(
@@ -315,6 +315,10 @@ class farm_projects(models.Model):
         string = 'Cost of Sold Price',
         help = 'compute price of cost of goods sold based on actual sold qty and current actual spending',
         compute = '_compute_cog_sales_price')
+    cog_service_price = fields.Float(
+        string = 'Cost of service Price',
+        help = 'compute price of service based on actual used + sold qty and current actual spending',
+        compute = '_compute_cog_service_price')
     category_id = fields.Many2one(
         comodel_name = 'product.category',
         required = True,
@@ -528,19 +532,21 @@ class farm_projects(models.Model):
             r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
         return r.total_actual
 
+    # -------------------------------------------------------------------------
+    # KPIs Calculation METHODS
+    # -------------------------------------------------------------------------
     @api.model
     def _compute_time_progress(self):
         for r in self:
             if not r.start_date:
                 r.time_progress = 0
-                continue
-            # Compute integer of time gone vs planned days
-            r.time_progress = abs(r.g_days / r.p_days * 100)
+            elif not r.close_date:
+                r.time_progress = 1
+            else:
+                # Compute integer of time gone vs planned days
+                r.time_progress = abs(r.g_days / r.p_days * 100)
         return r.time_progress
 
-    # -------------------------------------------------------------------------
-    # KPIs Calculation METHODS
-    # -------------------------------------------------------------------------
     @api.model
     def _compute_cost_progress(self):
         for r in self:
@@ -562,40 +568,6 @@ class farm_projects(models.Model):
         return r.service_progress
 
     # compute amount of operation orders plus sales
-    @api.model
-    def _compute_actual_service_amount(self):
-        for r in self:
-            if not r.product_id:
-                print('need a product')
-            else:
-                bills_amount_debit = sum(
-                    self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
-                        ('move_type', '=', 'in_invoice'),
-                    ]).mapped('debit')
-                )
-                bills_amount_credit = sum(
-                    self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
-                        ('move_type', '=', 'in_invoice'),
-                    ]).mapped('credit')
-                )
-
-                invoice_amount_debit = sum(
-                    self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
-                        ('move_type', '=', 'out_invoice'),
-                    ]).mapped('debit')
-                )
-                invoice_amount_credit = sum(
-                    self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
-                        ('move_type', '=', 'out_invoice'),
-                    ]).mapped('credit')
-                )
-                r.actual_service_amount = (
-                        bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
-        return r.actual_service_amount
 
     # -------------------------------------------------------------------------
     # Budget order Calculation
@@ -760,12 +732,47 @@ class farm_projects(models.Model):
                 r.actual_service_qty = (bills_quantity + invoice_quantity)
         return r.actual_service_qty
 
+    @api.model
+    def _compute_actual_service_amount(self):
+        for r in self:
+            if not r.product_id:
+                print('need a product')
+            else:
+                bills_amount_debit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'in_invoice'),
+                    ]).mapped('debit')
+                )
+                bills_amount_credit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'in_invoice'),
+                    ]).mapped('credit')
+                )
+
+                invoice_amount_debit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'out_invoice'),
+                    ]).mapped('debit')
+                )
+                invoice_amount_credit = sum(
+                    self.env['account.move.line'].search([
+                        ('product_id', '=', r.product_id.id),
+                        ('move_type', '=', 'out_invoice'),
+                    ]).mapped('credit')
+                )
+                r.actual_service_amount = (
+                        bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
+        return r.actual_service_amount
+
     def _compute_average_service_price(self):
         for rec in self:
-            if not rec.actual_service_qty:
-                rec.actual_service_qty = 0
+            if not rec.plan_service_qty:
+                rec.average_service_price = 0
                 continue
-            rec.average_service_price = rec.actual_service_amount / rec.actual_service_qty
+            rec.average_service_price = rec.plan_service_amount / rec.plan_service_qty
         return rec.average_service_price
 
     # -------------------------------------------------------------------------
@@ -781,11 +788,19 @@ class farm_projects(models.Model):
 
     def _compute_cog_sales_price(self):
         for rec in self:
-            if not rec.cog_sales_price:
+            if not rec.actual_sales_qty:
                 rec.cog_sales_price = 0
                 continue
             rec.cog_sales_price = rec.total_actual / rec.actual_sales_qty
         return rec.cog_sales_price
+
+    def _compute_cog_service_price(self):
+        for rec in self:
+            if not rec.actual_service_qty:
+                rec.cog_service_price = 0
+                continue
+            rec.cog_service_price = rec.actual_service_amount / rec.actual_service_qty
+        return rec.cog_service_price
 
     # -------------------------------------------------------------------------
     # CREATE METHODS

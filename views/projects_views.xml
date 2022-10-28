@@ -166,14 +166,18 @@
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
                                             <field name="average_sales_price" widget='monetary'
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                            <field name="average_service_price" widget='monetary'
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Actual Price">
-                                            <field name="cog_produce_price"
+                                            <field name="cog_produce_price" widget='monetary'
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
-                                            <field name="cog_sales_price"
+                                            <field name="cog_sales_price" widget='monetary'
                                                    attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                            <field name="cog_service_price" widget='monetary'
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
                                         </group>
                                     </div>
                                 </div>
