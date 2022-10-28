@@ -157,7 +157,7 @@
         <field name="model">farm.produce</field>
         <field name="arch" type="xml">
             <pivot string="produce">
-                <field name="projects_id" type="row" interval="month"/>
+                <field name="projects_id" type="row"/>
                 <field name="short_name" type="row"/>
                 <field name="name" type="row"/>
                 <field name="issue_date" type="col"/>

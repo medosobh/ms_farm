@@ -228,7 +228,7 @@
                                     <field name="user_id" widget="selection"/>
                                     <field name="activity_ids" widget="list_activity"/>
                                     <field name="issue_date"/>
-                                    <field name="o_order_cost" widget="monetary"/>
+                                    <field name="o_order_cost" widget="monetary" sum="Total"/>
                                     <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
                                     <field name="partner_id" widget="selection"/>
                                     <field name="stock_warehouse" widget="selection"/>
@@ -279,7 +279,7 @@
                                     <field name="user_id" widget="selection"/>
                                     <field name="activity_ids" widget="list_activity"/>
                                     <field name="issue_date"/>
-                                    <field name="m_order_cost" widget="monetary"/>
+                                    <field name="m_order_cost" widget="monetary" sum="Total"/>
                                     <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
                                     <field name="partner_id" widget="selection"/>
                                     <field name="stock_warehouse" widget="selection"/>
@@ -330,7 +330,7 @@
                                     <field name="user_id" widget="selection"/>
                                     <field name="activity_ids" widget="list_activity"/>
                                     <field name="issue_date"/>
-                                    <field name="e_order_cost" widget="monetary"/>
+                                    <field name="e_order_cost" widget="monetary" sum="Total"/>
                                     <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
                                     <field name="partner_id" widget="selection"/>
                                     <field name="stock_warehouse" widget="selection"/>

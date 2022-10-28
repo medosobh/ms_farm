@@ -161,13 +161,12 @@
         <field name="model">farm.operations</field>
         <field name="arch" type="xml">
             <pivot string="Operations">
-                <field name="projects_id" type="row" interval="month"/>
+                <field name="projects_id" type="row"/>
                 <field name="short_name" type="row"/>
                 <field name="name" type="row"/>
                 <field name="issue_date" type="col"/>
                 <field name="category_id" type="col"/>
                 <field name="o_order_cost" type="measure" widget="monetary"/>
-
                 <field name="state"/>
                 <field name="user_id"/>
                 <field name="partner_id" widget="selection"/>

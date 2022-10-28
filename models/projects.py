@@ -824,7 +824,7 @@ class farm_projects(models.Model):
             if self.project_type == "service":
                 product_vals = dict(
                     categ_id = self.category_id.id,
-                    detailed_type = 'product',
+                    detailed_type = 'service',
                     name = new_name,
                     projects_id = self.id,
                     default_code = self.name + " " + self.short_name,

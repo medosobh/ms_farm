@@ -150,7 +150,7 @@
         <field name="model">farm.sales</field>
         <field name="arch" type="xml">
             <pivot string="sales">
-                <field name="projects_id" type="row" interval="month"/>
+                <field name="projects_id" type="row"/>
                 <field name="short_name" type="row"/>
                 <field name="name" type="row"/>
                 <field name="issue_date" type="col"/>
