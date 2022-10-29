@@ -269,14 +269,11 @@ class farm_projects(models.Model):
         string = 'Total Actual',
         compute = '_compute_total_actual')
     total_actual04 = fields.Float(
-        related = 'total_actual',
-        string = 'Actual Spend vs Order')
+        related = 'total_actual')
     total_actual05 = fields.Float(
-        related = 'total_actual',
-        string = 'Actual Spend vs Executed Order')
+        related = 'total_actual')
     total_actual06 = fields.Float(
-        related = 'total_actual',
-        string = 'Actual Spend vs Sales')
+        related = 'total_actual')
     cost_progress = fields.Integer(
         string = 'Actual vs Order',
         compute = '_compute_cost_progress')
@@ -538,7 +535,7 @@ class farm_projects(models.Model):
     @api.model
     def _compute_time_progress(self):
         for r in self:
-            if not r.start_date:
+            if not r.start_date or r.p_days == 0:
                 r.time_progress = 0
             elif not r.close_date:
                 # Compute integer of time gone vs planned days
@@ -574,6 +571,8 @@ class farm_projects(models.Model):
     # -------------------------------------------------------------------------
     def _compute_plan_produce_qty(self):
         for rec in self:
+            if not rec.product_id:
+                continue
             pro_sum = sum(
                 self.env['farm.produce.oline'].search([
                     ('product_id', '=', rec.product_id.id)
@@ -594,6 +593,8 @@ class farm_projects(models.Model):
 
     def _compute_plan_sales_qty(self):
         for rec in self:
+            if not rec.product_id:
+                continue
             sal_line = sum(
                 self.env['farm.sales.oline'].search([
                     ('product_id', '=', rec.product_id.id)
@@ -613,6 +614,8 @@ class farm_projects(models.Model):
 
     def _compute_plan_service_qty(self):
         for rec in self:
+            if not rec.product_id:
+                continue
             prod_line = sum(
                 self.env['farm.operations.oline'].search([
                     ('product_id', '=', rec.product_id.id)
@@ -622,6 +625,8 @@ class farm_projects(models.Model):
 
     def _compute_plan_service_amount(self):
         for rec in self:
+            if not rec.product_id:
+                continue
             serv_line = sum(
                 self.env['farm.operations.oline'].search([
                     ('product_id', '=', rec.product_id.id)
@@ -634,6 +639,8 @@ class farm_projects(models.Model):
     # -------------------------------------------------------------------------
     def _compute_sum_produce_qty(self):
         for rec in self:
+            if not rec.analytic_account_id or not rec.product_id:
+                continue
             sum_produce_qty = sum(
                 self.env['stock.move.line'].search([
                     ('product_id', '=', rec.product_id.id),
@@ -647,6 +654,8 @@ class farm_projects(models.Model):
 
     def _compute_actual_produce_amount(self):
         for rec in self:
+            if not rec.analytic_account_id or not rec.product_id:
+                continue
             produce_debit = sum(
                 self.env['account.move.line'].search([
                     ('product_id', '=', rec.product_id.id),
@@ -674,6 +683,8 @@ class farm_projects(models.Model):
 
     def _compute_sum_sales_qty(self):
         for rec in self:
+            if not rec.analytic_account_id or not rec.product_id:
+                continue
             sum_sales_qty = sum(
                 self.env['account.move.line'].search([
                     ('product_id', '=', rec.product_id.id),
@@ -687,6 +698,8 @@ class farm_projects(models.Model):
 
     def _compute_actual_sales_amount(self):
         for rec in self:
+            if not rec.analytic_account_id or not rec.product_id:
+                continue
             sales_debit = sum(
                 self.env['account.move.line'].search([
                     ('product_id', '=', rec.product_id.id),
@@ -780,7 +793,7 @@ class farm_projects(models.Model):
     # -------------------------------------------------------------------------
     def _compute_cog_produce_price(self):
         for rec in self:
-            if not rec.cog_produce_price:
+            if not rec.actual_produce_qty:
                 rec.cog_produce_price = 0
                 continue
             rec.cog_produce_price = rec.total_actual / rec.actual_produce_qty

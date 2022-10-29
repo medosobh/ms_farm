@@ -103,9 +103,6 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col" style="border:1px solid #cccccc;">
-
-                                    </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Plan Time">
                                             <field name="p_days" string="Plan Days"/>
                                         </group>
@@ -118,9 +115,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col" style="border:1px solid #cccccc;">
-
-                                    </div>
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Plan">
                                             <field name="operation_budget" widget='monetary'/>
@@ -140,38 +134,47 @@
                                 </div>
                                 <div class="row">
                                     <div class="col" style="border:1px solid #cccccc;">
-
-                                    </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Plan Amount and Qty">
                                             <field name="plan_produce_amount" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
+                                            />
                                             <field name="plan_produce_qty"
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
+                                            />
                                             <field name="plan_sales_amount" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
+                                            />
                                             <field name="plan_sales_qty"
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
+                                            />
                                             <field name="plan_service_amount" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                            />
                                             <field name="plan_service_qty"
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                            />
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Actual Amount and Qty">
                                             <field name="actual_produce_amount" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
+                                            />
                                             <field name="actual_produce_qty"
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
+                                            />
                                             <field name="actual_sales_amount" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
+                                            />
                                             <field name="actual_sales_qty"
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
+                                            />
                                             <field name="actual_service_amount" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                            />
                                             <field name="actual_service_qty"
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                            />
                                         </group>
                                     </div>
                                 </div>
@@ -179,68 +182,89 @@
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Plan Price">
                                             <field name="plan_produce_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
+                                            />
                                             <field name="plan_sales_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
+                                            />
                                             <field name="plan_service_price" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                            />
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Actual Order Price">
                                             <field name="average_produce_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
+                                            />
                                             <field name="average_sales_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
+                                            />
                                             <field name="average_service_price" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                            />
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group string="Actual Price">
                                             <field name="cog_produce_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
+                                            />
                                             <field name="cog_sales_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"/>
+                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
+                                            />
                                             <field name="cog_service_price" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                            />
                                         </group>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group>
-                                            <field name="time_progress" widget="progressbar"/>
+                                            <field name="total_actual04" widget="progressbar"
+                                                   options="{'max_field': 'total_budget'}"
+                                                   string="Actual Spend vs Budget"
+                                            />
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group>
-                                            <field name="cost_progress" widget="progressbar"/>
+                                            <field name="total_actual05" widget="progressbar"
+                                                   options="{'max_field': 'actual_sales_amount'}"
+                                                   String="Actual Spend vs Sales"
+                                            />
                                         </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
                                         <group>
+                                            <field name="total_actual06" widget="progressbar"
+                                                   options="{'max_field': 'actual_service_amount'}"
+                                                   string="Actual Spend vs Executed Order"
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                            />
+                                        </group>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Time">
+                                            <field name="time_progress" widget="progressbar"
+                                            />
+                                        </group>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Cost">
+                                            <field name="cost_progress" widget="progressbar"
+                                            />
+                                        </group>
+                                    </div>
+                                    <div class="col" style="border:1px solid #cccccc;">
+                                        <group string="Service">
                                             <field name="service_progress" widget="progressbar"
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"/>
+                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
+                                            />
                                         </group>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col" style="border:1px solid #cccccc;">
-                                        <field name="total_actual04" widget="gauge"
-                                               options="{'max_field': 'total_budget'}"
-                                               string="Actual Spend vs Budget"/>
-                                    </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
-                                        <field name="total_actual06" widget="gauge"
-                                               options="{'max_field': 'actual_sales_amount'}"
-                                               String="Actual Spend vs Sales"/>
-                                    </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
-                                        <field name="total_actual05" widget="gauge"
-                                               attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                               options="{'max_field': 'actual_service_amount'}"
-                                               string="Actual Spend vs Executed Order"/>
                                     </div>
                                 </div>
                             </div>
@@ -554,36 +578,6 @@
         </field>
     </record>
 
-    <record id="quick_create_farm_projects_view_form" model="ir.ui.view">
-        <field name="name">farm.projects.form.quick_create</field>
-        <field name="model">farm.projects</field>
-        <field name="arch" type="xml">
-            <form string="Project">
-                <sheet>
-                    <group>
-                        <field name="priority" widget="priority" class="mr-3"/>
-                        <field name="name"/>
-                        <separator/>
-                        <field name="short_name"/>
-                        <group string="Basic">
-                            <field name="project_type"/>
-                            <field name="project_group_id" widget="selection"/>
-                            <field name="user_id" widget="selection"/>
-                            <field name="description"/>
-                            <field name="active" invisible="1"/>
-                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
-                            <field name="currency_id" widget="selection"/>
-                        </group>
-                        <group string="Time Frame">
-                            <field name="start_date" type="date" class="oe_inline"/>
-                            <field name="end_date" type="date" class="oe_inline"/>
-                        </group>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
     <record id="farm_projects_view_tree" model="ir.ui.view">
         <field name="name">farm.projects.tree</field>
         <field name="model">farm.projects</field>
@@ -620,9 +614,7 @@
         <field name="arch" type="xml">
             <kanban default_group_by="state"
                     class="o_kanban_small_column o_kanban_project_tasks"
-                    sample="1"
-                    on_create="quick_create"
-                    quick_create_view="ms_farm.quick_create_farm_projects_view_form">
+                    sample="1">
                 <field name="state"/>
                 <field name="priority" widget="priority" class="mr-3"/>
                 <field name="name"/>
@@ -689,7 +681,7 @@
         <field name="arch" type="xml">
             <calendar string="Projects" date_start="start_date" date_stop="end_date" create="1" quick_add="False"
                       mode="month" color="project_group_id" hide_time="true" event_limit="5"
-                      form_view_id="%(quick_create_farm_projects_view_form)d" event_open_popup="False">
+                      event_open_popup="False">
                 <field name="project_type" filters="1" invisible="1"/>
                 <field name="project_group_id" filters="1" invisible="1"/>
                 <field name="user_id" filters="1" invisible="1"/>
