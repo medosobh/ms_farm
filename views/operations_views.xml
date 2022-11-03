@@ -169,8 +169,8 @@
                 <field name="o_order_cost" type="measure" widget="monetary"/>
                 <field name="state"/>
                 <field name="user_id"/>
-                <field name="partner_id" widget="selection"/>
-                <field name="stock_warehouse" widget="selection"/>
+                <field name="partner_id"/>
+                <field name="stock_warehouse"/>
             </pivot>
         </field>
     </record>

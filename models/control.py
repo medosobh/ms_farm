@@ -206,6 +206,7 @@ class FarmControl(models.Model):
     )
     event_id = fields.Many2one(
         comodel_name = 'farm.event',
+        string = 'Event',
         required = True,
     )
     event_desc = fields.Text(
@@ -215,6 +216,7 @@ class FarmControl(models.Model):
     )
     action_id = fields.Many2one(
         comodel_name = 'farm.action',
+        string = 'Action',
         required = True,
     )
     action_desc = fields.Text(
