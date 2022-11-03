@@ -20,21 +20,32 @@
                   parent="farm_root"
                   sequence="30"
         />
+        <menuitem id="farm_menu_control"
+                  name="Control"
+                  parent="farm_root"
+                  sequence="40"
+        />
+
         <!-- This Menu Item Must have a parent -->
         <menuitem id="farm_menu_configuration"
                   name="Configuration"
                   parent="farm_root"
-                  sequence="41"/>
+                  sequence="50"/>
 
         <menuitem id="farm_menu_product"
                   name="Product and Category"
                   parent="farm_menu_configuration"
-                  sequence="41"/>
+                  sequence="51"/>
 
         <menuitem id="farm_menu_other"
                   name="Farm other Configuration"
                   parent="farm_menu_configuration"
-                  sequence="44"/>
+                  sequence="54"/>
+
+        <menuitem id="farm_menu_control_other"
+                  name="Event and Action"
+                  parent="farm_menu_configuration"
+                  sequence="57"/>
 
         <!-- Inherit account Move (vendor bill) Form View to Modify it -->
         <!-- This Menu Item must have a parent and an action -->

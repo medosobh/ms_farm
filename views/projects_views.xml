@@ -221,29 +221,20 @@
                                 </div>
                                 <div class="row">
                                     <div class="col" style="border:1px solid #cccccc;">
-                                        <group>
                                             <field name="total_actual04" widget="progressbar"
-                                                   options="{'max_field': 'total_budget'}"
-                                                   string="Actual Spend vs Budget"
+                                                   title="Actual Spend vs Budget"
                                             />
-                                        </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
-                                        <group>
                                             <field name="total_actual05" widget="progressbar"
-                                                   options="{'max_field': 'actual_sales_amount'}"
-                                                   String="Actual Spend vs Sales"
+                                                   title="Actual Spend vs Sales"
                                             />
-                                        </group>
                                     </div>
                                     <div class="col" style="border:1px solid #cccccc;">
-                                        <group>
                                             <field name="total_actual06" widget="progressbar"
-                                                   options="{'max_field': 'actual_service_amount'}"
-                                                   string="Actual Spend vs Executed Order"
+                                                   title="Actual Spend vs Executed Order"
                                                    attrs="{'invisible':[('project_type','!=', 'service')]}"
                                             />
-                                        </group>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -582,9 +573,12 @@
         <field name="name">farm.projects.tree</field>
         <field name="model">farm.projects</field>
         <field name="arch" type="xml">
-            <tree string="Project" sample="1" decoration-info="state == 'draft'"
-                  decoration-warning="state == 'in_operation'" decoration-success="state == 'finish'"
-                  decoration-danger="state == 'on_hold'">
+            <tree string="Project" sample="1"
+                  decoration-info="state == 'draft'"
+                  decoration-warning="state == 'in_operation'"
+                  decoration-success="state == 'finish'"
+                  decoration-danger="state == 'on_hold'"
+            >
                 <field name="name"/>
                 <field name="priority" widget="priority" class="mr-3"/>
                 <field name="state" widget="badge" decoration-info="state == 'draft'"

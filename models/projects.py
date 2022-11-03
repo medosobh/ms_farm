@@ -1,10 +1,11 @@
+
 from datetime import date, datetime, timedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class farm_projects(models.Model):
+class Farm_Projects(models.Model):
     _name = 'farm.projects'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Farm Projects Management'
@@ -13,17 +14,22 @@ class farm_projects(models.Model):
         ('short_name_uniq', 'unique(short_name)', "A short name can only be assigned to one project !"),
     ]
 
-    priority = fields.Selection([
-        ('0', 'Normal'),
-        ('1', 'Low'),
-        ('2', 'High'),
-        ('3', 'Very High')], string = "Priority",
+    priority = fields.Selection(
+        selection = [
+            ('0', 'Normal'),
+            ('1', 'Low'),
+            ('2', 'High'),
+            ('3', 'Very High')
+        ],
+        string = "Priority",
         help = 'Set the project priority which view first')
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('in_operation', 'In Operation'),
-        ('finish', 'Finished'),
-        ('on_hold', 'On hold')],
+    state = fields.Selection(
+        selection = [
+            ('draft', 'Draft'),
+            ('in_operation', 'In Operation'),
+            ('finish', 'Finished'),
+            ('on_hold', 'On hold')
+        ],
         string = 'Status',
         group_expand = '_group_expand_states',
         readonly = False,
@@ -77,7 +83,8 @@ class farm_projects(models.Model):
         string = 'Start Date',
         required = True,
         tracking = True,
-        default = datetime.today())
+        default = datetime.today()
+    )
     end_date = fields.Date(
         string = 'End Date',
         required = True,
@@ -100,7 +107,8 @@ class farm_projects(models.Model):
         string = 'Actual Days',
         store = True,
         readonly = True,
-        compute = '_get_time_gone')
+        compute = '_get_time_gone'
+    )
     operation_budget = fields.Monetary(
         string = 'Operation',
         compute = '_compute_operation_budget',
@@ -269,11 +277,11 @@ class farm_projects(models.Model):
         string = 'Total Actual',
         compute = '_compute_total_actual')
     total_actual04 = fields.Float(
-        related = 'total_actual')
+        compute = '_compute_total_actual04')
     total_actual05 = fields.Float(
-        related = 'total_actual')
+        compute = '_compute_total_actual05')
     total_actual06 = fields.Float(
-        related = 'total_actual')
+        compute = '_compute_total_actual06')
     cost_progress = fields.Integer(
         string = 'Actual vs Order',
         compute = '_compute_cost_progress')
@@ -528,6 +536,30 @@ class farm_projects(models.Model):
             # Compute the percent based on major cost till add expense module,
             r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
         return r.total_actual
+
+    @api.model
+    def _compute_total_actual04(self):
+        for r in self:
+            if not r.total_budget:
+                continue
+            r.total_actual04 = abs(r.total_actual / r.total_budget * 100)
+        return r.total_actual04
+
+    @api.model
+    def _compute_total_actual05(self):
+        for r in self:
+            if not r.actual_sales_amount:
+                continue
+            r.total_actual05 = abs(r.total_actual / r.actual_sales_amount * 100)
+        return r.total_actual05
+
+    @api.model
+    def _compute_total_actual06(self):
+        for r in self:
+            if not r.actual_service_amount:
+                continue
+            r.total_actual06 = abs(r.total_actual / r.actual_service_amount * 100)
+        return r.total_actual06
 
     # -------------------------------------------------------------------------
     # KPIs Calculation METHODS
@@ -822,7 +854,7 @@ class farm_projects(models.Model):
     def create(self, vals):
         if not vals.get('name') or vals['name'] == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('farm.projects') or _('New')
-        return super(farm_projects, self).create(vals)
+        return super(Farm_Projects, self).create(vals)
 
     def create_project_product(self):
         # if it is existed and send error message

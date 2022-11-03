@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="farm_pioasset_view_form" model="ir.ui.view">
+            <field name="name">farm.pioasset.form</field>
+            <field name="model">farm.pioasset</field>
+            <field name="arch" type="xml">
+                <form string="Pio Asset" class="oe_form_configuration">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Pio Asset"/>
+                            <h1>
+                                <field name="code" placeholder="serial 1, 2,.."/>
+                                <field name="name" placeholder="Name 1, 2,.."/>
+                            </h1>
+                        </div>
+                        <group name="first" col="2">
+                            <field name="type"/>
+                            <field name="group"/>
+                            <field name="parent_id"/>
+                            <field name="child_id" class="oe_inline" invisible="1"/>
+                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                        </group>
+                        <notebook>
+                            <page string="Control Tickets">
+                                <field name="control_ids" readonly="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="farm_pioasset_view_tree" model="ir.ui.view">
+            <field name="name">farm.pioasset.tree</field>
+            <field name="model">farm.pioasset</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <tree string="Pio Asset">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="group"/>
+                    <field name="display_name"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="farm_pioasset_view_search" model="ir.ui.view">
+            <field name="name">farm.pioasset.search</field>
+            <field name="model">farm.pioasset</field>
+            <field name="arch" type="xml">
+                <search string="Pio Asset">
+                    <field name="name" string="Pio Assets"/>
+                    <field name="parent_id"/>
+                    <searchpanel>
+                        <field name="type" select="multi" string="Type" enable_counters="1"/>
+                        <field name="group" select="multi" string="Type" enable_counters="1"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="farm_pioasset_action" model="ir.actions.act_window">
+            <field name="name">Pio-Asset</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">farm.pioasset</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Pio-Asset!
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_pioasset"
+                  name="Pio-Asset"
+                  parent="farm_menu_control"
+                  action="farm_pioasset_action"
+                  sequence="41"/>
+
+        <!--event model-->
+        <record id="farm_event_view_form" model="ir.ui.view">
+            <field name="name">farm.event.form</field>
+            <field name="model">farm.event</field>
+            <field name="arch" type="xml">
+                <form string="Event" class="oe_form_configuration">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Event"/>
+                            <h1>
+                                <field name="name" placeholder="Name 1, 2,.."/>
+                            </h1>
+                        </div>
+                        <group name="first" col="2">
+                            <field name="description"/>
+                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="farm_event_view_tree" model="ir.ui.view">
+            <field name="name">farm.event.tree</field>
+            <field name="model">farm.event</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <tree string="Pio Asset">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="farm_event_view_search" model="ir.ui.view">
+            <field name="name">farm.event.search</field>
+            <field name="model">farm.event</field>
+            <field name="arch" type="xml">
+                <search string="Event">
+                    <field name="name" string="Event"/>
+                    <field name="description" string="Event"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="farm_event_action" model="ir.actions.act_window">
+            <field name="name">Event</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">farm.event</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Event
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="farm_menu_control_event"
+                  name="Control Event"
+                  parent="farm_menu_control_other"
+                  action="farm_event_action"
+                  sequence="58"/>
+
+        <!--action model-->
+        <record id="farm_action_view_form" model="ir.ui.view">
+            <field name="name">farm.action.form</field>
+            <field name="model">farm.action</field>
+            <field name="arch" type="xml">
+                <form string="action" class="oe_form_configuration">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="action"/>
+                            <h1>
+                                <field name="name" placeholder="Name 1, 2,.."/>
+                            </h1>
+                        </div>
+                        <group name="first" col="2">
+                            <field name="description"/>
+                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="farm_action_view_tree" model="ir.ui.view">
+            <field name="name">farm.action.tree</field>
+            <field name="model">farm.action</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <tree string="Pio Asset">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="farm_action_view_search" model="ir.ui.view">
+            <field name="name">farm.action.search</field>
+            <field name="model">farm.action</field>
+            <field name="arch" type="xml">
+                <search string="action">
+                    <field name="name" string="action"/>
+                    <field name="description" string="action"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="farm_action_action" model="ir.actions.act_window">
+            <field name="name">Action</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">farm.action</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Action
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="farm_menu_control_action"
+                  name="Control Action"
+                  parent="farm_menu_control_other"
+                  action="farm_action_action"
+                  sequence="58"/>
+        <!--control -->
+        <record id="farm_control_view_form" model="ir.ui.view">
+            <field name="name">farm.control.form</field>
+            <field name="model">farm.control</field>
+            <field name="arch" type="xml">
+                <form string="Control" class="oe_form_configuration">
+                    <header>
+                        <field name="state" widget="statusbar"
+                               options="{'clickable': '0'}"
+                               clickable="True" type="object"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Ticket"/>
+                            <h3>
+                                <group>
+                                    <field name="priority" widget="priority" class="mr-3"/>
+                                    <field name="name"/>
+                                    <field name="pioasset_id"/>
+                                </group>
+                            </h3>
+                        </div>
+                        <group name="main information">
+                            <field name="parent_id"/>
+                            <field name="complete_name"/>
+                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                            <field name="init_date"/>
+                            <field name="next_date"/>
+                            <field name="lead_time"/>
+                        </group>
+                        <group>
+                            <field name="event_id"/>
+                            <field name="event_desc"/>
+                            <field name="child_id" class="oe_inline" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="who"/>
+                            <field name="what"/>
+                            <field name="action_id"/>
+                            <field name="action_desc"/>
+                        </group>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="farm_control_view_tree" model="ir.ui.view">
+            <field name="name">farm.control.tree</field>
+            <field name="model">farm.control</field>
+            <field name="arch" type="xml">
+                <tree string="Control" sample="1"
+                      decoration-muted="state == 'draft'"
+                      decoration-warning="state == 'progress'"
+                      decoration-info="state == 'schedule'"
+                      decoration-success="state == 'done'"
+                      decoration-danger="state == 'cancel'"
+                >
+                    <field name="state"/>
+                    <field name="name"/>
+                    <field name="pioasset_id"/>
+                    <field name="parent_id"/>
+                    <field name="complete_name"/>
+                    <field name="init_date"/>
+                    <field name="next_date"/>
+                    <field name="lead_time"/>
+                    <field name="parent_id"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                    <field name="event_id"/>
+                    <field name="event_desc"/>
+                    <field name="child_id" class="oe_inline" invisible="1"/>
+                    <field name="who"/>
+                    <field name="what"/>
+                    <field name="action_id"/>
+                    <field name="action_desc"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="farm_control_view_search" model="ir.ui.view">
+            <field name="name">farm.control.search</field>
+            <field name="model">farm.control</field>
+            <field name="arch" type="xml">
+                <search string="Control Ticket">
+                    <field name="state"/>
+                    <field name="priority" widget="priority" class="mr-3"/>
+                    <field name="name"/>
+                    <field name="pioasset_id"/>
+                    <field name="parent_id"/>
+                    <field name="complete_name"/>
+                    <field name="init_date"/>
+                    <field name="next_date"/>
+                    <field name="lead_time"/>
+                    <field name="parent_id"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                    <field name="event_id"/>
+                    <field name="event_desc"/>
+                    <field name="child_id" class="oe_inline" invisible="1"/>
+                    <field name="who"/>
+                    <field name="what"/>
+                    <field name="action_id"/>
+                    <field name="action_desc"/>
+
+                    <filter name="filter_user" string="Who?" domain="[('who', '=', uid)]"/>
+                    <separator/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                    <filter name="filter_progress" string="progress" domain="[('state', '=', 'progress')]"/>
+                    <filter name="filter_schedule" string="schedule" domain="[('state', '=', 'schedule')]"/>
+                    <filter name="filter_cancel" string="cancel" domain="[('state', '=', 'cancel')]"/>
+                    <filter name="filter_done" string="done" domain="[('state', '=', 'done')]"/>
+                    <separator/>
+                    <group expand="0" string="Group by">
+                        <filter string="Group" name="group_by_event" context="{'group_by':'event_id'}"/>
+                        <filter string="Group" name="group_by_action" context="{'group_by':'action_id'}"/>
+                        <filter string="Company" name="group_by_company" context="{'group_by':'company_id'}"/>
+                        <filter string="Who?" name="group_by_user" context="{'group_by':'who'}"/>
+                    </group>
+                    <searchpanel>
+                        <field name="priority" select="multi" string="priority" enable_counters="1"/>
+                        <field name="who" select="multi" string="who" enable_counters="1"/>
+                        <field name="event_id" select="multi" string="event" enable_counters="1"/>
+                        <field name="action_id" select="multi" string="action" enable_counters="1"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="farm_control_action" model="ir.actions.act_window">
+            <field name="name">Farm Control</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">farm.control</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_filter_user': 1}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create your first Control Ticket!</p>
+            </field>
+        </record>
+
+        <!--  This Menu Item must have a parent and an action  -->
+        <menuitem id="menu_control_ticket"
+                  name="Control Ticket"
+                  parent="farm_menu_control"
+                  action="farm_control_action"
+                  sequence="42"/>
+    </data>
+</odoo>

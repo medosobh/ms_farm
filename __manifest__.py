@@ -52,6 +52,7 @@
         'views/equipments_views.xml',
         'views/locations_views.xml',
         'views/projects_views.xml',
+        'views/control_views.xml',
         'views/inherit_views.xml',
     ],
     # only loaded in demonstration mode

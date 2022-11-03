@@ -14,3 +14,7 @@ access.farm_locations,access_farm_locations,ms_farm.model_farm_locations,base.gr
 access.farm_location_used,access_farm_location_used,ms_farm.model_farm_location_used,base.group_user,1,1,1,1
 access.farm_expenses,access_farm_expenses,ms_farm.model_farm_expenses,base.group_user,1,1,1,1
 access.farm_expenses_oline,access_farm_expenses_oline,ms_farm.model_farm_expenses_oline,base.group_user,1,1,1,1
+access.farm_pioasset,access_farm_pioasset,ms_farm.model_farm_pioasset,base.group_user,1,1,1,1
+access.farm_event,access_farm_event,ms_farm.model_farm_event,base.group_user,1,1,1,1
+access.farm_action,access_farm_action,ms_farm.model_farm_action,base.group_user,1,1,1,1
+access.farm_control,access_farm_control,ms_farm.model_farm_control,base.group_user,1,1,1,1

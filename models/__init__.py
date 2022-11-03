@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from . import control
 from . import equipments
 from . import expenses
 from . import inherit

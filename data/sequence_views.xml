@@ -9,6 +9,14 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+        <!-- Sequences for control ticket -->
+        <record id="farm_control_seq" model="ir.sequence">
+            <field name="name">Farm Control</field>
+            <field name="code">farm.control</field>
+            <field name="prefix">CTR/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
 
         <!-- Sequences for operations order -->
         <record id="farm_operations_seq" model="ir.sequence">

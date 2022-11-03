@@ -9,6 +9,7 @@ class farm_locations(models.Model):
     _parent_store = True
     _rec_name = 'complete_name'
     _order = 'complete_name'
+
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(
