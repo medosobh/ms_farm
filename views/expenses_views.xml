@@ -231,7 +231,7 @@
     </record>
 
     <record id="farm_expenses_action" model="ir.actions.act_window">
-        <field name="name">Farm expenses Order</field>
+        <field name="name">Expenses Order</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">farm.expenses</field>
         <field name="view_mode">tree,form,calendar,pivot,graph</field>

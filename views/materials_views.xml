@@ -219,7 +219,7 @@
     </record>
 
     <record id="farm_materials_action" model="ir.actions.act_window">
-        <field name="name">Farm Materials Order</field>
+        <field name="name">Materials Order</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">farm.materials</field>
         <field name="view_mode">tree,form,calendar,pivot,graph</field>

@@ -129,7 +129,7 @@
         </record>
 
         <record id="farm_event_action" model="ir.actions.act_window">
-            <field name="name">Event</field>
+            <field name="name">Events</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">farm.event</field>
             <field name="view_mode">tree,form</field>
@@ -195,7 +195,7 @@
         </record>
 
         <record id="farm_action_action" model="ir.actions.act_window">
-            <field name="name">Action</field>
+            <field name="name">Actions</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">farm.action</field>
             <field name="view_mode">tree,form</field>
@@ -396,7 +396,7 @@
         </record>
 
         <record id="farm_control_action" model="ir.actions.act_window">
-            <field name="name">Farm Control</field>
+            <field name="name">Control Tickets</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">farm.control</field>
             <field name="view_mode">tree,form,calendar,pivot,graph</field>

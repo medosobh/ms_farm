@@ -201,7 +201,7 @@
     </record>
 
     <record id="farm_sales_action" model="ir.actions.act_window">
-        <field name="name">Farm Sales Orders</field>
+        <field name="name">Sales Orders</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">farm.sales</field>
         <field name="view_mode">tree,form,calendar,pivot,graph</field>

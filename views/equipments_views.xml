@@ -147,7 +147,7 @@
         </record>
 
         <record id="farm_equipments_action" model="ir.actions.act_window">
-            <field name="name">Project Equipments</field>
+            <field name="name">Equipments</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">farm.equipments</field>
             <field name="view_mode">tree,form</field>

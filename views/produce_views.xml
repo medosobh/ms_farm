@@ -208,7 +208,7 @@
     </record>
 
     <record id="farm_produce_action" model="ir.actions.act_window">
-        <field name="name">Farm Produce Orders</field>
+        <field name="name">Produce Orders</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">farm.produce</field>
         <field name="view_mode">tree,form,calendar,pivot,graph</field>

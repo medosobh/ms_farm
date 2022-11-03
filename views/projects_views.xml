@@ -724,7 +724,7 @@
     </record>
 
     <record id="farm_projects_action" model="ir.actions.act_window">
-        <field name="name">Farm Projects</field>
+        <field name="name">Projects</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">farm.projects</field>
         <field name="view_mode">kanban,tree,form,calendar</field>

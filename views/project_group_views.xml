@@ -39,7 +39,7 @@
         </record>
 
         <record id="farm_project_group_action" model="ir.actions.act_window">
-            <field name="name">Farm Group</field>
+            <field name="name">Group</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">farm.project.group</field>
             <field name="view_mode">tree,form</field>
