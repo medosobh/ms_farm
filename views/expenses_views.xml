@@ -133,7 +133,7 @@
         <field name="name">farm.expenses.tree</field>
         <field name="model">farm.expenses</field>
         <field name="arch" type="xml">
-            <tree string="expenses">
+            <tree string="expenses" sample="1">
                 <field name="name"/>
                 <field name="state"/>
                 <field name="projects_id"/>

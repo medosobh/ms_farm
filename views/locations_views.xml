@@ -30,7 +30,7 @@
             <field name="model">farm.locations</field>
             <field name="priority">1</field>
             <field name="arch" type="xml">
-                <tree string="Project Locations">
+                <tree string="Project Locations" sample="1">
                     <field name="name"/>
                     <field name="address" placeholder=" North West East South of ..."/>
                     <field name="display_name"/>

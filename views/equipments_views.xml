@@ -118,7 +118,7 @@
             <field name="name">farm.equipments.tree</field>
             <field name="model">farm.equipments</field>
             <field name="arch" type="xml">
-                <tree string="ModelTitle">
+                <tree string="ModelTitle" sample="1">
                     <field name="code"/>
                     <field name="name"/>
                     <field name="description"/>

@@ -109,7 +109,7 @@
         <field name="name">farm.sales.tree</field>
         <field name="model">farm.sales</field>
         <field name="arch" type="xml">
-            <tree string="sales">
+            <tree string="sales" sample="1">
                 <field name="name"/>
                 <field name="state"/>
                 <field name="projects_id"/>
@@ -220,4 +220,5 @@
               parent="farm_menu_orders"
               action="farm_sales_action"
               sequence="25"/>
+
 </odoo>

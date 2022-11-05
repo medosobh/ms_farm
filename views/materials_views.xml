@@ -121,7 +121,7 @@
         <field name="name">farm.materials.tree</field>
         <field name="model">farm.materials</field>
         <field name="arch" type="xml">
-            <tree string="materials">
+            <tree string="materials" sample="1">
                 <field name="name"/>
                 <field name="state"/>
                 <field name="projects_id"/>

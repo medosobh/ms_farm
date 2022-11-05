@@ -116,7 +116,7 @@
         <field name="name">farm.operations.tree</field>
         <field name="model">farm.operations</field>
         <field name="arch" type="xml">
-            <tree string="operations">
+            <tree string="operations" sample="1">
                 <field name="name"/>
                 <field name="state"/>
                 <field name="projects_id"/>

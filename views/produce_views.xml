@@ -116,7 +116,7 @@
         <field name="name">farm.produce.tree</field>
         <field name="model">farm.produce</field>
         <field name="arch" type="xml">
-            <tree string="produce">
+            <tree string="produce" sample="1">
                 <field name="name"/>
                 <field name="state"/>
                 <field name="projects_id" widget="selection"/>
