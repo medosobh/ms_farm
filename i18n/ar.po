@@ -1,0 +1,3464 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ms_farm
+#
+msgid "Farm Management"
+msgstr "إدارة مزارع"
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-12 00:59+0000\n"
+"PO-Revision-Date: 2022-11-12 00:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__order_line_count
+msgid "# of Order"
+msgstr "عدد اﻷوامر"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+msgid "<span class=\"o_stat_text\">Actual Amount</span>"
+msgstr "الملغ الفعلى"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
+msgid "<span class=\"o_stat_text\">Amount</span>"
+msgstr "المبلغ"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
+msgid "<span class=\"o_stat_text\">Count</span>"
+msgstr "عدد"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "<span class=\"o_stat_text\">Expense TF</span>"
+msgstr "جدول زمنى للمصروف"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+msgid "<span class=\"o_stat_text\">Expense Ticket</span>"
+msgstr "مستند مصروف"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+msgid "<span class=\"o_stat_text\">Journal Count</span>"
+msgstr "عدد القيود"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "<span class=\"o_stat_text\">Material TF</span>"
+msgstr "جدول زمنى للمواد"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "<span class=\"o_stat_text\">Operation TF</span>"
+msgstr "جدول زمنى للعمليات"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+msgid "<span class=\"o_stat_text\">Order Amount</span>"
+msgstr "مبلغ اﻷوامر"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "<span class=\"o_stat_text\">Produce TF</span>"
+msgstr "جدول زمنى لﻹنتاج"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "<span class=\"o_stat_text\">Sales TF</span>"
+msgstr "جدول زمى للمبيعات"
+
+#. module: ms_farm
+#: model:ir.model.constraint,message:ms_farm.constraint_farm_pioasset_code_uniq
+msgid "A Code can only be assigned to one Pio-Asset !"
+msgstr "الكود مسموح للربط مع أصل حيوي واحد فقط"
+
+#. module: ms_farm
+#: model:ir.model.constraint,message:ms_farm.constraint_farm_equipments_code_uniq
+msgid "A code can only be assigned to one equipment !"
+msgstr "الكود مسموح لمعدة واحدة فقط"
+
+#. module: ms_farm
+#: model:ir.model.constraint,message:ms_farm.constraint_farm_equipments_name_uniq
+msgid "A name can only be assigned to one equipment !"
+msgstr "الاسم مسموح لمعدة واحدة فقط"
+
+#. module: ms_farm
+#: model:ir.model.constraint,message:ms_farm.constraint_farm_projects_short_name_uniq
+msgid "A short name can only be assigned to one project !"
+msgstr "اﻹسم المختصر مسموح لمشروع واحد فقط"
+
+#. module: ms_farm
+#: model:res.groups,name:ms_farm.group_account_dashboard
+msgid "Access to Accounting Dashboard"
+msgstr "الولوج الى لوحة الحسابات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__acq_date
+msgid "Acquisition Date"
+msgstr "تاريخ بداية العمل"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_action
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action__name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__action_id
+msgid "Action"
+msgstr "اﻹجراء"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_needaction
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_needaction
+msgid "Action Needed"
+msgstr "اﻹجراء المطلوب"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_action_action
+msgid "Actions"
+msgstr "اﻹجراءات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__active
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__active
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__active
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__active
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__active
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__active
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__active
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__active
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_ids
+msgid "Activities"
+msgstr "اﻷنشطة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_exception_decoration
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "تنسيق إستثنائى لﻷنشطة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_state
+msgid "Activity State"
+msgstr "موقف اﻷنشطة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_type_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Actual"
+msgstr "فعلى"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Actual Amount and Qty"
+msgstr "كمية ومبلغ فعلى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__total_expense
+msgid "Actual Cost"
+msgstr "تكلفة فعلية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__a_days
+msgid "Actual Days"
+msgstr "أيام فعلية"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+msgid "Actual Line"
+msgstr "سطور فعلى"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Actual Order Price"
+msgstr "سعر اﻷمر فعلى"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Actual Price"
+msgstr "سعر فعلى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__cog_produce_price
+msgid "Actual Produce"
+msgstr "الﻹنتاج الفعلى"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Actual Spend vs Budget"
+msgstr "المصروف الفعلى مقابل الموازنة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Actual Spend vs Executed Order"
+msgstr "المصروف الفعلى مقابل اﻷوامر المتوقعة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Actual Spend vs Sales"
+msgstr "المصروف الفعلى مقابل المبيعات"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Actual Time"
+msgstr "الوقت الفعلى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__operation_actual_line_ids
+msgid "Actual lines"
+msgstr "سطور فعلى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__cost_progress
+msgid "Actual vs Order"
+msgstr "الفعلى مقابل اﻷوامر"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__address
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__address
+msgid "Address"
+msgstr "المكان"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__employee_id
+msgid "Advance to Employee"
+msgstr "عهدة للموظف"
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid ""
+"All our contractual relations will be governed exclusively by Egypt law."
+msgstr "كل إرتباطاتنا التعاقدية ستكون حكومية حصرا خاضعة للقانون المصرى"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_account_analytic_account
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_move__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_move_line__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_picking__analytic_account_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_scrap__analytic_account_id
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__analytic_account_id__account_analytic_account
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Analytic Account"
+msgstr "الحساب التحليلي"
+
+#. module: ms_farm
+#: model:farm.project.group,description:ms_farm.project_group_aqua
+#: model:farm.project.group,name:ms_farm.project_group_aqua
+msgid "Aqua Farming"
+msgstr "مزرعة سمكية"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_attachment_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__plan_produce_price
+msgid "Average Plan Cost Order divided by Qty of Produce Orders"
+msgstr "متوسط لقيمة اﻷوامر مقسوم على كميات اﻷوامر"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__plan_sales_price
+msgid "Average Plan Sales Price"
+msgstr "متوسط سعر أوامر المبيعات"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__plan_service_price
+msgid "Average Plan Service Price"
+msgstr "متوسط سعر أوامر الخدمات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__average_produce_price
+msgid "Average Produce"
+msgstr "متوسط اﻹنتاج"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__average_sales_price
+msgid "Average Sales"
+msgstr "متوسط المبيعات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__average_service_price
+msgid "Average Service"
+msgstr "متوسط الخدمات"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
+msgid "Basic"
+msgstr "أساسي"
+
+#. module: ms_farm
+#: model:farm.project.group,description:ms_farm.project_group_apiculture
+#: model:farm.project.group,name:ms_farm.project_group_apiculture
+msgid "Bee Keeping"
+msgstr "مزرعة نحل"
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid ""
+"Below text serves as a suggestion and doesn’t engage Odoo S.A. "
+"responsibility."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__invoice_count
+msgid "Bill Count"
+msgstr "عدد فواتير"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__invoice_lines
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__bills_ids
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Bill Lines"
+msgstr "سطور الفاتورة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__invoice_ids
+msgid "Bills"
+msgstr "الفواتير"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__body_code
+msgid "Body Code"
+msgstr "رقم الشاسية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__e_order_cost
+msgid "Budget Cost"
+msgstr "تكلفة الموازنة"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_expenses
+msgid "Budget General Expenses"
+msgstr "موازنة المصروفات العامة"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__state__cancel
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__categ_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__categ_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__categ_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__categ_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__categ_id
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "Category"
+msgstr "مجموعة"
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid ""
+"Certain countries apply withholding at source on the amount of invoices, in "
+"accordance with their internal legislation. Any withholding at source will "
+"be paid by the client to the tax authorities. Under no circumstances can My "
+"Company become involved in costs related to a country's legislation. The "
+"amount of the invoice will therefore be due to My Company in its entirety "
+"and does not include any costs relating to the legislation of the country in"
+" which the client is located."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__child_id
+msgid "Child PioAsset"
+msgstr "فرع اﻷصل الحيوي"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__child_id
+msgid "Child Ticket"
+msgstr "فرع البطاقة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__child_id
+msgid "Child location"
+msgstr "فرع المكان"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__close_date
+msgid "Close Date"
+msgstr "تاريخ اﻹغلاق"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__code
+msgid "Code"
+msgstr "كود"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__company_id
+#: model:ir.model.fields,field_description:ms_farm.field_product_category__company_id
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+msgid "Company"
+msgstr "شركة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__complete_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__complete_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__complete_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__complete_name
+msgid "Complete Name"
+msgstr "اﻹسم كامل"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_configuration
+msgid "Configuration"
+msgstr "إعدادات"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__product_category__type__consu
+msgid "Consumable"
+msgstr "إستهلاكى"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_control
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_calendar
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_pivot
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_tree
+msgid "Control"
+msgstr "جودة ومكافحة"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_control_action
+msgid "Control Action"
+msgstr "إجراء جودة ومكافحة"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_control_event
+msgid "Control Event"
+msgstr "حدث جودة ومكافحة"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.menu_control_ticket
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "Control Ticket"
+msgstr "بطاقة جودة ومكافحة"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_control_action
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__control_ids
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_graph
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_form
+msgid "Control Tickets"
+msgstr "بطاقات جودة ومكافحة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "Cost"
+msgstr "تكلفة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "Cost Progress:"
+msgstr "تطور التكلفة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__cog_sales_price
+msgid "Cost of Sold"
+msgstr "تكلفة المبيعات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__cog_service_price
+msgid "Cost of service"
+msgstr "تكلفة الخدمات"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_pioasset__type__count
+msgid "Countable"
+msgstr "قابل للعد"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Create Analytic Account"
+msgstr "إنشاء حساب تحليلى"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+msgid "Create Asset"
+msgstr "إنشاء أصل"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
+msgid "Create Customer Invoice"
+msgstr "إنشاء فاتورة عميل"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+msgid "Create Expense Ticket"
+msgstr "إنشاء بطاقة مصروف"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__create_lock
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__create_lock
+msgid "Create Lock"
+msgstr "قفل اﻹنشاء"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Create Product"
+msgstr "إنشاء منتج"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+msgid "Create Stock Picking In"
+msgstr "إنشاء طلب إضافة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+msgid "Create Stock Picking Out"
+msgstr "إنشاء طلب صرف"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+msgid "Create Stock Produce"
+msgstr "إنشاء طلب إضافة منتج"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
+msgid "Create Vendor Bill"
+msgstr "إنشاء فاتورة مورد"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_project_group
+msgid "Create a Group of project like Calf, Poultry , Grape , fruit ,etc."
+msgstr "إنشاء مجموعة مشروع مثل تربية عجول او تربية دجاج او مزرعة عنب او مزرعة فاكهة الخ"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid ""
+"Create analytic account. bills, invoices and stock move depending on that."
+msgstr "إنشاء حساب تحليلى. الفواتير وحركة المنتجات متوقف على ذلك."
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid ""
+"Create product with type service. bills, invoices and stock move depending "
+"on that."
+msgstr "إنشاء منتج. الفواتير وحركة المنتجات متوقف على ذلك."
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
+msgid "Create service vendor bill"
+msgstr "إنشاء فاتورة مورد عمليات زراعية"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_action_action
+msgid "Create your first Action"
+msgstr "إنشاء أول إجراء"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_control_action
+msgid "Create your first Control Ticket!"
+msgstr "إنشاء أول بطاقة جودة ومكافحة"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_event_action
+msgid "Create your first Event"
+msgstr "إنشاء أول حدث جودة ومكافحة"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_pioasset_action
+msgid "Create your first Pio-Asset!"
+msgstr "إنشاء أول أصل حيوي"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_equipments_action
+msgid "Create your first equipment!"
+msgstr "إنشاء أول معدة"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_expenses_action
+msgid "Create your first expense order!"
+msgstr "إنشاء أول أمر مصروف"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_materials_action
+msgid "Create your first material order!"
+msgstr "إنشاء أول أمر حركة صرف مواد"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_operations_action
+msgid "Create your first operation order!"
+msgstr "إنشاء أول أمر عمليات زراعية"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_produce_action
+msgid "Create your first produce order!"
+msgstr "إنشاء أول أمر إنتاج!"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_project_group_action
+msgid "Create your first project group!"
+msgstr "!إنشاء أول مجموعة مشروعات"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_locations_action
+msgid "Create your first project location!"
+msgstr "إنشاء أول مكان مشروع!"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_projects_action
+msgid "Create your first project!"
+msgstr "إنشاء أول مشروع!"
+
+#. module: ms_farm
+#: model_terms:ir.actions.act_window,help:ms_farm.farm_sales_action
+msgid "Create your first sales order!"
+msgstr "إنشاء أول أمر مبيعات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__create_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__create_uid
+msgid "Created by"
+msgstr "إنشئ بواسطة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__create_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__create_date
+msgid "Created on"
+msgstr "إنشئ فى"
+
+#. module: ms_farm
+#: model:farm.project.group,description:ms_farm.project_group_crops
+#: model:farm.project.group,name:ms_farm.project_group_crops
+msgid "Crops Farming"
+msgstr "مزرعة محاصيل"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400404
+msgid "Cure Expense Account"
+msgstr "حساب مصروف أدوية"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124400
+msgid "Cure Stock"
+msgstr "مخزون أدوية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__currency_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__currency_id
+msgid "Currency"
+msgstr "عملة"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_customer_invoice
+msgid "Customer Invoice"
+msgstr "فاتورة عميل"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__customer_invoice_count
+msgid "Customer Invoice Count"
+msgstr "عدد فواتير"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__customer_invoice_total
+msgid "Customer Invoice Total"
+msgstr "إجمالى قيمة فواتير"
+
+#. module: ms_farm
+#: model:farm.project.group,description:ms_farm.project_group_dairy
+#: model:farm.project.group,name:ms_farm.project_group_dairy
+msgid "Dairy Farming"
+msgstr "مزرعة ألبان"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__issue_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__issue_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__issue_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__issue_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__issue_date
+msgid "Date"
+msgstr "تاريخ"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__g_days
+msgid "Days Gone"
+msgstr "أيام إنقضت"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses_oline__product_uom
+#: model:ir.model.fields,help:ms_farm.field_farm_materials_oline__product_uom
+#: model:ir.model.fields,help:ms_farm.field_farm_operations_oline__product_uom
+#: model:ir.model.fields,help:ms_farm.field_farm_produce_oline__product_uom
+#: model:ir.model.fields,help:ms_farm.field_farm_sales_oline__product_uom
+msgid "Default unit of measure used for all stock operations."
+msgstr "وحدة قياس افتراضية لجميع حركات المخزون"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action__description
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__action_desc
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__event_desc
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__description
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event__description
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__description
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__description
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__name
+msgid "Description"
+msgstr "وصف"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__location_id
+msgid "Destination Location"
+msgstr "مخزن الوجهة"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_equipments__type__device
+msgid "Device"
+msgstr "جهاز"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__display_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__display_name
+msgid "Display Name"
+msgstr "عرض اﻷسم"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_documents
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "Documents"
+msgstr "مستندات"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__state__done
+msgid "Done"
+msgstr "تم"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__state__draft
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__state__draft
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__end_date
+msgid "End Date"
+msgstr "تاريخ اﻹنتهاء"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "End:"
+msgstr "نهاية:"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__short_name
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__short_name
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__short_name
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__short_name
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__short_name
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__short_name
+msgid "Enter a short name"
+msgstr "أدخل إسم مختصر"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__description
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__description
+msgid "Enter the description"
+msgstr "إدخل الوصف"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__name
+msgid "Enter the name"
+msgstr "إدخل اﻹسم"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__equipments_id
+#: model:ir.model.fields,field_description:ms_farm.field_product_product__equipments_id
+#: model:ir.model.fields,field_description:ms_farm.field_product_template__equipments_id
+msgid "Equipment"
+msgstr "معدة"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400420
+msgid "Equipment Expense"
+msgstr "مصروف المعدة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_search
+msgid "Equipment Type"
+msgstr "نوع المعدة"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_equipments_action
+#: model:ir.ui.menu,name:ms_farm.menu_equipments
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_search
+msgid "Equipments"
+msgstr "معدات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__event_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event__name
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_event_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_event_view_search
+msgid "Event"
+msgstr "حدث"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_control_other
+msgid "Event and Action"
+msgstr "حدث وإجراء"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_event_action
+#: model:ir.model,name:ms_farm.model_farm_event
+msgid "Events"
+msgstr "أحداث"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__expense_budget
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__expenses_actual
+#: model:ir.model.fields.selection,name:ms_farm.selection__product_category__order_type__expense
+msgid "Expense"
+msgstr "مصروف"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Expense Budget"
+msgstr "موازنة مصروف"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__expenses_count
+msgid "Expense Count"
+msgstr "عدد مصروف"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+msgid "Expense Issue"
+msgstr "إصدار مصروف"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.menu_expenses_
+msgid "Expense Orders"
+msgstr "أمر مصروف"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__expense_id
+msgid "Expense Ref"
+msgstr "رقم مرجع مصروف"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_hr_expense
+msgid "Expense Tickets"
+msgstr "بطاقات مصروف"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses_oline__expense_id
+msgid "Expense where the move line come from"
+msgstr "المصروف من حيث يأتى سطر الحركة "
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__service_progress
+msgid "Expenses Actual vs Plan"
+msgstr "المصروفات فعلى مقابل الخطة"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_expenses_action
+msgid "Expenses Order"
+msgstr "أمر المصروفات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__expenses_ids
+msgid "Expenses Orders"
+msgstr "أوامر المصروفات"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_root
+msgid "Farm"
+msgstr "المزرعة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_account_move_line__equipments_id
+msgid "Farm Equipment"
+msgstr "معدات المزرعة"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.menu_project_group
+msgid "Farm Group"
+msgstr "مجموعات المزرعة"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124990
+msgid "Farm Intermediate account"
+msgstr "حساب وسيط المزرعة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_account_bank_statement_line__materials_id
+#: model:ir.model.fields,field_description:ms_farm.field_account_move__materials_id
+#: model:ir.model.fields,field_description:ms_farm.field_account_move_line__materials_id
+#: model:ir.model.fields,field_description:ms_farm.field_account_payment__materials_id
+msgid "Farm Material"
+msgstr "المواد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_account_move_line__operations_id
+msgid "Farm Operation"
+msgstr "عمليات زراعية"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_130100
+msgid "Farm Pio Assets"
+msgstr "أصول حيوية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_account_bank_statement_line__produce_id
+#: model:ir.model.fields,field_description:ms_farm.field_account_move__produce_id
+#: model:ir.model.fields,field_description:ms_farm.field_account_move_line__produce_id
+#: model:ir.model.fields,field_description:ms_farm.field_account_payment__produce_id
+msgid "Farm Produce"
+msgstr "منتج تام"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_projects
+msgid "Farm Projects Management"
+msgstr "إدارة مشروعات المزرعة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_account_move_line__sales_id
+msgid "Farm Sales"
+msgstr "مبيعات المزرعة"
+
+#. module: ms_farm
+#: model:stock.picking.type,name:ms_farm.farm_stock_sale
+msgid "Farm Sales Out"
+msgstr "مبيعات خارجية"
+
+#. module: ms_farm
+#: model:stock.picking.type,name:ms_farm.farm_stock_consumption
+msgid "Farm Stock Consumption"
+msgstr "طلبات صرف"
+
+#. module: ms_farm
+#: model:stock.picking.type,name:ms_farm.farm_stock_return
+msgid "Farm Stock Consumption Return"
+msgstr "طلب مرتجع صرف"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124970
+msgid "Farm Stock Input Account"
+msgstr "حساب وسيط استلام"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124980
+msgid "Farm Stock Output Account"
+msgstr "حساب وسيط صرف"
+
+#. module: ms_farm
+#: model:stock.picking.type,name:ms_farm.farm_stock_produce
+msgid "Farm Stock Produce"
+msgstr "حساب منتج تام"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124900
+msgid "Farm Work in process account"
+msgstr "حساب منتج وسيط"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_other
+msgid "Farm other Configuration"
+msgstr "إعدادات أخرى"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124700
+msgid "Farm produce Stock"
+msgstr "حساب "
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400401
+msgid "Fertilize Expense Account"
+msgstr "مصروف تسميد"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124100
+msgid "Fertilize Stock"
+msgstr "مخزون تسميد"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__state__finish
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+msgid "Finished"
+msgstr "منتهى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_follower_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_follower_ids
+msgid "Followers"
+msgstr "متابعين"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_partner_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "متابعين (شركاء)"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__activity_type_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: ms_farm
+#: model:farm.project.group,description:ms_farm.project_group_fruit
+#: model:farm.project.group,name:ms_farm.project_group_fruit
+msgid "Fruit Farming"
+msgstr "مزرعة فاكهة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_project_group_view_form
+msgid "General Information"
+msgstr "معلومات عامة"
+
+#. module: ms_farm
+#: model:farm.project.group,description:ms_farm.project_group_greenhouse
+#: model:farm.project.group,name:ms_farm.project_group_greenhouse
+msgid "Greenhouse"
+msgstr "صوبة"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_project_group_action
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__group
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__project_group_id
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_project_group_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_project_group_view_tree
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+msgid "Group"
+msgstr "مجموعة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_search
+msgid "Group By"
+msgstr "تجميع بـ"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__name
+msgid "Group Name"
+msgstr "إسم المجموعة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "Group by"
+msgstr "تجميع ب"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "Group:"
+msgstr "مجموعة:"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__has_message
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__priority__2
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__priority__2
+msgid "High"
+msgstr "عالى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__id
+msgid "ID"
+msgstr "معرف"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_exception_icon
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_exception_icon
+msgid "Icon"
+msgstr "أيقونة"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__activity_exception_icon
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid ""
+"If a payment is still outstanding more than sixty (60) days after the due "
+"payment date, My Company reserves the right to call on the services of a "
+"debt recovery company. All legal expenses will be payable by the client."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_control__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__message_unread
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__message_needaction
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_control__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__message_has_sms_error
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__message_has_error
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__state__in_operation
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+msgid "In Operation"
+msgstr "تحت التشغيل"
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid ""
+"In order for it to be admissible, My Company must be notified of any claim "
+"by means of a letter sent by recorded delivery to its registered office "
+"within 8 days of the delivery of the goods or the provision of the services."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__state__progress
+msgid "In-Progress"
+msgstr "فى تقدم"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
+msgid "Information"
+msgstr "معلومات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__init_date
+msgid "Init Date"
+msgstr "تاريخ البداية"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_control
+msgid "Inspect and cure Pio Asset "
+msgstr "فحص وعلاج الاصل الحيوي"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__code
+msgid "Internal Code"
+msgstr "كود داخلى"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_operations__state__order
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_produce__state__order
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_sales__state__order
+msgid "Invoicing"
+msgstr "فوترة"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400430
+msgid "Irrigate Expense"
+msgstr "مصروفات رى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_is_follower
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_account_move_line
+msgid "Journal Item"
+msgstr "عنصر اليومية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales____last_update
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__write_uid
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_action__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_event__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__write_date
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__lead_time
+msgid "Lead Time in Days"
+msgstr "المهلة باﻷيام"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_pioasset
+msgid "List of Pio Asset"
+msgstr "قائمة باﻷصول الحيوية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__locations_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__name
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_form
+msgid "Location"
+msgstr "أماكن"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_location_used
+msgid "Location Used"
+msgstr "مكان مستخدم"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_locations_action
+#: model:ir.ui.menu,name:ms_farm.menu_locations
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Locations"
+msgstr "أماكن"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_expenses__state__lock
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_materials__state__lock
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_operations__state__lock
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_produce__state__lock
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_sales__state__lock
+msgid "Locked"
+msgstr "مقفل"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__priority__1
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__priority__1
+msgid "Low"
+msgstr "منخفض"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_main_attachment_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400440
+msgid "Maintenance Expense"
+msgstr "مصروف صيانة"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_equipments
+msgid "Manage all Equipments"
+msgstr "إدارة كل المعدات"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_locations
+msgid "Manage project location"
+msgstr "إدارة اماكن المشروع"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400410
+msgid "Manpower Expense"
+msgstr "مصروف عمالة"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__material_budget
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__materials_actual
+#: model:ir.model.fields.selection,name:ms_farm.selection__product_category__order_type__material
+msgid "Material"
+msgstr "مواد"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_graph
+msgid "Material Analysis"
+msgstr "تحليل مواد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__materials_count
+msgid "Material Count"
+msgstr "عدد مستندات حركة مواد"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400400
+msgid "Material Expense Account"
+msgstr "حساب مصروف مواد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__materials_consumption_account_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__materials_consumption_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__produce_consumption_account_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__produce_consumption_count
+msgid "Material Moves Count"
+msgstr "عدد مستندات مواد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__materials_consumption_account_total
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__produce_consumption_account_total
+msgid "Material Moves Total"
+msgstr "إجمالى مستندات مواد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_stock_move__materials_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_move_line__materials_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_picking__materials_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_scrap__materials_id
+msgid "Material Order"
+msgstr "أوامر حركة مواد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__materials_ids
+#: model:ir.ui.menu,name:ms_farm.menu_materials_
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Material Orders"
+msgstr "أوامر مواد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__name
+msgid "Material Ref"
+msgstr "مرجع حركة مواد"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_material_move
+msgid "Material stock move"
+msgstr "حركة مواد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__materials_id
+msgid "Materials"
+msgstr "المواد"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_materials_action
+msgid "Materials Order"
+msgstr "أوامر المواد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_has_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_tree
+msgid "ModelTitle"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Move Project to In Draft State"
+msgstr "نقل المشروع لحالة مسودة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Move Project to In Finish State"
+msgstr "نقل المشروع لحالة منتهى"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Move Project to In operation State"
+msgstr "نقل المشروع لحالة تحت التشغيل"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Move Project to On Hold State"
+msgstr "نقل المشروع لحالة المجمد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid ""
+"My Company undertakes to do its best to supply performant services in due "
+"time in accordance with the agreed timeframes. However, none of its "
+"obligations can be considered as being an obligation to achieve results. My "
+"Company cannot under any circumstances, be required by the client to appear "
+"as a third party in the context of any claim for damages filed against the "
+"client by an end consumer."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__short_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__short_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__short_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__short_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__short_name
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__short_name
+msgid "Name"
+msgstr "إسم"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_action_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_event_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_form
+msgid "Name 1, 2,.."
+msgstr "أسم 1 ,2,.."
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "Name:"
+msgstr "اﻹسم:"
+
+#. module: ms_farm
+#: code:addons/ms_farm/models/control.py:0
+#: code:addons/ms_farm/models/control.py:0
+#: code:addons/ms_farm/models/control.py:0
+#: code:addons/ms_farm/models/expenses.py:0
+#: code:addons/ms_farm/models/expenses.py:0
+#: code:addons/ms_farm/models/expenses.py:0
+#: code:addons/ms_farm/models/materials.py:0
+#: code:addons/ms_farm/models/materials.py:0
+#: code:addons/ms_farm/models/materials.py:0
+#: code:addons/ms_farm/models/operations.py:0
+#: code:addons/ms_farm/models/operations.py:0
+#: code:addons/ms_farm/models/operations.py:0
+#: code:addons/ms_farm/models/produce.py:0
+#: code:addons/ms_farm/models/produce.py:0
+#: code:addons/ms_farm/models/produce.py:0
+#: code:addons/ms_farm/models/projects.py:0
+#: code:addons/ms_farm/models/projects.py:0
+#: code:addons/ms_farm/models/projects.py:0
+#: code:addons/ms_farm/models/sales.py:0 code:addons/ms_farm/models/sales.py:0
+#: code:addons/ms_farm/models/sales.py:0
+#, python-format
+msgid "New"
+msgstr "جديد"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_date_deadline
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_summary
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص اﻷنشطة التالى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__next_date
+msgid "Next Date"
+msgstr "التاريخ التالى"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__priority__0
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__priority__0
+msgid "Normal"
+msgstr "عادى"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_tree
+msgid "North West East South of ..."
+msgstr "شمال غرب شرق جنوب من ..."
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_needaction_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الاجراءات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_has_error_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الاخطاء"
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__message_needaction_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__message_has_error_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__message_unread_counter
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400402
+msgid "Nutrients Expense Account"
+msgstr "حساب مصروف تغذية"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124200
+msgid "Nutrients Stock"
+msgstr "مخزون تغذية"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+msgid "On Hold"
+msgstr "حالة تجميد"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__state__on_hold
+msgid "On hold"
+msgstr "حالة تجميد"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+msgid "Operate Asset"
+msgstr "تشغيل أصل"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__operation_budget
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__operations_actual
+msgid "Operation"
+msgstr "عمليات زراعية"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_graph
+msgid "Operation Analysis"
+msgstr "تحليل عمليات زراعية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__operations_count
+msgid "Operation Count"
+msgstr "عدد عمليات زراعية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__operations_id
+#: model:ir.model.fields.selection,name:ms_farm.selection__stock_picking__reference_record__farm_operations
+msgid "Operation Order"
+msgstr "أمر عملية زراعية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__order_ids
+msgid "Operation Order Lines"
+msgstr "سطور أمر عملية زراعية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__operations_ids
+#: model:ir.ui.menu,name:ms_farm.menu_operations_
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Operation Orders"
+msgstr "أوامر عملية زراعية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__name
+msgid "Operation Ref"
+msgstr "مرجع عمليات زراعية"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Operation order lines"
+msgstr "سطور أمر عملية زراعية"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_calendar
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_pivot
+msgid "Operations"
+msgstr "عمليات زراعية"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_operations_action
+msgid "Operations Order"
+msgstr "امر عمليات زراعية"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_expenses__state__order
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_materials__state__order
+msgid "Order"
+msgstr "أمر"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__order_line_cost
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__m_order_cost
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__o_order_cost
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__p_order_cost
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__s_order_cost
+msgid "Order Cost"
+msgstr "تكلفة أمر"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+msgid "Order Line"
+msgstr "سطر أمر"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
+msgid "Order Lines"
+msgstr "سطور أمر"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__user_id
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "Order Man"
+msgstr "مسئول أمر"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_stock_picking__reference_record
+msgid "Order Reference"
+msgstr "مرجع أمر"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_product_category__order_type
+msgid "Order Type"
+msgstr "نوع أمر"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__operation_order_line_ids
+msgid "Order lines"
+msgstr "سطور أمر"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_orders
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "Orders"
+msgstr "أوامر"
+
+#. module: ms_farm
+#: model:farm.project.group,description:ms_farm.project_group_organic
+#: model:farm.project.group,name:ms_farm.project_group_organic
+msgid "Organic Farming"
+msgstr "مزرعة منتجات عضوية"
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid ""
+"Our invoices are payable within 21 working days, unless another payment "
+"timeframe is indicated on either the invoice or the order. In the event of "
+"non-payment by the due date, My Company reserves the right to request a "
+"fixed interest payment amounting to 10% of the sum remaining due. My Company"
+" will be authorized to suspend any provision of services without prior "
+"warning in the event of late payment."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__parent_id
+msgid "Parent Location"
+msgstr "مكان رئيسى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__parent_path
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__parent_path
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__parent_path
+msgid "Parent Path"
+msgstr "مسار رئيسى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__parent_id
+msgid "Parent Pio Asset"
+msgstr "أصل حيوي رئيسى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__parent_id
+msgid "Parent Ticket"
+msgstr "بطاقة رئيسى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__partner_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__partner_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__partner_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__partner_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__partner_id
+msgid "Partner"
+msgstr "رئيسى"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__payment_term_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__payment_term_id
+msgid "Payment Terms"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400403
+msgid "Pesticides Expense Account"
+msgstr "حساب مصروف مبيدات"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124300
+msgid "Pesticides Stock"
+msgstr "مخزون مبيدات"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__pioasset_id
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_action_view_tree
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_event_view_tree
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_tree
+msgid "Pio Asset"
+msgstr "أصول حيوية"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400300
+msgid "Pio Asset COGS Account"
+msgstr "حساب مصروف تكلفة أصل حيوي"
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_500300
+msgid "Pio Asset Income Account"
+msgstr "حساب إيرد أصل حيوي"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__name
+msgid "Pio Asset Name"
+msgstr "إسم أصل حيوي"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_search
+msgid "Pio Assets"
+msgstr "أصول حيوية"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_pioasset_action
+#: model:ir.ui.menu,name:ms_farm.menu_pioasset
+msgid "Pio-Asset"
+msgstr "أصل حيوي"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Plan"
+msgstr "خطة"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Plan Amount and Qty"
+msgstr "خطة مبلغ وكمية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__p_days
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Plan Days"
+msgstr "خطة أيام"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Plan Price"
+msgstr "خطة سعر"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Plan Time"
+msgstr "خطة وقت"
+
+#. module: ms_farm
+#: code:addons/ms_farm/models/materials.py:0
+#: code:addons/ms_farm/models/produce.py:0
+#, python-format
+msgid "Please define a warehouse for the company %s (%s)."
+msgstr "من فضلك عرف مخزن لشركة "
+
+#. module: ms_farm
+#: code:addons/ms_farm/models/operations.py:0
+#, python-format
+msgid "Please define an accounting purchase journal for the company %s (%s)."
+msgstr "من فضلك عرف يومية مشتريات لشركة "
+
+#. module: ms_farm
+#: code:addons/ms_farm/models/sales.py:0
+#, python-format
+msgid "Please define an accounting sales journal for the company %s (%s)."
+msgstr "من فضلك عرف يومية مبيعات لشركة "
+
+#. module: ms_farm
+#: code:addons/ms_farm/models/materials.py:0
+#: code:addons/ms_farm/models/operations.py:0
+#: code:addons/ms_farm/models/sales.py:0
+#, python-format
+msgid "Please define an analytic account for the company %s (%s)."
+msgstr "من فضلك عرف حساب تحليلى لشركة "
+
+#. module: ms_farm
+#: code:addons/ms_farm/models/projects.py:0
+#, python-format
+msgid ""
+"Please define start and End date for current project for the company %s "
+"(%s)."
+msgstr "من فضلك عرف تاريخ بداية ونهاية للمشروع الحالى لشركة "
+
+#. module: ms_farm
+#: code:addons/ms_farm/models/projects.py:0
+#, python-format
+msgid "Please define start date for current project for the company %s (%s)."
+msgstr "من فضلك عرف تاريخ بداية ونهاية للمشروع الحالى لشركة "
+
+#. module: ms_farm
+#: model:farm.project.group,description:ms_farm.project_group_poultry
+#: model:farm.project.group,name:ms_farm.project_group_poultry
+msgid "Poultry Farming"
+msgstr "مزرعة دواجن"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__price_unit
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__price_unit
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__price_unit
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__price_unit
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__price_unit
+msgid "Price"
+msgstr "سعر"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__priority
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__priority
+msgid "Priority"
+msgstr "أولوية"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_produce_price
+#: model:ir.model.fields.selection,name:ms_farm.selection__product_category__order_type__produce
+msgid "Produce"
+msgstr "إنتاج"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_produce_amount
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_produce_amount
+msgid "Produce Amount"
+msgstr "مبلغ اﻹنتاج"
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_graph
+msgid "Produce Analysis"
+msgstr "تحليل اﻹنتاج"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__produce_count
+msgid "Produce Count"
+msgstr "عدد اﻹنتاج"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__produce_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_move__produce_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_move_line__produce_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_picking__produce_id
+#: model:ir.model.fields,field_description:ms_farm.field_stock_scrap__produce_id
+#: model:ir.model.fields.selection,name:ms_farm.selection__stock_picking__reference_record__farm_produce
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Produce Order"
+msgstr "أمر إنتاج"
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_produce_action
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__produce_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__produce_ids
+#: model:ir.ui.menu,name:ms_farm.menu_produce_
+msgid "Produce Orders"
+msgstr "أوامر إنتاج"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_produce_qty
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_produce_qty
+msgid "Produce Qty"
+msgstr "كمية إنتاج"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__name
+msgid "Produce Ref"
+msgstr "مرجع أمر إنتاج"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__project_type__create
+msgid "Produce a Pio-Asset or Crop"
+msgstr "إنتاج أصل حيوي أومحصول"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__project_type__operate
+msgid "Produce and Sell"
+msgstr "إنتاج وبيع"
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_product_move
+msgid "Produce stock move"
+msgstr "حركة إضافة"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_product_product
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__product_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__product_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__product_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__product_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__product_id
+#: model:ir.ui.menu,name:ms_farm.menu_product_product
+msgid "Product"
+msgstr "المنتج"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_product_category
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__category_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__category_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__category_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__category_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__category_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__category_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__category_id
+#: model:ir.ui.menu,name:ms_farm.menu_product_category
+msgid "Product Category"
+msgstr "فئة المنتج"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "حركات المنتج (بند حركة المخزون) "
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_product_template
+msgid "Product Template"
+msgstr "قالب المنتج"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_product_category__type
+msgid "Product Type"
+msgstr ""
+
+#. module: ms_farm
+#: code:addons/ms_farm/models/equipments.py:0
+#: code:addons/ms_farm/models/projects.py:0
+#: code:addons/ms_farm/models/projects.py:0
+#, python-format
+msgid "Product already exist in the company %s (%s)."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_product
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Product and Category"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400200
+msgid "Products COGS Account"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_500200
+msgid "Products Income Account"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_account_analytic_account__project_reference
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__projects_id
+#: model:ir.model.fields,field_description:ms_farm.field_product_product__projects_id
+#: model:ir.model.fields,field_description:ms_farm.field_product_template__projects_id
+#: model:ir.model.fields.selection,name:ms_farm.selection__account_analytic_account__project_reference__farm_projects
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_tree
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "Project"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Project Brief"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__expenses_id
+msgid "Project Expenses"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+msgid "Project Group"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_tree
+msgid "Project Locations"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__materials_id
+msgid "Project Materials"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__operations_id
+msgid "Project Operations"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__name
+msgid "Project Ref"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_projects_action
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__projects_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__projects_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__projects_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__projects_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__projects_id
+#: model:ir.ui.menu,name:ms_farm.menu_projects
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_calendar
+msgid "Projects"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400450
+msgid "Quality Expense"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__qty
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__qty
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__qty
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__qty
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__qty
+msgid "Quantity"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__state__schedule
+msgid "Re-Schedule"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "Ref:"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__name
+msgid "Reference"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "Relative Category"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__product_id
+msgid "Relative Product"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "Relative Project"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__user_id
+msgid "Responsible Man"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_user_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_has_sms_error
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid "STANDARD TERMS AND CONDITIONS OF SALE"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400100
+msgid "Sale Expenses"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_500100
+msgid "Sale Income Account"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_sales_price
+#: model:ir.model.fields.selection,name:ms_farm.selection__product_category__order_type__sales
+msgid "Sales"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_sales_amount
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_sales_amount
+msgid "Sales Amount"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_graph
+msgid "Sales Analysis"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__sales_count
+msgid "Sales Count"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__sales_id
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Sales Order"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.actions.act_window,name:ms_farm.farm_sales_action
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__sales_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__sales_ids
+#: model:ir.ui.menu,name:ms_farm.menu_sales_
+msgid "Sales Orders"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_sales_qty
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_sales_qty
+msgid "Sales Qty"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__name
+msgid "Sales Ref"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_stock_scrap
+msgid "Scrap"
+msgstr "مخلفات التصنيع "
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_form
+msgid "Sector 1, 2,.."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__project_type
+msgid "Select the type Produce, Sell or Both, either Service"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__project_type__sale
+msgid "Sell directly product  as consumable"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__sequence
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__sequence
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__sequence
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__sequence
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_service_price
+#: model:ir.model.fields.selection,name:ms_farm.selection__product_category__order_type__service
+#: model:ir.model.fields.selection,name:ms_farm.selection__product_category__type__service
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Service"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_service_amount
+msgid "Service Amount"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_500500
+msgid "Service Income Account"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_service_amount
+msgid "Service Order"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_service_qty
+msgid "Service Order Qty"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "Service Progress:"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_service_qty
+msgid "Service Qty"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__project_type__service
+msgid "Service of an Asset or a Function"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Set Draft"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Set Finish"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Set In Operation"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Set On hold"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__priority
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__priority
+msgid "Set the project priority which view first"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__state
+msgid ""
+"Set whether the project process is open or closed to start or end "
+"operations."
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Settings"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__note
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__note
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__note
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__note
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__note
+msgid "Short Note"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__location_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__location_id
+msgid "Source Location"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__space
+msgid "Space in acre"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400405
+msgid "Spare Part Expense Account"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124500
+msgid "Spare part Stock"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__start_date
+msgid "Start Date"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "Start:"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__state
+msgid "State"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__state
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__state
+msgid "Status"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__activity_state
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_product_category__location_id
+msgid "Stock Consume Location"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_500400
+msgid "Stock Income Account"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+msgid "Stock Issue"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_stock_move
+msgid "Stock Move"
+msgstr "حركة المخزون"
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__picking_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__picking_type_id
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__picking_type_id
+msgid "Stock Picking Type"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__product_category__type__product
+msgid "Storable Product"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__price_subtotal
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__price_subtotal
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__price_subtotal
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__price_subtotal
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__price_subtotal
+msgid "Subtotal"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Summary and Ratios"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__notes
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__notes
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__notes
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__notes
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__notes
+msgid "Terms and Conditions"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_location_used__space_sum
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__space
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__space_sum
+msgid ""
+"The Acre space under this location (Does not consider the children location)"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid ""
+"The client explicitly waives its own standard terms and conditions, even if "
+"these were drawn up after these standard terms and conditions of sale. In "
+"order to be valid, any derogation must be expressly agreed to in advance in "
+"writing."
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_form
+msgid "Ticket"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Time"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Time Frame"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__time_progress
+msgid "Time Gone"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "Time Progress:"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Total"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_actual
+msgid "Total Actual"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_actual04
+msgid "Total Actual04"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_actual05
+msgid "Total Actual05"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_actual06
+msgid "Total Actual06"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
+msgid "Total Cost"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+msgid "Total Credit"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+msgid "Total Debit"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_budget
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_tree
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_tree
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_tree
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_tree
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_tree
+msgid "Total Order"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
+msgid "Total QTY"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
+msgid "Total Quantity"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+msgid "Total Space"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__space_sum
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__space_sum
+msgid "Total Space in acre"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__actual_service_amount
+msgid "Total of Service internal bills plus external invoices."
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_stock_picking
+msgid "Transfer"
+msgstr "الشحنة"
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_equipments__type__truck
+msgid "Truck"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_account_move_line__move_type
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__type
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__type
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__project_type
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_search
+msgid "Type"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__activity_exception_decoration
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
+msgid "Type:"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_pioasset__type__uncount
+msgid "Uncountable"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__product_uom
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials_oline__product_uom
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__product_uom
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__product_uom
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__product_uom
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_unread
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__message_unread_counter
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses_oline__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_materials_oline__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_operations_oline__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_produce_oline__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__currency_id
+#: model:ir.model.fields,help:ms_farm.field_farm_sales_oline__currency_id
+msgid "Used to display the currency when tracking monetary values"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
+msgid "User"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400406
+msgid "Utilities Expense Account"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_124600
+msgid "Utilities Stock"
+msgstr ""
+
+#. module: ms_farm
+#: model:farm.project.group,description:ms_farm.project_group_vegetable
+#: model:farm.project.group,name:ms_farm.project_group_vegetable
+msgid "Vegetable Farming"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_equipments__type__vehicle
+msgid "Vehicle"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.ui.menu,name:ms_farm.farm_menu_vendor_bill
+msgid "Vendor Bill"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__vendor_bill_count
+msgid "Vendor Bill Count"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__vendor_bill_total
+msgid "Vendor Bill Total"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__priority__3
+#: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__priority__3
+msgid "Very High"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__stock_warehouse
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__stock_warehouse
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__stock_warehouse
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__stock_warehouse
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__stock_warehouse
+msgid "Warehouse"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_locations__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_pioasset__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_project_group__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__website_message_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_control__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_equipments__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_expenses__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_materials__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_operations__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_pioasset__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_produce__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_project_group__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__website_message_ids
+#: model:ir.model.fields,help:ms_farm.field_farm_sales__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__what
+msgid "What?"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_control__who
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "Who?"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_location_used__address
+#: model:ir.model.fields,help:ms_farm.field_farm_locations__address
+msgid "Wrtie down the address of this location"
+msgstr ""
+
+#. module: ms_farm
+#: code:addons/ms_farm/models/control.py:0
+#: code:addons/ms_farm/models/locations.py:0
+#, python-format
+msgid "You cannot create recursive categories."
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
+msgid "You should update this document to reflect your T&amp;C."
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_action_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_action_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "action"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__buy_sell_price
+msgid "buy  and sell price"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "cancel"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__service_progress
+msgid "compute % of actual spent vs actual bills and invoices"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__average_service_price
+msgid "compute average price of Service internal and external"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__average_sales_price
+msgid "compute average price of sales invoices"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__average_produce_price
+msgid "compute average price of stock move"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__cog_produce_price
+msgid ""
+"compute price of cost of goods produce based on actual produce qty and "
+"current actual spending"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__cog_sales_price
+msgid ""
+"compute price of cost of goods sold based on actual sold qty and current "
+"actual spending"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,help:ms_farm.field_farm_projects__cog_service_price
+msgid ""
+"compute price of service based on actual used + sold qty and current actual "
+"spending"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "done"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "event"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_graph
+msgid "expense Analysis"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__expenses_consumption_account_count
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__expenses_consumption_count
+msgid "expense Moves Count"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__expenses_consumption_account_total
+msgid "expense Moves Total"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__name
+msgid "expense Ref"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_expenses_oline
+msgid "expense order line"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__expenses_id
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_calendar
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_pivot
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_tree
+msgid "expenses"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_projects__locations_used_ids
+msgid "locations Used"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_materials_oline
+msgid "material order line"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_calendar
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_pivot
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_tree
+msgid "materials"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_operations_oline
+msgid "operation order line"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_materials
+#: model:ir.model,name:ms_farm.model_farm_operations
+msgid "operation orders"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_tree
+msgid "operations"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__expenses_order_line_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_materials__materials_order_line_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_operations__operation_order_line_ids
+#: model:ir.model.fields,field_description:ms_farm.field_farm_sales__sales_order_line_ids
+msgid "order lines"
+msgstr ""
+
+#. module: ms_farm
+#: model:account.account,name:ms_farm.farm_account_400500
+msgid "price diff of products"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "priority"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_calendar
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_pivot
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_tree
+msgid "produce"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_produce
+msgid "produce order"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_produce_oline
+msgid "produce order line"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model.fields,field_description:ms_farm.field_farm_produce__produce_order_line_ids
+msgid "produce order lines"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "progress"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_calendar
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_pivot
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_tree
+msgid "sales"
+msgstr ""
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_sales
+#: model:ir.model,name:ms_farm.model_farm_sales_oline
+msgid "sales order"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "schedule"
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_form
+msgid "serial 1, 2,.."
+msgstr ""
+
+#. module: ms_farm
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
+msgid "who"
+msgstr ""
