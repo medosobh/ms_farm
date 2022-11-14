@@ -28,7 +28,7 @@ class Farm_Projects(models.Model):
             ('draft', 'Draft'),
             ('in_operation', 'In Operation'),
             ('finish', 'Finished'),
-            ('on_hold', 'On hold')
+            ('on_hold', 'On Hold')
         ],
         string = 'Status',
         group_expand = '_group_expand_states',

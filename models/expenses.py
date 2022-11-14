@@ -91,13 +91,13 @@ class farm_expenses(models.Model):
         ondelete = 'set null',
         help = "Used to display the currency when tracking monetary values")
     expenses_consumption_count = fields.Integer(
-        string = "expense Moves Count",
+        string = "Expense Moves Count",
         compute = '_compute_expense_ticket_count')
     expenses_consumption_account_count = fields.Integer(
-        string = "expense Moves Count",
+        string = "Expense Moves Count",
         compute = '_compute_account_move_count')
     expenses_consumption_account_total = fields.Integer(
-        string = "expense Moves Total",
+        string = "Expense Moves Total",
         compute = '_compute_account_move_total')
     analytic_account_id = fields.Reference(
         related = 'projects_id.analytic_account_id')

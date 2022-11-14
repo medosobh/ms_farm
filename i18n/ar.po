@@ -2,8 +2,8 @@
 # This file contains the translation of the following modules:
 # 	* ms_farm
 #
-msgid "Farm Management"
-msgstr "إدارة مزارع"
+msgid ""
+msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-12 00:59+0000\n"
@@ -23,7 +23,7 @@ msgstr "عدد اﻷوامر"
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
 msgid "<span class=\"o_stat_text\">Actual Amount</span>"
-msgstr "الملغ الفعلى"
+msgstr "المبلغ الفعلى"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
@@ -68,12 +68,12 @@ msgstr "جدول زمنى للمواد"
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "<span class=\"o_stat_text\">Operation TF</span>"
-msgstr "جدول زمنى للعمليات"
+msgstr "جدول زمنى للعمليات الزراعية"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
 msgid "<span class=\"o_stat_text\">Order Amount</span>"
-msgstr "مبلغ اﻷوامر"
+msgstr "مبلغ اﻷمر"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
@@ -83,7 +83,7 @@ msgstr "جدول زمنى لﻹنتاج"
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "<span class=\"o_stat_text\">Sales TF</span>"
-msgstr "جدول زمى للمبيعات"
+msgstr "جدول زمنى للمبيعات"
 
 #. module: ms_farm
 #: model:ir.model.constraint,message:ms_farm.constraint_farm_pioasset_code_uniq
@@ -98,7 +98,7 @@ msgstr "الكود مسموح لمعدة واحدة فقط"
 #. module: ms_farm
 #: model:ir.model.constraint,message:ms_farm.constraint_farm_equipments_name_uniq
 msgid "A name can only be assigned to one equipment !"
-msgstr "الاسم مسموح لمعدة واحدة فقط"
+msgstr "اﻹسم مسموح لمعدة واحدة فقط"
 
 #. module: ms_farm
 #: model:ir.model.constraint,message:ms_farm.constraint_farm_projects_short_name_uniq
@@ -119,6 +119,9 @@ msgstr "تاريخ بداية العمل"
 #: model:ir.model,name:ms_farm.model_farm_action
 #: model:ir.model.fields,field_description:ms_farm.field_farm_action__name
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__action_id
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_action_view_form
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_action_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
 msgid "Action"
 msgstr "اﻹجراء"
 
@@ -440,6 +443,7 @@ msgstr "موازنة المصروفات العامة"
 
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__state__cancel
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -858,7 +862,7 @@ msgstr "أيام إنقضت"
 #: model:ir.model.fields,help:ms_farm.field_farm_produce_oline__product_uom
 #: model:ir.model.fields,help:ms_farm.field_farm_sales_oline__product_uom
 msgid "Default unit of measure used for all stock operations."
-msgstr "وحدة قياس افتراضية لجميع حركات المخزون"
+msgstr "وحدة قياس إفتراضية لجميع حركات المخزون"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_action__description
@@ -993,6 +997,7 @@ msgstr "معدات"
 #: model:ir.model.fields,field_description:ms_farm.field_farm_event__name
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_event_view_form
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_event_view_search
+#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
 msgid "Event"
 msgstr "حدث"
 
@@ -1450,7 +1455,7 @@ msgstr "تاريخ البداية"
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_control
 msgid "Inspect and cure Pio Asset "
-msgstr "فحص وعلاج الاصل الحيوي"
+msgstr "فحص وعلاج اﻷصل الحيوي"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__code
@@ -1636,7 +1641,7 @@ msgstr "إدارة كل المعدات"
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_locations
 msgid "Manage project location"
-msgstr "إدارة اماكن المشروع"
+msgstr "إدارة أماكن المشروع"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_400410
@@ -1767,7 +1772,7 @@ msgstr "نقل المشروع لحالة تحت التشغيل"
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Move Project to On Hold State"
-msgstr "نقل المشروع لحالة المجمد"
+msgstr "نقل المشروع لحالة مجمد"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__my_activity_date_deadline
@@ -1993,14 +1998,10 @@ msgstr "مخزون تغذية"
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
 msgid "On Hold"
-msgstr "حالة تجميد"
+msgstr "تجميد"
 
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__state__on_hold
-msgid "On hold"
-msgstr "حالة تجميد"
-
-#. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
 msgid "Operate Asset"
 msgstr "تشغيل أصل"
@@ -2175,13 +2176,13 @@ msgstr "بطاقة رئيسى"
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce__partner_id
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales__partner_id
 msgid "Partner"
-msgstr "رئيسى"
+msgstr "شريك"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_operations__payment_term_id
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales__payment_term_id
 msgid "Payment Terms"
-msgstr ""
+msgstr "شروط سداد"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_400403
@@ -2421,7 +2422,7 @@ msgstr "قالب المنتج"
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_product_category__type
 msgid "Product Type"
-msgstr ""
+msgstr "نوع المنتج"
 
 #. module: ms_farm
 #: code:addons/ms_farm/models/equipments.py:0
@@ -2429,23 +2430,23 @@ msgstr ""
 #: code:addons/ms_farm/models/projects.py:0
 #, python-format
 msgid "Product already exist in the company %s (%s)."
-msgstr ""
+msgstr "المنتج موجدو بالفعل فى شركة "
 
 #. module: ms_farm
 #: model:ir.ui.menu,name:ms_farm.farm_menu_product
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Product and Category"
-msgstr ""
+msgstr "المنتج والمجموعة"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_400200
 msgid "Products COGS Account"
-msgstr ""
+msgstr "حساب تكلفة بضاعة مباعة"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_500200
 msgid "Products Income Account"
-msgstr ""
+msgstr "حساب ايراد مبيعات"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_account_analytic_account__project_reference
@@ -2462,43 +2463,43 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_tree
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
 msgid "Project"
-msgstr ""
+msgstr "مشروع"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Project Brief"
-msgstr ""
+msgstr "ملخص مشروع"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__expenses_id
 msgid "Project Expenses"
-msgstr ""
+msgstr "مصروفات مشروع"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_search
 msgid "Project Group"
-msgstr ""
+msgstr "مجموعة مشروع"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_search
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_tree
 msgid "Project Locations"
-msgstr ""
+msgstr "أماكن مشروع"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__materials_id
 msgid "Project Materials"
-msgstr ""
+msgstr "مواد المشروع"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__operations_id
 msgid "Project Operations"
-msgstr ""
+msgstr "عمليات زراعية المشروع"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__name
 msgid "Project Ref"
-msgstr ""
+msgstr "مرجع المشروع"
 
 #. module: ms_farm
 #: model:ir.actions.act_window,name:ms_farm.farm_projects_action
@@ -2510,12 +2511,12 @@ msgstr ""
 #: model:ir.ui.menu,name:ms_farm.menu_projects
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_calendar
 msgid "Projects"
-msgstr ""
+msgstr "المشروعات"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_400450
 msgid "Quality Expense"
-msgstr ""
+msgstr "مصروف الجودة"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__qty
@@ -2524,22 +2525,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__qty
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__qty
 msgid "Quantity"
-msgstr ""
+msgstr "كمية"
 
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__state__schedule
 msgid "Re-Schedule"
-msgstr ""
+msgstr "إعادة جدولة"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
 msgid "Ref:"
-msgstr ""
+msgstr "مرجع"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__name
 msgid "Reference"
-msgstr ""
+msgstr "مرجع"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
@@ -2548,12 +2549,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
 msgid "Relative Category"
-msgstr ""
+msgstr "المجموع المرتبطة"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__product_id
 msgid "Relative Product"
-msgstr ""
+msgstr "المنتج المرتبط"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_search
@@ -2562,12 +2563,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_search
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_search
 msgid "Relative Project"
-msgstr ""
+msgstr "المشروع المرتبط"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__user_id
 msgid "Responsible Man"
-msgstr ""
+msgstr "الشخص المسئول"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__activity_user_id
@@ -2582,7 +2583,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__activity_user_id
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "المستخدم المسئول"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_has_sms_error
@@ -2607,40 +2608,40 @@ msgstr ""
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_400100
 msgid "Sale Expenses"
-msgstr ""
+msgstr "مصروفات البيع"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_500100
 msgid "Sale Income Account"
-msgstr ""
+msgstr "ايردات البيع"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_sales_price
 #: model:ir.model.fields.selection,name:ms_farm.selection__product_category__order_type__sales
 msgid "Sales"
-msgstr ""
+msgstr "مبيعات"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_sales_amount
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_sales_amount
 msgid "Sales Amount"
-msgstr ""
+msgstr "مبلغ المبيعات"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_graph
 msgid "Sales Analysis"
-msgstr ""
+msgstr "تحليل المبيعات"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__sales_count
 msgid "Sales Count"
-msgstr ""
+msgstr "عدد المبيعات"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__sales_id
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Sales Order"
-msgstr ""
+msgstr "أمر مبيعات"
 
 #. module: ms_farm
 #: model:ir.actions.act_window,name:ms_farm.farm_sales_action
@@ -2648,18 +2649,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__sales_ids
 #: model:ir.ui.menu,name:ms_farm.menu_sales_
 msgid "Sales Orders"
-msgstr ""
+msgstr "أوامر المبيعات"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_sales_qty
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_sales_qty
 msgid "Sales Qty"
-msgstr ""
+msgstr "كمية المبيعات"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales__name
 msgid "Sales Ref"
-msgstr ""
+msgstr "مرجع المبيعات"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_stock_scrap
@@ -2669,17 +2670,17 @@ msgstr "مخلفات التصنيع "
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_locations_view_form
 msgid "Sector 1, 2,.."
-msgstr ""
+msgstr "قطاع 1, 2, .."
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__project_type
 msgid "Select the type Produce, Sell or Both, either Service"
-msgstr ""
+msgstr "اختر المنتج إنتاج او مبيع او خدمة"
 
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__project_type__sale
 msgid "Sell directly product  as consumable"
-msgstr ""
+msgstr "منتج بيع مباشر مثل إستهلاكى"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__sequence
@@ -2688,7 +2689,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__sequence
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "متتالية"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_service_price
@@ -2696,80 +2697,80 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ms_farm.selection__product_category__type__service
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Service"
-msgstr ""
+msgstr "خدمة"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_service_amount
 msgid "Service Amount"
-msgstr ""
+msgstr "مبلغ خدمة"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_500500
 msgid "Service Income Account"
-msgstr ""
+msgstr "ايراد خدمة"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_service_amount
 msgid "Service Order"
-msgstr ""
+msgstr "أمر خدمة"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__plan_service_qty
 msgid "Service Order Qty"
-msgstr ""
+msgstr "كمية أمر خدمة"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
 msgid "Service Progress:"
-msgstr ""
+msgstr "تطور خدمة:"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__actual_service_qty
 msgid "Service Qty"
-msgstr ""
+msgstr "كمية خدمة"
 
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__project_type__service
 msgid "Service of an Asset or a Function"
-msgstr ""
+msgstr "خدمة أصل أو وظيفة "
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Set Draft"
-msgstr ""
+msgstr "وضع مسودة"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Set Finish"
-msgstr ""
+msgstr "وضع منتهى"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Set In Operation"
-msgstr ""
+msgstr "وضع تحت التشغيل"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Set On hold"
-msgstr ""
+msgstr "وضع مجمد"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_control__priority
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__priority
 msgid "Set the project priority which view first"
-msgstr ""
+msgstr "ضع أولوية المشروع للعرض أولا"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__state
 msgid ""
 "Set whether the project process is open or closed to start or end "
 "operations."
-msgstr ""
+msgstr "وضع المشروع مفتوح أومغلق للبدء او اﻹنتهاء "
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Settings"
-msgstr ""
+msgstr "إعدادات"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__note
@@ -2778,38 +2779,38 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__note
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__note
 msgid "Short Note"
-msgstr ""
+msgstr "بيان مختصر"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__location_id
 #: model:ir.model.fields,field_description:ms_farm.field_farm_materials__location_id
 msgid "Source Location"
-msgstr ""
+msgstr "مخزن المصدر"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_locations__space
 msgid "Space in acre"
-msgstr ""
+msgstr "المساحة بالفدان"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_400405
 msgid "Spare Part Expense Account"
-msgstr ""
+msgstr "حساب مصروف قطع غيار"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_124500
 msgid "Spare part Stock"
-msgstr ""
+msgstr "مخزن قطع غيار"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "تاريخ البداية"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
 msgid "Start:"
-msgstr ""
+msgstr "البداية:"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__state
@@ -2819,14 +2820,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce__state
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales__state
 msgid "State"
-msgstr ""
+msgstr "الحالة"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_operations__state
 #: model:ir.model.fields,field_description:ms_farm.field_farm_operations_oline__state
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__state
 msgid "Status"
-msgstr ""
+msgstr "الحالات"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_control__activity_state
@@ -2850,17 +2851,17 @@ msgstr ""
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_product_category__location_id
 msgid "Stock Consume Location"
-msgstr ""
+msgstr "مخزن اﻹستهلاك"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_500400
 msgid "Stock Income Account"
-msgstr ""
+msgstr "حساب ايرادات مخزون"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_form
 msgid "Stock Issue"
-msgstr ""
+msgstr "صرف مخزون"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_stock_move
@@ -2872,12 +2873,12 @@ msgstr "حركة المخزون"
 #: model:ir.model.fields,field_description:ms_farm.field_farm_materials__picking_type_id
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce__picking_type_id
 msgid "Stock Picking Type"
-msgstr ""
+msgstr "نوع حركة المخزون"
 
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__product_category__type__product
 msgid "Storable Product"
-msgstr ""
+msgstr "منتج مخزنى"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__price_subtotal
@@ -2886,12 +2887,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__price_subtotal
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__price_subtotal
 msgid "Subtotal"
-msgstr ""
+msgstr "إجمالى"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Summary and Ratios"
-msgstr ""
+msgstr "ملخص ومعدلات"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__notes
@@ -2900,7 +2901,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce__notes
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales__notes
 msgid "Terms and Conditions"
-msgstr ""
+msgstr "بنود وشروط"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_location_used__space_sum
@@ -2908,7 +2909,7 @@ msgstr ""
 #: model:ir.model.fields,help:ms_farm.field_farm_locations__space_sum
 msgid ""
 "The Acre space under this location (Does not consider the children location)"
-msgstr ""
+msgstr "مساحة الفدان فى المكان (بدون اعتبار الاماكن الفرعية)"
 
 #. module: ms_farm
 #: model_terms:res.config.settings,invoice_terms_html:ms_farm.res_config_settings
@@ -2922,52 +2923,52 @@ msgstr ""
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_form
 msgid "Ticket"
-msgstr ""
+msgstr "بطاقة"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Time"
-msgstr ""
+msgstr "الوقت"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Time Frame"
-msgstr ""
+msgstr "جدول الزمنى"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__time_progress
 msgid "Time Gone"
-msgstr ""
+msgstr "الوقت المستغرق"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
 msgid "Time Progress:"
-msgstr ""
+msgstr "تقدم الوقت"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Total"
-msgstr ""
+msgstr "إجمالى"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_actual
 msgid "Total Actual"
-msgstr ""
+msgstr "إجمالى فعلى"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_actual04
 msgid "Total Actual04"
-msgstr ""
+msgstr "إجمالى"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_actual05
 msgid "Total Actual05"
-msgstr ""
+msgstr "إجمالى"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_actual06
 msgid "Total Actual06"
-msgstr ""
+msgstr "إجمالى"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
@@ -2978,17 +2979,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
 msgid "Total Cost"
-msgstr ""
+msgstr "إجمالى تكلفة"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
 msgid "Total Credit"
-msgstr ""
+msgstr "إجمالى دائن"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
 msgid "Total Debit"
-msgstr ""
+msgstr "إجمالى مدين"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__total_budget
@@ -2999,34 +3000,30 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_tree
 msgid "Total Order"
-msgstr ""
+msgstr "إجمالى أمر"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_form
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_form
-msgid "Total QTY"
-msgstr ""
-
-#. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_equipments_view_form
-msgid "Total Quantity"
-msgstr ""
+msgid "Total QTY"
+msgstr "إجمالى كمية"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
 msgid "Total Space"
-msgstr ""
+msgstr "إجمالى مساحة"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__space_sum
 #: model:ir.model.fields,field_description:ms_farm.field_farm_locations__space_sum
 msgid "Total Space in acre"
-msgstr ""
+msgstr "إجمالى مساحة بالفدان"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__actual_service_amount
 msgid "Total of Service internal bills plus external invoices."
-msgstr ""
+msgstr "إجمالى خدمات فواتير داخلية وفواتير خارجية"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_stock_picking
@@ -3036,7 +3033,7 @@ msgstr "الشحنة"
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_equipments__type__truck
 msgid "Truck"
-msgstr ""
+msgstr "شاحنة"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_account_move_line__move_type
@@ -3045,7 +3042,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__project_type
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_search
 msgid "Type"
-msgstr ""
+msgstr "نوع"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_control__activity_exception_decoration
@@ -3065,12 +3062,12 @@ msgstr ""
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_kanban
 msgid "Type:"
-msgstr ""
+msgstr "نوع:"
 
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_pioasset__type__uncount
 msgid "Uncountable"
-msgstr ""
+msgstr "غير قابل للعد"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__product_uom
@@ -3079,7 +3076,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce_oline__product_uom
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales_oline__product_uom
 msgid "Unit of Measure"
-msgstr ""
+msgstr "وحدة قياس"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__message_unread
@@ -3143,44 +3140,44 @@ msgstr ""
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_400406
 msgid "Utilities Expense Account"
-msgstr ""
+msgstr "حساب مصروف وقود ومحروقات"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_124600
 msgid "Utilities Stock"
-msgstr ""
+msgstr "مخزن وقود ومحروقات"
 
 #. module: ms_farm
 #: model:farm.project.group,description:ms_farm.project_group_vegetable
 #: model:farm.project.group,name:ms_farm.project_group_vegetable
 msgid "Vegetable Farming"
-msgstr ""
+msgstr "مزرعة خضروات"
 
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_equipments__type__vehicle
 msgid "Vehicle"
-msgstr ""
+msgstr "سيارة"
 
 #. module: ms_farm
 #: model:ir.ui.menu,name:ms_farm.farm_menu_vendor_bill
 msgid "Vendor Bill"
-msgstr ""
+msgstr "فاتورة مورد"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_operations__vendor_bill_count
 msgid "Vendor Bill Count"
-msgstr ""
+msgstr "عدد فواتير مورد"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_operations__vendor_bill_total
 msgid "Vendor Bill Total"
-msgstr ""
+msgstr "إجمالى فواتير مورد"
 
 #. module: ms_farm
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_control__priority__3
 #: model:ir.model.fields.selection,name:ms_farm.selection__farm_projects__priority__3
 msgid "Very High"
-msgstr ""
+msgstr "مهم جدا"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__stock_warehouse
@@ -3189,7 +3186,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce__stock_warehouse
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales__stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "مخزن"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__website_message_ids
@@ -3224,19 +3221,19 @@ msgstr ""
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__what
 msgid "What?"
-msgstr ""
+msgstr "ماذا؟"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_control__who
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
 msgid "Who?"
-msgstr ""
+msgstr "من؟"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_location_used__address
 #: model:ir.model.fields,help:ms_farm.field_farm_locations__address
 msgid "Wrtie down the address of this location"
-msgstr ""
+msgstr "أكتب عنوان المكان"
 
 #. module: ms_farm
 #: code:addons/ms_farm/models/control.py:0
@@ -3251,98 +3248,81 @@ msgid "You should update this document to reflect your T&amp;C."
 msgstr ""
 
 #. module: ms_farm
-#: model_terms:ir.ui.view,arch_db:ms_farm.farm_action_view_form
-#: model_terms:ir.ui.view,arch_db:ms_farm.farm_action_view_search
-#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
-msgid "action"
-msgstr ""
-
-#. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_equipments__buy_sell_price
 msgid "buy  and sell price"
-msgstr ""
-
-#. module: ms_farm
-#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
-msgid "cancel"
-msgstr ""
+msgstr "سعر شراء وبيع"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__service_progress
 msgid "compute % of actual spent vs actual bills and invoices"
-msgstr ""
+msgstr "حساب نسبة اﻹنفاق الفعلى مقابل فعلى فواتير"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__average_service_price
 msgid "compute average price of Service internal and external"
-msgstr ""
+msgstr "حساب متويط سعر خدمات داخلية وخارجية"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__average_sales_price
 msgid "compute average price of sales invoices"
-msgstr ""
+msgstr "حساب متوسط سعر فواتير مبيعات"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__average_produce_price
 msgid "compute average price of stock move"
-msgstr ""
+msgstr "حساب متوسط سعر لحركة المخزون"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__cog_produce_price
 msgid ""
 "compute price of cost of goods produce based on actual produce qty and "
 "current actual spending"
-msgstr ""
+msgstr "إنفاق فعلى حالى"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__cog_sales_price
 msgid ""
 "compute price of cost of goods sold based on actual sold qty and current "
 "actual spending"
-msgstr ""
+msgstr "إنفاق فعلى"
 
 #. module: ms_farm
 #: model:ir.model.fields,help:ms_farm.field_farm_projects__cog_service_price
 msgid ""
 "compute price of service based on actual used + sold qty and current actual "
 "spending"
-msgstr ""
+msgstr "حساب متوسط سعر الخدمة بناء على الاستخدام الفعلى والبيع والتكلفة الحالية الفعلية"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
 msgid "done"
-msgstr ""
-
-#. module: ms_farm
-#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
-msgid "event"
-msgstr ""
+msgstr "تم"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_graph
-msgid "expense Analysis"
-msgstr ""
+msgid "Expense Analysis"
+msgstr "تحليل مصروف"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__expenses_consumption_account_count
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__expenses_consumption_count
-msgid "expense Moves Count"
-msgstr ""
+msgid "Expense Moves Count"
+msgstr "عدد حركات مصروف"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__expenses_consumption_account_total
-msgid "expense Moves Total"
-msgstr ""
+msgid "Expense Moves Total"
+msgstr "إجمالى حركات مصروف"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__name
-msgid "expense Ref"
-msgstr ""
+msgid "Expense Ref"
+msgstr "مرجع مصروف"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_expenses_oline
-msgid "expense order line"
-msgstr ""
+msgid "Expense order line"
+msgstr "سطر أمر مصروف"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses_oline__expenses_id
@@ -3350,18 +3330,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_form
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_pivot
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_expenses_view_tree
-msgid "expenses"
-msgstr ""
+msgid "Expenses"
+msgstr "مصروفات"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__locations_used_ids
 msgid "locations Used"
-msgstr ""
+msgstr "مكان مستخدم"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_materials_oline
 msgid "material order line"
-msgstr ""
+msgstr "سطر امر مواد"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_calendar
@@ -3369,24 +3349,24 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_pivot
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_materials_view_tree
 msgid "materials"
-msgstr ""
+msgstr "مواد"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_operations_oline
 msgid "operation order line"
-msgstr ""
+msgstr "سطر أمر عمليات زراعية"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_materials
 #: model:ir.model,name:ms_farm.model_farm_operations
 msgid "operation orders"
-msgstr ""
+msgstr "أوامر عملية زراعية"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_tree
 msgid "operations"
-msgstr ""
+msgstr "عمليات زراعية"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_expenses__expenses_order_line_ids
@@ -3394,17 +3374,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:ms_farm.field_farm_operations__operation_order_line_ids
 #: model:ir.model.fields,field_description:ms_farm.field_farm_sales__sales_order_line_ids
 msgid "order lines"
-msgstr ""
+msgstr "سطور أمر"
 
 #. module: ms_farm
 #: model:account.account,name:ms_farm.farm_account_400500
 msgid "price diff of products"
-msgstr ""
+msgstr "حساب فرق سعر منتجات"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
 msgid "priority"
-msgstr ""
+msgstr "أولوية"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_calendar
@@ -3412,27 +3392,27 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_pivot
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_produce_view_tree
 msgid "produce"
-msgstr ""
+msgstr "إنتاج"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_produce
 msgid "produce order"
-msgstr ""
+msgstr "أمر إنتاج"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_produce_oline
 msgid "produce order line"
-msgstr ""
+msgstr "سطر امر انتاج"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce__produce_order_line_ids
 msgid "produce order lines"
-msgstr ""
+msgstr "سطور أمر إنتاج"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
 msgid "progress"
-msgstr ""
+msgstr "تقدم"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_calendar
@@ -3440,13 +3420,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_pivot
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_tree
 msgid "sales"
-msgstr ""
+msgstr "مبيعات"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_sales
 #: model:ir.model,name:ms_farm.model_farm_sales_oline
 msgid "sales order"
-msgstr ""
+msgstr "أمر مبيعات"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
@@ -3456,9 +3436,4 @@ msgstr ""
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_pioasset_view_form
 msgid "serial 1, 2,.."
-msgstr ""
-
-#. module: ms_farm
-#: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search
-msgid "who"
-msgstr ""
+msgstr "مسلسل 1,2, .."

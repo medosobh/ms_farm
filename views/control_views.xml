@@ -153,10 +153,10 @@
             <field name="name">farm.action.form</field>
             <field name="model">farm.action</field>
             <field name="arch" type="xml">
-                <form string="action" class="oe_form_configuration">
+                <form string="Action" class="oe_form_configuration">
                     <sheet>
                         <div class="oe_title">
-                            <label for="name" string="action"/>
+                            <label for="name" string="Action"/>
                             <h1>
                                 <field name="name" placeholder="Name 1, 2,.."/>
                             </h1>
@@ -187,9 +187,9 @@
             <field name="name">farm.action.search</field>
             <field name="model">farm.action</field>
             <field name="arch" type="xml">
-                <search string="action">
-                    <field name="name" string="action"/>
-                    <field name="description" string="action"/>
+                <search string="Action">
+                    <field name="name" string="Action"/>
+                    <field name="description" string="Action"/>
                 </search>
             </field>
         </record>
@@ -376,7 +376,7 @@
                     <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
                     <filter name="filter_progress" string="progress" domain="[('state', '=', 'progress')]"/>
                     <filter name="filter_schedule" string="schedule" domain="[('state', '=', 'schedule')]"/>
-                    <filter name="filter_cancel" string="cancel" domain="[('state', '=', 'cancel')]"/>
+                    <filter name="filter_cancel" string="Cancel" domain="[('state', '=', 'cancel')]"/>
                     <filter name="filter_done" string="done" domain="[('state', '=', 'done')]"/>
                     <separator/>
                     <group expand="0" string="Group by">
@@ -387,9 +387,9 @@
                     </group>
                     <searchpanel>
                         <field name="priority" select="multi" string="priority" enable_counters="1"/>
-                        <field name="who" select="multi" string="who" enable_counters="1"/>
-                        <field name="event_id" select="multi" string="event" enable_counters="1"/>
-                        <field name="action_id" select="multi" string="action" enable_counters="1"/>
+                        <field name="who" select="multi" string="who?" enable_counters="1"/>
+                        <field name="event_id" select="multi" string="Event" enable_counters="1"/>
+                        <field name="action_id" select="multi" string="Action" enable_counters="1"/>
                     </searchpanel>
                 </search>
             </field>

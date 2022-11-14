@@ -92,7 +92,7 @@
                                     <tree>
                                         <field name="account_id"/>
                                         <field name="analytic_account_id"/>
-                                        <field name="quantity" sum="Total Quantity"/>
+                                        <field name="quantity" sum="Total QTY"/>
                                         <field name="debit" sum="Total Debit"/>
                                         <field name="credit" sum="Total Credit"/>
                                         <field name="credit"/>

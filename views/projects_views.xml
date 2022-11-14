@@ -16,7 +16,7 @@
                     <button name="button_finish" string="Set Finish" type="object"
                             class="oe_highlight"
                             help="Move Project to In Finish State" states="in_operation"/>
-                    <button name="button_on_hold" string="Set On hold" type="object"
+                    <button name="button_on_hold" string="Set On Hold" type="object"
                             class="oe_highlight"
                             help="Move Project to On Hold State" states="in_operation"/>
                     <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
