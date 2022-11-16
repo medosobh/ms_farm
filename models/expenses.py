@@ -3,8 +3,9 @@ from odoo import fields, models, api, _
 
 class farm_expenses(models.Model):
     _name = 'farm.expenses'
-    _description = 'Budget General Expenses'
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    _description = 'Budget General Expenses'
+    _check_company_auto = True
     _order = 'issue_date'
 
     name = fields.Char(
@@ -187,7 +188,7 @@ class farm_expenses(models.Model):
 
 class farm_expenses_oline(models.Model):
     _name = 'farm.expenses.oline'
-    _description = 'expense order line'
+    _description = 'Expense Order Line'
 
     name = fields.Text(
         string = 'Description',

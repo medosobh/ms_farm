@@ -19,5 +19,145 @@
                    eval="[(3, ref('account.group_account_invoice')), (4, ref('account.group_account_user'))]"/>
             <field name="category_id" ref="base.module_category_accounting_accounting"/>
         </record>
+
+        <record model="ir.module.category" id="module_category_farm">
+            <field name="name">Farm Management</field>
+            <field name="description">Helps you manage your Farm.</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="group_farm_operator" model="res.groups">
+            <field name="name">Operator</field>
+            <field name="category_id" ref="module_category_farm"/>
+        </record>
+        <record id="group_farm_controller" model="res.groups">
+            <field name="name">Controller</field>
+            <field name="category_id" ref="module_category_farm"/>
+        </record>
+
+        <record id="group_farm_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_farm"/>
+        </record>
+
+
+    </data>
+    <!-- Company-restricted Records -->
+    <data noupdate="0">
+        <record model="ir.rule" id="farm_projects_restricted_company_rule">
+            <field name="name">Farm Projects: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_projects"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+        <record model="ir.rule" id="farm_operations_restricted_company_rule">
+            <field name="name">Farm Operations: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_operations"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+        <record model="ir.rule" id="farm_materials_restricted_company_rule">
+            <field name="name">Farm Materials: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_materials"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+        <record model="ir.rule" id="farm_expenses_restricted_company_rule">
+            <field name="name">Farm Expenses: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_expenses"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+        <record model="ir.rule" id="farm_produce_restricted_company_rule">
+            <field name="name">Farm Produce: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_produce"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+        <record model="ir.rule" id="farm_sales_restricted_company_rule">
+            <field name="name">Farm Sales: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_sales"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+        <record model="ir.rule" id="farm_control_restricted_company_rule">
+            <field name="name">Farm Control: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_control"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+        <record model="ir.rule" id="farm_equipments_restricted_company_rule">
+            <field name="name">Farm Equipments: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_equipments"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+        <record model="ir.rule" id="farm_locations_restricted_company_rule">
+            <field name="name">Farm Locations: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_locations"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+        <record model="ir.rule" id="farm_pioasset_restricted_company_rule">
+            <field name="name">Farm Pio-Asset: multi-company</field>
+            <field name="model_id" ref="ms_farm.model_farm_pioasset"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+    </data>
+    <!-- Company-restricted Records -->
+    <data noupdate="0">
+        <record model="ir.rule" id="farm_manage_everything_rule">
+            <field name="name">Farm Manage Everthing</field>
+            <field name="model_id" ref="ms_farm.model_farm_projects"/>
+            <field name="groups" eval="[(4, ref('group_farm_manager'))]"/>
+            <field name="domain_force">
+                [(1, 'in', 1)]
+            </field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+        <record model="ir.rule" id="farm_operator_everything_rule">
+            <field name="name">Farm Manage Orders</field>
+            <field name="model_id" ref="ms_farm.model_farm_projects"/>
+            <field name="groups" eval="[(4, ref('group_farm_operator'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+        <record model="ir.rule" id="farm_controller_everything_rule">
+            <field name="name">Farm Manage Control</field>
+            <field name="model_id" ref="ms_farm.model_farm_projects"/>
+            <field name="groups" eval="[(4, ref('group_farm_controller'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+
     </data>
 </odoo>

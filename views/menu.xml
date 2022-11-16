@@ -7,11 +7,17 @@
                   web_icon="static/description/icon.png"
                   sequence="145"
         />
+        <menuitem id="farm_menu_projects"
+                  name="Projects"
+                  parent="farm_root"
+                  sequence="10"
+        />
         <!-- This Menu Item Must have a parent -->
         <menuitem id="farm_menu_orders"
                   name="Orders"
                   parent="farm_root"
                   sequence="20"
+                  groups="ms_farm.group_farm_operator"
         />
         <!-- This Menu Item Must have a parent -->
 
@@ -19,18 +25,22 @@
                   name="Documents"
                   parent="farm_root"
                   sequence="30"
+                  groups="ms_farm.group_farm_operator"
         />
         <menuitem id="farm_menu_control"
                   name="Control"
                   parent="farm_root"
                   sequence="40"
+                  groups="ms_farm.group_farm_controller"
         />
 
         <!-- This Menu Item Must have a parent -->
         <menuitem id="farm_menu_configuration"
                   name="Configuration"
                   parent="farm_root"
-                  sequence="50"/>
+                  sequence="50"
+                  groups="ms_farm.group_farm_manager"
+        />
 
         <menuitem id="farm_menu_product"
                   name="Product and Category"
@@ -40,12 +50,14 @@
         <menuitem id="farm_menu_other"
                   name="Farm other Configuration"
                   parent="farm_menu_configuration"
-                  sequence="54"/>
+                  sequence="12"
+                  groups="ms_farm.group_farm_operator"
+        />
 
         <menuitem id="farm_menu_control_other"
                   name="Event and Action"
-                  parent="farm_menu_configuration"
-                  sequence="57"/>
+                  parent="farm_menu_control"
+                  sequence="43"/>
 
         <!-- Inherit account Move (vendor bill) Form View to Modify it -->
         <!-- This Menu Item must have a parent and an action -->
@@ -71,13 +83,17 @@
                   name="Produce stock move"
                   parent="farm_menu_documents"
                   action="stock.action_picking_tree_all"
-                  sequence="34"/>
+                  sequence="34"
+                  groups="ms_farm.group_farm_manager"
+        />
 
         <menuitem id="farm_menu_customer_invoice"
                   name="Customer Invoice"
                   parent="farm_menu_documents"
                   action="account.action_move_out_invoice_type"
-                  sequence="35"/>
+                  sequence="35"
+                  groups="ms_farm.group_farm_manager"
+        />
 
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="menu_product_category"

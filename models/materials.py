@@ -5,7 +5,8 @@ from odoo.exceptions import UserError
 class farm_materials(models.Model):
     _name = 'farm.materials'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = 'operation orders'
+    _description = 'Material Orders'
+    _check_company_auto = True
     _order = 'issue_date'
 
     name = fields.Char(
@@ -229,7 +230,7 @@ class farm_materials(models.Model):
 
 class farm_materials_oline(models.Model):
     _name = 'farm.materials.oline'
-    _description = 'material order line'
+    _description = 'Material Order Line'
 
     sequence = fields.Integer(
         string = 'Sequence',

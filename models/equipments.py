@@ -4,8 +4,9 @@ from odoo.exceptions import UserError
 
 class farm_equipments(models.Model):
     _name = 'farm.equipments'
-    _description = 'Manage all Equipments'
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    _description = 'Manage Equipments'
+    _check_company_auto = True
     _sql_constraints = [
         ('code_uniq', 'unique(code)', "A code can only be assigned to one equipment !"),
         ('name_uniq', 'unique(name)', "A name can only be assigned to one equipment !"),

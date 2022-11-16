@@ -4,7 +4,9 @@ from odoo.exceptions import ValidationError
 
 class farm_locations(models.Model):
     _name = 'farm.locations'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Manage project location'
+    _check_company_auto = True
     _parent_name = "parent_id"
     _parent_store = True
     _rec_name = 'complete_name'

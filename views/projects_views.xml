@@ -738,8 +738,8 @@
     <!--  This Menu Item must have a parent and an action  -->
     <menuitem id="menu_projects"
               name="Projects"
-              parent="farm_root"
+              parent="farm_menu_projects"
               action="farm_projects_action"
-              sequence="10"/>
+              sequence="11"/>
 
 </odoo>

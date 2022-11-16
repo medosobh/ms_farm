@@ -164,7 +164,7 @@
                   name="Equipments"
                   parent="farm_menu_other"
                   action="farm_equipments_action"
-                  sequence="46"/>
+                  sequence="14"/>
 
     </data>
 </odoo>

@@ -1575,8 +1575,8 @@ msgstr "المهلة باﻷيام"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_pioasset
-msgid "List of Pio Asset"
-msgstr "قائمة باﻷصول الحيوية"
+msgid "Pio-Asset"
+msgstr "أصول حيوية"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_location_used__locations_id
@@ -1635,8 +1635,8 @@ msgstr "مصروف صيانة"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_equipments
-msgid "Manage all Equipments"
-msgstr "إدارة كل المعدات"
+msgid "Manage Equipments"
+msgstr "إدارة المعدات"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_locations
@@ -2037,6 +2037,7 @@ msgstr "سطور أمر عملية زراعية"
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__operations_ids
 #: model:ir.ui.menu,name:ms_farm.menu_operations_
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_projects_view_form
+#: model:ir.model,name:ms_farm.model_farm_operations
 msgid "Operation Orders"
 msgstr "أوامر عملية زراعية"
 
@@ -2356,6 +2357,7 @@ msgstr "أمر إنتاج"
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__produce_id
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__produce_ids
 #: model:ir.ui.menu,name:ms_farm.menu_produce_
+#: model:ir.model,name:ms_farm.model_farm_produce
 msgid "Produce Orders"
 msgstr "أوامر إنتاج"
 
@@ -2648,7 +2650,13 @@ msgstr "أمر مبيعات"
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__sales_id
 #: model:ir.model.fields,field_description:ms_farm.field_farm_projects__sales_ids
 #: model:ir.ui.menu,name:ms_farm.menu_sales_
+#: model:ir.model,name:ms_farm.model_farm_sales
 msgid "Sales Orders"
+msgstr "أوامر المبيعات"
+
+#. module: ms_farm
+#: model:ir.model,name:ms_farm.model_farm_sales_oline
+msgid "Sales Order Line"
 msgstr "أوامر المبيعات"
 
 #. module: ms_farm
@@ -3321,7 +3329,7 @@ msgstr "مرجع مصروف"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_expenses_oline
-msgid "Expense order line"
+msgid "Expense Order Line"
 msgstr "سطر أمر مصروف"
 
 #. module: ms_farm
@@ -3340,7 +3348,7 @@ msgstr "مكان مستخدم"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_materials_oline
-msgid "material order line"
+msgid "Material Order Line"
 msgstr "سطر امر مواد"
 
 #. module: ms_farm
@@ -3353,14 +3361,15 @@ msgstr "مواد"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_operations_oline
-msgid "operation order line"
+msgid "Operation Order Line"
 msgstr "سطر أمر عمليات زراعية"
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_materials
-#: model:ir.model,name:ms_farm.model_farm_operations
-msgid "operation orders"
-msgstr "أوامر عملية زراعية"
+msgid "Material Orders"
+msgstr "أوامر صرف مواد"
+
+
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_operations_view_form
@@ -3394,19 +3403,16 @@ msgstr "أولوية"
 msgid "produce"
 msgstr "إنتاج"
 
-#. module: ms_farm
-#: model:ir.model,name:ms_farm.model_farm_produce
-msgid "produce order"
-msgstr "أمر إنتاج"
+
 
 #. module: ms_farm
 #: model:ir.model,name:ms_farm.model_farm_produce_oline
-msgid "produce order line"
+msgid "Produce Order Line"
 msgstr "سطر امر انتاج"
 
 #. module: ms_farm
 #: model:ir.model.fields,field_description:ms_farm.field_farm_produce__produce_order_line_ids
-msgid "produce order lines"
+msgid "Produce Order Lines"
 msgstr "سطور أمر إنتاج"
 
 #. module: ms_farm
@@ -3421,12 +3427,6 @@ msgstr "تقدم"
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_sales_view_tree
 msgid "sales"
 msgstr "مبيعات"
-
-#. module: ms_farm
-#: model:ir.model,name:ms_farm.model_farm_sales
-#: model:ir.model,name:ms_farm.model_farm_sales_oline
-msgid "sales order"
-msgstr "أمر مبيعات"
 
 #. module: ms_farm
 #: model_terms:ir.ui.view,arch_db:ms_farm.farm_control_view_search

@@ -146,7 +146,7 @@
                   name="Control Event"
                   parent="farm_menu_control_other"
                   action="farm_event_action"
-                  sequence="58"/>
+                  sequence="44"/>
 
         <!--action model-->
         <record id="farm_action_view_form" model="ir.ui.view">
@@ -212,7 +212,7 @@
                   name="Control Action"
                   parent="farm_menu_control_other"
                   action="farm_action_action"
-                  sequence="58"/>
+                  sequence="45"/>
         <!--control -->
         <record id="farm_control_view_form" model="ir.ui.view">
             <field name="name">farm.control.form</field>

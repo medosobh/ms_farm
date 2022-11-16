@@ -57,6 +57,6 @@
                   name="Farm Group"
                   parent="farm_menu_other"
                   action="farm_project_group_action"
-                  sequence="45"/>
+                  sequence="13"/>
     </data>
 </odoo>

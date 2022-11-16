@@ -6,7 +6,9 @@ from odoo.exceptions import ValidationError
 
 class PioAsset(models.Model):
     _name = 'farm.pioasset'
-    _description = 'List of Pio Asset'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _description = 'Pio-Asset'
+    _check_company_auto = True
     _parent_name = "parent_id"
     _parent_store = True
     _rec_name = 'complete_name'
@@ -147,12 +149,13 @@ class action(models.Model):
 
 class FarmControl(models.Model):
     _name = 'farm.control'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Inspect and cure Pio Asset '
+    _check_company_auto = True
     _parent_name = "parent_id"
     _parent_store = True
     _rec_name = 'complete_name'
     _order = 'complete_name'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     state = fields.Selection(
         string = 'State',

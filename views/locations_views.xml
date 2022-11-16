@@ -68,6 +68,6 @@
                   name="Locations"
                   parent="farm_menu_other"
                   action="farm_locations_action"
-                  sequence="47"/>
+                  sequence="15"/>
 
 </odoo>
