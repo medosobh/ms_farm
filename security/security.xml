@@ -132,7 +132,7 @@
             <field name="model_id" ref="ms_farm.model_farm_projects"/>
             <field name="groups" eval="[(4, ref('group_farm_manager'))]"/>
             <field name="domain_force">
-                [(1, 'in', 1)]
+                [(1, '=', 1)]
             </field>
             <field name="perm_read" eval="1"/>
             <field name="perm_create" eval="1"/>
