@@ -12,6 +12,8 @@ access.farm_materials_oline,access_farm_materials_oline,ms_farm.model_farm_mater
 access.farm_expenses,access_farm_expenses,ms_farm.model_farm_expenses,ms_farm.group_farm_manager,1,1,1,1
 access.farm_expenses_oline,access_farm_expenses_oline,ms_farm.model_farm_expenses_oline,ms_farm.group_farm_manager,1,1,1,1
 
+access.farm_projects,access_farm_projects,ms_farm.model_farm_projects,ms_farm.group_farm_operator,1,0,0,0
+
 access.farm_operations_operator,access_farm_operations_operator,ms_farm.model_farm_operations,ms_farm.group_farm_operator,1,1,1,0
 access.farm_operations_oline_operator,access_farm_operations_oline_operator,ms_farm.model_farm_operations_oline,ms_farm.group_farm_operator,1,1,1,0
 access.farm_materials_operator,access_farm_materials_operator,ms_farm.model_farm_materials,ms_farm.group_farm_operator,1,1,1,0

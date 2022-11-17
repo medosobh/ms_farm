@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    <data noupdate="0">
         <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
         <menuitem id="farm_root"
                   name="Farm"
@@ -17,7 +17,6 @@
                   name="Orders"
                   parent="farm_root"
                   sequence="20"
-                  groups="ms_farm.group_farm_operator"
         />
         <!-- This Menu Item Must have a parent -->
 
@@ -25,13 +24,11 @@
                   name="Documents"
                   parent="farm_root"
                   sequence="30"
-                  groups="ms_farm.group_farm_operator"
         />
         <menuitem id="farm_menu_control"
                   name="Control"
                   parent="farm_root"
                   sequence="40"
-                  groups="ms_farm.group_farm_controller"
         />
 
         <!-- This Menu Item Must have a parent -->
@@ -39,7 +36,6 @@
                   name="Configuration"
                   parent="farm_root"
                   sequence="50"
-                  groups="ms_farm.group_farm_manager"
         />
 
         <menuitem id="farm_menu_product"
@@ -51,7 +47,6 @@
                   name="Farm other Configuration"
                   parent="farm_menu_configuration"
                   sequence="12"
-                  groups="ms_farm.group_farm_operator"
         />
 
         <menuitem id="farm_menu_control_other"

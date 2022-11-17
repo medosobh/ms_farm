@@ -38,12 +38,14 @@
         <record id="group_farm_manager" model="res.groups">
             <field name="name">Manager</field>
             <field name="category_id" ref="module_category_farm"/>
+            <field name="implied_ids"
+                   eval="[(4, ref('group_farm_operator')), (4, ref('group_farm_controller'))]"/>
         </record>
 
 
     </data>
     <!-- Company-restricted Records -->
-    <data noupdate="0">
+    <data noupdate="1">
         <record model="ir.rule" id="farm_projects_restricted_company_rule">
             <field name="name">Farm Projects: multi-company</field>
             <field name="model_id" ref="ms_farm.model_farm_projects"/>
@@ -126,7 +128,7 @@
         </record>
     </data>
     <!-- Company-restricted Records -->
-    <data noupdate="0">
+    <data noupdate="1">
         <record model="ir.rule" id="farm_manage_everything_rule">
             <field name="name">Farm Manage Everthing</field>
             <field name="model_id" ref="ms_farm.model_farm_projects"/>
@@ -139,25 +141,7 @@
             <field name="perm_write" eval="1"/>
             <field name="perm_unlink" eval="1"/>
         </record>
-        <record model="ir.rule" id="farm_operator_everything_rule">
-            <field name="name">Farm Manage Orders</field>
-            <field name="model_id" ref="ms_farm.model_farm_projects"/>
-            <field name="groups" eval="[(4, ref('group_farm_operator'))]"/>
-            <field name="perm_read" eval="1"/>
-            <field name="perm_create" eval="0"/>
-            <field name="perm_write" eval="0"/>
-            <field name="perm_unlink" eval="0"/>
-        </record>
-        <record model="ir.rule" id="farm_controller_everything_rule">
-            <field name="name">Farm Manage Control</field>
-            <field name="model_id" ref="ms_farm.model_farm_projects"/>
-            <field name="groups" eval="[(4, ref('group_farm_controller'))]"/>
-            <field name="perm_read" eval="1"/>
-            <field name="perm_create" eval="0"/>
-            <field name="perm_write" eval="0"/>
-            <field name="perm_unlink" eval="0"/>
-        </record>
-
+        
 
     </data>
 </odoo>
