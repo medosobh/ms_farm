@@ -16,7 +16,6 @@ class PioAsset(models.Model):
     _sql_constraints = [
         ('code_uniq', 'unique(code)', "A Code can only be assigned to one Pio-Asset !"),
     ]
-    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     code = fields.Char(
         index = True,
