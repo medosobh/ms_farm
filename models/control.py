@@ -18,76 +18,77 @@ class PioAsset(models.Model):
     ]
 
     code = fields.Char(
-        index = True,
-        required = True,
+        index=True,
+        required=True,
     )
     name = fields.Char(
-        string = 'Pio Asset Name',
-        required = True,
+        string='Pio Asset Name',
+        required=True,
     )
     complete_name = fields.Char(
-        string = 'Complete Name',
-        compute = '_compute_pioasset_complete_name',
-        recursive = True,
-        store = True,
+        string='Complete Name',
+        compute='_compute_pioasset_complete_name',
+        recursive=True,
+        store=True,
     )
     type = fields.Selection(
-        string = 'Type',
-        selection = [
+        string='Type',
+        selection=[
             ('count', 'Countable'),
             ('uncount', 'Uncountable'),
         ]
     )
     group = fields.Many2one(
-        comodel_name = 'farm.project.group',
-        string = 'Group',
-        index = True,
+        comodel_name='farm.project.group',
+        string='Group',
+        index=True,
     )
     parent_id = fields.Many2one(
-        comodel_name = 'farm.pioasset',
-        string = 'Parent Pio Asset',
-        index = True,
-        ondelete = 'cascade'
+        comodel_name='farm.pioasset',
+        string='Parent Pio Asset',
+        index=True,
+        ondelete='cascade'
     )
     parent_path = fields.Char(
-        index = True
+        index=True
     )
     child_id = fields.One2many(
-        comodel_name = 'farm.pioasset',
-        inverse_name = 'parent_id',
-        string = 'Child PioAsset'
+        comodel_name='farm.pioasset',
+        inverse_name='parent_id',
+        string='Child PioAsset'
     )
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True
+        comodel_name='res.company',
+        string='Company',
+        change_default=True,
+        default=lambda self: self.env.company,
+        required=False,
+        readonly=True
     )
     currency_id = fields.Many2one(
-        comodel_name = 'res.currency',
-        string = 'Currency',
-        related = 'company_id.currency_id',
-        readonly = True,
-        ondelete = 'set null',
-        help = "Used to display the currency when tracking monetary values"
+        comodel_name='res.currency',
+        string='Currency',
+        related='company_id.currency_id',
+        readonly=True,
+        ondelete='set null',
+        help="Used to display the currency when tracking monetary values"
     )
     control_ids = fields.One2many(
-        comodel_name = 'farm.control',
-        inverse_name = 'pioasset_id',
-        string = 'Control Tickets'
+        comodel_name='farm.control',
+        inverse_name='pioasset_id',
+        string='Control Tickets'
     )
     active = fields.Boolean(
-        string = "Active",
-        default = True,
-        tracking = True)
+        string="Active",
+        default=True,
+        tracking=True)
 
     @api.depends('name', 'parent_id.complete_name')
     def _compute_pioasset_complete_name(self):
         for pioasset in self:
             if pioasset.parent_id:
-                pioasset.complete_name = '%s / %s' % (pioasset.parent_id.complete_name, pioasset.name)
+                pioasset.complete_name = '%s / %s' % (
+                    pioasset.parent_id.complete_name, pioasset.name)
             else:
                 pioasset.complete_name = pioasset.name
 
@@ -111,18 +112,18 @@ class events(models.Model):
     _description = 'Events'
 
     name = fields.Char(
-        string = 'Event'
+        string='Event'
     )
     description = fields.Text(
-        string = 'Description'
+        string='Description'
     )
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True
+        comodel_name='res.company',
+        string='Company',
+        change_default=True,
+        default=lambda self: self.env.company,
+        required=False,
+        readonly=True
     )
 
 
@@ -131,18 +132,18 @@ class action(models.Model):
     _description = 'Action'
 
     name = fields.Char(
-        string = 'Action'
+        string='Action'
     )
     description = fields.Text(
-        string = 'Description'
+        string='Description'
     )
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True
+        comodel_name='res.company',
+        string='Company',
+        change_default=True,
+        default=lambda self: self.env.company,
+        required=False,
+        readonly=True
     )
 
 
@@ -157,113 +158,113 @@ class FarmControl(models.Model):
     _order = 'complete_name'
 
     state = fields.Selection(
-        string = 'State',
-        selection = [
+        string='State',
+        selection=[
             ('draft', 'Draft'),
             ('progress', 'In-Progress'),
             ('schedule', 'Re-Schedule'),
             ('cancel', 'Cancel'),
             ('done', 'Done'),
         ],
-        default = 'draft',
-        group_expand = '_group_expand_states',
-        required = True,
+        default='draft',
+        group_expand='_group_expand_states',
+        required=True,
     )
     pioasset_id = fields.Many2one(
-        comodel_name = 'farm.pioasset',
-        required = True,
-        string = 'Pio Asset'
+        comodel_name='farm.pioasset',
+        required=True,
+        string='Pio Asset'
     )
     priority = fields.Selection(
-        selection = [
+        selection=[
             ('0', 'Normal'),
             ('1', 'Low'),
             ('2', 'High'),
             ('3', 'Very High')
         ],
-        string = "Priority",
-        help = 'Set the project priority which view first')
+        string="Priority",
+        help='Set the project priority which view first')
     name = fields.Char(
-        string = 'Reference',
-        default = lambda x: _('New')
+        string='Reference',
+        default=lambda x: _('New')
     )
     complete_name = fields.Char(
-        string = 'Complete Name',
-        compute = '_compute_control_complete_name',
-        recursive = True,
-        store = True)
+        string='Complete Name',
+        compute='_compute_control_complete_name',
+        recursive=True,
+        store=True)
     init_date = fields.Date(
-        string = 'Init Date',
-        default = datetime.today(),
-        required = True,
+        string='Init Date',
+        default=datetime.today(),
+        required=True,
     )
     next_date = fields.Date(
-        string = 'Next Date',
-        default = datetime.today(),
-        required = True,
+        string='Next Date',
+        default=datetime.today(),
+        required=True,
     )
     lead_time = fields.Integer(
-        string = 'Lead Time in Days',
-        compute = '_get_lead_time'
+        string='Lead Time in Days',
+        compute='_get_lead_time'
     )
     event_id = fields.Many2one(
-        comodel_name = 'farm.event',
-        string = 'Event',
-        required = True,
+        comodel_name='farm.event',
+        string='Event',
+        required=True,
     )
     event_desc = fields.Text(
-        comodel_name = 'farm.event',
-        string = 'Description',
-        related = 'event_id.description',
+        comodel_name='farm.event',
+        string='Description',
+        related='event_id.description',
     )
     action_id = fields.Many2one(
-        comodel_name = 'farm.action',
-        string = 'Action',
-        required = True,
+        comodel_name='farm.action',
+        string='Action',
+        required=True,
     )
     action_desc = fields.Text(
-        comodel_name = 'farm.action',
-        string = 'Description',
-        related = 'action_id.description',
+        comodel_name='farm.action',
+        string='Description',
+        related='action_id.description',
     )
     what = fields.Text(
-        string = 'What?',
-        required = True,
+        string='What?',
+        required=True,
     )
     who = fields.Many2one(
-        string = 'Who?',
-        comodel_name = 'res.users',
-        required = True,
+        string='Who?',
+        comodel_name='res.users',
+        required=True,
     )
     parent_id = fields.Many2one(
-        comodel_name = 'farm.control',
-        string = 'Parent Ticket',
-        index = True,
-        ondelete = 'cascade')
+        comodel_name='farm.control',
+        string='Parent Ticket',
+        index=True,
+        ondelete='cascade')
     parent_path = fields.Char(
-        index = True)
+        index=True)
     child_id = fields.One2many(
-        comodel_name = 'farm.control',
-        inverse_name = 'parent_id',
-        string = 'Child Ticket')
+        comodel_name='farm.control',
+        inverse_name='parent_id',
+        string='Child Ticket')
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True)
+        comodel_name='res.company',
+        string='Company',
+        change_default=True,
+        default=lambda self: self.env.company,
+        required=False,
+        readonly=True)
     currency_id = fields.Many2one(
-        comodel_name = 'res.currency',
-        string = 'Currency',
-        related = 'company_id.currency_id',
-        readonly = True,
-        ondelete = 'set null',
-        help = "Used to display the currency when tracking monetary values")
+        comodel_name='res.currency',
+        string='Currency',
+        related='company_id.currency_id',
+        readonly=True,
+        ondelete='set null',
+        help="Used to display the currency when tracking monetary values")
     active = fields.Boolean(
-        string = "Active",
-        default = True,
-        tracking = True)
+        string="Active",
+        default=True,
+        tracking=True)
 
     def _group_expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
@@ -271,7 +272,8 @@ class FarmControl(models.Model):
     @api.model
     def create(self, vals):
         if not vals.get('name') or vals['name'] == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('farm.control') or _('New')
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'farm.control') or _('New')
         return super(FarmControl, self).create(vals)
 
     @api.depends('init_date', 'next_date')
@@ -289,6 +291,7 @@ class FarmControl(models.Model):
     def _compute_control_complete_name(self):
         for control in self:
             if control.parent_id:
-                control.complete_name = '%s / %s' % (control.parent_id.complete_name, control.name)
+                control.complete_name = '%s / %s' % (
+                    control.parent_id.complete_name, control.name)
             else:
                 control.complete_name = control.name

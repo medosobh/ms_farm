@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="farm_project_group_view_form" model="ir.ui.view">
+        <record id="farm_project_group_view_form"
+            model="ir.ui.view">
             <field name="name">farm.project.group.form</field>
             <field name="model">farm.project.group</field>
-            <field name="arch" type="xml">
+            <field name="arch"
+                type="xml">
                 <form string="Group">
                     <sheet>
                         <group string="General Information">
@@ -16,10 +18,12 @@
             </field>
         </record>
 
-        <record id="farm_project_group_view_tree" model="ir.ui.view">
+        <record id="farm_project_group_view_tree"
+            model="ir.ui.view">
             <field name="name">farm.project.group.tree</field>
             <field name="model">farm.project.group</field>
-            <field name="arch" type="xml">
+            <field name="arch"
+                type="xml">
                 <tree string="Group">
                     <field name="name"/>
                     <field name="description"/>
@@ -27,10 +31,12 @@
             </field>
         </record>
 
-        <record id="farm_project_group_view_search" model="ir.ui.view">
+        <record id="farm_project_group_view_search"
+            model="ir.ui.view">
             <field name="name">farm.project.group.search</field>
             <field name="model">farm.project.group</field>
-            <field name="arch" type="xml">
+            <field name="arch"
+                type="xml">
                 <search>
                     <field name="name"/>
                     <field name="description"/>
@@ -38,14 +44,16 @@
             </field>
         </record>
 
-        <record id="farm_project_group_action" model="ir.actions.act_window">
+        <record id="farm_project_group_action"
+            model="ir.actions.act_window">
             <field name="name">Group</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">farm.project.group</field>
             <field name="view_mode">tree,form</field>
             <field name="context">{}</field>
             <field name="domain">[]</field>
-            <field name="help" type="html">
+            <field name="help"
+                type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create your first project group!
                 </p>
@@ -54,9 +62,9 @@
 
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="menu_project_group"
-                  name="Farm Group"
-                  parent="farm_menu_other"
-                  action="farm_project_group_action"
-                  sequence="13"/>
+            name="Farm Group"
+            parent="farm_menu_other"
+            action="farm_project_group_action"
+            sequence="13"/>
     </data>
 </odoo>

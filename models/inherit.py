@@ -5,46 +5,46 @@ class ProductCategory(models.Model):
     _inherit = 'product.category'
 
     location_id = fields.Many2one(
-        comodel_name = 'stock.location',
-        string = "Stock Consume Location",
-        check_company = True,
-        required = False)
+        comodel_name='stock.location',
+        string="Stock Consume Location",
+        check_company=True,
+        required=False)
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True)
+        comodel_name='res.company',
+        string='Company',
+        change_default=True,
+        default=lambda self: self.env.company,
+        required=False,
+        readonly=True)
     type = fields.Selection([
         ('product', 'Storable Product'),
         ('service', 'Service'),
         ('consu', 'Consumable')],
-        string = 'Product Type',
-        readonly = False,
-        copy = False,
-        default = 'product')
+        string='Product Type',
+        readonly=False,
+        copy=False,
+        default='product')
     order_type = fields.Selection([
         ('service', 'Service'),
         ('material', 'Material'),
         ('expense', 'Expense'),
         ('produce', 'Produce'),
         ('sales', 'Sales')],
-        string = 'Order Type',
-        readonly = False,
-        copy = False)
+        string='Order Type',
+        readonly=False,
+        copy=False)
 
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     projects_id = fields.Many2one(
-        comodel_name = 'farm.projects',
-        string = 'Project'
+        comodel_name='farm.projects',
+        string='Project'
     )
     equipments_id = fields.Many2one(
-        comodel_name = 'farm.equipments',
-        string = 'Equipment'
+        comodel_name='farm.equipments',
+        string='Equipment'
     )
 
 
@@ -71,19 +71,19 @@ class ProductProduct(models.Model):
             uom,
             qty,
             price_unit,
-            currency = currency,
-            amount_currency = amount_currency,
-            fiscal_position = fiscal_position,
-            account_analytic = account_analytic,
-            analytic_tags = analytic_tags,
+            currency=currency,
+            amount_currency=amount_currency,
+            fiscal_position=fiscal_position,
+            account_analytic=account_analytic,
+            analytic_tags=analytic_tags,
         )
         if res:
             res[0]["account_analytic_id"] = account_analytic and account_analytic.id
             res[0]["analytic_tag_ids"] = (
-                    analytic_tags
-                    and analytic_tags.ids
-                    and [(6, 0, analytic_tags.ids)]
-                    or False
+                analytic_tags
+                and analytic_tags.ids
+                and [(6, 0, analytic_tags.ids)]
+                or False
             )
         return res
 
@@ -92,32 +92,32 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     analytic_account_id = fields.Many2one(
-        comodel_name = "account.analytic.account",
-        string = "Analytic Account")
+        comodel_name="account.analytic.account",
+        string="Analytic Account")
     materials_id = fields.Many2one(
-        comodel_name = "farm.materials",
-        string = "Material Order")
+        comodel_name="farm.materials",
+        string="Material Order")
     produce_id = fields.Many2one(
-        comodel_name = "farm.produce",
-        string = "Produce Order")
+        comodel_name="farm.produce",
+        string="Produce Order")
     reference_record = fields.Reference(
-        selection = [('farm.operations', 'Operation Order'),
-                     ('farm.produce', 'Produce Order')],
-        string = 'Order Reference')
+        selection=[('farm.operations', 'Operation Order'),
+                   ('farm.produce', 'Produce Order')],
+        string='Order Reference')
 
 
 class StockMove(models.Model):
     _inherit = "stock.move"
 
     analytic_account_id = fields.Many2one(
-        comodel_name = "account.analytic.account",
-        string = "Analytic Account")
+        comodel_name="account.analytic.account",
+        string="Analytic Account")
     materials_id = fields.Many2one(
-        comodel_name = "farm.materials",
-        string = "Material Order")
+        comodel_name="farm.materials",
+        string="Material Order")
     produce_id = fields.Many2one(
-        comodel_name = "farm.produce",
-        string = "Produce Order")
+        comodel_name="farm.produce",
+        string="Produce Order")
 
     def _prepare_account_move_vals(
             self, credit_account_id, debit_account_id, journal_id, qty, description, svl_id, cost
@@ -169,25 +169,25 @@ class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
     analytic_account_id = fields.Many2one(
-        related = "move_id.analytic_account_id")
+        related="move_id.analytic_account_id")
     materials_id = fields.Many2one(
-        related = "move_id.materials_id")
+        related="move_id.materials_id")
     produce_id = fields.Many2one(
-        related = "move_id.produce_id")
+        related="move_id.produce_id")
 
 
 class StockScrap(models.Model):
     _inherit = "stock.scrap"
 
     analytic_account_id = fields.Many2one(
-        comodel_name = "account.analytic.account",
-        string = "Analytic Account")
+        comodel_name="account.analytic.account",
+        string="Analytic Account")
     materials_id = fields.Many2one(
-        comodel_name = "farm.materials",
-        string = "Material Order")
+        comodel_name="farm.materials",
+        string="Material Order")
     produce_id = fields.Many2one(
-        comodel_name = "farm.produce",
-        string = "Produce Order")
+        comodel_name="farm.produce",
+        string="Produce Order")
 
     def _prepare_move_values(self):
         res = super()._prepare_move_values()
@@ -205,11 +205,11 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     materials_id = fields.Many2one(
-        comodel_name = 'farm.materials',
-        string = "Farm Material")
+        comodel_name='farm.materials',
+        string="Farm Material")
     produce_id = fields.Many2one(
-        comodel_name = 'farm.produce',
-        string = "Farm Produce")
+        comodel_name='farm.produce',
+        string="Farm Produce")
 
 
 class AccountMoveLine(models.Model):
@@ -217,29 +217,29 @@ class AccountMoveLine(models.Model):
 
     # expense already maintained in he.expense model
     equipments_id = fields.Many2one(
-        comodel_name = 'farm.equipments',
-        string = "Farm Equipment")
+        comodel_name='farm.equipments',
+        string="Farm Equipment")
     operations_id = fields.Many2one(
-        comodel_name = 'farm.operations',
-        string = "Farm Operation")
+        comodel_name='farm.operations',
+        string="Farm Operation")
     materials_id = fields.Many2one(
-        comodel_name = 'farm.materials',
-        string = "Farm Material")
+        comodel_name='farm.materials',
+        string="Farm Material")
     produce_id = fields.Many2one(
-        comodel_name = 'farm.produce',
-        string = "Farm Produce")
+        comodel_name='farm.produce',
+        string="Farm Produce")
     sales_id = fields.Many2one(
-        comodel_name = 'farm.sales',
-        string = "Farm Sales")
+        comodel_name='farm.sales',
+        string="Farm Sales")
     move_type = fields.Selection(
-        related = "move_id.move_type")
+        related="move_id.move_type")
 
 
 class AccountAnalyticAccount(models.Model):
     _inherit = 'account.analytic.account'
 
     project_reference = fields.Reference(
-        selection = [
+        selection=[
             ('farm.projects', 'Project')
         ],
-        string = 'Project')
+        string='Project')

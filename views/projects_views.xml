@@ -1,80 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="farm_projects_view_form" model="ir.ui.view">
+    <record id="farm_projects_view_form"
+        model="ir.ui.view">
         <field name="name">farm.projects.form</field>
         <field name="model">farm.projects</field>
-        <field name="arch" type="xml">
+        <field name="arch"
+            type="xml">
             <form string="Project">
                 <header>
-                    <button name="button_draft" string="Set Draft" type="object"
-                            class="oe_highlight"
-                            help="Move Project to In Draft State" states="on_hold"/>
-                    <button name="button_in_operation" string="Set In Operation" type="object"
-                            class="oe_highlight"
-                            help="Move Project to In operation State" states="draft,finish"/>
-                    <button name="button_finish" string="Set Finish" type="object"
-                            class="oe_highlight"
-                            help="Move Project to In Finish State" states="in_operation"/>
-                    <button name="button_on_hold" string="Set On Hold" type="object"
-                            class="oe_highlight"
-                            help="Move Project to On Hold State" states="in_operation"/>
-                    <field name="state" widget="statusbar" options="{'clickable': '0'}" clickable="True" type="object"/>
+                    <button name="button_draft"
+                        string="Set Draft"
+                        type="object"
+                        class="oe_highlight"
+                        help="Move Project to In Draft State"
+                        states="on_hold"/>
+                    <button name="button_in_operation"
+                        string="Set In Operation"
+                        type="object"
+                        class="oe_highlight"
+                        help="Move Project to In operation State"
+                        states="draft,finish"/>
+                    <button name="button_finish"
+                        string="Set Finish"
+                        type="object"
+                        class="oe_highlight"
+                        help="Move Project to In Finish State"
+                        states="in_operation"/>
+                    <button name="button_on_hold"
+                        string="Set On Hold"
+                        type="object"
+                        class="oe_highlight"
+                        help="Move Project to On Hold State"
+                        states="in_operation"/>
+                    <field name="state"
+                        widget="statusbar"
+                        options="{'clickable': '0'}"
+                        clickable="True"
+                        type="object"/>
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_open_operation_orders_timeframe" type="object"
-                                class="oe_stat_button"
-                                icon="fa-calendar">
+                    <div class="oe_button_box"
+                        name="button_box">
+                        <button name="action_open_operation_orders_timeframe"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-calendar">
                             <div class="o_stat_info">
                                 <field name="operations_count"/>
                                 <span class="o_stat_text">Operation TF</span>
                             </div>
                         </button>
-                        <button name="action_open_material_orders_timeframe" type="object"
-                                class="oe_stat_button"
-                                icon="fa-calendar">
+                        <button name="action_open_material_orders_timeframe"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-calendar">
                             <div class="o_stat_info">
                                 <field name="materials_count"/>
                                 <span class="o_stat_text">Material TF</span>
                             </div>
                         </button>
-                        <button name="action_open_expense_orders_timeframe" type="object"
-                                class="oe_stat_button"
-                                icon="fa-calendar">
+                        <button name="action_open_expense_orders_timeframe"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-calendar">
                             <div class="o_stat_info">
                                 <field name="expenses_count"/>
                                 <span class="o_stat_text">Expense TF</span>
                             </div>
                         </button>
-                        <button name="action_open_produce_orders_timeframe" type="object"
-                                class="oe_stat_button"
-                                icon="fa-calendar">
+                        <button name="action_open_produce_orders_timeframe"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-calendar">
                             <div class="o_stat_info">
                                 <field name="produce_count"/>
                                 <span class="o_stat_text">Produce TF</span>
                             </div>
                         </button>
-                        <button name="action_open_sales_orders_timeframe" type="object"
-                                class="oe_stat_button"
-                                icon="fa-calendar">
+                        <button name="action_open_sales_orders_timeframe"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-calendar">
                             <div class="o_stat_info">
                                 <field name="sales_count"/>
                                 <span class="o_stat_text">Sales TF</span>
                             </div>
                         </button>
                     </div>
-                    <div role="alert" class="alert alert-warning"
-                         attrs="{'invisible': [('analytic_account_id', '!=', False)]}">
+                    <div role="alert"
+                        class="alert alert-warning"
+                        attrs="{'invisible': [('analytic_account_id', '!=', False)]}">
                         Create analytic account. bills, invoices and stock move depending on that.
                     </div>
-                    <div role="alert" class="alert alert-warning"
-                         attrs="{'invisible': [('product_id', '!=', False)]}">
+                    <div role="alert"
+                        class="alert alert-warning"
+                        attrs="{'invisible': [('product_id', '!=', False)]}">
                         Create product with type service. bills, invoices and stock move depending on that.
                     </div>
                     <div class="oe_title">
                         <h3>
-                            <field name="priority" widget="priority" class="mr-3"/>
+                            <field name="priority"
+                                widget="priority"
+                                class="mr-3"/>
                             <field name="name"/>
                             <separator/>
                             <field name="short_name"/>
@@ -83,196 +111,237 @@
                     <group>
                         <group string="Basic">
                             <field name="project_type"/>
-                            <field name="project_group_id" widget="selection"/>
-                            <field name="user_id" widget="selection"/>
+                            <field name="project_group_id"
+                                widget="selection"/>
+                            <field name="user_id"
+                                widget="selection"/>
                             <field name="description"/>
-                            <field name="active" invisible="1"/>
-                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
-                            <field name="currency_id" widget="selection"/>
+                            <field name="active"
+                                invisible="1"/>
+                            <field name="company_id"
+                                widget="selection"
+                                groups="base.group_multi_company"/>
+                            <field name="currency_id"
+                                widget="selection"/>
                             <field name="product_id"/>
                             <field name="analytic_account_id"/>
                         </group>
                         <group string="Time Frame">
-                            <field name="start_date" type="date" class="oe_inline"/>
-                            <field name="end_date" type="date" class="oe_inline"/>
-                            <field name="close_date" type="date" class="oe_inline"/>
+                            <field name="start_date"
+                                type="date"
+                                class="oe_inline"/>
+                            <field name="end_date"
+                                type="date"
+                                class="oe_inline"/>
+                            <field name="close_date"
+                                type="date"
+                                class="oe_inline"/>
                         </group>
                     </group>
                     <notebook string="Project Brief">
                         <page string="Summary and Ratios">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Plan Time">
-                                            <field name="p_days" string="Plan Days"/>
+                                            <field name="p_days"
+                                                string="Plan Days"/>
                                         </group>
                                     </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Actual Time">
-                                            <field name="g_days" String="Actual Days"/>
-                                            <field name="a_days" String="Actual Days"/>
+                                            <field name="g_days"
+                                                String="Actual Days"/>
+                                            <field name="a_days"
+                                                String="Actual Days"/>
                                         </group>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Plan">
-                                            <field name="operation_budget" widget='monetary'/>
-                                            <field name="material_budget" widget='monetary'/>
-                                            <field name="expense_budget" widget='monetary'/>
-                                            <field name="total_budget" widget='monetary'/>
+                                            <field name="operation_budget"
+                                                widget='monetary'/>
+                                            <field name="material_budget"
+                                                widget='monetary'/>
+                                            <field name="expense_budget"
+                                                widget='monetary'/>
+                                            <field name="total_budget"
+                                                widget='monetary'/>
                                         </group>
                                     </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Actual">
-                                            <field name="operations_actual" widget='monetary'/>
-                                            <field name="materials_actual" widget='monetary'/>
-                                            <field name="expenses_actual" widget='monetary'/>
-                                            <field name="total_actual" widget='monetary'/>
+                                            <field name="operations_actual"
+                                                widget='monetary'/>
+                                            <field name="materials_actual"
+                                                widget='monetary'/>
+                                            <field name="expenses_actual"
+                                                widget='monetary'/>
+                                            <field name="total_actual"
+                                                widget='monetary'/>
                                         </group>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Plan Amount and Qty">
-                                            <field name="plan_produce_amount" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
-                                            />
+                                            <field name="plan_produce_amount"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}" />
                                             <field name="plan_produce_qty"
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
-                                            />
-                                            <field name="plan_sales_amount" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
-                                            />
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}" />
+                                            <field name="plan_sales_amount"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}" />
                                             <field name="plan_sales_qty"
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
-                                            />
-                                            <field name="plan_service_amount" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                            />
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}" />
+                                            <field name="plan_service_amount"
+                                                widget='monetary'
+                                                attrs="{'invisible':[('project_type','!=', 'service')]}" />
                                             <field name="plan_service_qty"
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                            />
+                                                attrs="{'invisible':[('project_type','!=', 'service')]}" />
                                         </group>
                                     </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Actual Amount and Qty">
-                                            <field name="actual_produce_amount" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
-                                            />
+                                            <field name="actual_produce_amount"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}" />
                                             <field name="actual_produce_qty"
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
-                                            />
-                                            <field name="actual_sales_amount" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
-                                            />
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}" />
+                                            <field name="actual_sales_amount"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}" />
                                             <field name="actual_sales_qty"
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
-                                            />
-                                            <field name="actual_service_amount" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                            />
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}" />
+                                            <field name="actual_service_amount"
+                                                widget='monetary'
+                                                attrs="{'invisible':[('project_type','!=', 'service')]}" />
                                             <field name="actual_service_qty"
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                            />
+                                                attrs="{'invisible':[('project_type','!=', 'service')]}" />
                                         </group>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Plan Price">
-                                            <field name="plan_produce_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
-                                            />
-                                            <field name="plan_sales_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
-                                            />
-                                            <field name="plan_service_price" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                            />
+                                            <field name="plan_produce_price"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}" />
+                                            <field name="plan_sales_price"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}" />
+                                            <field name="plan_service_price"
+                                                widget='monetary'
+                                                attrs="{'invisible':[('project_type','!=', 'service')]}" />
                                         </group>
                                     </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Actual Order Price">
-                                            <field name="average_produce_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
-                                            />
-                                            <field name="average_sales_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
-                                            />
-                                            <field name="average_service_price" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                            />
+                                            <field name="average_produce_price"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}" />
+                                            <field name="average_sales_price"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}" />
+                                            <field name="average_service_price"
+                                                widget='monetary'
+                                                attrs="{'invisible':[('project_type','!=', 'service')]}" />
                                         </group>
                                     </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Actual Price">
-                                            <field name="cog_produce_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}"
-                                            />
-                                            <field name="cog_sales_price" widget='monetary'
-                                                   attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}"
-                                            />
-                                            <field name="cog_service_price" widget='monetary'
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                            />
+                                            <field name="cog_produce_price"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}" />
+                                            <field name="cog_sales_price"
+                                                widget='monetary'
+                                                attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}" />
+                                            <field name="cog_service_price"
+                                                widget='monetary'
+                                                attrs="{'invisible':[('project_type','!=', 'service')]}" />
                                         </group>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col" style="border:1px solid #cccccc;">
-                                            <field name="total_actual04" widget="progressbar"
-                                                   title="Actual Spend vs Budget"
-                                            />
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
+                                        <field name="total_actual04"
+                                            widget="progressbar"
+                                            title="Actual Spend vs Budget" />
                                     </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
-                                            <field name="total_actual05" widget="progressbar"
-                                                   title="Actual Spend vs Sales"
-                                            />
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
+                                        <field name="total_actual05"
+                                            widget="progressbar"
+                                            title="Actual Spend vs Sales" />
                                     </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
-                                            <field name="total_actual06" widget="progressbar"
-                                                   title="Actual Spend vs Executed Order"
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                            />
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
+                                        <field name="total_actual06"
+                                            widget="progressbar"
+                                            title="Actual Spend vs Executed Order"
+                                            attrs="{'invisible':[('project_type','!=', 'service')]}" />
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Time">
-                                            <field name="time_progress" widget="progressbar"
-                                            />
+                                            <field name="time_progress"
+                                                widget="progressbar" />
                                         </group>
                                     </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Cost">
-                                            <field name="cost_progress" widget="progressbar"
-                                            />
+                                            <field name="cost_progress"
+                                                widget="progressbar" />
                                         </group>
                                     </div>
-                                    <div class="col" style="border:1px solid #cccccc;">
+                                    <div class="col"
+                                        style="border:1px solid #cccccc;">
                                         <group string="Service">
-                                            <field name="service_progress" widget="progressbar"
-                                                   attrs="{'invisible':[('project_type','!=', 'service')]}"
-                                            />
+                                            <field name="service_progress"
+                                                widget="progressbar"
+                                                attrs="{'invisible':[('project_type','!=', 'service')]}" />
                                         </group>
                                     </div>
                                 </div>
                             </div>
                         </page>
                         <page string="Operation Orders">
-                            <field name="operations_ids" context="{'default_user_id': user_id}">
+                            <field name="operations_ids"
+                                context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
                                     <field name="state"/>
                                     <field name="category_id"/>
-                                    <field name="user_id" widget="selection"/>
-                                    <field name="activity_ids" widget="list_activity"/>
+                                    <field name="user_id"
+                                        widget="selection"/>
+                                    <field name="activity_ids"
+                                        widget="list_activity"/>
                                     <field name="issue_date"/>
-                                    <field name="o_order_cost" widget="monetary" sum="Total"/>
-                                    <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
-                                    <field name="partner_id" widget="selection"/>
-                                    <field name="stock_warehouse" widget="selection"/>
+                                    <field name="o_order_cost"
+                                        widget="monetary"
+                                        sum="Total"/>
+                                    <field name="currency_id"
+                                        groups="base.group_multi_currency"
+                                        widget="selection"/>
+                                    <field name="partner_id"
+                                        widget="selection"/>
+                                    <field name="stock_warehouse"
+                                        widget="selection"/>
                                 </tree>
                                 <form>
                                     <group>
@@ -282,48 +351,74 @@
                                             <field name="category_id"/>
                                         </group>
                                         <group string="Basic">
-                                            <field name="user_id" widget="selection"/>
+                                            <field name="user_id"
+                                                widget="selection"/>
                                             <field name="issue_date"/>
-                                            <field name="o_order_cost" widget="monetary"/>
-                                            <field name="active" invisible="1"/>
-                                            <field name="company_id" groups="base.group_multi_company"
-                                                   widget="selection"/>
-                                            <field name="currency_id" groups="base.group_multi_currency"
-                                                   widget="selection"/>
-                                            <field name="partner_id" widget="selection"/>
-                                            <field name="stock_warehouse" widget="selection"/>
+                                            <field name="o_order_cost"
+                                                widget="monetary"/>
+                                            <field name="active"
+                                                invisible="1"/>
+                                            <field name="company_id"
+                                                groups="base.group_multi_company"
+                                                widget="selection"/>
+                                            <field name="currency_id"
+                                                groups="base.group_multi_currency"
+                                                widget="selection"/>
+                                            <field name="partner_id"
+                                                widget="selection"/>
+                                            <field name="stock_warehouse"
+                                                widget="selection"/>
                                         </group>
                                     </group>
-                                    <field name="operation_order_line_ids" readonly="1">
+                                    <field name="operation_order_line_ids"
+                                        readonly="1">
                                         <tree>
-                                            <field name="sequence" widget="handle"/>
-                                            <field name="product_id" widget="selection"/>
-                                            <field name="name" widget="section_and_note_text"/>
-                                            <field name="categ_id" widget="selection" invisible="1"/>
-                                            <field name="price_unit" widget="monetary"/>
-                                            <field name="currency_id" invisible="1" widget="selection"/>
+                                            <field name="sequence"
+                                                widget="handle"/>
+                                            <field name="product_id"
+                                                widget="selection"/>
+                                            <field name="name"
+                                                widget="section_and_note_text"/>
+                                            <field name="categ_id"
+                                                widget="selection"
+                                                invisible="1"/>
+                                            <field name="price_unit"
+                                                widget="monetary"/>
+                                            <field name="currency_id"
+                                                invisible="1"
+                                                widget="selection"/>
                                             <field name="product_uom"/>
                                             <field name="qty"/>
                                             <field name="note"/>
-                                            <field name="price_subtotal" sum="Total Cost"/>
+                                            <field name="price_subtotal"
+                                                sum="Total Cost"/>
                                         </tree>
                                     </field>
                                 </form>
                             </field>
                         </page>
                         <page string="Material Orders">
-                            <field name="materials_ids" context="{'default_user_id': user_id}">
+                            <field name="materials_ids"
+                                context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
                                     <field name="state"/>
                                     <field name="category_id"/>
-                                    <field name="user_id" widget="selection"/>
-                                    <field name="activity_ids" widget="list_activity"/>
+                                    <field name="user_id"
+                                        widget="selection"/>
+                                    <field name="activity_ids"
+                                        widget="list_activity"/>
                                     <field name="issue_date"/>
-                                    <field name="m_order_cost" widget="monetary" sum="Total"/>
-                                    <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
-                                    <field name="partner_id" widget="selection"/>
-                                    <field name="stock_warehouse" widget="selection"/>
+                                    <field name="m_order_cost"
+                                        widget="monetary"
+                                        sum="Total"/>
+                                    <field name="currency_id"
+                                        groups="base.group_multi_currency"
+                                        widget="selection"/>
+                                    <field name="partner_id"
+                                        widget="selection"/>
+                                    <field name="stock_warehouse"
+                                        widget="selection"/>
                                 </tree>
                                 <form>
                                     <group>
@@ -333,64 +428,96 @@
                                             <field name="category_id"/>
                                         </group>
                                         <group string="Basic">
-                                            <field name="user_id" widget="selection"/>
+                                            <field name="user_id"
+                                                widget="selection"/>
                                             <field name="issue_date"/>
-                                            <field name="m_order_cost" widget="monetary"/>
-                                            <field name="active" invisible="1"/>
-                                            <field name="company_id" groups="base.group_multi_company"
-                                                   widget="selection"/>
-                                            <field name="currency_id" groups="base.group_multi_currency"
-                                                   widget="selection"/>
-                                            <field name="partner_id" widget="selection"/>
-                                            <field name="stock_warehouse" widget="selection"/>
+                                            <field name="m_order_cost"
+                                                widget="monetary"/>
+                                            <field name="active"
+                                                invisible="1"/>
+                                            <field name="company_id"
+                                                groups="base.group_multi_company"
+                                                widget="selection"/>
+                                            <field name="currency_id"
+                                                groups="base.group_multi_currency"
+                                                widget="selection"/>
+                                            <field name="partner_id"
+                                                widget="selection"/>
+                                            <field name="stock_warehouse"
+                                                widget="selection"/>
                                         </group>
                                     </group>
-                                    <field name="materials_order_line_ids" readonly="1">
+                                    <field name="materials_order_line_ids"
+                                        readonly="1">
                                         <tree editable="bottom">
-                                            <field name="sequence" widget="handle"/>
-                                            <field name="product_id" widget="selection"/>
-                                            <field name="name" widget="section_and_note_text"/>
-                                            <field name="categ_id" widget="selection" invisible="1"/>
-                                            <field name="price_unit" widget="monetary"/>
-                                            <field name="currency_id" invisible="1" widget="selection"/>
+                                            <field name="sequence"
+                                                widget="handle"/>
+                                            <field name="product_id"
+                                                widget="selection"/>
+                                            <field name="name"
+                                                widget="section_and_note_text"/>
+                                            <field name="categ_id"
+                                                widget="selection"
+                                                invisible="1"/>
+                                            <field name="price_unit"
+                                                widget="monetary"/>
+                                            <field name="currency_id"
+                                                invisible="1"
+                                                widget="selection"/>
                                             <field name="product_uom"/>
                                             <field name="qty"/>
                                             <field name="note"/>
-                                            <field name="price_subtotal" sum="Total Cost"/>
+                                            <field name="price_subtotal"
+                                                sum="Total Cost"/>
                                         </tree>
                                     </field>
                                 </form>
                             </field>
                         </page>
                         <page string="Expense Budget">
-                            <field name="expenses_ids" context="{'default_user_id': user_id}">
+                            <field name="expenses_ids"
+                                context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
                                     <field name="state"/>
                                     <field name="category_id"/>
-                                    <field name="user_id" widget="selection"/>
-                                    <field name="activity_ids" widget="list_activity"/>
+                                    <field name="user_id"
+                                        widget="selection"/>
+                                    <field name="activity_ids"
+                                        widget="list_activity"/>
                                     <field name="issue_date"/>
-                                    <field name="e_order_cost" widget="monetary" sum="Total"/>
-                                    <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
-                                    <field name="partner_id" widget="selection"/>
-                                    <field name="stock_warehouse" widget="selection"/>
+                                    <field name="e_order_cost"
+                                        widget="monetary"
+                                        sum="Total"/>
+                                    <field name="currency_id"
+                                        groups="base.group_multi_currency"
+                                        widget="selection"/>
+                                    <field name="partner_id"
+                                        widget="selection"/>
+                                    <field name="stock_warehouse"
+                                        widget="selection"/>
                                 </tree>
                             </field>
                         </page>
                         <page string="Produce Order"
-                              attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}">
-                            <field name="produce_ids" context="{'default_user_id': user_id}">
+                            attrs="{'invisible':['|', ('project_type','=', 'service'), ('project_type','=', 'sale')]}">
+                            <field name="produce_ids"
+                                context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
                                     <field name="state"/>
                                     <field name="short_name"/>
-                                    <field name="user_id" widget="selection"/>
-                                    <field name="activity_ids" widget="list_activity"/>
+                                    <field name="user_id"
+                                        widget="selection"/>
+                                    <field name="activity_ids"
+                                        widget="list_activity"/>
                                     <field name="issue_date"/>
-                                    <field name="p_order_cost" sum="Total Order"/>
-                                    <field name="partner_id" widget="selection"/>
-                                    <field name="stock_warehouse" widget="selection"/>
+                                    <field name="p_order_cost"
+                                        sum="Total Order"/>
+                                    <field name="partner_id"
+                                        widget="selection"/>
+                                    <field name="stock_warehouse"
+                                        widget="selection"/>
                                 </tree>
                                 <form>
                                     <group>
@@ -399,46 +526,68 @@
                                             <field name="short_name"/>
                                         </group>
                                         <group string="Basic">
-                                            <field name="user_id" widget="selection"/>
+                                            <field name="user_id"
+                                                widget="selection"/>
                                             <field name="issue_date"/>
-                                            <field name="p_order_cost" widget="monetary"/>
-                                            <field name="active" invisible="1"/>
-                                            <field name="company_id" groups="base.group_multi_company"/>
-                                            <field name="currency_id" groups="base.group_multi_currency"/>
-                                            <field name="partner_id" widget="selection"/>
-                                            <field name="stock_warehouse" widget="selection"/>
+                                            <field name="p_order_cost"
+                                                widget="monetary"/>
+                                            <field name="active"
+                                                invisible="1"/>
+                                            <field name="company_id"
+                                                groups="base.group_multi_company"/>
+                                            <field name="currency_id"
+                                                groups="base.group_multi_currency"/>
+                                            <field name="partner_id"
+                                                widget="selection"/>
+                                            <field name="stock_warehouse"
+                                                widget="selection"/>
                                         </group>
                                     </group>
-                                    <field name="produce_order_line_ids" readonly="1">
+                                    <field name="produce_order_line_ids"
+                                        readonly="1">
                                         <tree>
-                                            <field name="sequence" widget="handle"/>
-                                            <field name="product_id" widget="selection"/>
-                                            <field name="name" widget="section_and_note_text"/>
-                                            <field name="categ_id" widget="selection" invisible="1"/>
-                                            <field name="price_unit" widget="monetary"/>
-                                            <field name="currency_id" invisible="1"/>
+                                            <field name="sequence"
+                                                widget="handle"/>
+                                            <field name="product_id"
+                                                widget="selection"/>
+                                            <field name="name"
+                                                widget="section_and_note_text"/>
+                                            <field name="categ_id"
+                                                widget="selection"
+                                                invisible="1"/>
+                                            <field name="price_unit"
+                                                widget="monetary"/>
+                                            <field name="currency_id"
+                                                invisible="1"/>
                                             <field name="product_uom"/>
                                             <field name="qty"/>
                                             <field name="note"/>
-                                            <field name="price_subtotal" sum="Total Cost"/>
+                                            <field name="price_subtotal"
+                                                sum="Total Cost"/>
                                         </tree>
                                     </field>
                                 </form>
                             </field>
                         </page>
                         <page string="Sales Order"
-                              attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}">
-                            <field name="sales_ids" context="{'default_user_id': user_id}">
+                            attrs="{'invisible':['|', ('project_type','=', 'service'),('project_type','=', 'create')]}">
+                            <field name="sales_ids"
+                                context="{'default_user_id': user_id}">
                                 <tree>
                                     <field name="name"/>
                                     <field name="state"/>
                                     <field name="short_name"/>
-                                    <field name="user_id" widget="selection"/>
-                                    <field name="activity_ids" widget="list_activity"/>
+                                    <field name="user_id"
+                                        widget="selection"/>
+                                    <field name="activity_ids"
+                                        widget="list_activity"/>
                                     <field name="issue_date"/>
-                                    <field name="s_order_cost" sum="Total Order"/>
-                                    <field name="partner_id" widget="selection"/>
-                                    <field name="stock_warehouse" widget="selection"/>
+                                    <field name="s_order_cost"
+                                        sum="Total Order"/>
+                                    <field name="partner_id"
+                                        widget="selection"/>
+                                    <field name="stock_warehouse"
+                                        widget="selection"/>
                                 </tree>
                                 <form>
                                     <group>
@@ -447,83 +596,121 @@
                                             <field name="short_name"/>
                                         </group>
                                         <group string="Basic">
-                                            <field name="user_id" widget="selection"/>
+                                            <field name="user_id"
+                                                widget="selection"/>
                                             <field name="issue_date"/>
-                                            <field name="s_order_cost" widget="monetary"/>
-                                            <field name="active" invisible="1"/>
-                                            <field name="company_id" groups="base.group_multi_company"
-                                                   widget="selection"/>
-                                            <field name="currency_id" groups="base.group_multi_currency"
-                                                   widget="selection"/>
-                                            <field name="partner_id" widget="selection"/>
-                                            <field name="stock_warehouse" widget="selection"/>
+                                            <field name="s_order_cost"
+                                                widget="monetary"/>
+                                            <field name="active"
+                                                invisible="1"/>
+                                            <field name="company_id"
+                                                groups="base.group_multi_company"
+                                                widget="selection"/>
+                                            <field name="currency_id"
+                                                groups="base.group_multi_currency"
+                                                widget="selection"/>
+                                            <field name="partner_id"
+                                                widget="selection"/>
+                                            <field name="stock_warehouse"
+                                                widget="selection"/>
                                         </group>
                                     </group>
-                                    <field name="sales_order_line_ids" readonly="1">
+                                    <field name="sales_order_line_ids"
+                                        readonly="1">
                                         <tree>
-                                            <field name="sequence" widget="handle"/>
-                                            <field name="product_id" widget="selection"/>
-                                            <field name="name" widget="section_and_note_text"/>
-                                            <field name="categ_id" widget="selection" invisible="1"/>
-                                            <field name="price_unit" widget="monetary"/>
-                                            <field name="currency_id" invisible="1" widget="selection"/>
+                                            <field name="sequence"
+                                                widget="handle"/>
+                                            <field name="product_id"
+                                                widget="selection"/>
+                                            <field name="name"
+                                                widget="section_and_note_text"/>
+                                            <field name="categ_id"
+                                                widget="selection"
+                                                invisible="1"/>
+                                            <field name="price_unit"
+                                                widget="monetary"/>
+                                            <field name="currency_id"
+                                                invisible="1"
+                                                widget="selection"/>
                                             <field name="product_uom"/>
                                             <field name="qty"/>
                                             <field name="note"/>
-                                            <field name="price_subtotal" sum="Total Cost"/>
+                                            <field name="price_subtotal"
+                                                sum="Total Cost"/>
                                         </tree>
                                     </field>
                                 </form>
                             </field>
                         </page>
-                        <page string="Operation order lines" attrs="{'invisible':[('project_type','!=', 'service')]}">
-                            <field name="order_ids" readonly="1">
+                        <page string="Operation order lines"
+                            attrs="{'invisible':[('project_type','!=', 'service')]}">
+                            <field name="order_ids"
+                                readonly="1">
                                 <tree>
-                                    <field name="sequence" widget="handle"/>
+                                    <field name="sequence"
+                                        widget="handle"/>
                                     <field name="state"/>
                                     <field name="operations_id"/>
                                     <field name="product_id"/>
-                                    <field name="name" widget="section_and_note_text"/>
-                                    <field name="categ_id" invisible="1"/>
-                                    <field name="price_unit" widget="monetary"/>
-                                    <field name="company_id" invisible="1"/>
-                                    <field name="currency_id" invisible="1"/>
+                                    <field name="name"
+                                        widget="section_and_note_text"/>
+                                    <field name="categ_id"
+                                        invisible="1"/>
+                                    <field name="price_unit"
+                                        widget="monetary"/>
+                                    <field name="company_id"
+                                        invisible="1"/>
+                                    <field name="currency_id"
+                                        invisible="1"/>
                                     <field name="product_uom"/>
                                     <field name="qty"/>
                                     <field name="note"/>
-                                    <field name="price_subtotal" sum="Total Cost"/>
+                                    <field name="price_subtotal"
+                                        sum="Total Cost"/>
                                     <field name="equipments_id"/>
                                 </tree>
                             </field>
                         </page>
-                        <page string="Bill Lines" attrs="{'invisible':[('project_type','!=', 'service')]}">
-                            <field name="bills_ids" readonly="1">
+                        <page string="Bill Lines"
+                            attrs="{'invisible':[('project_type','!=', 'service')]}">
+                            <field name="bills_ids"
+                                readonly="1">
                                 <tree>
-                                    <field name="move_id" optional="hide"/>
+                                    <field name="move_id"
+                                        optional="hide"/>
                                     <field name="date"/>
                                     <field name="product_id"/>
                                     <field name="quantity"/>
                                     <field name="price_unit"/>
                                     <field name="price_subtotal"/>
                                     <field name="ref"/>
-                                    <field name="debit" optional="hide"/>
-                                    <field name="debit" optional="hide"/>
-                                    <field name="move_name" optional="hide"/>
+                                    <field name="debit"
+                                        optional="hide"/>
+                                    <field name="debit"
+                                        optional="hide"/>
+                                    <field name="move_name"
+                                        optional="hide"/>
                                 </tree>
                             </field>
                         </page>
                         <page string="Locations">
                             <field name="locations_used_ids">
                                 <tree>
-                                    <field name="locations_id" widget="selection"/>
-                                    <field name="complete_name" widget="selection"/>
-                                    <field name="address" widget="selection"/>
-                                    <field name="space_sum" sum="Total Space"/>
+                                    <field name="locations_id"
+                                        widget="selection"/>
+                                    <field name="complete_name"
+                                        widget="selection"/>
+                                    <field name="address"
+                                        widget="selection"/>
+                                    <field name="space_sum"
+                                        sum="Total Space"/>
                                 </tree>
                                 <form>
                                     <group>
-                                        <field name="locations_id" widget="selection"/>
-                                        <field name="space_sum" readonly="1"/>
+                                        <field name="locations_id"
+                                            widget="selection"/>
+                                        <field name="space_sum"
+                                            readonly="1"/>
                                     </group>
                                 </form>
                             </field>
@@ -531,15 +718,19 @@
                         <page string="Settings">
                             <group string="Product and Category">
                                 <group>
-                                    <field name="category_id" widget="selection" class="oe_inline"/>
+                                    <field name="category_id"
+                                        widget="selection"
+                                        class="oe_inline"/>
                                 </group>
                                 <group>
                                     <div>
-                                        <field name="create_lock" invisible="0"/>
-                                        <button name="create_project_product" type="object"
-                                                string="Create Product"
-                                                class="oe_highlight"
-                                                attrs="{'invisible':[('create_lock','=', True)]}"/>
+                                        <field name="create_lock"
+                                            invisible="0"/>
+                                        <button name="create_project_product"
+                                            type="object"
+                                            string="Create Product"
+                                            class="oe_highlight"
+                                            attrs="{'invisible':[('create_lock','=', True)]}"/>
                                     </div>
                                 </group>
                             </group>
@@ -549,10 +740,11 @@
                                 </group>
                                 <group>
                                     <div>
-                                        <button name="create_project_analytic_account" type="object"
-                                                string="Create Analytic Account"
-                                                class="oe_highlight"
-                                                attrs="{'invisible':[('analytic_account_id','!=', False)]}"/>
+                                        <button name="create_project_analytic_account"
+                                            type="object"
+                                            string="Create Analytic Account"
+                                            class="oe_highlight"
+                                            attrs="{'invisible':[('analytic_account_id','!=', False)]}"/>
                                     </div>
                                 </group>
                             </group>
@@ -569,63 +761,96 @@
         </field>
     </record>
 
-    <record id="farm_projects_view_tree" model="ir.ui.view">
+    <record id="farm_projects_view_tree"
+        model="ir.ui.view">
         <field name="name">farm.projects.tree</field>
         <field name="model">farm.projects</field>
-        <field name="arch" type="xml">
-            <tree string="Project" sample="1"
-                  decoration-info="state == 'draft'"
-                  decoration-warning="state == 'in_operation'"
-                  decoration-success="state == 'finish'"
-                  decoration-danger="state == 'on_hold'"
-            >
+        <field name="arch"
+            type="xml">
+            <tree string="Project"
+                sample="1"
+                decoration-info="state == 'draft'"
+                decoration-warning="state == 'in_operation'"
+                decoration-success="state == 'finish'"
+                decoration-danger="state == 'on_hold'">
                 <field name="name"/>
-                <field name="priority" widget="priority" class="mr-3"/>
-                <field name="state" widget="badge" decoration-info="state == 'draft'"
-                       decoration-warning="state == 'in_operation'" decoration-success="state == 'finish'"
-                       decoration-danger="state == 'on_hold'"/>
-                <field name="activity_ids" widget="list_activity"/>
-                <field name="project_type" optional="show"/>
-                <field name="project_group_id" optional="show"/>
+                <field name="priority"
+                    widget="priority"
+                    class="mr-3"/>
+                <field name="state"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state == 'in_operation'"
+                    decoration-success="state == 'finish'"
+                    decoration-danger="state == 'on_hold'"/>
+                <field name="activity_ids"
+                    widget="list_activity"/>
+                <field name="project_type"
+                    optional="show"/>
+                <field name="project_group_id"
+                    optional="show"/>
                 <field name="short_name"/>
-                <field name="user_id" widget="selection"/>
-                <field name="description" optional="show"/>
-                <field name="start_date" type="date"/>
-                <field name="end_date" type="date"/>
-                <field name="close_date" type="date" optional="hide"/>
-                <field name="p_days" optional="hide"/>
-                <field name="g_days" optional="hide"/>
-                <field name="a_days" optional="hide"/>
-                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
-                <field name="currency_id" widget="selection"/>
+                <field name="user_id"
+                    widget="selection"/>
+                <field name="description"
+                    optional="show"/>
+                <field name="start_date"
+                    type="date"/>
+                <field name="end_date"
+                    type="date"/>
+                <field name="close_date"
+                    type="date"
+                    optional="hide"/>
+                <field name="p_days"
+                    optional="hide"/>
+                <field name="g_days"
+                    optional="hide"/>
+                <field name="a_days"
+                    optional="hide"/>
+                <field name="company_id"
+                    widget="selection"
+                    groups="base.group_multi_company"/>
+                <field name="currency_id"
+                    widget="selection"/>
             </tree>
         </field>
     </record>
 
-    <record id="farm_projects_view_kanban" model="ir.ui.view">
+    <record id="farm_projects_view_kanban"
+        model="ir.ui.view">
         <field name="name">farm.projects.kanban</field>
         <field name="model">farm.projects</field>
-        <field name="arch" type="xml">
+        <field name="arch"
+            type="xml">
             <kanban default_group_by="state"
-                    class="o_kanban_small_column o_kanban_project_tasks"
-                    sample="1">
+                class="o_kanban_small_column o_kanban_project_tasks"
+                sample="1">
                 <field name="state"/>
-                <field name="priority" widget="priority" class="mr-3"/>
+                <field name="priority"
+                    widget="priority"
+                    class="mr-3"/>
                 <field name="name"/>
                 <field name="project_type"/>
                 <field name="short_name"/>
-                <field name="user_id" widget="selection"/>
+                <field name="user_id"
+                    widget="selection"/>
                 <field name="description"/>
-                <field name="start_date" type="date"/>
-                <field name="end_date" type="date"/>
-                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                <field name="start_date"
+                    type="date"/>
+                <field name="end_date"
+                    type="date"/>
+                <field name="company_id"
+                    widget="selection"
+                    groups="base.group_multi_company"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_global_click">
                             <div class="oe_kanban_details">
                                 <ul>
                                     <li>
-                                        <field name="priority" widget="priority" class="mr-3"/>
+                                        <field name="priority"
+                                            widget="priority"
+                                            class="mr-3"/>
                                     </li>
                                     <li>
                                         Ref:
@@ -636,7 +861,8 @@
                                         <field name="short_name"/>
                                     </li>
                                     <li>
-                                        <field name="user_id" widget="selection"/>
+                                        <field name="user_id"
+                                            widget="selection"/>
                                     </li>
                                     <li>
                                         Type:
@@ -654,12 +880,15 @@
                             </div>
                             <li>
                                 Time Progress:
-                                <field name="time_progress" widget="progressbar"/>
+                                <field name="time_progress"
+                                    widget="progressbar"/>
                                 Cost Progress:
-                                <field name="cost_progress" widget="progressbar">Cost</field>
+                                <field name="cost_progress"
+                                    widget="progressbar">Cost</field>
                                 Service Progress:
-                                <field name="service_progress" widget="progressbar"
-                                       attrs="{'invisible':[('project_type','!=', 'service')]}">Cost
+                                <field name="service_progress"
+                                    widget="progressbar"
+                                    attrs="{'invisible':[('project_type','!=', 'service')]}">Cost
                                 </field>
                             </li>
                         </div>
@@ -669,77 +898,130 @@
         </field>
     </record>
 
-    <record id="farm_projects_view_calendar" model="ir.ui.view">
+    <record id="farm_projects_view_calendar"
+        model="ir.ui.view">
         <field name="name">farm.projects.calendar</field>
         <field name="model">farm.projects</field>
-        <field name="arch" type="xml">
-            <calendar string="Projects" date_start="start_date" date_stop="end_date" create="1" quick_add="False"
-                      mode="month" color="project_group_id" hide_time="true" event_limit="5"
-                      event_open_popup="False">
-                <field name="project_type" filters="1" invisible="1"/>
-                <field name="project_group_id" filters="1" invisible="1"/>
-                <field name="user_id" filters="1" invisible="1"/>
+        <field name="arch"
+            type="xml">
+            <calendar string="Projects"
+                date_start="start_date"
+                date_stop="end_date"
+                create="1"
+                quick_add="False"
+                mode="month"
+                color="project_group_id"
+                hide_time="true"
+                event_limit="5"
+                event_open_popup="False">
+                <field name="project_type"
+                    filters="1"
+                    invisible="1"/>
+                <field name="project_group_id"
+                    filters="1"
+                    invisible="1"/>
+                <field name="user_id"
+                    filters="1"
+                    invisible="1"/>
                 <field name="name"/>
                 <field name="short_name"/>
-                <field name="company_id" widget="selection" groups="base.group_multi_company" invisible="1"/>
+                <field name="company_id"
+                    widget="selection"
+                    groups="base.group_multi_company"
+                    invisible="1"/>
             </calendar>
         </field>
     </record>
 
-    <record id="farm_projects_view_search" model="ir.ui.view">
+    <record id="farm_projects_view_search"
+        model="ir.ui.view">
         <field name="name">farm.projects.search</field>
         <field name="model">farm.projects</field>
-        <field name="arch" type="xml">
+        <field name="arch"
+            type="xml">
             <search string="Project">
                 <field name="name"/>
                 <field name="short_name"/>
                 <field name="project_type"/>
                 <field name="project_group_id"/>
-                <field name="user_id" widget="selection"/>
+                <field name="user_id"
+                    widget="selection"/>
                 <field name="description"/>
-                <field name="start_date" type="date"/>
-                <field name="end_date" type="date"/>
-                <field name="company_id" widget="selection" groups="base.group_multi_company"/>
-                <filter name="filter_create" string="Create Asset" domain="[('project_type', '=', 'create')]"/>
-                <filter name="filter_operate" string="Operate Asset" domain="[('project_type', '=', 'operate')]"/>
-                <filter name="filter_user" string="User" domain="[('user_id', '=', uid)]"/>
+                <field name="start_date"
+                    type="date"/>
+                <field name="end_date"
+                    type="date"/>
+                <field name="company_id"
+                    widget="selection"
+                    groups="base.group_multi_company"/>
+                <filter name="filter_create"
+                    string="Create Asset"
+                    domain="[('project_type', '=', 'create')]"/>
+                <filter name="filter_operate"
+                    string="Operate Asset"
+                    domain="[('project_type', '=', 'operate')]"/>
+                <filter name="filter_user"
+                    string="User"
+                    domain="[('user_id', '=', uid)]"/>
                 <separator/>
-                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <filter name="filter_archived"
+                    string="Archived"
+                    domain="[('active', '=', False)]"/>
                 <separator/>
-                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
-                <filter name="filter_in_operation" string="In Operation" domain="[('state', '=', 'in_operation')]"/>
-                <filter name="filter_finish" string="Finished" domain="[('state', '=', 'finish')]"/>
-                <filter name="filter_on_hold" string="On Hold" domain="[('state', '=', 'on_hold')]"/>
+                <filter name="filter_draft"
+                    string="Draft"
+                    domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_in_operation"
+                    string="In Operation"
+                    domain="[('state', '=', 'in_operation')]"/>
+                <filter name="filter_finish"
+                    string="Finished"
+                    domain="[('state', '=', 'finish')]"/>
+                <filter name="filter_on_hold"
+                    string="On Hold"
+                    domain="[('state', '=', 'on_hold')]"/>
                 <separator/>
-                <group expand="0" string="Group by">
-                    <filter string="Group" name="group_by_group" context="{'group_by':'project_group_id'}"/>
-                    <filter string="Company" name="group_by_company" context="{'group_by':'company_id'}"/>
-                    <filter string="Order Man" name="group_by_user" context="{'group_by':'user_id'}"/>
+                <group expand="0"
+                    string="Group by">
+                    <filter string="Group"
+                        name="group_by_group"
+                        context="{'group_by':'project_group_id'}"/>
+                    <filter string="Company"
+                        name="group_by_company"
+                        context="{'group_by':'company_id'}"/>
+                    <filter string="Order Man"
+                        name="group_by_user"
+                        context="{'group_by':'user_id'}"/>
                 </group>
                 <searchpanel>
-                    <field name="project_group_id" select="multi" string="Project Group" enable_counters="1"/>
+                    <field name="project_group_id"
+                        select="multi"
+                        string="Project Group"
+                        enable_counters="1"/>
                 </searchpanel>
             </search>
         </field>
     </record>
 
-    <record id="farm_projects_action" model="ir.actions.act_window">
+    <record id="farm_projects_action"
+        model="ir.actions.act_window">
         <field name="name">Projects</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">farm.projects</field>
         <field name="view_mode">kanban,tree,form,calendar</field>
         <field name="context">{'search_default_filter_user': 1}</field>
         <field name="domain">[]</field>
-        <field name="help" type="html">
+        <field name="help"
+            type="html">
             <p class="o_view_nocontent_smiling_face">Create your first project!</p>
         </field>
     </record>
 
     <!--  This Menu Item must have a parent and an action  -->
     <menuitem id="menu_projects"
-              name="Projects"
-              parent="farm_menu_projects"
-              action="farm_projects_action"
-              sequence="11"/>
+        name="Projects"
+        parent="farm_menu_projects"
+        action="farm_projects_action"
+        sequence="11"/>
 
 </odoo>

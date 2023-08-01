@@ -10,95 +10,95 @@ class farm_produce(models.Model):
     _order = 'issue_date'
 
     name = fields.Char(
-        string = 'Produce Ref',
-        index = True,
-        readonly = True,
-        tracking = True,
-        default = lambda x: _('New'))
+        string='Produce Ref',
+        index=True,
+        readonly=True,
+        tracking=True,
+        default=lambda x: _('New'))
     state = fields.Selection([
         ('order', 'Invoicing'),
         ('lock', 'Locked')],
-        string = 'State', readonly = False, copy = False,
-        tracking = True, default = 'order')
+        string='State', readonly=False, copy=False,
+        tracking=True, default='order')
     category_id = fields.Many2one(
-        comodel_name = 'product.category',
-        required = True,
-        domain = [('order_type', '=', 'produce')],
-        string = 'Product Category')
+        comodel_name='product.category',
+        required=True,
+        domain=[('order_type', '=', 'produce')],
+        string='Product Category')
     projects_id = fields.Many2one(
-        comodel_name = 'farm.projects',
-        required = True,
-        tracking = True)
+        comodel_name='farm.projects',
+        required=True,
+        tracking=True)
     short_name = fields.Char(
-        related = 'projects_id.short_name',
-        store = True)
+        related='projects_id.short_name',
+        store=True)
     issue_date = fields.Date(
-        string = 'Date',
-        default = fields.Datetime.today,
-        tracking = True)
+        string='Date',
+        default=fields.Datetime.today,
+        tracking=True)
     partner_id = fields.Many2one(
-        comodel_name = 'res.partner',
-        string = 'Partner')
+        comodel_name='res.partner',
+        string='Partner')
     stock_warehouse = fields.Many2one(
-        comodel_name = 'stock.warehouse',
-        required = True,
-        string = 'Warehouse')
+        comodel_name='stock.warehouse',
+        required=True,
+        string='Warehouse')
     location_id = fields.Many2one(
-        comodel_name = 'stock.location',
-        string = 'Destination Location',
-        default = lambda self: self.env['stock.picking.type'].browse(
+        comodel_name='stock.location',
+        string='Destination Location',
+        default=lambda self: self.env['stock.picking.type'].browse(
             self._context.get('default_picking_type_id')).default_location_dest_id,
-        domain = [('usage', '=', 'internal')],
-        check_company = True,
-        required = True)
+        domain=[('usage', '=', 'internal')],
+        check_company=True,
+        required=True)
     picking_type_id = fields.Many2one(
-        comodel_name = 'stock.picking.type',
-        string = 'Stock Picking Type',
-        default = lambda self: self.env.ref('ms_farm.farm_location_produce').id,
-        required = True)
+        comodel_name='stock.picking.type',
+        string='Stock Picking Type',
+        default=lambda self: self.env.ref('ms_farm.farm_location_produce').id,
+        required=True)
     p_order_cost = fields.Float(
-        string = 'Order Cost',
-        compute = '_compute_produce_order_cost',
-        store = True)
+        string='Order Cost',
+        compute='_compute_produce_order_cost',
+        store=True)
     active = fields.Boolean(
-        string = "Active",
-        default = True,
-        tracking = True)
+        string="Active",
+        default=True,
+        tracking=True)
     user_id = fields.Many2one(
-        comodel_name = 'res.users',
-        string = "Order Man",
-        required = True)
+        comodel_name='res.users',
+        string="Order Man",
+        required=True)
     notes = fields.Html(
-        string = 'Terms and Conditions')
+        string='Terms and Conditions')
     produce_order_line_ids = fields.One2many(
-        comodel_name = 'farm.produce.oline',
-        inverse_name = 'produce_id',
-        string = "produce order lines")
+        comodel_name='farm.produce.oline',
+        inverse_name='produce_id',
+        string="produce order lines")
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True)
+        comodel_name='res.company',
+        string='Company',
+        change_default=True,
+        default=lambda self: self.env.company,
+        required=False,
+        readonly=True)
     currency_id = fields.Many2one(
-        comodel_name = 'res.currency',
-        string = 'Currency',
-        related = 'company_id.currency_id',
-        readonly = True,
-        ondelete = 'set null',
-        help = "Used to display the currency when tracking monetary values")
+        comodel_name='res.currency',
+        string='Currency',
+        related='company_id.currency_id',
+        readonly=True,
+        ondelete='set null',
+        help="Used to display the currency when tracking monetary values")
     produce_consumption_count = fields.Integer(
-        string = "Material Moves Count",
-        compute = '_compute_stock_move_count')
+        string="Material Moves Count",
+        compute='_compute_stock_move_count')
     produce_consumption_account_count = fields.Integer(
-        string = "Material Moves Count",
-        compute = '_compute_account_move_count')
+        string="Material Moves Count",
+        compute='_compute_account_move_count')
     produce_consumption_account_total = fields.Float(
-        string = "Material Moves Total",
-        compute = '_compute_account_move_total')
+        string="Material Moves Total",
+        compute='_compute_account_move_total')
     analytic_account_id = fields.Reference(
-        related = 'projects_id.analytic_account_id')
+        related='projects_id.analytic_account_id')
 
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
@@ -152,7 +152,8 @@ class farm_produce(models.Model):
     @api.model
     def create(self, vals):
         if not vals.get('name') or vals['name'] == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('farm.produce') or _('New')
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'farm.produce') or _('New')
         return super(farm_produce, self).create(vals)
 
     def button_farm_stock_in(self):
@@ -225,51 +226,51 @@ class farm_produce_oline(models.Model):
     _description = 'Produce Order Line'
 
     sequence = fields.Integer(
-        string = 'Sequence',
-        default = 10)
+        string='Sequence',
+        default=10)
     product_id = fields.Many2one(
-        comodel_name = 'product.product',
-        required = True,
-        domain = "[('categ_id', '=', categ_id)]")
+        comodel_name='product.product',
+        required=True,
+        domain="[('categ_id', '=', categ_id)]")
     name = fields.Text(
-        string = 'Description',
-        required = False)
+        string='Description',
+        required=False)
     categ_id = fields.Many2one(
-        related = 'produce_id.category_id',
-        string = 'Category')
+        related='produce_id.category_id',
+        string='Category')
     price_unit = fields.Float(
-        string = 'Price')
+        string='Price')
     product_uom = fields.Many2one(
-        comodel_name = 'uom.uom',
-        string = 'Unit of Measure',
-        related = 'product_id.uom_id',
-        domain = "[('category_id', '=', product_uom_category_id)]")
+        comodel_name='uom.uom',
+        string='Unit of Measure',
+        related='product_id.uom_id',
+        domain="[('category_id', '=', product_uom_category_id)]")
     qty = fields.Float(
-        string = 'Quantity')
+        string='Quantity')
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        related = 'produce_id.company_id',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True)
+        comodel_name='res.company',
+        string='Company',
+        related='produce_id.company_id',
+        change_default=True,
+        default=lambda self: self.env.company,
+        required=False,
+        readonly=True)
     currency_id = fields.Many2one(
-        comodel_name = 'res.currency',
-        string = 'Currency',
-        related = 'produce_id.currency_id',
-        readonly = True,
-        help = "Used to display the currency when tracking monetary values")
+        comodel_name='res.currency',
+        string='Currency',
+        related='produce_id.currency_id',
+        readonly=True,
+        help="Used to display the currency when tracking monetary values")
     note = fields.Char(
-        string = 'Short Note')
+        string='Short Note')
     price_subtotal = fields.Monetary(
-        string = 'Subtotal',
-        compute = '_compute_subtotal',
-        currency_field = 'currency_id',
-        store = True)
+        string='Subtotal',
+        compute='_compute_subtotal',
+        currency_field='currency_id',
+        store=True)
     produce_id = fields.Many2one(
-        comodel_name = 'farm.produce',
-        string = 'Produce Order')
+        comodel_name='farm.produce',
+        string='Produce Order')
 
     @api.onchange('product_id')
     def onchange_price_unit(self):

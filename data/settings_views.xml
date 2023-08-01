@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data noupdate="1">
-        <record model="res.groups" id="account.group_account_user">
-            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        <record model="res.groups"
+            id="account.group_account_user">
+            <field name="users"
+                eval="[(4, ref('base.user_admin'))]"/>
         </record>
-        <record model="res.config.settings" id="res_config_settings">
-            <field name="group_uom" eval="1"/>
-            <field name="group_stock_multi_locations" eval="1"/>
-            <field name="group_analytic_accounting" eval="1"/>
+        <record model="res.config.settings"
+            id="res_config_settings">
+            <field name="group_uom"
+                eval="1"/>
+            <field name="group_stock_multi_locations"
+                eval="1"/>
+            <field name="group_analytic_accounting"
+                eval="1"/>
         </record>
         <function model="res.config.settings"
-                  name="execute"
-                  eval="[ref('res_config_settings')]">
+            name="execute"
+            eval="[ref('res_config_settings')]">
         </function>
     </data>
 </odoo>

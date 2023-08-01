@@ -3,106 +3,97 @@
     <data noupdate="0">
         <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
         <menuitem id="farm_root"
-                  name="Farm"
-                  web_icon="static/description/icon.png"
-                  sequence="145"
-        />
+            name="Farm"
+            web_icon="static/description/icon.png"
+            sequence="145" />
         <menuitem id="farm_menu_projects"
-                  name="Projects"
-                  parent="farm_root"
-                  sequence="10"
-        />
+            name="Projects"
+            parent="farm_root"
+            sequence="10" />
         <!-- This Menu Item Must have a parent -->
         <menuitem id="farm_menu_orders"
-                  name="Orders"
-                  parent="farm_root"
-                  sequence="20"
-        />
+            name="Orders"
+            parent="farm_root"
+            sequence="20" />
         <!-- This Menu Item Must have a parent -->
 
         <menuitem id="farm_menu_documents"
-                  name="Documents"
-                  parent="farm_root"
-                  sequence="30"
-        />
+            name="Documents"
+            parent="farm_root"
+            sequence="30" />
         <menuitem id="farm_menu_control"
-                  name="Control"
-                  parent="farm_root"
-                  sequence="40"
-        />
+            name="Control"
+            parent="farm_root"
+            sequence="40" />
 
         <!-- This Menu Item Must have a parent -->
         <menuitem id="farm_menu_configuration"
-                  name="Configuration"
-                  parent="farm_root"
-                  sequence="50"
-        />
+            name="Configuration"
+            parent="farm_root"
+            sequence="50" />
 
         <menuitem id="farm_menu_product"
-                  name="Product and Category"
-                  parent="farm_menu_configuration"
-                  sequence="51"/>
+            name="Product and Category"
+            parent="farm_menu_configuration"
+            sequence="51"/>
 
         <menuitem id="farm_menu_other"
-                  name="Farm other Configuration"
-                  parent="farm_menu_configuration"
-                  sequence="12"
-        />
+            name="Farm other Configuration"
+            parent="farm_menu_configuration"
+            sequence="12" />
 
         <menuitem id="farm_menu_control_other"
-                  name="Event and Action"
-                  parent="farm_menu_control"
-                  sequence="43"/>
+            name="Event and Action"
+            parent="farm_menu_control"
+            sequence="43"/>
 
         <!-- Inherit account Move (vendor bill) Form View to Modify it -->
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="farm_menu_vendor_bill"
-                  name="Vendor Bill"
-                  parent="farm_menu_documents"
-                  action="account.action_move_in_invoice_type"
-                  sequence="31"/>
+            name="Vendor Bill"
+            parent="farm_menu_documents"
+            action="account.action_move_in_invoice_type"
+            sequence="31"/>
 
         <menuitem id="farm_menu_material_move"
-                  name="Material stock move"
-                  parent="farm_menu_documents"
-                  action="stock.action_picking_tree_all"
-                  sequence="32"/>
+            name="Material stock move"
+            parent="farm_menu_documents"
+            action="stock.action_picking_tree_all"
+            sequence="32"/>
 
         <menuitem id="farm_menu_hr_expense"
-                  name="Expense Tickets"
-                  parent="farm_menu_documents"
-                  action="hr_expense.hr_expense_actions_my_all"
-                  sequence="33"/>
+            name="Expense Tickets"
+            parent="farm_menu_documents"
+            action="hr_expense.hr_expense_actions_my_all"
+            sequence="33"/>
 
         <menuitem id="farm_menu_product_move"
-                  name="Produce stock move"
-                  parent="farm_menu_documents"
-                  action="stock.action_picking_tree_all"
-                  sequence="34"
-                  groups="ms_farm.group_farm_manager"
-        />
+            name="Produce stock move"
+            parent="farm_menu_documents"
+            action="stock.action_picking_tree_all"
+            sequence="34"
+            groups="ms_farm.group_farm_manager" />
 
         <menuitem id="farm_menu_customer_invoice"
-                  name="Customer Invoice"
-                  parent="farm_menu_documents"
-                  action="account.action_move_out_invoice_type"
-                  sequence="35"
-                  groups="ms_farm.group_farm_manager"
-        />
+            name="Customer Invoice"
+            parent="farm_menu_documents"
+            action="account.action_move_out_invoice_type"
+            sequence="35"
+            groups="ms_farm.group_farm_manager" />
 
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="menu_product_category"
-                  name="Product Category"
-                  parent="farm_menu_product"
-                  action="product.product_category_action_form"
-                  sequence="42"/>
+            name="Product Category"
+            parent="farm_menu_product"
+            action="product.product_category_action_form"
+            sequence="42"/>
 
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="menu_product_product"
-                  name="Product"
-                  parent="farm_menu_product"
-                  action="stock.product_template_action_product"
-                  sequence="43"/>
+            name="Product"
+            parent="farm_menu_product"
+            action="stock.product_template_action_product"
+            sequence="43"/>
 
     </data>
 </odoo>

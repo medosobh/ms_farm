@@ -13,75 +13,76 @@ class farm_equipments(models.Model):
     ]
 
     code = fields.Char(
-        string = 'Internal Code',
-        required = True)
+        string='Internal Code',
+        required=True)
     name = fields.Char(
-        string = 'Name',
-        required = True)
+        string='Name',
+        required=True)
     description = fields.Text(
-        string = 'Description')
+        string='Description')
     type = fields.Selection([
         ('device', 'Device'),
         ('truck', 'Truck'),
         ('vehicle', 'Vehicle')
     ],
-        required = True,
-        string = 'Type')
+        required=True,
+        string='Type')
     body_code = fields.Char(
-        string = 'Body Code',
-        required = True)
+        string='Body Code',
+        required=True)
     acq_date = fields.Date(
-        string = 'Acquisition Date',
-        required = True)
+        string='Acquisition Date',
+        required=True)
     active = fields.Boolean(
-        string = "Active",
-        default = True,
-        tracking = True)
+        string="Active",
+        default=True,
+        tracking=True)
     category_id = fields.Many2one(
-        comodel_name = 'product.category',
-        required = True,
-        default = lambda self: self.env.ref('ms_farm.product_category_equipment'),
-        string = 'Product Category')
+        comodel_name='product.category',
+        required=True,
+        default=lambda self: self.env.ref(
+            'ms_farm.product_category_equipment'),
+        string='Product Category')
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True)
+        comodel_name='res.company',
+        string='Company',
+        change_default=True,
+        default=lambda self: self.env.company,
+        required=False,
+        readonly=True)
     currency_id = fields.Many2one(
-        comodel_name = 'res.currency',
-        string = 'Currency',
-        related = 'company_id.currency_id',
-        readonly = True,
-        ondelete = 'set null',
-        help = "Used to display the currency when tracking monetary values")
+        comodel_name='res.currency',
+        string='Currency',
+        related='company_id.currency_id',
+        readonly=True,
+        ondelete='set null',
+        help="Used to display the currency when tracking monetary values")
     buy_sell_price = fields.Float(
-        string = 'buy  and sell price',
-        store = True)
+        string='buy  and sell price',
+        store=True)
     order_line_count = fields.Integer(
-        string = '# of Order',
-        compute = '_compute_order_line_count')
+        string='# of Order',
+        compute='_compute_order_line_count')
     order_line_cost = fields.Monetary(
-        string = 'Order Cost',
-        compute = '_compute_order_cost')
+        string='Order Cost',
+        compute='_compute_order_cost')
     total_expense = fields.Monetary(
-        string = 'Actual Cost',
-        compute = '_compute_total_expense')
+        string='Actual Cost',
+        compute='_compute_total_expense')
     operation_order_line_ids = fields.One2many(
-        comodel_name = 'farm.operations.oline',
-        inverse_name = 'equipments_id',
-        domain = "[('equipments_id', '=', id)]",
-        readonly = True,
-        string = "Order lines")
+        comodel_name='farm.operations.oline',
+        inverse_name='equipments_id',
+        domain="[('equipments_id', '=', id)]",
+        readonly=True,
+        string="Order lines")
     operation_actual_line_ids = fields.One2many(
-        comodel_name = 'account.move.line',
-        inverse_name = 'equipments_id',
-        domain = "[('equipments_id', '=', id)]",
-        readonly = True,
-        string = "Actual lines")
+        comodel_name='account.move.line',
+        inverse_name='equipments_id',
+        domain="[('equipments_id', '=', id)]",
+        readonly=True,
+        string="Actual lines")
     create_lock = fields.Boolean(
-        string = 'Create Lock')
+        string='Create Lock')
 
     # create a related product under equipment category
     # to use in operation order
@@ -95,13 +96,13 @@ class farm_equipments(models.Model):
                 self.company_id.name, self.company_id.id))
         # elif create
         product_vals = dict(
-            categ_id = self.category_id.id,
-            detailed_type = 'service',
-            name = new_name,
-            equipments_id = self.id,
-            default_code = self.code + " " + self.name,
-            standard_price = self.buy_sell_price,
-            list_price = self.buy_sell_price,
+            categ_id=self.category_id.id,
+            detailed_type='service',
+            name=new_name,
+            equipments_id=self.id,
+            default_code=self.code + " " + self.name,
+            standard_price=self.buy_sell_price,
+            list_price=self.buy_sell_price,
         )
         new_product = self.env['product.template'].create(product_vals)
         self.create_lock = True

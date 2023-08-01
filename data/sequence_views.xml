@@ -2,97 +2,119 @@
 <odoo>
     <data noupdate="1">
         <!-- Sequences for projects -->
-        <record id="farm_projects_seq" model="ir.sequence">
+        <record id="farm_projects_seq"
+            model="ir.sequence">
             <field name="name">Farm Projects</field>
             <field name="code">farm.projects</field>
             <field name="prefix">PRO/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
         <!-- Sequences for control ticket -->
-        <record id="farm_control_seq" model="ir.sequence">
+        <record id="farm_control_seq"
+            model="ir.sequence">
             <field name="name">Farm Control</field>
             <field name="code">farm.control</field>
             <field name="prefix">CTR/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
 
         <!-- Sequences for operations order -->
-        <record id="farm_operations_seq" model="ir.sequence">
+        <record id="farm_operations_seq"
+            model="ir.sequence">
             <field name="name">Farm Operations</field>
             <field name="code">farm.operations</field>
             <field name="prefix">OPR/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
 
         <!-- Sequences for material order -->
-        <record id="farm_materials_seq" model="ir.sequence">
+        <record id="farm_materials_seq"
+            model="ir.sequence">
             <field name="name">Farm Materials</field>
             <field name="code">farm.materials</field>
             <field name="prefix">MAT/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
 
         <!-- Sequences for expense order -->
-        <record id="farm_expenses_seq" model="ir.sequence">
+        <record id="farm_expenses_seq"
+            model="ir.sequence">
             <field name="name">Farm Expenses</field>
             <field name="code">farm.expenses</field>
             <field name="prefix">EXP/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
 
         <!-- Sequences for sales order -->
-        <record id="farm_sales_seq" model="ir.sequence">
+        <record id="farm_sales_seq"
+            model="ir.sequence">
             <field name="name">Farm Sales</field>
             <field name="code">farm.sales</field>
             <field name="prefix">SAL/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
 
         <!-- Sequences for produce order -->
-        <record id="farm_produce_seq" model="ir.sequence">
+        <record id="farm_produce_seq"
+            model="ir.sequence">
             <field name="name">Farm Produce</field>
             <field name="code">farm.produce</field>
             <field name="prefix">PDC/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
 
         <!-- Sequences for stock picking farm out -->
-        <record id="farm_stock_produce_seq" model="ir.sequence">
+        <record id="farm_stock_produce_seq"
+            model="ir.sequence">
             <field name="name">Farm Stock Produce</field>
             <field name="code">farm.stock.produce</field>
             <field name="prefix">FWH/OUT/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
 
-        <record id="farm_stock_consumption_seq" model="ir.sequence">
+        <record id="farm_stock_consumption_seq"
+            model="ir.sequence">
             <field name="name">Farm Stock Consumption</field>
             <field name="code">farm.stock.consumption</field>
             <field name="prefix">FWH/OUT/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
-        <record id="farm_stock_return_seq" model="ir.sequence">
+        <record id="farm_stock_return_seq"
+            model="ir.sequence">
             <field name="name">Farm Stock Consumption Return</field>
             <field name="code">farm.stock.return</field>
             <field name="prefix">FWH/RET/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
 
-        <record id="farm_stock_sale_seq" model="ir.sequence">
+        <record id="farm_stock_sale_seq"
+            model="ir.sequence">
             <field name="name">Farm Stock Sales</field>
             <field name="code">farm.stock.sales</field>
             <field name="prefix">FWH/SAL/%(year)s/</field>
             <field name="padding">5</field>
-            <field name="company_id" eval="False"/>
+            <field name="company_id"
+                eval="False"/>
         </record>
     </data>
 </odoo>

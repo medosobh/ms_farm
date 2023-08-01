@@ -15,55 +15,56 @@ class farm_locations(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(
-        string = 'Location',
-        required = True)
+        string='Location',
+        required=True)
     complete_name = fields.Char(
-        string = 'Complete Name',
-        compute = '_compute_complete_name',
-        recursive = True,
-        store = True)
+        string='Complete Name',
+        compute='_compute_complete_name',
+        recursive=True,
+        store=True)
     address = fields.Text(
-        string = 'Address',
-        help = "Wrtie down the address of this location")
+        string='Address',
+        help="Wrtie down the address of this location")
     space = fields.Float(
-        string = 'Space in acre',
-        help = "The Acre space under this location (Does not consider the children location)")
+        string='Space in acre',
+        help="The Acre space under this location (Does not consider the children location)")
     space_sum = fields.Float(
-        string = 'Total Space in acre',
-        compute = '_compute_space',
-        inverse = '_compute_space',
-        help = "The Acre space under this location (Does not consider the children location)")
+        string='Total Space in acre',
+        compute='_compute_space',
+        inverse='_compute_space',
+        help="The Acre space under this location (Does not consider the children location)")
     parent_id = fields.Many2one(
-        comodel_name = 'farm.locations',
-        string = 'Parent Location',
-        index = True,
-        ondelete = 'cascade')
+        comodel_name='farm.locations',
+        string='Parent Location',
+        index=True,
+        ondelete='cascade')
     parent_path = fields.Char(
-        index = True)
+        index=True)
     child_id = fields.One2many(
-        comodel_name = 'farm.locations',
-        inverse_name = 'parent_id',
-        string = 'Child location')
+        comodel_name='farm.locations',
+        inverse_name='parent_id',
+        string='Child location')
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        change_default = True,
-        default = lambda self: self.env.company,
-        required = False,
-        readonly = True)
+        comodel_name='res.company',
+        string='Company',
+        change_default=True,
+        default=lambda self: self.env.company,
+        required=False,
+        readonly=True)
     currency_id = fields.Many2one(
-        comodel_name = 'res.currency',
-        string = 'Currency',
-        related = 'company_id.currency_id',
-        readonly = True,
-        ondelete = 'set null',
-        help = "Used to display the currency when tracking monetary values")
+        comodel_name='res.currency',
+        string='Currency',
+        related='company_id.currency_id',
+        readonly=True,
+        ondelete='set null',
+        help="Used to display the currency when tracking monetary values")
 
     @api.depends('name', 'parent_id.complete_name')
     def _compute_complete_name(self):
         for location in self:
             if location.parent_id:
-                location.complete_name = '%s / %s' % (location.parent_id.complete_name, location.name)
+                location.complete_name = '%s / %s' % (
+                    location.parent_id.complete_name, location.name)
             else:
                 location.complete_name = location.name
 
@@ -101,16 +102,16 @@ class farm_location_used(models.Model):
     _description = 'Location Used'
 
     projects_id = fields.Many2one(
-        comodel_name = 'farm.projects',
-        string = 'Project',
+        comodel_name='farm.projects',
+        string='Project',
     )
     locations_id = fields.Many2one(
-        comodel_name = 'farm.locations',
-        string = 'Location',
-        required = True)
+        comodel_name='farm.locations',
+        string='Location',
+        required=True)
     space_sum = fields.Float(
-        related = 'locations_id.space_sum')
+        related='locations_id.space_sum')
     complete_name = fields.Char(
-        related = 'locations_id.complete_name')
+        related='locations_id.complete_name')
     address = fields.Text(
-        related = 'locations_id.address')
+        related='locations_id.address')
