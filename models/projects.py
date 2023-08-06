@@ -9,345 +9,350 @@ class Farm_Projects(models.Model):
     _description = 'Farm Projects Management'
     _check_company_auto = True
     _sql_constraints = [
-        ('short_name_uniq', 'unique(short_name)', "A short name can only be assigned to one project !"),
+        ('short_name_uniq', 'unique(short_name)',
+         "A short name can only be assigned to one project !"),
     ]
 
     priority = fields.Selection(
-        selection = [
+        selection=[
             ('0', 'Normal'),
             ('1', 'Low'),
             ('2', 'High'),
             ('3', 'Very High')
         ],
-        string = "Priority",
-        help = 'Set the project priority which view first')
+        string="Priority",
+        help='Set the project priority which view first')
     state = fields.Selection(
-        selection = [
+        selection=[
             ('draft', 'Draft'),
             ('in_operation', 'In Operation'),
             ('finish', 'Finished'),
             ('on_hold', 'On Hold')
         ],
-        string = 'Status',
-        group_expand = '_group_expand_states',
-        readonly = False,
-        required = True,
-        tracking = True,
-        copy = False,
-        default = 'draft',
-        help = "Set whether the project process is open or closed to start or end operations.")
+        string='Status',
+        group_expand='_group_expand_states',
+        readonly=False,
+        required=True,
+        tracking=True,
+        copy=False,
+        default='draft',
+        help="Set whether the project process is open or closed to start or end operations.")
     name = fields.Char(
-        string = 'Project Ref',
-        index = True,
-        tracking = True,
-        default = lambda x: _('New'))
+        string='Project Ref',
+        index=True,
+        tracking=True,
+        default=lambda x: _('New'))
     short_name = fields.Char(
-        string = 'Name',
-        required = True,
-        help = "Enter a short name",
-        translate = True,
-        tracking = True)
+        string='Name',
+        required=True,
+        help="Enter a short name",
+        translate=True,
+        tracking=True)
     project_type = fields.Selection([
-        ('create', 'Produce a Pio-Asset or Crop'),  # produce only, product must be storable
-        ('operate', 'Produce and Sell'),  # produce and sell , product must be storable
-        ('sale', 'Sell directly product  as consumable'),  # product must be consumable
+        # produce only, product must be storable
+        ('create', 'Produce a Pio-Asset or Crop'),
+        # produce and sell , product must be storable
+        ('operate', 'Produce and Sell'),
+        # product must be consumable
+        ('sale', 'Sell directly product  as consumable'),
         ('service', 'Service of an Asset or a Function'),
         # product must be service and the bills will be collected as invoices
     ],
-        required = True,
-        help = "Select the type Produce, Sell or Both, either Service",
-        string = 'Type',
-        default = 'operate',
-        tracking = True)
+        required=True,
+        help="Select the type Produce, Sell or Both, either Service",
+        string='Type',
+        default='operate',
+        tracking=True)
     project_group_id = fields.Many2one(
-        comodel_name = 'farm.project.group',
-        string = 'Group',
-        required = True)
+        comodel_name='farm.project.group',
+        string='Group',
+        required=True)
     user_id = fields.Many2one(
-        comodel_name = 'res.users',
-        string = "Responsible Man",
-        required = True)
+        comodel_name='res.users',
+        string="Responsible Man",
+        required=True)
     description = fields.Text(
-        string = 'Description',
-        required = False,
-        help = "Enter the description",
-        translate = True,
-        tracking = True)
+        string='Description',
+        required=False,
+        help="Enter the description",
+        translate=True,
+        tracking=True)
     active = fields.Boolean(
-        string = "Active",
-        default = True,
-        tracking = True)
+        string="Active",
+        default=True,
+        tracking=True)
     start_date = fields.Date(
-        string = 'Start Date',
-        required = True,
-        tracking = True,
-        default = datetime.today()
+        string='Start Date',
+        required=True,
+        tracking=True,
+        default=datetime.today()
     )
     end_date = fields.Date(
-        string = 'End Date',
-        required = True,
-        store = True,
-        compute = '_get_end_date',
-        inverse = '_set_end_date')
+        string='End Date',
+        required=True,
+        store=True,
+        compute='_get_end_date',
+        inverse='_set_end_date')
     close_date = fields.Date(
-        string = 'Close Date',
-        tracking = True,
-        store = True,
-        inverse = '_get_actual_gone')
+        string='Close Date',
+        tracking=True,
+        store=True,
+        inverse='_get_actual_gone')
     p_days = fields.Integer(
-        string = 'Plan Days',
-        store = True)
+        string='Plan Days',
+        store=True)
     g_days = fields.Integer(
-        string = 'Days Gone',
-        store = True,
-        readonly = True)
+        string='Days Gone',
+        store=True,
+        readonly=True)
     a_days = fields.Integer(
-        string = 'Actual Days',
-        store = True,
-        readonly = True,
-        compute = '_get_time_gone'
+        string='Actual Days',
+        store=True,
+        readonly=True,
+        compute='_get_time_gone'
     )
     operation_budget = fields.Monetary(
-        string = 'Operation',
-        compute = '_compute_operation_budget',
-        currency_field = 'currency_id',
-        required = False,
-        tracking = True)
+        string='Operation',
+        compute='_compute_operation_budget',
+        currency_field='currency_id',
+        required=False,
+        tracking=True
+    )
     material_budget = fields.Monetary(
-        string = 'Material',
-        compute = '_compute_material_budget',
-        currency_field = 'currency_id',
-        required = False,
-        tracking = True)
+        string='Material',
+        compute='_compute_material_budget',
+        currency_field='currency_id',
+        required=False,
+        tracking=True)
     expense_budget = fields.Monetary(
-        string = 'Expense',
-        compute = '_compute_expense_budget',
-        currency_field = 'currency_id',
-        tracking = True)
+        string='Expense',
+        compute='_compute_expense_budget',
+        currency_field='currency_id',
+        tracking=True)
     operations_actual = fields.Monetary(
-        string = 'Operation',
-        compute = '_compute_operations_actual',
-        currency_field = 'currency_id',
-        required = False,
-        tracking = True)
+        string='Operation',
+        compute='_compute_operations_actual',
+        currency_field='currency_id',
+        required=False,
+        tracking=True)
     materials_actual = fields.Monetary(
-        string = 'Material',
-        compute = '_compute_materials_actual',
-        currency_field = 'currency_id',
-        required = False,
-        tracking = True)
+        string='Material',
+        compute='_compute_materials_actual',
+        currency_field='currency_id',
+        required=False,
+        tracking=True)
     expenses_actual = fields.Monetary(
-        string = 'Expense',
-        compute = '_compute_expenses_actual',
-        currency_field = 'currency_id',
-        required = False,
-        tracking = True)
+        string='Expense',
+        compute='_compute_expenses_actual',
+        currency_field='currency_id',
+        required=False,
+        tracking=True)
     plan_produce_qty = fields.Float(
-        string = 'Produce Qty',
-        compute = '_compute_plan_produce_qty',
-        readonly = True)
+        string='Produce Qty',
+        compute='_compute_plan_produce_qty',
+        readonly=True)
     plan_produce_amount = fields.Monetary(
-        string = 'Produce Amount',
-        compute = '_compute_plan_produce_amount',
-        currency_field = 'currency_id',
-        readonly = True)
+        string='Produce Amount',
+        compute='_compute_plan_produce_amount',
+        currency_field='currency_id',
+        readonly=True)
     plan_sales_qty = fields.Float(
-        string = 'Sales Qty',
-        compute = '_compute_plan_sales_qty',
-        readonly = True)
+        string='Sales Qty',
+        compute='_compute_plan_sales_qty',
+        readonly=True)
     plan_sales_amount = fields.Monetary(
-        string = 'Sales Amount',
-        compute = '_compute_plan_sales_amount',
-        currency_field = 'currency_id')
+        string='Sales Amount',
+        compute='_compute_plan_sales_amount',
+        currency_field='currency_id')
     plan_service_qty = fields.Float(
-        string = 'Service Order Qty',
-        compute = '_compute_plan_service_qty')
+        string='Service Order Qty',
+        compute='_compute_plan_service_qty')
     plan_service_amount = fields.Monetary(
-        string = 'Service Order',
-        compute = '_compute_plan_service_amount',
-        currency_field = 'currency_id')
+        string='Service Order',
+        compute='_compute_plan_service_amount',
+        currency_field='currency_id')
     actual_produce_qty = fields.Float(
-        string = 'Produce Qty',
-        compute = '_compute_sum_produce_qty',
-        required = False,
-        readonly = True)
+        string='Produce Qty',
+        compute='_compute_sum_produce_qty',
+        required=False,
+        readonly=True)
     actual_produce_amount = fields.Monetary(
-        string = 'Produce Amount',
-        compute = '_compute_actual_produce_amount',
-        currency_field = 'currency_id',
-        required = False,
-        readonly = True)
+        string='Produce Amount',
+        compute='_compute_actual_produce_amount',
+        currency_field='currency_id',
+        required=False,
+        readonly=True)
     actual_sales_qty = fields.Float(
-        string = 'Sales Qty',
-        required = False,
-        readonly = True)
+        string='Sales Qty',
+        required=False,
+        readonly=True)
     actual_sales_amount = fields.Monetary(
-        string = 'Sales Amount',
-        compute = '_compute_actual_sales_amount',
-        currency_field = 'currency_id',
-        required = False,
-        readonly = True)
+        string='Sales Amount',
+        compute='_compute_actual_sales_amount',
+        currency_field='currency_id',
+        required=False,
+        readonly=True)
     actual_service_qty = fields.Float(
-        string = 'Service Qty',
-        compute = '_compute_sum_service_qty',
-        required = False)
+        string='Service Qty',
+        compute='_compute_sum_service_qty',
+        required=False)
     actual_service_amount = fields.Float(
-        string = 'Service Amount',
-        compute = '_compute_actual_service_amount',
-        help = 'Total of Service internal bills plus external invoices.')
+        string='Service Amount',
+        compute='_compute_actual_service_amount',
+        help='Total of Service internal bills plus external invoices.')
     operations_id = fields.Many2one(
-        comodel_name = 'farm.operations',
-        string = "Project Operations")
+        comodel_name='farm.operations',
+        string="Project Operations")
     operations_ids = fields.One2many(
-        comodel_name = 'farm.operations',
-        inverse_name = 'projects_id',
-        string = "Operation Orders")
+        comodel_name='farm.operations',
+        inverse_name='projects_id',
+        string="Operation Orders")
     operations_count = fields.Integer(
-        string = "Operation Count",
-        compute = '_compute_operations_count')
+        string="Operation Count",
+        compute='_compute_operations_count')
     materials_id = fields.Many2one(
-        comodel_name = 'farm.materials',
-        string = "Project Materials")
+        comodel_name='farm.materials',
+        string="Project Materials")
     materials_ids = fields.One2many(
-        comodel_name = 'farm.materials',
-        inverse_name = 'projects_id',
-        string = "Material Orders")
+        comodel_name='farm.materials',
+        inverse_name='projects_id',
+        string="Material Orders")
     materials_count = fields.Integer(
-        string = "Material Count",
-        compute = '_compute_materials_count')
+        string="Material Count",
+        compute='_compute_materials_count')
     expenses_id = fields.Many2one(
-        comodel_name = 'farm.expenses',
-        string = "Project Expenses")
+        comodel_name='farm.expenses',
+        string="Project Expenses")
     expenses_ids = fields.One2many(
-        comodel_name = 'farm.expenses',
-        inverse_name = 'projects_id',
-        string = "Expenses Orders")
+        comodel_name='farm.expenses',
+        inverse_name='projects_id',
+        string="Expenses Orders")
     expenses_count = fields.Integer(
-        string = "Expense Count",
-        compute = '_compute_expenses_count')
+        string="Expense Count",
+        compute='_compute_expenses_count')
     produce_id = fields.Many2one(
-        comodel_name = 'farm.produce',
-        string = "Produce Orders")
+        comodel_name='farm.produce',
+        string="Produce Orders")
     produce_ids = fields.One2many(
-        comodel_name = 'farm.produce',
-        inverse_name = 'projects_id',
-        string = "Produce Orders")
+        comodel_name='farm.produce',
+        inverse_name='projects_id',
+        string="Produce Orders")
     produce_count = fields.Integer(
-        string = "Produce Count",
-        compute = '_compute_produce_count')
+        string="Produce Count",
+        compute='_compute_produce_count')
     sales_id = fields.Many2one(
-        comodel_name = 'farm.sales',
-        string = "Sales Orders")
+        comodel_name='farm.sales',
+        string="Sales Orders")
     sales_ids = fields.One2many(
-        comodel_name = 'farm.sales',
-        inverse_name = 'projects_id',
-        string = "Sales Orders")
+        comodel_name='farm.sales',
+        inverse_name='projects_id',
+        string="Sales Orders")
     sales_count = fields.Integer(
-        string = "Sales Count",
-        compute = '_compute_sales_count')
+        string="Sales Count",
+        compute='_compute_sales_count')
     company_id = fields.Many2one(
-        comodel_name = 'res.company',
-        string = 'Company',
-        index = True,
-        required = True,
-        change_default = True,
-        readonly = True,
-        default = lambda self: self.env.company)
+        comodel_name='res.company',
+        string='Company',
+        index=True,
+        required=True,
+        change_default=True,
+        readonly=True,
+        default=lambda self: self.env.company)
     currency_id = fields.Many2one(
-        comodel_name = 'res.currency',
-        string = 'Currency',
-        related = 'company_id.currency_id',
-        readonly = True,
-        ondelete = 'set null',
-        help = "Used to display the currency when tracking monetary values")
+        comodel_name='res.currency',
+        string='Currency',
+        related='company_id.currency_id',
+        readonly=True,
+        ondelete='set null',
+        help="Used to display the currency when tracking monetary values")
     locations_used_ids = fields.One2many(
-        comodel_name = 'farm.location.used',
-        inverse_name = 'projects_id',
-        string = "locations Used")
+        comodel_name='farm.location.used',
+        inverse_name='projects_id',
+        string="locations Used")
     # set of Key performance indicators
     time_progress = fields.Integer(
-        string = 'Time Gone',
-        compute = '_compute_time_progress')
+        string='Time Gone',
+        compute='_compute_time_progress')
     total_budget = fields.Float(
-        string = 'Total Order',
-        compute = '_compute_total_budget')
+        string='Total Order',
+        compute='_compute_total_budget')
     total_actual = fields.Float(
-        string = 'Total Actual',
-        compute = '_compute_total_actual')
+        string='Total Actual',
+        compute='_compute_total_actual')
     total_actual04 = fields.Float(
-        compute = '_compute_total_actual04')
+        compute='_compute_total_actual04')
     total_actual05 = fields.Float(
-        compute = '_compute_total_actual05')
+        compute='_compute_total_actual05')
     total_actual06 = fields.Float(
-        compute = '_compute_total_actual06')
+        compute='_compute_total_actual06')
     cost_progress = fields.Integer(
-        string = 'Actual vs Order',
-        compute = '_compute_cost_progress')
+        string='Actual vs Order',
+        compute='_compute_cost_progress')
     service_progress = fields.Integer(
-        string = 'Expenses Actual vs Plan',
-        help = 'compute % of actual spent vs actual bills and invoices',
-        compute = '_compute_service_progress')
+        string='Expenses Actual vs Plan',
+        help='compute % of actual spent vs actual bills and invoices',
+        compute='_compute_service_progress')
     plan_produce_price = fields.Float(
-        string = 'Produce',
-        help = 'Average Plan Cost Order divided by Qty of Produce Orders', )
+        string='Produce',
+        help='Average Plan Cost Order divided by Qty of Produce Orders', )
     plan_sales_price = fields.Float(
-        string = 'Sales',
-        help = 'Average Plan Sales Price', )
+        string='Sales',
+        help='Average Plan Sales Price', )
     plan_service_price = fields.Float(
-        string = 'Service',
-        help = 'Average Plan Service Price', )
+        string='Service',
+        help='Average Plan Service Price', )
     # average plan order product price
     average_produce_price = fields.Float(
-        string = 'Average Produce',
-        help = 'compute average price of stock move',
-        compute = '_compute_average_produce_price')
+        string='Average Produce',
+        help='compute average price of stock move',
+        compute='_compute_average_produce_price')
     average_sales_price = fields.Float(
-        string = 'Average Sales',
-        help = 'compute average price of sales invoices',
-        compute = '_compute_average_sales_price')
+        string='Average Sales',
+        help='compute average price of sales invoices',
+        compute='_compute_average_sales_price')
     average_service_price = fields.Float(
-        string = 'Average Service',
-        help = 'compute average price of Service internal and external',
-        compute = '_compute_average_service_price')
+        string='Average Service',
+        help='compute average price of Service internal and external',
+        compute='_compute_average_service_price')
     cog_produce_price = fields.Float(
-        string = 'Actual Produce',
-        help = 'compute price of cost of goods produce based on actual produce qty and current actual spending',
-        compute = '_compute_cog_produce_price')
+        string='Actual Produce',
+        help='compute price of cost of goods produce based on actual produce qty and current actual spending',
+        compute='_compute_cog_produce_price')
     # actual spend divided by sales volume
     cog_sales_price = fields.Float(
-        string = 'Cost of Sold',
-        help = 'compute price of cost of goods sold based on actual sold qty and current actual spending',
-        compute = '_compute_cog_sales_price')
+        string='Cost of Sold',
+        help='compute price of cost of goods sold based on actual sold qty and current actual spending',
+        compute='_compute_cog_sales_price')
     cog_service_price = fields.Float(
-        string = 'Cost of service',
-        help = 'compute price of service based on actual used + sold qty and current actual spending',
-        compute = '_compute_cog_service_price')
+        string='Cost of service',
+        help='compute price of service based on actual used + sold qty and current actual spending',
+        compute='_compute_cog_service_price')
     category_id = fields.Many2one(
-        comodel_name = 'product.category',
-        required = True,
-        default = lambda self: self.env.ref('ms_farm.product_category_produce'),
-        string = 'Product Category')
+        comodel_name='product.category',
+        required=True,
+        default=lambda self: self.env.ref('ms_farm.product_category_produce'),
+        string='Product Category')
     analytic_account_id = fields.Reference(
-        selection = [
+        selection=[
             ('account.analytic.account', 'Analytic Account')
         ],
-        string = 'Analytic Account')
+        string='Analytic Account')
     create_lock = fields.Boolean(
-        string = 'Create Lock',
-        default = False)
+        string='Create Lock',
+        default=False)
     product_id = fields.Many2one(
-        comodel_name = 'product.product',
-        string = "Relative Product")
+        comodel_name='product.product',
+        string="Relative Product")
     order_ids = fields.One2many(
-        comodel_name = 'farm.operations.oline',
-        inverse_name = 'product_id',
-        string = "Operation Order Lines",
-        compute = '_operations_order_lines')
+        comodel_name='farm.operations.oline',
+        inverse_name='product_id',
+        string="Operation Order Lines",
+        compute='_operations_order_lines')
     bills_ids = fields.One2many(
-        comodel_name = 'account.move.line',
-        inverse_name = 'product_id',
-        string = "Bill Lines",
-        compute = '_bills_order_lines')
+        comodel_name='account.move.line',
+        inverse_name='product_id',
+        string="Bill Lines",
+        compute='_bills_order_lines')
 
     def _group_expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
@@ -387,7 +392,7 @@ class Farm_Projects(models.Model):
                 continue
             # Add duration to start_date, but: Monday + 5 days = Saturday, so
             # subtract one second to get on Friday instead
-            p_days = timedelta(days = r.p_days, seconds = 0)
+            p_days = timedelta(days=r.p_days, seconds=0)
             r.end_date = r.start_date + p_days
         return r.end_date
 
@@ -497,7 +502,8 @@ class Farm_Projects(models.Model):
     def _compute_total_budget(self):
         for r in self:
             # Compute the percent based on major cost till add expense module,
-            r.total_budget = (r.operation_budget + r.material_budget + r.expense_budget)
+            r.total_budget = (r.operation_budget +
+                              r.material_budget + r.expense_budget)
         return r.total_budget
 
     def _compute_operations_actual(self):
@@ -532,7 +538,8 @@ class Farm_Projects(models.Model):
     def _compute_total_actual(self):
         for r in self:
             # Compute the percent based on major cost till add expense module,
-            r.total_actual = (r.operations_actual + r.materials_actual + r.expenses_actual)
+            r.total_actual = (r.operations_actual +
+                              r.materials_actual + r.expenses_actual)
         return r.total_actual
 
     @api.model
@@ -548,7 +555,8 @@ class Farm_Projects(models.Model):
         for r in self:
             if not r.actual_sales_amount:
                 continue
-            r.total_actual05 = abs(r.total_actual / r.actual_sales_amount * 100)
+            r.total_actual05 = abs(
+                r.total_actual / r.actual_sales_amount * 100)
         return r.total_actual05
 
     @api.model
@@ -556,7 +564,8 @@ class Farm_Projects(models.Model):
         for r in self:
             if not r.actual_service_amount:
                 continue
-            r.total_actual06 = abs(r.total_actual / r.actual_service_amount * 100)
+            r.total_actual06 = abs(
+                r.total_actual / r.actual_service_amount * 100)
         return r.total_actual06
 
     # -------------------------------------------------------------------------
@@ -591,7 +600,8 @@ class Farm_Projects(models.Model):
                 r.service_progress = 0
                 continue
             # Compute the percent based on major cost till add expense module,
-            r.service_progress = abs(r.total_actual / r.actual_service_amount * 100)
+            r.service_progress = abs(
+                r.total_actual / r.actual_service_amount * 100)
         return r.service_progress
 
     # compute amount of operation orders plus sales
@@ -807,7 +817,7 @@ class Farm_Projects(models.Model):
                     ]).mapped('credit')
                 )
                 r.actual_service_amount = (
-                        bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
+                    bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
         return r.actual_service_amount
 
     def _compute_average_service_price(self):
@@ -851,7 +861,8 @@ class Farm_Projects(models.Model):
     @api.model
     def create(self, vals):
         if not vals.get('name') or vals['name'] == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('farm.projects') or _('New')
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'farm.projects') or _('New')
         return super(Farm_Projects, self).create(vals)
 
     def create_project_product(self):
@@ -866,23 +877,23 @@ class Farm_Projects(models.Model):
         else:
             if self.project_type == "service":
                 product_vals = dict(
-                    categ_id = self.category_id.id,
-                    detailed_type = 'service',
-                    name = new_name,
-                    projects_id = self.id,
-                    default_code = self.name + " " + self.short_name,
-                    standard_price = self.plan_service_price,
-                    list_price = self.plan_service_price,
+                    categ_id=self.category_id.id,
+                    detailed_type='service',
+                    name=new_name,
+                    projects_id=self.id,
+                    default_code=self.name + " " + self.short_name,
+                    standard_price=self.plan_service_price,
+                    list_price=self.plan_service_price,
                 )
             else:
                 product_vals = dict(
-                    categ_id = self.category_id.id,
-                    detailed_type = 'product',
-                    name = new_name,
-                    projects_id = self.id,
-                    default_code = self.name + " " + self.short_name,
-                    standard_price = self.plan_produce_price,
-                    list_price = self.plan_sales_price,
+                    categ_id=self.category_id.id,
+                    detailed_type='product',
+                    name=new_name,
+                    projects_id=self.id,
+                    default_code=self.name + " " + self.short_name,
+                    standard_price=self.plan_produce_price,
+                    list_price=self.plan_sales_price,
                 )
             new_product = self.env['product.template'].create(product_vals)
             self.create_lock = True
@@ -900,11 +911,13 @@ class Farm_Projects(models.Model):
                 self.company_id.name, self.company_id.id))
         # elif create
         analytic_account_vals = dict(
-            name = new_name,
-            project_reference = '% s,% s' % ('farm.projects', self.id),
+            name=new_name,
+            project_reference='% s,% s' % ('farm.projects', self.id),
         )
-        new_analytic_account = self.env['account.analytic.account'].create(analytic_account_vals)
-        self.analytic_account_id = '% s,% s' % ('account.analytic.account', new_analytic_account.id)
+        new_analytic_account = self.env['account.analytic.account'].create(
+            analytic_account_vals)
+        self.analytic_account_id = '% s,% s' % (
+            'account.analytic.account', new_analytic_account.id)
         return
 
     # -------------------------------------------------------------------------
@@ -1042,14 +1055,14 @@ class farm_project_group(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(
-        string = 'Group Name',
-        required = True,
-        help = "Enter the name",
-        translate = True,
-        tracking = True)
+        string='Group Name',
+        required=True,
+        help="Enter the name",
+        translate=True,
+        tracking=True)
     description = fields.Text(
-        string = 'Description',
-        required = False,
-        help = "Enter the description",
-        translate = True,
-        tracking = True)
+        string='Description',
+        required=False,
+        help="Enter the description",
+        translate=True,
+        tracking=True)
