@@ -2,7 +2,7 @@ from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 
 
-class farm_produce(models.Model):
+class FarmProduce(models.Model):
     _name = 'farm.produce'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Produce Orders'
@@ -47,7 +47,8 @@ class farm_produce(models.Model):
         comodel_name='stock.location',
         string='Destination Location',
         default=lambda self: self.env['stock.picking.type'].browse(
-            self._context.get('default_picking_type_id')).default_location_dest_id,
+            self._context.get(
+                'default_picking_type_id')).default_location_dest_id,
         domain=[('usage', '=', 'internal')],
         check_company=True,
         required=True)
@@ -154,7 +155,7 @@ class farm_produce(models.Model):
         if not vals.get('name') or vals['name'] == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'farm.produce') or _('New')
-        return super(farm_produce, self).create(vals)
+        return super(FarmProduce, self).create(vals)
 
     def button_farm_stock_in(self):
         self.ensure_one()
@@ -162,8 +163,9 @@ class farm_produce(models.Model):
         warehouse = self.stock_warehouse
 
         if not warehouse:
-            raise UserError(_('Please define a warehouse for the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
+            raise UserError(
+                _('Please define a warehouse for the company %s (%s).') % (
+                    self.company_id.name, self.company_id.id))
 
         picking_vals = {
             'picking_type_id': self.picking_type_id.id,
@@ -190,7 +192,9 @@ class farm_produce(models.Model):
                 'company_id': self.company_id.id,
                 'picking_type_id': self.picking_type_id.id,
                 'route_ids': 1 and [
-                    (6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
+                    (6, 0, [x.id for x in
+                            self.env['stock.location.route'].search(
+                                [('id', 'in', (2, 3))])])] or [],
                 'warehouse_id': self.picking_type_id.warehouse_id.id,
                 'analytic_account_id': self.analytic_account_id.id,
                 'produce_id': self.id,

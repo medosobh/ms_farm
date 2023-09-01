@@ -1,7 +1,7 @@
 from odoo import fields, models, api, _
 
 
-class farm_expenses(models.Model):
+class FarmExpenses(models.Model):
     _name = 'farm.expenses'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Budget General Expenses'
@@ -49,7 +49,8 @@ class farm_expenses(models.Model):
         comodel_name='stock.location',
         string='Source Location',
         default=lambda self: self.env['stock.picking.type'].browse(
-            self._context.get('default_picking_type_id')).default_location_src_id,
+            self._context.get(
+                'default_picking_type_id')).default_location_src_id,
         domain=[('usage', '=', 'internal')],
         check_company=True,
         required=False)
@@ -111,7 +112,8 @@ class farm_expenses(models.Model):
     def _compute_expense_order_cost(self):
         for rec in self:
             oline = sum(
-                self.env['farm.expenses.oline'].search([('expenses_id', '=', rec.id)]).mapped('price_subtotal'))
+                self.env['farm.expenses.oline'].search(
+                    [('expenses_id', '=', rec.id)]).mapped('price_subtotal'))
             rec.e_order_cost = oline
         return rec.e_order_cost
 
@@ -156,7 +158,7 @@ class farm_expenses(models.Model):
         if not vals.get('name') or vals['name'] == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'farm.expenses') or _('New')
-        return super(farm_expenses, self).create(vals)
+        return super(FarmExpenses, self).create(vals)
 
     def button_farm_expense_issue(self):
         self.ensure_one()
@@ -168,7 +170,8 @@ class farm_expenses(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Expenses to Report',
             'res_model': 'hr.expense',
-            'domain': [('analytic_account_id', '=', self.analytic_account_id.id)],
+            'domain': [
+                ('analytic_account_id', '=', self.analytic_account_id.id)],
             'view_mode': 'tree,form',
             'context': {},
             'target': 'current'
@@ -189,7 +192,7 @@ class farm_expenses(models.Model):
         }
 
 
-class farm_expenses_oline(models.Model):
+class FarmExpensesOline(models.Model):
     _name = 'farm.expenses.oline'
     _description = 'Expense Order Line'
 

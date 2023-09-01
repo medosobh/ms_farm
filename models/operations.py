@@ -2,7 +2,7 @@ from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 
 
-class farm_operations(models.Model):
+class FarmOperations(models.Model):
     _name = 'farm.operations'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Operation Orders'
@@ -112,7 +112,8 @@ class farm_operations(models.Model):
     def _compute_operation_order_cost(self):
         for rec in self:
             oline = sum(
-                self.env['farm.operations.oline'].search([('operations_id', '=', rec.id)]).mapped('price_subtotal'))
+                self.env['farm.operations.oline'].search(
+                    [('operations_id', '=', rec.id)]).mapped('price_subtotal'))
             rec.o_order_cost = oline
         return rec.o_order_cost
 
@@ -155,7 +156,7 @@ class farm_operations(models.Model):
         if not vals.get('name') or vals['name'] == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'farm.operations') or _('New')
-        return super(farm_operations, self).create(vals)
+        return super(FarmOperations, self).create(vals)
 
     def action_vendor_bill(self):
         return {
@@ -175,20 +176,23 @@ class farm_operations(models.Model):
         # check analytic_account_id created
         analytic = self.analytic_account_id
         if not analytic:
-            raise UserError(_('Please define an analytic account for the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
+            raise UserError(
+                _('Please define an analytic account for the company %s (%s).') % (
+                    self.company_id.name, self.company_id.id))
 
         move_type = self._context.get('default_move_type', 'in_invoice')
         journal = self.env['account.move'].with_context(
             default_move_type=move_type)._get_default_journal()
         if not journal:
-            raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
+            raise UserError(
+                _('Please define an accounting purchase journal for the company %s (%s).') % (
+                    self.company_id.name, self.company_id.id))
 
         partner_invoice_id = self.partner_id.address_get(['invoice'])[
             'invoice']
         partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(
-            ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
+            ['|', ('company_id', '=', False),
+             ('company_id', '=', self.company_id.id)])[:1]
         invoice_vals = {
             'state': 'draft',
             'ref': self.name or '',
@@ -220,13 +224,14 @@ class farm_operations(models.Model):
         res = self.env.ref('account.view_move_form', False)
         form_view = [(res and res.id or False, 'form')]
         result['views'] = form_view + \
-            [(state, view)
-             for state, view in result['views'] if view != 'form']
+                          [(state, view)
+                           for state, view in result['views'] if
+                           view != 'form']
         result['res_id'] = bill.id
         return result
 
 
-class farm_operations_oline(models.Model):
+class FarmOperationsOline(models.Model):
     _name = 'farm.operations.oline'
     _description = 'Operation Order Line'
 
@@ -304,4 +309,3 @@ class farm_operations_oline(models.Model):
     def _compute_subtotal(self):
         for rec in self:
             rec.price_subtotal = rec.price_unit * rec.qty
-        return rec.price_subtotal

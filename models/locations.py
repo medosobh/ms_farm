@@ -2,7 +2,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
-class farm_locations(models.Model):
+class FarmLocations(models.Model):
     _name = 'farm.locations'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Manage project location'
@@ -94,10 +94,9 @@ class farm_locations(models.Model):
                 rec.space = total
             else:
                 rec.space_sum = rec.space
-        return rec.space_sum
 
 
-class farm_location_used(models.Model):
+class FarmLocationUsed(models.Model):
     _name = 'farm.location.used'
     _description = 'Location Used'
 

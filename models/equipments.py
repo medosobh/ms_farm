@@ -2,14 +2,16 @@ from odoo import fields, models, _
 from odoo.exceptions import UserError
 
 
-class farm_equipments(models.Model):
+class FarmEquipments(models.Model):
     _name = 'farm.equipments'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Manage Equipments'
     _check_company_auto = True
     _sql_constraints = [
-        ('code_uniq', 'unique(code)', "A code can only be assigned to one equipment !"),
-        ('name_uniq', 'unique(name)', "A name can only be assigned to one equipment !"),
+        ('code_uniq', 'unique(code)',
+         "A code can only be assigned to one equipment !"),
+        ('name_uniq', 'unique(name)',
+         "A name can only be assigned to one equipment !"),
     ]
 
     code = fields.Char(
@@ -92,8 +94,9 @@ class farm_equipments(models.Model):
         search_name = self.env['product.template'].search([
             ('name', '=', new_name)])
         if search_name:
-            raise UserError(_('Product already exist in the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
+            raise UserError(
+                _('Product already exist in the company %s (%s).') % (
+                    self.company_id.name, self.company_id.id))
         # elif create
         product_vals = dict(
             categ_id=self.category_id.id,
@@ -117,7 +120,6 @@ class farm_equipments(models.Model):
                 ('equipments_id', '=', rec.id)
             ])
             rec.order_line_count = count
-        return rec.order_line_count
 
     def _compute_order_cost(self):
         for rec in self:
@@ -127,7 +129,6 @@ class farm_equipments(models.Model):
                 ]).mapped('price_subtotal')
             )
             rec.order_line_cost = cost
-        return rec.order_line_cost
 
     def _compute_total_expense(self):
         for rec in self:
@@ -140,4 +141,3 @@ class farm_equipments(models.Model):
                     ('equipments_id', '=', rec.id)
                 ]).mapped('credit'))
             rec.total_expense = cost_debit - cost_credit
-        return rec.total_expense

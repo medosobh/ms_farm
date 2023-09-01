@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta
+
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
@@ -48,16 +49,17 @@ class Farm_Projects(models.Model):
         help="Enter a short name",
         translate=True,
         tracking=True)
-    project_type = fields.Selection([
-        # produce only, product must be storable
-        ('create', 'Produce a Pio-Asset or Crop'),
-        # produce and sell , product must be storable
-        ('operate', 'Produce and Sell'),
-        # product must be consumable
-        ('sale', 'Sell directly product  as consumable'),
-        ('service', 'Service of an Asset or a Function'),
-        # product must be service and the bills will be collected as invoices
-    ],
+    project_type = fields.Selection(
+        selection=[
+            # produce only, product must be storable
+            ('create', 'Produce a Pio-Asset or Crop'),
+            # produce and sell , product must be storable
+            ('operate', 'Produce and Sell'),
+            # product must be consumable
+            ('sale', 'Sell directly product  as consumable'),
+            ('service', 'Service of an Asset or a Function'),
+            # product must be service and the bills will be collected as invoices
+        ],
         required=True,
         help="Select the type Produce, Sell or Both, either Service",
         string='Type',
@@ -386,27 +388,26 @@ class Farm_Projects(models.Model):
     # -------------------------------------------------------------------------
     @api.depends('start_date', 'close_date')
     def _get_end_date(self):
-        for r in self:
-            if not (r.start_date and r.p_days):
-                r.end_date = r.start_date
+        for rec in self:
+            if not (rec.start_date and rec.p_days):
+                rec.end_date = rec.start_date
                 continue
             # Add duration to start_date, but: Monday + 5 days = Saturday, so
             # subtract one second to get on Friday instead
-            p_days = timedelta(days=r.p_days, seconds=0)
-            r.end_date = r.start_date + p_days
-        return r.end_date
+            p_days = timedelta(days=rec.p_days, seconds=0)
+            rec.end_date = rec.start_date + p_days
 
     def _set_end_date(self):
-        for r in self:
-            if not (r.start_date and r.end_date):
-                raise UserError(_('Please define start and End date for current project for the company %s (%s).') % (
-                    self.company_id.name, self.company_id.id))
+        for rec in self:
+            if not (rec.start_date and rec.end_date):
+                raise UserError(
+                    _('Please define start and End date for current project for the company %s (%s).') % (
+                        self.company_id.name, self.company_id.id))
                 continue
 
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
-            r.p_days = (r.end_date - r.start_date).days
-        return r.p_days
+            rec.p_days = (rec.end_date - rec.start_date).days
 
     @api.depends('end_date')
     def _get_time_gone(self):
@@ -414,8 +415,9 @@ class Farm_Projects(models.Model):
         if not self.end_date:
             self.g_days = 0
         elif not self.start_date:
-            raise UserError(_('Please define start date for current project for the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
+            raise UserError(
+                _('Please define start date for current project for the company %s (%s).') % (
+                    self.company_id.name, self.company_id.id))
         else:
             # Compute the difference between dates, but: Friday - Monday = 4 days,
             # so add one day to get 5 days instead
@@ -500,11 +502,10 @@ class Farm_Projects(models.Model):
 
     @api.model
     def _compute_total_budget(self):
-        for r in self:
+        for rec in self:
             # Compute the percent based on major cost till add expense module,
-            r.total_budget = (r.operation_budget +
-                              r.material_budget + r.expense_budget)
-        return r.total_budget
+            rec.total_budget = (rec.operation_budget +
+                                rec.material_budget + rec.expense_budget)
 
     def _compute_operations_actual(self):
         for rec in self:
@@ -536,73 +537,66 @@ class Farm_Projects(models.Model):
 
     @api.model
     def _compute_total_actual(self):
-        for r in self:
+        for rec in self:
             # Compute the percent based on major cost till add expense module,
-            r.total_actual = (r.operations_actual +
-                              r.materials_actual + r.expenses_actual)
-        return r.total_actual
+            rec.total_actual = (rec.operations_actual +
+                                rec.materials_actual + rec.expenses_actual)
 
     @api.model
     def _compute_total_actual04(self):
-        for r in self:
-            if not r.total_budget:
+        for rec in self:
+            if not rec.total_budget:
                 continue
-            r.total_actual04 = abs(r.total_actual / r.total_budget * 100)
-        return r.total_actual04
+            rec.total_actual04 = abs(rec.total_actual / rec.total_budget * 100)
 
     @api.model
     def _compute_total_actual05(self):
-        for r in self:
-            if not r.actual_sales_amount:
+        for rec in self:
+            if not rec.actual_sales_amount:
                 continue
-            r.total_actual05 = abs(
-                r.total_actual / r.actual_sales_amount * 100)
-        return r.total_actual05
+            rec.total_actual05 = abs(
+                rec.total_actual / rec.actual_sales_amount * 100)
 
     @api.model
     def _compute_total_actual06(self):
-        for r in self:
-            if not r.actual_service_amount:
+        for rec in self:
+            if not rec.actual_service_amount:
                 continue
-            r.total_actual06 = abs(
-                r.total_actual / r.actual_service_amount * 100)
-        return r.total_actual06
+            rec.total_actual06 = abs(
+                rec.total_actual / rec.actual_service_amount * 100)
 
     # -------------------------------------------------------------------------
     # KPIs Calculation METHODS
     # -------------------------------------------------------------------------
     @api.model
     def _compute_time_progress(self):
-        for r in self:
-            if not r.start_date or r.p_days == 0:
-                r.time_progress = 0
-            elif not r.close_date:
+        for rec in self:
+            if not rec.start_date or rec.p_days == 0:
+                rec.time_progress = 0
+            elif not rec.close_date:
                 # Compute integer of time gone vs planned days
-                r.time_progress = abs(r.g_days / r.p_days * 100)
+                rec.time_progress = abs(rec.g_days / rec.p_days * 100)
             else:
-                r.time_progress = 100
-        return r.time_progress
+                rec.time_progress = 100
 
     @api.model
     def _compute_cost_progress(self):
-        for r in self:
-            if not r.total_budget:
-                r.cost_progress = 0
+        for rec in self:
+            if not rec.total_budget:
+                rec.cost_progress = 0
                 continue
             # Compute the percent based on major cost till add expense module,
-            r.cost_progress = abs(r.total_actual / r.total_budget * 100)
-        return r.cost_progress
+            rec.cost_progress = abs(rec.total_actual / rec.total_budget * 100)
 
     @api.model
     def _compute_service_progress(self):
-        for r in self:
-            if not r.actual_service_amount:
-                r.service_progress = 0
+        for rec in self:
+            if not rec.actual_service_amount:
+                rec.service_progress = 0
                 continue
             # Compute the percent based on major cost till add expense module,
-            r.service_progress = abs(
-                r.total_actual / r.actual_service_amount * 100)
-        return r.service_progress
+            rec.service_progress = abs(
+                rec.total_actual / rec.actual_service_amount * 100)
 
     # compute amount of operation orders plus sales
 
@@ -619,7 +613,6 @@ class Farm_Projects(models.Model):
                 ]).mapped('qty')
             )
             rec.plan_produce_qty = pro_sum
-        return rec.plan_produce_qty
 
     def _compute_plan_produce_amount(self):
         for rec in self:
@@ -641,7 +634,6 @@ class Farm_Projects(models.Model):
                 ]).mapped('qty')
             )
             rec.plan_sales_qty = sal_line
-        return rec.plan_sales_qty
 
     def _compute_plan_sales_amount(self):
         for rec in self:
@@ -661,7 +653,6 @@ class Farm_Projects(models.Model):
                     ('product_id', '=', rec.product_id.id)
                 ]).mapped('qty'))
             rec.plan_service_qty = prod_line
-        return rec.plan_service_qty
 
     def _compute_plan_service_amount(self):
         for rec in self:
@@ -672,7 +663,6 @@ class Farm_Projects(models.Model):
                     ('product_id', '=', rec.product_id.id)
                 ]).mapped('price_subtotal'))
             rec.plan_service_amount = serv_line
-        return rec.plan_service_amount
 
     # -------------------------------------------------------------------------
     # actual order Price Calculation METHODS
@@ -690,7 +680,6 @@ class Farm_Projects(models.Model):
                 ]).mapped('qty_done')
             )
             rec.actual_produce_qty = sum_produce_qty
-        return rec.actual_produce_qty
 
     def _compute_actual_produce_amount(self):
         for rec in self:
@@ -711,7 +700,6 @@ class Farm_Projects(models.Model):
                 ]).mapped('credit')
             )
             rec.actual_produce_amount = produce_debit + produce_credit
-        return rec.actual_produce_amount
 
     def _compute_average_produce_price(self):
         for rec in self:
@@ -719,7 +707,6 @@ class Farm_Projects(models.Model):
                 rec.average_produce_price = 0
                 continue
             rec.average_produce_price = rec.actual_produce_amount / rec.actual_produce_qty
-        return rec.average_produce_price
 
     def _compute_sum_sales_qty(self):
         for rec in self:
@@ -734,7 +721,6 @@ class Farm_Projects(models.Model):
                 ]).mapped('quantity')
             )
             rec.actual_sales_qty = sum_sales_qty
-        return rec.actual_sales_qty
 
     def _compute_actual_sales_amount(self):
         for rec in self:
@@ -755,7 +741,6 @@ class Farm_Projects(models.Model):
                 ]).mapped('credit')
             )
             rec.actual_sales_amount = sales_debit + sales_credit
-        return rec.actual_sales_amount
 
     def _compute_average_sales_price(self):
         for rec in self:
@@ -763,62 +748,59 @@ class Farm_Projects(models.Model):
                 rec.average_sales_price = 0
                 continue
             rec.average_sales_price = rec.actual_sales_amount / rec.actual_sales_qty
-        return rec.average_sales_price
 
     def _compute_sum_service_qty(self):
-        for r in self:
-            if not r.product_id:
-                r.actual_service_qty = 0
+        for rec in self:
+            if not rec.product_id:
+                rec.actual_service_qty = 0
             else:
                 bills_quantity = sum(
                     self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
+                        ('product_id', '=', rec.product_id.id),
                         ('move_type', '=', 'in_invoice'),
                     ]).mapped('quantity')
                 )
                 invoice_quantity = sum(
                     self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
+                        ('product_id', '=', rec.product_id.id),
                         ('move_type', '=', 'out_invoice'),
                     ]).mapped('quantity')
                 )
-                r.actual_service_qty = (bills_quantity + invoice_quantity)
-        return r.actual_service_qty
+                rec.actual_service_qty = (bills_quantity + invoice_quantity)
 
     @api.model
     def _compute_actual_service_amount(self):
-        for r in self:
-            if not r.product_id:
+        for rec in self:
+            if not rec.product_id:
                 print('need a product')
             else:
                 bills_amount_debit = sum(
                     self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
+                        ('product_id', '=', rec.product_id.id),
                         ('move_type', '=', 'in_invoice'),
                     ]).mapped('debit')
                 )
                 bills_amount_credit = sum(
                     self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
+                        ('product_id', '=', rec.product_id.id),
                         ('move_type', '=', 'in_invoice'),
                     ]).mapped('credit')
                 )
 
                 invoice_amount_debit = sum(
                     self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
+                        ('product_id', '=', rec.product_id.id),
                         ('move_type', '=', 'out_invoice'),
                     ]).mapped('debit')
                 )
                 invoice_amount_credit = sum(
                     self.env['account.move.line'].search([
-                        ('product_id', '=', r.product_id.id),
+                        ('product_id', '=', rec.product_id.id),
                         ('move_type', '=', 'out_invoice'),
                     ]).mapped('credit')
                 )
-                r.actual_service_amount = (
-                    bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
-        return r.actual_service_amount
+                rec.actual_service_amount = (
+                        bills_amount_debit - bills_amount_credit + invoice_amount_credit - invoice_amount_debit)
 
     def _compute_average_service_price(self):
         for rec in self:
@@ -826,7 +808,6 @@ class Farm_Projects(models.Model):
                 rec.average_service_price = 0
                 continue
             rec.average_service_price = rec.plan_service_amount / rec.plan_service_qty
-        return rec.average_service_price
 
     # -------------------------------------------------------------------------
     # Cost of Goods Price Calculation METHODS
@@ -837,7 +818,6 @@ class Farm_Projects(models.Model):
                 rec.cog_produce_price = 0
                 continue
             rec.cog_produce_price = rec.total_actual / rec.actual_produce_qty
-        return rec.cog_produce_price
 
     def _compute_cog_sales_price(self):
         for rec in self:
@@ -845,7 +825,6 @@ class Farm_Projects(models.Model):
                 rec.cog_sales_price = 0
                 continue
             rec.cog_sales_price = rec.total_actual / rec.actual_sales_qty
-        return rec.cog_sales_price
 
     def _compute_cog_service_price(self):
         for rec in self:
@@ -853,7 +832,6 @@ class Farm_Projects(models.Model):
                 rec.cog_service_price = 0
                 continue
             rec.cog_service_price = rec.actual_service_amount / rec.actual_service_qty
-        return rec.cog_service_price
 
     # -------------------------------------------------------------------------
     # CREATE METHODS
@@ -872,8 +850,9 @@ class Farm_Projects(models.Model):
             ('name', '=', new_name)
         ])
         if search_name:
-            raise UserError(_('Product already exist in the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
+            raise UserError(
+                _('Product already exist in the company %s (%s).') % (
+                    self.company_id.name, self.company_id.id))
         else:
             if self.project_type == "service":
                 product_vals = dict(
@@ -907,8 +886,9 @@ class Farm_Projects(models.Model):
             ('name', '=', new_name)
         ])
         if search_name:
-            raise UserError(_('Product already exist in the company %s (%s).') % (
-                self.company_id.name, self.company_id.id))
+            raise UserError(
+                _('Product already exist in the company %s (%s).') % (
+                    self.company_id.name, self.company_id.id))
         # elif create
         analytic_account_vals = dict(
             name=new_name,
@@ -1049,7 +1029,7 @@ class Farm_Projects(models.Model):
         }
 
 
-class farm_project_group(models.Model):
+class FarmProjectGroup(models.Model):
     _name = 'farm.project.group'
     _description = 'Create a Group of project like Calf, Poultry , Grape , fruit ,etc.'
     _inherit = ['mail.thread', 'mail.activity.mixin']

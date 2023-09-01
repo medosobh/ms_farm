@@ -4,7 +4,7 @@ from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 
 
-class PioAsset(models.Model):
+class Pioasset(models.Model):
     _name = 'farm.pioasset'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Pio-Asset'
@@ -14,7 +14,8 @@ class PioAsset(models.Model):
     _rec_name = 'complete_name'
     _order = 'complete_name'
     _sql_constraints = [
-        ('code_uniq', 'unique(code)', "A Code can only be assigned to one Pio-Asset !"),
+        ('code_uniq', 'unique(code)',
+         "A Code can only be assigned to one Pio-Asset !"),
     ]
 
     code = fields.Char(
@@ -107,7 +108,7 @@ class PioAsset(models.Model):
         return super().name_get()
 
 
-class events(models.Model):
+class Events(models.Model):
     _name = 'farm.event'
     _description = 'Events'
 
@@ -127,7 +128,7 @@ class events(models.Model):
     )
 
 
-class action(models.Model):
+class Action(models.Model):
     _name = 'farm.action'
     _description = 'Action'
 
@@ -279,7 +280,8 @@ class FarmControl(models.Model):
     @api.depends('init_date', 'next_date')
     def _get_lead_time(self):
         self.ensure_one()
-        if not (self.init_date or self.next_date or self.next_date < self.init_date):
+        if not (
+                self.init_date or self.next_date or self.next_date < self.init_date):
             self.lead_time = 0
         else:
             # Compute the difference between dates, but: Friday - Monday = 4 days,

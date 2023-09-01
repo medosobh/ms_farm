@@ -2,7 +2,7 @@ from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 
 
-class farm_materials(models.Model):
+class FarmMaterials(models.Model):
     _name = 'farm.materials'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Material Orders'
@@ -113,7 +113,6 @@ class farm_materials(models.Model):
                     ('materials_id', '=', rec.id)
                 ]).mapped('price_subtotal'))
             rec.m_order_cost = oline
-        return rec.m_order_cost
 
     def _compute_stock_move_count(self):
         for rec in self:
@@ -121,7 +120,6 @@ class farm_materials(models.Model):
                 ('materials_id', '=', rec.id)
             ])
             rec.materials_consumption_count = count
-        return rec.materials_consumption_count
 
     def _compute_account_move_count(self):
         fam_count = 0
@@ -131,7 +129,6 @@ class farm_materials(models.Model):
             ])
 
         mo_rec.materials_consumption_account_count = fam_count
-        return mo_rec.materials_consumption_account_count
 
     def _compute_account_move_total(self):
         for rec in self:
@@ -146,7 +143,6 @@ class farm_materials(models.Model):
                 ]).mapped('credit')
             )
         rec.materials_consumption_account_total = total_debit + total_credit
-        return rec.materials_consumption_account_total
 
     # -------------------------------------------------------------------------
     # Create METHODS
@@ -156,7 +152,7 @@ class farm_materials(models.Model):
         if not vals.get('name') or vals['name'] == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'farm.materials') or _('New')
-        return super(farm_materials, self).create(vals)
+        return super(FarmMaterials, self).create(vals)
 
     def button_farm_stock_out(self):
         self.ensure_one()
@@ -230,7 +226,7 @@ class farm_materials(models.Model):
         }
 
 
-class farm_materials_oline(models.Model):
+class FarmMaterialsOline(models.Model):
     _name = 'farm.materials.oline'
     _description = 'Material Order Line'
 
