@@ -4,7 +4,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class Farm_Projects(models.Model):
+class FarmProjects(models.Model):
     _name = 'farm.projects'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Farm Projects Management'
@@ -841,7 +841,7 @@ class Farm_Projects(models.Model):
         if not vals.get('name') or vals['name'] == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'farm.projects') or _('New')
-        return super(Farm_Projects, self).create(vals)
+        return super(FarmProjects, self).create(vals)
 
     def create_project_product(self):
         # if it is existed and send error message
