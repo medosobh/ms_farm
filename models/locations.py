@@ -12,8 +12,6 @@ class FarmLocations(models.Model):
     _rec_name = 'complete_name'
     _order = 'complete_name'
 
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-
     name = fields.Char(
         string='Location',
         required=True)

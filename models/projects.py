@@ -70,9 +70,9 @@ class FarmProjects(models.Model):
         string='Group',
         required=True)
     user_id = fields.Many2one(
-        comodel_name='res.users',
-        string="Responsible Man",
-        required=True)
+        comodel_name='res.users', string='Responsible',
+        required=False,
+        default=lambda self: self.env.user)
     description = fields.Text(
         string='Description',
         required=False,
