@@ -443,7 +443,6 @@
         </record>
     </data>
 
-
     <!-- Product Category -->
     <data noupdate="0">
         <record id="product_category_farm"
@@ -825,6 +824,5 @@
                 eval="ref('stock.stock_location_stock')"/>
         </record>
     </data>
-
 
 </odoo>
