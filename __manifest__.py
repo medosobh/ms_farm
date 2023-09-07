@@ -63,7 +63,9 @@
     'auto_install': False,
     'application': True,
     'sequence': '31',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
+    'price': 49.99,
+    'currency': 'EUR',
     'assets': {
         'web.assets_backend': {
 
